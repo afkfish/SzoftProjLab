@@ -18,7 +18,7 @@ repositories {
 dependencies {
     // log4j2 for logging
     implementation("org.apache.logging.log4j:log4j-api:2.14.1")
-    implementation("org.apache.logging.log4j:log4j-core:2.14.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
 
     // JUnit for testing
     testImplementation("junit:junit:4.13.2")
