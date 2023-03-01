@@ -6,13 +6,17 @@ import org.apache.logging.log4j.Logger;
 import javax.swing.*;
 
 public class Main {
+	private enum Version {
+		SKELETON, PROTOTYPE, GRAPGHICAL
+	}
+	public static Version version = Version.SKELETON;
 	public static void main(String[] args) {
 		Logger logger = LogManager.getLogger(Main.class);
 		logger.info("Hello World!");
 
-		JFrame frame = new JFrame("Hello World");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(300, 300);
-		frame.setVisible(true);
+
+		if (version == Version.GRAPGHICAL) {
+			JFrame mainFrame = View.setup();
+		}
 	}
 }
