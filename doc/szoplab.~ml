@@ -259,7 +259,7 @@
 <XPD:ATTR name="Left" type="integer">944</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">364</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">80</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">69</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">82</XPD:ATTR>
 <XPD:REF name="Model">+IwCoHsRBUiCpm/MpKv1jwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="7tRW6UWa2UCUWtWLnmzqSAAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="dnGr4v/MWUmoc31AsJN6SwAA">
@@ -648,7 +648,7 @@
 <XPD:OBJ name="OwnedViews[17]" type="UMLAssociationView" guid="oOy39u4xpkGUs20F7qqtvwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">637,398;944,398</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">637,399;944,403</XPD:ATTR>
 <XPD:REF name="Model">d77IbWB4I02Xeo0/LmCzgwAA</XPD:REF>
 <XPD:REF name="Head">2/8YzK+vekuS+W6nosyT+AAA</XPD:REF>
 <XPD:REF name="Tail">vwty/HujmEyqu5/sEdCYhgAA</XPD:REF>
@@ -1335,6 +1335,17 @@
 <XPD:REF name="Views[1]">kW+M7IuysU2RjEDCna9JCQAA</XPD:REF>
 <XPD:REF name="Views[2]">Q0677umJP0mT/FfZpCKRfwAA</XPD:REF>
 <XPD:REF name="Views[3]">yRbgvKAc50OHOk5dKdUoWwAA</XPD:REF>
+<XPD:ATTR name="#Operations" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Operations[0]" type="UMLOperation" guid="UELTF0p4VEyuKJ/XhDNRvAAA">
+<XPD:ATTR name="Name" type="string">kor</XPD:ATTR>
+<XPD:REF name="Owner">+IwCoHsRBUiCpm/MpKv1jwAA</XPD:REF>
+<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="U+Hy7CEI5k+zPTQ+dmanTAAA">
+<XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">void</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">UELTF0p4VEyuKJ/XhDNRvAAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
 <XPD:ATTR name="#Associations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Associations[0]">g4AGOTj6Q0OZ32c+RJkRRAAA</XPD:REF>
 <XPD:ATTR name="#Attributes" type="integer">2</XPD:ATTR>
