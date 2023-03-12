@@ -1,5 +1,6 @@
-package com.example.application;
+package com.ez_mode;
 
+import com.ez_mode.gui.View;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +13,8 @@ public class Main {
 	public static Version version = Version.SKELETON;
 	public static void main(String[] args) {
 		Logger logger = LogManager.getLogger(Main.class);
-		logger.info("Hello World!");
+
+		Map map = new Map();
 
 
 		if (version == Version.GRAPGHICAL) {
