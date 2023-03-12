@@ -1,4 +1,4 @@
-package com.example.application;
+package com.ez_mode.gui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 

@@ -1,0 +1,73 @@
+package com.ez_mode.characters;
+
+import com.ez_mode.Map;
+import com.ez_mode.exceptions.InvalidPlayerMovementException;
+import com.ez_mode.exceptions.NotFoundExeption;
+import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Node;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * This class is responsible for the characters in the game.
+ * This is tha abstract class for all characters.
+ * It contains a name and a reference to the StandableObject it is standing on.
+ */
+public abstract class Character {
+	/*
+	 * The logger for this class.
+	 */
+	protected final Logger logger;
+
+	/*
+	 * The uuid of the character.
+	 */
+	private final String uuid = this.getClass().getName() + (int) (Math.random() * 1000000);
+
+	/**
+	 * The name of the player.
+	 */
+	private final String name;
+
+	/**
+	 * The StandableObject the player is standing on.
+	 */
+	protected Node standingOn;
+
+	public Character(String name) {
+		this.logger = LogManager.getLogger(this.getClass());
+		this.name = name;
+	}
+
+	public String getUuid() { return uuid; }
+
+	public String getName() {
+		return name;
+	}
+
+	public Node getStandingOn() {
+		return standingOn;
+	}
+
+	/**
+	 * This method moves the character to the given StandableObject.
+	 * @param node The StandableObject to move to.
+	 */
+	public void moveTo(Node node) {
+		try {
+			node.addCharacter(this);
+			standingOn.removeCharacter(this);
+			this.standingOn = node;
+			logger.debug("Moved " + this.uuid + " to " + node.getUuid());
+		} catch (ObjectFullException | InvalidPlayerMovementException e) {
+			logger.error(e.getMessage());
+		} catch (NotFoundExeption e) {
+			logger.error(e.getMessage());
+			Map.playerLostHandler(this);
+		}
+	}
+
+	public void placeTo(Node node) {
+		this.standingOn = node;
+	}
+}
