@@ -11,7 +11,7 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  */
 public class WaterSpring extends Node {
 	public WaterSpring() {
-		super(Integer.MAX_VALUE);
+		super(Integer.MAX_VALUE, 4);
 		this.flowRate = 1;
 	}
 
@@ -32,8 +32,8 @@ public class WaterSpring extends Node {
 
 	@Override
 	public void tick() {
-		this.neighbours.forEach(node -> node.addFlowRate(this, 1));
+		this.connectors.stream().filter(Connector::isConnected).forEach(connector -> connector.getNeighbour(this).addFlowRate(this, 1));
 
-		this.logger.debug(String.format("Flow rate is at %f", this.flowRate));
+		this.logger.debug("Flow rate is at {}", this.flowRate);
 	}
 }

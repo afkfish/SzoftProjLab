@@ -14,7 +14,7 @@ public class Pump extends Node {
 	// TODO: Make that this is used when calculating the flow rate
 	private double internalBufferLevel = 0;
 	public Pump() {
-		super(5);
+		super(5, 4);
 	}
 
 	@Override
@@ -37,15 +37,6 @@ public class Pump extends Node {
 
 	@Override
 	public void tick() {
-		if (this.isBroken) {
-			if (this.sources.size() > 0) {
-				Map.waterLost += this.flowRate;
-			}
-			this.absorbers.forEach(node -> node.removeFlowRate(this, this.flowRate));
-		} else {
-			this.absorbers.forEach(node -> node.addFlowRate(this, this.flowRate));
-		}
-
-		this.logger.debug(String.format("Flow rate is at %f", this.flowRate));
+		// TODO: Implement the pump breaking randomly and other stuff
 	}
 }

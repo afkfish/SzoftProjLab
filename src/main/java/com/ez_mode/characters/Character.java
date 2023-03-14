@@ -53,16 +53,14 @@ public abstract class Character {
 	 * This method moves the character to the given Node.
 	 * @param node The destination Node.
 	 */
-	public void moveTo(Node node) {
+	public void moveTo(Node node) throws ObjectFullException, InvalidPlayerMovementException {
 		try {
 			node.addCharacter(this);
 			standingOn.removeCharacter(this);
+			this.logger.debug("Moved {} to {} from {}", this.uuid, node.getUuid(), standingOn.getUuid());
 			this.standingOn = node;
-			logger.debug("Moved " + this.uuid + " to " + node.getUuid());
-		} catch (ObjectFullException | InvalidPlayerMovementException e) {
-			logger.error(e.getMessage());
 		} catch (NotFoundExeption e) {
-			logger.error(e.getMessage());
+			this.logger.error(e.getMessage());
 			Map.playerLostHandler(this);
 		}
 	}
@@ -75,5 +73,6 @@ public abstract class Character {
 	 */
 	public void placeTo(Node node) {
 		this.standingOn = node;
+		node.placeCharacter(this);
 	}
 }
