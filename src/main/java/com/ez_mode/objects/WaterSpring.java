@@ -3,6 +3,12 @@ package com.ez_mode.objects;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
+/**
+ * WaterSpring is a special type of node that can be used
+ * to refill a cistern. It generates 1 unit of water per tick.
+ * It is not possible to break or repair a water spring.
+ * It has no maximum capacity and unlimited water.
+ */
 public class WaterSpring extends Node {
 	public WaterSpring() {
 		super(Integer.MAX_VALUE);

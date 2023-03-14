@@ -4,6 +4,12 @@ import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
+/**
+ * A pipe is a node that can be broken and repaired.
+ * It can also be connected to other pipes.
+ * A pipe can only be connected to 2 other nodes
+ * and the maximum player capacity is 1.
+ */
 public class Pipe extends Node {
 	public Pipe() {
 		super(1);
