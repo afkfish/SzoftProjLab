@@ -12,7 +12,8 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  */
 public class Pipe extends Node {
 	public Pipe() {
-		super(1);
+		super(1, 2);
+		this.connectors.add(new Connector(this));
 	}
 
 	@Override
@@ -31,22 +32,5 @@ public class Pipe extends Node {
 		} else {
 			throw new InvalidPlayerActionException(String.format("Player <%s> tried to break a pipe that was already broken.", character.getName()));
 		}
-	}
-
-	@Override
-	public void tick() {
-		assert this.neighbours.size() <= 2 : "Pipe has more than 2 neighbours";
-		this.isConnected = this.neighbours.size() == 2;
-
-		this.logger.debug(String.format("Pipe is connected: %b", this.isConnected));
-
-		if (this.isBroken | !this.isConnected) {
-			Map.waterLost += this.flowRate;
-			this.absorbers.forEach(node -> node.removeFlowRate(this, this.flowRate));
-		} else {
-			this.absorbers.forEach(node -> node.addFlowRate(this, this.flowRate));
-		}
-
-		this.logger.debug(String.format("Flow rate is at %f", this.flowRate));
 	}
 }

@@ -2,6 +2,8 @@ package com.ez_mode;
 
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Plummer;
+import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Connector;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.WaterSpring;
@@ -16,13 +18,14 @@ import java.util.HashMap;
  * It contains a HashMap of StandableObjects and the Characters standing on them.
  * It also contains a method to handle the case when a player is lost somehow.
  */
-public class Map {
-	private static final Logger logger = LogManager.getLogger(Map.class);
+public class Map implements Tickable {
+	private final Logger logger = LogManager.getLogger(Map.class);
 	/**
-	 * The HashMap representation of the game.
-	 * This map contains everyone and every object.
+	 * The ArrayList representation of the game.
+	 * This map contains every object.
+	 * TODO: store the objects with their coordinates
 	 */
-	private static final HashMap<Node, ArrayList<Character>> gameMap = new HashMap<>();
+	private static final ArrayList<Node> gameMap = new ArrayList<>();
 
 	/**
 	 * The list of all players.
@@ -44,30 +47,45 @@ public class Map {
 	 */
 	private void fillMap() {
 		// TODO: implement a way to fill the map
-		WaterSpring waterSpring = new WaterSpring();
-		gameMap.put(waterSpring, new ArrayList<>());
+		WaterSpring waterSpring1 = new WaterSpring();
+		gameMap.add(waterSpring1);
 
-		Plummer plummer = new Plummer("Plummer");
-		gameMap.get(waterSpring).add(plummer);
-		waterSpring.addCharacter(plummer);
-
-		players.add(plummer);
+		WaterSpring waterSpring2 = new WaterSpring();
+		gameMap.add(waterSpring2);
 
 		Pipe pipe = new Pipe();
-		gameMap.put(pipe, new ArrayList<>());
+		gameMap.add(pipe);
 
-		waterSpring.addNeighbour(pipe);
-		pipe.addNeighbour(waterSpring);
-		pipe.addSource(waterSpring);
-		waterSpring.addAbsorber(pipe);
+		Plummer plummer = new Plummer("Plummer");
+		players.add(plummer);
 
-		for (int i = 0; i < 1; i++) {
-			gameMap.keySet().forEach(Tickable::tick);
+		try {
+			pipe.connect(waterSpring1);
+			pipe.connect(waterSpring2);
+		} catch (ObjectFullException e) {
+			this.logger.error("The pipe is full, but it shouldn't be.");
+		}
+		for (int i = 0; i < 4; i++) {
+			this.tick();
 		}
 
-		plummer.placeTo(waterSpring);
+		plummer.placeTo(waterSpring1);
 
-		plummer.moveTo(pipe);
+		try {
+			plummer.moveTo(pipe);
+			plummer.moveTo(waterSpring2);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void addNode(Node node) {
+		gameMap.add(node);
+	}
+
+	public static void addPlayer(Character player, Node node) {
+		players.add(player);
+		player.placeTo(node);
 	}
 
 	/**
@@ -78,10 +96,8 @@ public class Map {
 	 */
 	public static void playerLostHandler(Character character) {
 		Node playerTruePos = gameMap
-				.keySet()
 				.stream()
-				.filter(standableObject ->
-						standableObject
+				.filter(node -> node
 								.getCharactersOn()
 								.contains(character)
 				).findFirst()
@@ -90,5 +106,11 @@ public class Map {
 		// TODO: move to start if null
 		assert playerTruePos != null;
 		character.placeTo(playerTruePos);
+	}
+
+	@Override
+	public void tick() {
+		gameMap.forEach(Tickable::tick);
+		this.logger.debug("Current water loss: {}", Map.waterLost);
 	}
 }
