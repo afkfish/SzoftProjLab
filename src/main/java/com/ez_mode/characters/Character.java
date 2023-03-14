@@ -50,8 +50,8 @@ public abstract class Character {
 	}
 
 	/**
-	 * This method moves the character to the given StandableObject.
-	 * @param node The StandableObject to move to.
+	 * This method moves the character to the given Node.
+	 * @param node The destination Node.
 	 */
 	public void moveTo(Node node) {
 		try {
@@ -67,6 +67,12 @@ public abstract class Character {
 		}
 	}
 
+	/**
+	 * This method places the character on the given Node.
+	 * Useful when a character has to respawn,
+	 * or placen at the game start.
+	 * @param node The destination Node.
+	 */
 	public void placeTo(Node node) {
 		this.standingOn = node;
 	}

@@ -38,6 +38,10 @@ public class Map {
 		this.fillMap();
 	}
 
+	/**
+	 * This method fills the map with the objects
+	 * and places the characters to their startiing positions.
+	 */
 	private void fillMap() {
 		// TODO: implement a way to fill the map
 		WaterSpring waterSpring = new WaterSpring();

@@ -4,6 +4,12 @@ import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
+/**
+ * A pump is a node that can be audjusted
+ * and repaired. It is bound to break after
+ * a certain amount of time. The pump can hold
+ * 5 players at once.
+ */
 public class Pump extends Node {
 	// TODO: Make that this is used when calculating the flow rate
 	private double internalBufferLevel = 0;

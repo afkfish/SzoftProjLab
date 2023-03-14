@@ -11,19 +11,44 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * The Node class is the base class for
+ * all objects that can be placed on the map.
+ */
 public abstract class Node implements Tickable {
 	/*
 	 * The logger for this class.
 	 */
 	protected final Logger logger = LogManager.getLogger(Node.class);
+	/**
+	 * The unique identifier for this object.
+	 */
 	private final String uuid = this.getClass().getName() + (int) (Math.random() * 1000000);
+	/**
+	 * The characters currently on this object.
+	 */
 	protected final ArrayList<Character> charactersOn = new ArrayList<>();
+	/**
+	 * The objects that are neighbours to this object.
+	 */
 	protected final ArrayList<Node> neighbours = new ArrayList<>();
+	/**
+	 * The objects that are sources of water to this object.
+	 */
 	protected final ArrayList<Node> sources = new ArrayList<>();
+	/**
+	 * The objects that are absorbers of water from this object.
+	 */
 	protected final ArrayList<Node> absorbers = new ArrayList<>();
+	/**
+	 * The maximum number of characters that can be on this object.
+	 */
 	protected final int maxCharacters;
 	protected boolean isBroken = false;
 	protected boolean isConnected = false;
+	/**
+	 * The amount of water flowing through this object.
+	 */
 	protected double flowRate = 0;
 
 	protected Node(int maxCharacters) {
