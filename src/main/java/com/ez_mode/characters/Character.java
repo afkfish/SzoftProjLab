@@ -5,8 +5,8 @@ import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * This class is responsible for the characters in the game.
@@ -74,5 +74,8 @@ public abstract class Character {
 	public void placeTo(Node node) {
 		this.standingOn = node;
 		node.placeCharacter(this);
+	}
+	public void SetPump(){
+		///Stakeholder
 	}
 }

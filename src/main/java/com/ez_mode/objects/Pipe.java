@@ -1,6 +1,5 @@
 package com.ez_mode.objects;
 
-import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
@@ -11,11 +10,14 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * and the maximum player capacity is 1.
  */
 public class Pipe extends Node {
+	private double capacity;
 	public Pipe() {
 		super(1, 2);
 		this.connectors.add(new Connector(this));
 	}
-
+	public double getCapacity(){
+		return capacity;
+	}
 	@Override
 	public void repairNode(Character character) throws InvalidPlayerActionException {
 		if (this.isBroken) {

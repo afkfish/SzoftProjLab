@@ -7,8 +7,8 @@ import com.ez_mode.objects.Connector;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.WaterSpring;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +36,10 @@ public class Map implements Tickable {
 	 * The amount of water, lost by the nomads sabotaging the nodes.
 	 */
 	public static double waterLost = 0;
+	/**
+	 * The amount of water, arrived to the cisterns.
+	 */
+	public static double waterArrived=0;
 
 	public Map() {
 		this.fillMap();

@@ -7,8 +7,8 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -124,11 +124,11 @@ public abstract class Node implements Tickable {
 		isBroken = true;
 	}
 
-	public void addFlowRate(Node source, double flowRate) {
+	public void addFlowRate(Node source, double excededFlow) {
 		if (!this.sources.contains(source)) {
-			this.flowRate += flowRate;
+			this.flowRate += excededFlow;
 			this.sources.add(source);
-			this.absorbers.forEach(standableObject -> standableObject.addFlowRate(this, flowRate));
+			this.absorbers.forEach(standableObject -> standableObject.addFlowRate(excededFlow));
 		}
 	}
 
@@ -138,6 +138,10 @@ public abstract class Node implements Tickable {
 			this.sources.remove(source);
 			this.absorbers.forEach(standableObject -> standableObject.removeFlowRate(this, flowRate));
 		}
+	}
+
+	public void setFlowRate(double flowRate) {
+		this.flowRate = flowRate;
 	}
 
 	@Override
@@ -151,17 +155,24 @@ public abstract class Node implements Tickable {
 
 	protected void calculateFlowRate() {
 		this.logger.debug(this.connectors.stream().allMatch(Connector::isConnected));
+
 		// If the pipe is broken or any of its connectors are not connected, then it loses water
 		if (this.isBroken || !this.connectors.stream().allMatch(Connector::isConnected)) {
+
 			this.logger.warn("Pipe is broken or has a loose connection, losing water.");
+
 			// get how many connectors are not connected
 			double looseConnectors = (double) this.connectors.stream().filter(connector -> !connector.isConnected()).count();
+
 			// calculate the water loss per connection
 			double waterLossPerConnection = this.flowRate * (looseConnectors / (this.connectors.size() - this.sources.size()));
+
 			// add the water loss to the nomad points
 			Map.waterLost += waterLossPerConnection;
 			this.absorbers.forEach(node -> node.removeFlowRate(this, waterLossPerConnection));
-		} else {
+
+		} else
+		{
 			this.absorbers.forEach(node -> node.addFlowRate(this, this.flowRate));
 		}
 	}

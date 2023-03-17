@@ -23,4 +23,10 @@ public class Plummer extends Character {
 			this.logger.error(e.getMessage());
 		}
 	}
+	public void PlacePump(){
+		//Stakeholder
+	}
+	public void MovePipe(){
+		//Stakeholder
+	}
 }
