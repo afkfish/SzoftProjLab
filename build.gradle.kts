@@ -8,7 +8,7 @@ plugins {
     java
 }
 
-group = "com.example.application"
+group = "com.ez_mode"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -17,8 +17,8 @@ repositories {
 
 dependencies {
     // log4j2 for logging
-    implementation("org.apache.logging.log4j:log4j-api:2.14.1")
-    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
+    implementation("org.apache.logging.log4j:log4j-api:2.20.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
 
     // swing laf
     implementation("com.formdev:flatlaf:3.0")
