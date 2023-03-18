@@ -1,7 +1,7 @@
 package com.ez_mode;
 
 import com.ez_mode.characters.Character;
-import com.ez_mode.characters.Plummer;
+import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
@@ -58,8 +58,8 @@ public class Map implements Tickable {
 		Pipe pipe = new Pipe();
 		gameMap.add(pipe);
 
-		Plummer plummer = new Plummer("Plummer");
-		players.add(plummer);
+		Plumber plumber = new Plumber("Plummer");
+		players.add(plumber);
 
 		try {
 			pipe.connect(waterSpring1);
@@ -71,11 +71,11 @@ public class Map implements Tickable {
 			this.tick();
 		}
 
-		plummer.placeTo(waterSpring1);
+		plumber.placeTo(waterSpring1);
 
 		try {
-			plummer.moveTo(pipe);
-			plummer.moveTo(waterSpring2);
+			plumber.moveTo(pipe);
+			plumber.moveTo(waterSpring2);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

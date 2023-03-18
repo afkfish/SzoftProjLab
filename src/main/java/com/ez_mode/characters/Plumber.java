@@ -8,8 +8,8 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * place new pipes and pupms and reroute the water
  * to the cisterns.
  */
-public class Plummer extends Character {
-	public Plummer(String name) {
+public class Plumber extends Character {
+	public Plumber(String name) {
 		super(name);
 	}
 
