@@ -3,7 +3,6 @@ package com.ez_mode.map_tests;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Plummer;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
-import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.WaterSpring;

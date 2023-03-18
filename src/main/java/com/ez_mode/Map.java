@@ -3,15 +3,13 @@ package com.ez_mode;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Plummer;
 import com.ez_mode.exceptions.ObjectFullException;
-import com.ez_mode.objects.Connector;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.WaterSpring;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * This class is responsible for the map of the game.

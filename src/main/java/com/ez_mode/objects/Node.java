@@ -7,8 +7,8 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -128,7 +128,7 @@ public abstract class Node implements Tickable {
 		if (!this.sources.contains(source)) {
 			this.flowRate += excededFlow;
 			this.sources.add(source);
-			this.absorbers.forEach(standableObject -> standableObject.addFlowRate(excededFlow));
+			this.absorbers.forEach(standableObject -> standableObject.addFlowRate(this, excededFlow));
 		}
 	}
 

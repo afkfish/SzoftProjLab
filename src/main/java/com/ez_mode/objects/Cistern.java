@@ -11,12 +11,12 @@ public class Cistern extends Node {
 	public void tick(){
 		super.tick();
 
-		if(sources.size()<maxConnections)
+		if(sources.size() < maxConnections)
 			sources.add(MakePipe());
 
-		for (Node nodi: this.sources
-			 ) {
-			Map.waterArrived+=nodi.flowRate;
+		// this.sources.forEach(node -> Map.waterLost += node.flowRate);
+		for (Node nodi: this.sources) {
+			Map.waterArrived += nodi.flowRate;
 		}
 	}
 	public Pipe MakePipe(){
