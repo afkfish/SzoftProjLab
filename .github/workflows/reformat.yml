@@ -1,7 +1,8 @@
 name: Format
 
 on:
-  push
+  push:
+    tags-ignore: 'reformat'
 
 jobs:
   formatting:
