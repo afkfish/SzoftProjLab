@@ -1,0 +1,17 @@
+name: Format
+
+on:
+  push:
+    branches-ignore: [ main ]
+    tags-ignore: [ reformat ]
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # v2 minimum required
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--replace"
+      - name: Tag the commit
+        run: git tag -a reformat -m "Reformatting"
