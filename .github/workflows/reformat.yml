@@ -13,5 +13,9 @@ jobs:
         with:
           args: "--replace"
           skip-commit: true
-      - name: Commit changes
-        run: git tag reformat && git commit -a -m "Reformat code" && git push origin reformat
+      - name: Tag the commit
+        run: git tag reformat
+      - name: Commit the changes
+        run: git commit -a -m "Reformat code"
+      - name: Push
+        run: git push origin reformat
