@@ -1,8 +1,11 @@
-name: Format
+name: Reformat
 
 on:
   push:
+    branches: [ "main" ]
     tags-ignore: 'reformat'
+  pull_request:
+    types: [ opened, reopened ]
 
 jobs:
   formatting:
