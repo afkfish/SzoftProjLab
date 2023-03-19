@@ -1,0 +1,24 @@
+name: Reformat
+
+on:
+  push:
+    branches: [ "main" ]
+    tags-ignore: 'reformat'
+  pull_request:
+    types: [ opened, reopened ]
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # v2 minimum required
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--replace"
+          skip-commit: true
+      - name: Tag the commit
+        run: git tag reformat
+      - name: Commit the changes
+        run: git commit -a -m "Reformat code"
+      - name: Push
+        run: git push origin reformat
