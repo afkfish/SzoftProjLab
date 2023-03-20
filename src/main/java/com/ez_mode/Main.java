@@ -1,25 +1,26 @@
 package com.ez_mode;
 
 import com.ez_mode.gui.Menu;
-import com.ez_mode.gui.View;
+import javax.swing.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-
 public class Main {
-	private enum Version {
-		SKELETON, PROTOTYPE, GRAPGHICAL
-	}
-	public static Version version = Version.GRAPGHICAL;
-	public static void main(String[] args) {
-		Logger logger = LogManager.getLogger(Main.class);
+  private enum Version {
+    SKELETON,
+    PROTOTYPE,
+    GRAPGHICAL
+  }
 
-		Menu menu = new Menu();
+  public static Version version = Version.GRAPGHICAL;
 
+  public static void main(String[] args) {
+    Logger logger = LogManager.getLogger(Main.class);
 
-		/*if (version == Version.GRAPGHICAL) {
-			JFrame mainFrame = View.setup();
-		}*/
-	}
+    Menu menu = new Menu();
+
+    /*if (version == Version.GRAPGHICAL) {
+    	JFrame mainFrame = View.setup();
+    }*/
+  }
 }
