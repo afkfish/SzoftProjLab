@@ -9,7 +9,8 @@ name: Java CI with Gradle
 
 on:
   push:
-    tags: [ reformat]
+    branches: [ main ]
+    tags: [ reformat ]
 
 permissions:
   contents: read
