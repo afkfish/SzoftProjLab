@@ -19,3 +19,5 @@ jobs:
           github-token: ${{ secrets.ACTIONS_TOKEN }}
       - name: Tag the commit
         run: git tag -a reformat -m "Reformatting"
+      - name: Push the tag
+        run: git push --follow-tags
