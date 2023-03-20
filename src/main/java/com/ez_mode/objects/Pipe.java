@@ -8,36 +8,38 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * can only be connected to 2 other nodes and the maximum player capacity is 1.
  */
 public class Pipe extends Node {
-  private double capacity;
+    private double capacity;
 
-  public Pipe() {
-    super(1, 2);
-    this.connectors.add(new Connector(this));
-  }
-
-  public double getCapacity() {
-    return capacity;
-  }
-
-  @Override
-  public void repairNode(Character character) throws InvalidPlayerActionException {
-    if (this.isBroken) {
-      this.isBroken = false;
-    } else {
-      throw new InvalidPlayerActionException(
-          String.format(
-              "Player <%s> tried to repair a pipe that was not broken.", character.getName()));
+    public Pipe() {
+        super(1, 2);
+        this.connectors.add(new Connector(this));
     }
-  }
 
-  @Override
-  public void breakNode(Character character) throws InvalidPlayerActionException {
-    if (!this.isBroken) {
-      this.isBroken = true;
-    } else {
-      throw new InvalidPlayerActionException(
-          String.format(
-              "Player <%s> tried to break a pipe that was already broken.", character.getName()));
+    public double getCapacity() {
+        return capacity;
     }
-  }
+
+    @Override
+    public void repairNode(Character character) throws InvalidPlayerActionException {
+        if (this.isBroken) {
+            this.isBroken = false;
+        } else {
+            throw new InvalidPlayerActionException(
+                    String.format(
+                            "Player <%s> tried to repair a pipe that was not broken.",
+                            character.getName()));
+        }
+    }
+
+    @Override
+    public void breakNode(Character character) throws InvalidPlayerActionException {
+        if (!this.isBroken) {
+            this.isBroken = true;
+        } else {
+            throw new InvalidPlayerActionException(
+                    String.format(
+                            "Player <%s> tried to break a pipe that was already broken.",
+                            character.getName()));
+        }
+    }
 }
