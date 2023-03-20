@@ -8,9 +8,8 @@
 name: Java CI with Gradle
 
 on:
-  workflow_run:
-    workflows: [ Format ]
-    types: [ completed ]
+  push:
+    tags: [ reformat]
 
 permissions:
   contents: read
