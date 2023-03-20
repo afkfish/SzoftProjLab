@@ -6,7 +6,7 @@ on:
     tags-ignore: [ reformat ]
 
 permissions:
-    contents: [ read, write ]
+    contents: write
 
 jobs:
   formatting:
