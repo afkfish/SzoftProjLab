@@ -2,7 +2,6 @@ name: Format
 
 on:
   push:
-    branches-ignore: [ main ]
     tags-ignore: [ reformat ]
 
 permissions:
@@ -15,9 +14,9 @@ jobs:
       - uses: actions/checkout@v3 # v2 minimum required
       - uses: axel-op/googlejavaformat-action@v3
         with:
-          args: "--replace"
+          args: "--replace --aosp"
           github-token: ${{ secrets.ACTIONS_TOKEN }}
       - name: Tag the commit
-        run: git tag -a reformat -m "Reformatting"
+        run: git tag -a reformat -m "Auto reformatting by the aosp standard."
       - name: Push the tag
         run: git push --follow-tags
