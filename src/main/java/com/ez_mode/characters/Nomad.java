@@ -7,16 +7,16 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * reroute the water into the desert.
  */
 public class Nomad extends Character {
-  public Nomad(String name) {
-    super(name);
-  }
-
-  /** Breaks the node the player is standing on. */
-  public void breakNode() {
-    try {
-      this.standingOn.breakNode(this);
-    } catch (InvalidPlayerActionException e) {
-      this.logger.error(e.getMessage());
+    public Nomad(String name) {
+        super(name);
     }
-  }
+
+    /** Breaks the node the player is standing on. */
+    public void breakNode() {
+        try {
+            this.standingOn.breakNode(this);
+        } catch (InvalidPlayerActionException e) {
+            this.logger.error(e.getMessage());
+        }
+    }
 }
