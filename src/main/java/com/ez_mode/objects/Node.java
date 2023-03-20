@@ -110,7 +110,7 @@ public abstract class Node implements Tickable {
             throw new NotFoundExeption(
                     String.format(
                             "Player <%s> tried to remove a character from an object they are not"
-                                + " on.",
+                                    + " on.",
                             character.getName()));
         charactersOn.remove(character);
     }
