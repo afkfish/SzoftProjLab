@@ -5,6 +5,9 @@ on:
     branches-ignore: [ main ]
     tags-ignore: [ reformat ]
 
+permissions:
+    contents: [ read, write ]
+
 jobs:
   formatting:
     runs-on: ubuntu-latest
