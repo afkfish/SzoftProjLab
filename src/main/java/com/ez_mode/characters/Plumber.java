@@ -12,9 +12,7 @@ public class Plumber extends Character {
     }
 
     @Override
-    public void SetPump() {
-
-    }
+    public void SetPump() {}
 
     /** Repairs the node the player is standing on. */
     public void repair() {
