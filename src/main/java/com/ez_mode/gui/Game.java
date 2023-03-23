@@ -1,9 +1,10 @@
 package com.ez_mode.gui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.*;
 
 public class Game implements ActionListener {
     String imagePath1 = "src/main/resources/pixil-frame-5.png";
@@ -17,15 +18,19 @@ public class Game implements ActionListener {
     JPanel buttonPanel = new JPanel();
     JLabel textField = new JLabel();
     JLabel turnLabel = new JLabel();
-    JButton[] buttons = new JButton[gridNum*gridNum];
+    JButton[] buttons = new JButton[gridNum * gridNum];
     JButton exitButton = new JButton();
 
     ImageIcon icon1 = new ImageIcon(imagePath1);
     ImageIcon icon2 = new ImageIcon(imagePath2);
 
+    public String getImagePath1() {
+        return imagePath1;
+    }
 
-    public String getImagePath1(){ return imagePath1; }
-    public String getImagePath2(){ return imagePath2; }
+    public String getImagePath2() {
+        return imagePath2;
+    }
 
     public Game() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +69,7 @@ public class Game implements ActionListener {
             buttonPanel.add(buttons[i]);
             buttons[i].setFocusable(false);
             buttons[i].setSize(20, 20);
-            //buttons[i].setBackground(new Color(50, 50, 50));
+            // buttons[i].setBackground(new Color(50, 50, 50));
             buttons[i].setBackground(new Color(244, 228, 156));
             buttons[i].setBorderPainted(false);
             buttons[i].setHorizontalAlignment(JLabel.HORIZONTAL);
@@ -96,18 +101,18 @@ public class Game implements ActionListener {
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
     }
-        public void actionPerformed (ActionEvent e){
-            for (int i = 0; i < gridNum*gridNum; i++) {
-                if (e.getSource() == buttons[i]) {
-                    if (buttons[i].getText().equals("")) {
-                        icon1 = new ImageIcon(String.valueOf(getImagePath1()));
-                        Image i1 = icon1.getImage();
-                        Image modIcon1 = i1.getScaledInstance(40, 32, Image.SCALE_DEFAULT);
-                        buttons[i].setIcon(new ImageIcon(modIcon1));
-                    }
+
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < gridNum * gridNum; i++) {
+            if (e.getSource() == buttons[i]) {
+                if (buttons[i].getText().equals("")) {
+                    icon1 = new ImageIcon(String.valueOf(getImagePath1()));
+                    Image i1 = icon1.getImage();
+                    Image modIcon1 = i1.getScaledInstance(40, 32, Image.SCALE_DEFAULT);
+                    buttons[i].setIcon(new ImageIcon(modIcon1));
                 }
             }
         }
+    }
 }
