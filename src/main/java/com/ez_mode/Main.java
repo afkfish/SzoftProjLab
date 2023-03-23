@@ -1,6 +1,7 @@
 package com.ez_mode;
 
 import com.ez_mode.gui.Menu;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

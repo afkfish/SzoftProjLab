@@ -96,8 +96,7 @@ public abstract class Node implements Tickable {
         if (!this.sources.contains(source)) {
             this.flowRate += excededFlow;
             this.sources.add(source);
-            this.absorbers.forEach(
-                    node -> node.addFlowRate(this, excededFlow));
+            this.absorbers.forEach(node -> node.addFlowRate(this, excededFlow));
         }
     }
 
@@ -105,8 +104,7 @@ public abstract class Node implements Tickable {
         if (this.sources.contains(source)) {
             this.flowRate -= flowRate;
             this.sources.remove(source);
-            this.absorbers.forEach(
-                    node -> node.removeFlowRate(this, flowRate));
+            this.absorbers.forEach(node -> node.removeFlowRate(this, flowRate));
         }
     }
 
