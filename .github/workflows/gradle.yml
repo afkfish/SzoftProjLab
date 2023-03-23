@@ -10,7 +10,11 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ main ]
-    tags: [ reformat ]
+
+  workflow_run:
+    workflows: [ "Format" ]
+    types:
+      - completed
 
 permissions:
   contents: read
