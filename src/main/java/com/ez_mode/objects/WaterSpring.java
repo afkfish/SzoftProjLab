@@ -16,7 +16,7 @@ public class WaterSpring extends Node {
 
     @Override
     public void addCharacter(Character character) {
-        this.charactersOn.add(character);
+        this.characters.add(character);
     }
 
     @Override
@@ -33,9 +33,9 @@ public class WaterSpring extends Node {
 
     @Override
     public void tick() {
-        this.connectors.stream()
-                .filter(Connector::isConnected)
-                .forEach(connector -> connector.getNeighbour(this).addFlowRate(this, 1));
+        this.neighbours.stream()
+                .filter(node -> !node.isBroken)
+                .forEach(node -> node.addFlowRate(this, 1));
 
         this.logger.debug("Flow rate is at {}", this.flowRate);
     }

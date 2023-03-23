@@ -75,10 +75,6 @@ public class Map implements Tickable {
         }
     }
 
-    public static void addNode(Node node) {
-        gameMap.add(node);
-    }
-
     public static void addPlayer(Character player, Node node) {
         players.add(player);
         player.placeTo(node);
@@ -93,7 +89,7 @@ public class Map implements Tickable {
     public static void playerLostHandler(Character character) {
         Node playerTruePos =
                 gameMap.stream()
-                        .filter(node -> node.getCharactersOn().contains(character))
+                        .filter(node -> node.getCharacters().contains(character))
                         .findFirst()
                         .orElse(null);
 

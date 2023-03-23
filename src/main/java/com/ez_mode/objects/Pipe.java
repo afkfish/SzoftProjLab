@@ -12,7 +12,6 @@ public class Pipe extends Node {
 
     public Pipe() {
         super(1, 2);
-        this.connectors.add(new Connector(this));
     }
 
     public double getCapacity() {
