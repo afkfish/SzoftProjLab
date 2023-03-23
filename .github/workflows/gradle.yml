@@ -8,13 +8,7 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ main ]
-
-  workflow_run:
-    workflows: [ "Format" ]
-    types:
-      - completed
+  [ push, pull_request ]
 
 permissions:
   contents: read
