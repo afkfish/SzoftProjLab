@@ -11,6 +11,11 @@ public class Nomad extends Character {
         super(name);
     }
 
+    @Override
+    public void SetPump() {
+
+    }
+
     /** Breaks the node the player is standing on. */
     public void breakNode() {
         try {

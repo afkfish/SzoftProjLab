@@ -11,6 +11,11 @@ public class Plumber extends Character {
         super(name);
     }
 
+    @Override
+    public void SetPump() {
+
+    }
+
     /** Repairs the node the player is standing on. */
     public void repair() {
         try {

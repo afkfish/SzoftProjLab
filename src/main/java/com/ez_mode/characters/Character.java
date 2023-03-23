@@ -76,7 +76,6 @@ public abstract class Character {
         node.placeCharacter(this);
     }
 
-    public void SetPump() {
-        // TODO: Implement this method.
-    }
+    // TODO: Override in children
+    public abstract void SetPump();
 }
