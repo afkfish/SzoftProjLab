@@ -5850,7 +5850,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="ry/d2rakz06p2sg4iNOpFQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="nb3Hi5BWZUyjwjsy1wiaHwAA">
 <XPD:ATTR name="FontStyle" type="integer">4</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">gameMap : Node</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">node : Node</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="9eE1HXHFaUWPZeM+dkQhIwAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -6100,7 +6100,7 @@
 <XPD:REF name="ReceivingStimuli[1]">tIvm0VkU6EqAD86bVIovVgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="ParticipatingInstances[2]" type="UMLObject" guid="t0UiMBHF90SEnqoYiR51OwAA">
-<XPD:ATTR name="Name" type="string">gameMap</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">node</XPD:ATTR>
 <XPD:REF name="Classifier">t+KMPLvt4kqQQ0xLtmHHDwAA</XPD:REF>
 <XPD:REF name="CollaborationInstanceSet">0U36XxqKH0aoIUaCfPg3jQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">2</XPD:ATTR>
@@ -6127,11 +6127,6 @@
 <XPD:REF name="Stimulus">71ZNRyyiE0C49qL9z80RVgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:REF name="InteractionInstanceSet">KnOGFD7pn0WR1imZmr23cAAA</XPD:REF>
-<XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
-<XPD:REF name="Views[0]">38iL/u1XRkGxqWOuAz95sgAA</XPD:REF>
-<XPD:REF name="Views[1]">ozYWVoY0tEq98kT6Hv1o0QAA</XPD:REF>
-<XPD:REF name="Views[2]">w8Lnapi3pkKN+czcbVVBzAAA</XPD:REF>
-<XPD:REF name="Views[3]">tA9u8SxtwEy7+v7YMId18wAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="ParticipatingStimuli[1]" type="UMLStimulus" guid="i95+QYzm3k+7huiUHO0biwAA">
 <XPD:REF name="Sender">oxNMcemUiE6AVVEGKkdNJgAA</XPD:REF>
@@ -6140,11 +6135,6 @@
 <XPD:REF name="Stimulus">i95+QYzm3k+7huiUHO0biwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:REF name="InteractionInstanceSet">KnOGFD7pn0WR1imZmr23cAAA</XPD:REF>
-<XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
-<XPD:REF name="Views[0]">bR3g8zPEbk2damvL2FUJLgAA</XPD:REF>
-<XPD:REF name="Views[1]">sDJ8t4xh60af6u5xBzbpoAAA</XPD:REF>
-<XPD:REF name="Views[2]">qudXA4ABW0uDcD0CN0Ho/gAA</XPD:REF>
-<XPD:REF name="Views[3]">nqSEvui99EOgU+hvDP+41wAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="ParticipatingStimuli[2]" type="UMLStimulus" guid="62BYwolnOUKM/O6uiVVsSAAA">
 <XPD:REF name="Sender">oxNMcemUiE6AVVEGKkdNJgAA</XPD:REF>
@@ -6153,11 +6143,6 @@
 <XPD:REF name="Stimulus">62BYwolnOUKM/O6uiVVsSAAA</XPD:REF>
 </XPD:OBJ>
 <XPD:REF name="InteractionInstanceSet">KnOGFD7pn0WR1imZmr23cAAA</XPD:REF>
-<XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
-<XPD:REF name="Views[0]">+nYgFztse0uo1TT7HYdUZwAA</XPD:REF>
-<XPD:REF name="Views[1]">jjiiW+7DREW08pFAISZe1gAA</XPD:REF>
-<XPD:REF name="Views[2]">18EZbBYWGkSaUqJbSbkdtgAA</XPD:REF>
-<XPD:REF name="Views[3]">cWgQBaA4MEWwXc2nS9eW3wAA</XPD:REF>
 </XPD:OBJ>
 <XPD:ATTR name="#OwnedFrames" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="OwnedFrames[0]" type="UMLFrame" guid="aQaBqn5D50q8mGo4RY51aQAA">
