@@ -22,7 +22,7 @@ public abstract class Character {
     /*
      * The uuid of the character.
      */
-    private final String uuid = this.getClass().getName() + (int) (Math.random() * 1000000);
+    private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 1000000);
 
     /** The name of the player. */
     private final String name;
@@ -76,7 +76,6 @@ public abstract class Character {
         node.placeCharacter(this);
     }
 
-    public void SetPump() {
-        /// Stakeholder
-    }
+    // TODO: Override in children
+    public abstract void SetPump();
 }

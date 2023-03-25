@@ -1,6 +1,7 @@
 package com.ez_mode.map_tests;
 
 import com.ez_mode.Map;
+import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
@@ -14,19 +15,19 @@ import org.junit.Test;
 public class PlayerMovementTest {
     WaterSpring waterSpring1 = new WaterSpring();
     Pipe pipe1 = new Pipe();
-    Plumber plumber1 = new Plumber("Plumber");
-    Plumber plumber2 = new Plumber("Plumber");
+    Plumber plumber = new Plumber("Plumber");
+    Nomad nomad = new Nomad("Nomad");
 
     @Before
     public void setUp() {
-        Map.addPlayer(plumber1, waterSpring1);
+        Map.addPlayer(plumber, waterSpring1);
     }
 
     @Test
     public void testInvalidMovement() {
         // test if a player can move to a node
         // that is not connected to the node he is standing on
-        Assert.assertThrows(InvalidPlayerMovementException.class, () -> plumber1.moveTo(pipe1));
+        Assert.assertThrows(InvalidPlayerMovementException.class, () -> plumber.moveTo(pipe1));
     }
 
     @Test
@@ -38,7 +39,7 @@ public class PlayerMovementTest {
             throw new RuntimeException(e);
         }
 
-        plumber1.moveTo(pipe1);
+        plumber.moveTo(pipe1);
     }
 
     @Test
@@ -51,9 +52,9 @@ public class PlayerMovementTest {
         }
 
         // add player2 to the map
-        Map.addPlayer(plumber2, pipe1);
+        Map.addPlayer(nomad, pipe1);
 
         // test if a player can move to a node that is full
-        Assert.assertThrows(ObjectFullException.class, () -> plumber1.moveTo(pipe1));
+        Assert.assertThrows(ObjectFullException.class, () -> plumber.moveTo(pipe1));
     }
 }

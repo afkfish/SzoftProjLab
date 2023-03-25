@@ -5,8 +5,6 @@ import com.ez_mode.gui.Menu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-
 public class Main {
     private enum Version {
         SKELETON,
@@ -19,10 +17,10 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = LogManager.getLogger(Main.class);
 
-        Menu menu = new Menu();
-
-        /*if (version == Version.GRAPGHICAL) {
-        	JFrame mainFrame = View.setup();
-        }*/
+        if (version == Version.SKELETON) {
+            new Map();
+        } else if (version == Version.GRAPGHICAL) {
+            new Menu();
+        }
     }
 }
