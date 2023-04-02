@@ -24,15 +24,14 @@ public class Main {
 
     if (version == Version.SKELETON) {
       Map map = new Map();
+      System.out.println("\033]31mHello! This is the skeleton version of the game.\033[0m\n");
+
+      System.out.println("What do you want to do?");
+      System.out.println("add - adds an object or a character to the map");
+      System.out.println("map - shows the map");
+      System.out.println("help - shows this message");
+      System.out.println("exit - exits the program");
       while (true) {
-        System.out.println("\033]31mHello! This is the skeleton version of the game.\033[0m\n");
-
-        System.out.println("What do you want to do?");
-        System.out.println("add - adds an object or a character to the map");
-        System.out.println("map - shows the map");
-        System.out.println("help - shows this message");
-        System.out.println("exit - exits the program");
-
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         switch (input) {
