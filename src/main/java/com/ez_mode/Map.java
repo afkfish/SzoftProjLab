@@ -96,6 +96,24 @@ public class Map implements Tickable {
       return gameMap.get(index);
   }
 
+  /**
+   * If a player character lost somehow, this method will move it to the position it is supposed to
+   * be, or to the start position.
+   *
+   * @param character the player who is lost
+   */
+  public static void playerLostHandler(Character character) {
+    Node playerTruePos =
+            gameMap.stream()
+                    .filter(node -> node.getCharacters().contains(character))
+                    .findFirst()
+                    .orElse(null);
+
+    // TODO: move to start if null
+    assert playerTruePos != null;
+    character.placeTo(playerTruePos);
+  }
+
   @Override
   public void tick() {
       gameMap.forEach(Tickable::tick);
