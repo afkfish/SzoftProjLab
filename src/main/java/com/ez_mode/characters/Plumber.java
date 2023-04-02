@@ -7,27 +7,27 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * and pupms and reroute the water to the cisterns.
  */
 public class Plumber extends Character {
-    public Plumber(String name) {
-        super(name);
-    }
+  public Plumber(String name) {
+    super(name);
+  }
 
-    @Override
-    public void SetPump() {}
+  @Override
+  public void SetPump() {}
 
-    /** Repairs the node the player is standing on. */
-    public void repair() {
-        try {
-            this.standingOn.repairNode(this);
-        } catch (InvalidPlayerActionException e) {
-            this.logger.error(e.getMessage());
-        }
+  /** Repairs the node the player is standing on. */
+  public void repair() {
+    try {
+      this.standingOn.repairNode(this);
+    } catch (InvalidPlayerActionException e) {
+      this.logger.error(e.getMessage());
     }
+  }
 
-    public void PlacePump() {
-        // Stakeholder
-    }
+  public void PlacePump() {
+    // Stakeholder
+  }
 
-    public void MovePipe() {
-        // Stakeholder
-    }
+  public void MovePipe() {
+    // Stakeholder
+  }
 }

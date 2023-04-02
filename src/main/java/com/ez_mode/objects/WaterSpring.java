@@ -9,34 +9,34 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * capacity and unlimited water.
  */
 public class WaterSpring extends Node {
-    public WaterSpring() {
-        super(Integer.MAX_VALUE, 4);
-        this.flowRate = 1;
-    }
+  public WaterSpring() {
+    super(Integer.MAX_VALUE, 4);
+    this.flowRate = 1;
+  }
 
-    @Override
-    public void addCharacter(Character character) {
-        this.characters.add(character);
-    }
+  @Override
+  public void addCharacter(Character character) {
+    this.characters.add(character);
+  }
 
-    @Override
-    public void repairNode(Character character) throws InvalidPlayerActionException {
-        throw new InvalidPlayerActionException(
-                String.format("Player <%s> tried to repair a cistern.", character.getName()));
-    }
+  @Override
+  public void repairNode(Character character) throws InvalidPlayerActionException {
+    throw new InvalidPlayerActionException(
+        String.format("Player <%s> tried to repair a cistern.", character.getName()));
+  }
 
-    @Override
-    public void breakNode(Character character) throws InvalidPlayerActionException {
-        throw new InvalidPlayerActionException(
-                String.format("Player <%s> tried to break a cistern.", character.getName()));
-    }
+  @Override
+  public void breakNode(Character character) throws InvalidPlayerActionException {
+    throw new InvalidPlayerActionException(
+        String.format("Player <%s> tried to break a cistern.", character.getName()));
+  }
 
-    @Override
-    public void tick() {
-        this.neighbours.stream()
-                .filter(node -> !node.isBroken)
-                .forEach(node -> node.addFlowRate(this, 1));
+  @Override
+  public void tick() {
+    this.neighbours.stream()
+        .filter(node -> !node.isBroken)
+        .forEach(node -> node.addFlowRate(this, 1));
 
-        this.logger.debug("Flow rate is at {}", this.flowRate);
-    }
+    this.logger.debug("Flow rate is at {}", this.flowRate);
+  }
 }
