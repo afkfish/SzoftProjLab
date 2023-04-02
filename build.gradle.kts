@@ -6,6 +6,11 @@
  */
 plugins {
     java
+    application
+}
+
+application {
+    mainClass.set("com.ez_mode.Main")
 }
 
 group = "com.ez_mode"
@@ -20,11 +25,13 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api:2.20.0")
     implementation("org.apache.logging.log4j:log4j-core:2.20.0")
 
-    // swing laf
-    implementation("com.formdev:flatlaf:3.0")
-
     // JUnit for testing
     testImplementation("junit:junit:4.13.2")
+}
+
+tasks.create("copyRuntimeLibs", Copy::class.java) {
+    into("lib")
+    from(configurations.testRuntimeClasspath)
 }
 
 tasks.withType<JavaCompile> {
