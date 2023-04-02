@@ -10,11 +10,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.Scanner;
 
 public class Main {
-    private enum Version {
-        SKELETON,
-        PROTOTYPE,
-        GRAPGHICAL
-    }
+  private enum Version {
+    SKELETON,
+    PROTOTYPE,
+    GRAPGHICAL
+  }
 
     public static Version version = Version.SKELETON;
 
@@ -115,4 +115,5 @@ public class Main {
             new Menu();
         }
     }
+  }
 }
