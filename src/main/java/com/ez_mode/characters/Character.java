@@ -78,4 +78,19 @@ public abstract class Character {
 
     // TODO: Override in children
     public abstract void SetPump();
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\t");
+        sb.append(this.uuid);
+        sb.append(" (");
+        sb.append(this.name);
+        sb.append(") ");
+        sb.append("\n");
+        sb.append("\t");
+        sb.append("Standing on: ");
+        sb.append(this.standingOn.getUuid());
+        return sb.toString();
+    }
 }

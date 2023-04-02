@@ -34,7 +34,7 @@ public class Map implements Tickable {
     public static double waterArrived = 0;
 
     public Map() {
-        this.fillMap();
+        //this.fillMap();
     }
 
     /**
@@ -75,6 +75,15 @@ public class Map implements Tickable {
         }
     }
 
+    /**
+     * This method adds a node to the map.
+     *
+     * @param node the node to be added
+     */
+    public static void addNode(Node node) {
+        gameMap.add(node);
+    }
+
     public static void addPlayer(Character player, Node node) {
         players.add(player);
         player.placeTo(node);
@@ -98,9 +107,30 @@ public class Map implements Tickable {
         character.placeTo(playerTruePos);
     }
 
+    public static int getNodeCount() {
+        return gameMap.size();
+    }
+
+    public static Node getNode(int index) {
+        return gameMap.get(index);
+    }
+
     @Override
     public void tick() {
         gameMap.forEach(Tickable::tick);
         this.logger.debug("Current water loss: {}", Map.waterLost);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Node node : gameMap) {
+            sb.append(node.toString());
+            sb.append("""
+                    \n
+                    \s
+                    """);
+        }
+        return sb.toString();
     }
 }

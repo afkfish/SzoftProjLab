@@ -5,7 +5,7 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
 public class Cistern extends Node {
-    protected Cistern() {
+    public Cistern() {
         super(Integer.MAX_VALUE, 4);
     }
 

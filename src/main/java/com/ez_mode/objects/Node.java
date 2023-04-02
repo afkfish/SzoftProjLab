@@ -142,4 +142,35 @@ public abstract class Node implements Tickable {
 
         this.neighbours.add(node);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.uuid);
+        sb.append(" (");
+        sb.append(this.getClass().getSimpleName());
+        sb.append(") \n");
+        sb.append("Characters: ");
+        sb.append(this.characters.size());
+        sb.append("/");
+        sb.append(this.maxCharacters);
+        sb.append("\n");
+        for (Character character : this.characters) {
+            sb.append(character.toString());
+        }
+        sb.append("\nNeighbours: ");
+        sb.append(this.neighbours.size());
+        sb.append("/");
+        sb.append(this.maxConnections);
+        sb.append("\nSources: ");
+        sb.append(this.sources.size());
+        sb.append("\nAbsorbers: ");
+        sb.append(this.absorbers.size());
+        sb.append("\nFlow Rate: ");
+        sb.append(this.flowRate);
+        sb.append("\nBroken: ");
+        sb.append(this.isBroken);
+
+        return sb.toString();
+    }
 }
