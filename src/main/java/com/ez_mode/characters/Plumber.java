@@ -11,12 +11,13 @@ public class Plumber extends Character {
   public Plumber(String name) {
     super(name);
   }
+
   private Pump pickedup;
   private Pipe draggedpipe;
 
   @Override
   public void SetPump() {
-    System.out.println(this.getUuid()+" has set "+standingOn.getUuid());
+    System.out.println(this.getUuid() + " has set " + standingOn.getUuid());
   }
 
   /** Repairs the node the player is standing on. */
@@ -30,12 +31,11 @@ public class Plumber extends Character {
 
   public void PlacePump() {
     // Stakeholder
-if(this.pickedup!=null){
-  System.out.println(pickedup.getUuid()+" has been placed ");
-}
-else{
-  System.out.println(this.getUuid()+" doesn't have a pump to place");
-}
+    if (this.pickedup != null) {
+      System.out.println(pickedup.getUuid() + " has been placed ");
+    } else {
+      System.out.println(this.getUuid() + " doesn't have a pump to place");
+    }
   }
 
   public void MovePipe() {
@@ -44,32 +44,29 @@ else{
   }
 
   public void PickupPump() {
-    try{
-      Pump temp=((Cistern)standingOn).GivePump();
-      if(( temp!=null)){
-        System.out.println(temp.getUuid()+" has been picked up by "+this.getUuid());
+    try {
+      Pump temp = ((Cistern) standingOn).GivePump();
+      if ((temp != null)) {
+        System.out.println(temp.getUuid() + " has been picked up by " + this.getUuid());
       }
-    }catch(IncompatibleClassChangeError e){
-        System.out.println(this.getUuid()+ " is not standing on a Cistern");
+    } catch (IncompatibleClassChangeError e) {
+      System.out.println(this.getUuid() + " is not standing on a Cistern");
     }
   }
 
   public void PickupPipe() {
-    try
-    {
-      for(Node nodi : standingOn.getNeighbours())
-      {
-        if (nodi.getNeighbours().size()>2)
-        {
-          draggedpipe= (Pipe)nodi;
+    try {
+      for (Node nodi : standingOn.getNeighbours()) {
+        if (nodi.getNeighbours().size() > 2) {
+          draggedpipe = (Pipe) nodi;
           break;
         }
-    }
-      if(( draggedpipe!=null)){
-        System.out.println(draggedpipe+" has been picked up by "+this.getUuid());
       }
-    }catch(IncompatibleClassChangeError e){
-      System.out.println(this.getUuid()+ " is not standing on a Cistern");
+      if ((draggedpipe != null)) {
+        System.out.println(draggedpipe + " has been picked up by " + this.getUuid());
+      }
+    } catch (IncompatibleClassChangeError e) {
+      System.out.println(this.getUuid() + " is not standing on a Cistern");
     }
   }
 }

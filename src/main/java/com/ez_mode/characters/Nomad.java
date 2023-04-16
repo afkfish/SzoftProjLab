@@ -13,7 +13,7 @@ public class Nomad extends Character {
 
   @Override
   public void SetPump() {
-    System.out.println(this.getUuid()+" has set "+standingOn.getUuid());
+    System.out.println(this.getUuid() + " has set " + standingOn.getUuid());
   }
 
   /** Breaks the node the player is standing on. */

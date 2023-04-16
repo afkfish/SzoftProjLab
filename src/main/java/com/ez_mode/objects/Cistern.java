@@ -36,12 +36,14 @@ public class Cistern extends Node {
       Map.waterArrived += nodi.flowRate;
     }
   }
-  public Pump GivePump(){
-    if (producedPumps.size()>=1){
-      return producedPumps.remove(producedPumps.size()-1);
+
+  public Pump GivePump() {
+    if (producedPumps.size() >= 1) {
+      return producedPumps.remove(producedPumps.size() - 1);
     }
     return null;
   }
+
   public Pipe MakePipe() {
     // Stakeholder
     Pipe temp = new Pipe();
