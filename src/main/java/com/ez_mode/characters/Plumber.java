@@ -30,8 +30,8 @@ public class Plumber extends Character {
   public void MovePipe() {
     // Stakeholder
   }
-  public void PickupPump(){
 
-  }
-  public void PickupPipe(){}
+  public void PickupPump() {}
+
+  public void PickupPipe() {}
 }

@@ -4,12 +4,12 @@ import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.ObjectFullException;
-
 import java.util.ArrayList;
 
 public class Cistern extends Node {
-  ArrayList<Pump> producedPumps=new ArrayList<>();
-  public  Cistern() {
+  ArrayList<Pump> producedPumps = new ArrayList<>();
+
+  public Cistern() {
     super(Integer.MAX_VALUE, 4);
   }
 
@@ -39,7 +39,7 @@ public class Cistern extends Node {
 
   public Pipe MakePipe() {
     // Stakeholder
-    Pipe temp=new Pipe();
+    Pipe temp = new Pipe();
     try {
       temp.connect(this);
     } catch (ObjectFullException e) {
@@ -47,9 +47,10 @@ public class Cistern extends Node {
     }
     return temp;
   }
+
   public void MakePump() {
     // Stakeholder
-    Pump temp=new Pump();
+    Pump temp = new Pump();
     producedPumps.add(temp);
   }
 }
