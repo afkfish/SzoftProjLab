@@ -5495,7 +5495,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="/i62yfaDLU2N9bHGIRJ14gAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">2 : BreakNode(pipe): void</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">2 : BreakNode(): void</XPD:ATTR>
 <XPD:REF name="Model">HeuIPiwyXUmQTQvJfpFX4AAA</XPD:REF>
 <XPD:REF name="HostEdge">oupqD9ciIEiiZ6q8+aOdXQAA</XPD:REF>
 </XPD:OBJ>
@@ -5685,7 +5685,6 @@
 <XPD:REF name="Views[3]">H3pcP8zTFEGFDyiJ8VKmBQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="ParticipatingStimuli[1]" type="UMLStimulus" guid="HeuIPiwyXUmQTQvJfpFX4AAA">
-<XPD:ATTR name="Arguments" type="string">pipe</XPD:ATTR>
 <XPD:REF name="Sender">btM99eaMzUm6nYxIHUPccwAA</XPD:REF>
 <XPD:REF name="Receiver">ZIiKR0D06EuiqvUkQhalowAA</XPD:REF>
 <XPD:OBJ name="Action" type="UMLCallAction" guid="b2zzapWIBke6JxLMrCE/CAAA">
@@ -13854,7 +13853,7 @@
 <XPD:OBJ name="OwnedViews[13]" type="UMLClassView" guid="pt7ppnuV/k2Ppz86TehbQAAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">728</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">708</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">52</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">289</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">229</XPD:ATTR>

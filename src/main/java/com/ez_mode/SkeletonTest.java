@@ -15,7 +15,7 @@ public class SkeletonTest {
       pump.connect(absorber);
       pump.connect(source);
     } catch (ObjectFullException oe) {
-      System.out.println("A Node teli van");
+      System.out.println(oe.getMessage());
     }
     character.placeTo(pump);
     character.SetPump();
@@ -26,7 +26,7 @@ public class SkeletonTest {
     Pipe pipe = new Pipe();
     Pump pump = new Pump();
     try {
-      pipe.connect(pump);
+      pump.connect(pipe);
     } catch (ObjectFullException oe) {
       System.out.println(oe.getMessage());
     }
@@ -43,7 +43,7 @@ public class SkeletonTest {
     Pipe pipe = new Pipe();
     Pump pump = new Pump();
     try {
-      pipe.connect(pump);
+      pump.connect(pipe);
     } catch (ObjectFullException oe) {
       System.out.println(oe.getMessage());
     }
@@ -170,11 +170,11 @@ public class SkeletonTest {
       System.out.println(ofe.getMessage());
     }
     p1.placeTo(Pipe1);
-    try {
+   /* try {
       p1.moveTo(c1);
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
       System.out.println(ipme.getMessage());
-    }
+    }*/
     p1.PlacePump();
   }
 
