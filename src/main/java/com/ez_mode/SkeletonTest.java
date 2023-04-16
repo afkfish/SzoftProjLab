@@ -170,7 +170,7 @@ public class SkeletonTest {
       System.out.println(ofe.getMessage());
     }
     p1.placeTo(Pipe1);
-   /* try {
+    /* try {
       p1.moveTo(c1);
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
       System.out.println(ipme.getMessage());
