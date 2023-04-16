@@ -21,10 +21,10 @@ public class Main {
     if (version == Version.SKELETON) {
       Map map = new Map();
       SkeletonTest skeletonTest = new SkeletonTest();
-      System.out.println("Hello! This is the skeleton version of the game.\n");
+      System.out.println("Hello! This is the skeleton version of the game.");
 
       while (true) {
-        System.out.println("What do you want to do?");
+        System.out.println("\nWhat do you want to do?");
         System.out.println("character - shows the character tests");
         System.out.println("map - shows the map in text form");
         System.out.println("help - shows this message");
@@ -36,7 +36,7 @@ public class Main {
           case "character":
             {
               System.out.println("What do you want to do?");
-              System.out.println("- place\n- pickup\n- move\n- break\n- repair\n- set");
+              System.out.println("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
               switch (scanner.nextLine()) {
                 case "place":
                   {

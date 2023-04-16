@@ -52,7 +52,7 @@ public class SkeletonTest {
     Pump pump = new Pump();
     System.out.println("SkeletonTest:PlumberMovesToPipeTest param: -");
     try {
-      pump.connect(pipe);
+      pipe.connect(pump);
       System.out.println("\tpump:connect param: pipe");
     } catch (ObjectFullException oe) {
       System.out.println(oe.getMessage());
@@ -107,7 +107,7 @@ public class SkeletonTest {
     Node node2 = new Pipe();
     System.out.println("SkeletonTest:CharacterMovesTest param: -");
     try {
-      node1.connect(node2);
+      node2.connect(node1);
       System.out.println("\tnode:connect param: node");
     } catch (ObjectFullException oe) {
       System.out.println(oe.getMessage());
@@ -118,7 +118,6 @@ public class SkeletonTest {
       character.moveTo(node2);
       System.out.println("\tcharacter:moveTo param: node");
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
-
       System.out.println(ipme.getMessage());
     }
   }
@@ -217,6 +216,7 @@ public class SkeletonTest {
     Pipe Pipe1 = new Pipe();
     try {
       Pipe1.connect(c1);
+      System.out.println("\tpipe:connect param: cistern");
     } catch (ObjectFullException ofe) {
       System.out.println(ofe.getMessage());
     }
@@ -237,7 +237,7 @@ public class SkeletonTest {
     Plumber p1 = new Plumber("Plumber1");
     System.out.println("SkeletonTest:PlumberMovesToCistern param: -");
     try {
-      Pipe1.connect(c1);
+      c1.connect(Pipe1);
       System.out.println("\tpipe:connect param: cistern");
     } catch (ObjectFullException ofe) {
       System.out.println(ofe.getMessage());
