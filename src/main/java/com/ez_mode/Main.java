@@ -83,8 +83,14 @@ public class Main {
             break;
           }
           case "edit": {
+            System.out.println("What do you want to do?");
+            System.out.println("- remove\n- connect");
             switch (scanner.nextLine()) {
-              case "remove", "connect": {
+              case "remove": {
+                // TODO: implement
+                break;
+              }
+              case "connect": {
                 // TODO: implement
                 break;
               }
@@ -93,11 +99,26 @@ public class Main {
                 break;
               }
             }
+            break;
           }
           case "character": {
+            System.out.println("What do you want to do?");
+            System.out.println("- place\n- move\n- break\n- repair\n- set");
             switch (scanner.nextLine()) {
-              case "place", "move", "break", "repair", "set": {
+              case "place": {
                 // TODO: list the characters then the nodes and let the user choose
+                break;
+              }
+              case "move": {
+                break;
+              }
+              case "break": {
+                break;
+              }
+              case "repair": {
+                break;
+              }
+              case "set": {
                 break;
               }
               default: {
@@ -105,6 +126,7 @@ public class Main {
                 break;
               }
             }
+            break;
           }
           case "map": {
             System.out.println(map);
