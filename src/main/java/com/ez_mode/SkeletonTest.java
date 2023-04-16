@@ -21,9 +21,7 @@ public class SkeletonTest {
       System.out.println(oe.getMessage());
     }
     character.placeTo(pump);
-    System.out.println("\tcharacter:placeTo param: pump");
     character.SetPump();
-    System.out.println("\tcharacter:SetPump param: -");
   }
 
   public void PlumberMovesToPumpTest() {
@@ -63,7 +61,6 @@ public class SkeletonTest {
       plumber.moveTo(pipe);
       System.out.println("\tplumber:moveTo param: pipe");
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
-
       System.out.println(ipme.getMessage());
     }
   }
@@ -76,7 +73,7 @@ public class SkeletonTest {
     System.out.println("\tnomad:placeTo param: pipe");
     nomad.breakNode();
     System.out.println("\tnomad:breakNode param: -");
-    System.out.println(nomad.getUuid() + " has broken " + pipe.getUuid());
+    System.out.println("\t" + nomad.getUuid() + " has broken " + pipe.getUuid());
   }
 
   public void NomadMovesToPipeTest() {
@@ -96,7 +93,6 @@ public class SkeletonTest {
       nomad.moveTo(pipe);
       System.out.println("\tnomad:moveTo param: pipe");
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
-
       System.out.println(ipme.getMessage());
     }
   }
@@ -139,7 +135,6 @@ public class SkeletonTest {
       character.moveTo(pump);
       System.out.println("\tcharacter:moveTo param: pump");
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
-
       System.out.println(ipme.getMessage());
     }
   }
@@ -174,7 +169,7 @@ public class SkeletonTest {
     System.out.println("\tplumber:placeTo param: pump");
     p1.repair();
     System.out.println("\tplumber:repair param: -");
-    System.out.println(p1.getUuid() + " has repaired " + pumpa.getUuid());
+    System.out.println("\t" + p1.getUuid() + " has repaired " + pumpa.getUuid());
   }
 
   public void PlumberPicksUpPipe() {
@@ -187,7 +182,7 @@ public class SkeletonTest {
     System.out.println("\tcistern:MakePipe param: -");
     p1.PickupPipe();
     System.out.println("\tplumber:PickupPipe param: -");
-    System.out.println(p1.getUuid() + " has picked up a new pipe.");
+    System.out.println("\t" + p1.getUuid() + " has picked up a new pipe.");
   }
 
   public void PlumberPicksUpPump() {
@@ -200,7 +195,7 @@ public class SkeletonTest {
     System.out.println("\tcistern:MakePump param: -");
     p1.PickupPump();
     System.out.println("\tplumber:PickupPump param: -");
-    System.out.println(p1.getUuid() + " has picked up a new pump.");
+    System.out.println("\t" + p1.getUuid() + " has picked up a new pump.");
   }
 
   public void PlumberDeploysPump() {
@@ -248,7 +243,6 @@ public class SkeletonTest {
       p1.moveTo(c1);
       System.out.println("\tplumber:moveTo param: cistern");
     } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
-
       System.out.println(ipme.getMessage());
     }
   }

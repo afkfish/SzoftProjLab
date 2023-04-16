@@ -46,6 +46,7 @@ public class Cistern extends Node {
 
   public Pipe MakePipe() {
     // Stakeholder
+    System.out.println("\t" + this.uuid + " made a pipe");
     Pipe temp = new Pipe();
     try {
       temp.connect(this);
@@ -57,6 +58,7 @@ public class Cistern extends Node {
 
   public void MakePump() {
     // Stakeholder
+    System.out.println("\t" + this.uuid + " made a pump");
     Pump temp = new Pump();
     producedPumps.add(temp);
   }

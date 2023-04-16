@@ -17,13 +17,14 @@ public class Plumber extends Character {
 
   @Override
   public void SetPump() {
-    System.out.println(this.getUuid() + " has set " + standingOn.getUuid());
+    System.out.println("\t" + this.getUuid() + " has set " + standingOn.getUuid());
   }
 
   /** Repairs the node the player is standing on. */
   public void repair() {
     try {
       this.standingOn.repairNode(this);
+      System.out.println("\t" + this.getUuid() + " has repaired " + standingOn.getUuid());
     } catch (InvalidPlayerActionException e) {
       this.logger.error(e.getMessage());
     }
@@ -32,7 +33,7 @@ public class Plumber extends Character {
   public void PlacePump() {
     // Stakeholder
     if (this.pickedup != null) {
-      System.out.println(pickedup.getUuid() + " has been placed ");
+      System.out.println("\t" + pickedup.getUuid() + " has been placed ");
     } else {
       System.out.println(this.getUuid() + " doesn't have a pump to place");
     }
@@ -47,7 +48,8 @@ public class Plumber extends Character {
     try {
       Pump temp = ((Cistern) standingOn).GivePump();
       if ((temp != null)) {
-        System.out.println(temp.getUuid() + " has been picked up by " + this.getUuid());
+        pickedup = temp;
+        System.out.println("\t" + temp.getUuid() + " has been picked up by " + this.getUuid());
       }
     } catch (IncompatibleClassChangeError e) {
       System.out.println(this.getUuid() + " is not standing on a Cistern");
@@ -63,7 +65,7 @@ public class Plumber extends Character {
         }
       }
       if ((draggedpipe != null)) {
-        System.out.println(draggedpipe + " has been picked up by " + this.getUuid());
+        System.out.println("\t" + draggedpipe + " has been picked up by " + this.getUuid());
       }
     } catch (IncompatibleClassChangeError e) {
       System.out.println(this.getUuid() + " is not standing on a Cistern");

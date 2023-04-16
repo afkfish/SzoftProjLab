@@ -18,7 +18,7 @@ public abstract class Node implements Tickable {
    */
   protected final Logger logger;
   /** The unique identifier for this object. */
-  private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 1000000);
+  protected final String uuid;
   /** The characters currently on this object. */
   protected final ArrayList<Character> characters = new ArrayList<>();
 
@@ -37,6 +37,7 @@ public abstract class Node implements Tickable {
   protected double flowRate = 0;
 
   protected Node(int maxCharacters, int maxConnections) {
+    this.uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
     this.logger = LogManager.getLogger(this.getClass());
     this.maxCharacters = maxCharacters;
     this.maxConnections = maxConnections;
@@ -65,6 +66,7 @@ public abstract class Node implements Tickable {
     for (Node neighbour : neighbours) {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
+        System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
     }
@@ -81,6 +83,7 @@ public abstract class Node implements Tickable {
               "Player <%s> tried to remove a character from an object they are not" + " on.",
               character.getName()));
     characters.remove(character);
+    System.out.println("\t" + character.getUuid() + " removed from " + this.uuid);
   }
 
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
@@ -136,6 +139,7 @@ public abstract class Node implements Tickable {
   }
 
   public void connect(Node node) throws ObjectFullException {
+    System.out.println("\t" + this.uuid + ":connect param: " + node.uuid);
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
     this.neighbours.add(node);

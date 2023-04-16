@@ -21,7 +21,7 @@ public abstract class Character {
   /*
    * The uuid of the character.
    */
-  private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 1000000);
+  private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
 
   /** The name of the player. */
   private final String name;
@@ -57,6 +57,7 @@ public abstract class Character {
       standingOn.removeCharacter(this);
       this.logger.debug("Moved {} to {} from {}", this.uuid, node.getUuid(), standingOn.getUuid());
       this.standingOn = node;
+      System.out.println("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
       this.logger.error(e.getMessage());
       Map.playerLostHandler(this);
@@ -70,12 +71,15 @@ public abstract class Character {
    * @param node The destination Node.
    */
   public void placeTo(Node node) {
+    System.out.println("\tPlaced " + this.uuid + " on " + node.getUuid());
     this.standingOn = node;
     node.placeCharacter(this);
   }
 
   // TODO: Override in children
-  public abstract void SetPump();
+  public void SetPump() {
+    System.out.println("\t" + this.uuid + " is setting the pump.");
+  }
 
   @Override
   public String toString() {
