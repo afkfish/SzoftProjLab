@@ -7,7 +7,7 @@ import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
 
 public class Cistern extends Node {
-  ArrayList<Pump> producedPumps = new ArrayList<>();
+  private ArrayList<Pump> producedPumps = new ArrayList<>();
 
   public Cistern() {
     super(Integer.MAX_VALUE, 4);
@@ -36,7 +36,12 @@ public class Cistern extends Node {
       Map.waterArrived += nodi.flowRate;
     }
   }
-
+  public Pump GivePump(){
+    if (producedPumps.size()>=1){
+      return producedPumps.remove(producedPumps.size()-1);
+    }
+    return null;
+  }
   public Pipe MakePipe() {
     // Stakeholder
     Pipe temp = new Pipe();
