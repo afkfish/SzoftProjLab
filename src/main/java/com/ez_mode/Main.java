@@ -1,6 +1,6 @@
 package com.ez_mode;
 
-import com.ez_mode.gui.Menu;
+// import com.ez_mode.gui.Menu;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -109,7 +109,7 @@ public class Main {
         }
       }
     } else if (version == Version.GRAPGHICAL) {
-      new Menu();
+      // new Menu();
     }
   }
 }
