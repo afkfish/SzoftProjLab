@@ -33,11 +33,8 @@ public class SkeletonTest {
     plumber.placeTo(pipe);
     try {
       plumber.moveTo(pump);
-    } catch (InvalidPlayerMovementException ipme) {
-
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
   }
 
@@ -53,11 +50,9 @@ public class SkeletonTest {
     plumber.placeTo(pump);
     try {
       plumber.moveTo(pipe);
-    } catch (InvalidPlayerMovementException ipme) {
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
 
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
   }
 
@@ -80,11 +75,9 @@ public class SkeletonTest {
     nomad.placeTo(pump);
     try {
       nomad.moveTo(pipe);
-    } catch (InvalidPlayerMovementException ipme) {
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
 
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
   }
 
@@ -100,11 +93,9 @@ public class SkeletonTest {
     character.placeTo(node1);
     try {
       character.moveTo(node2);
-    } catch (InvalidPlayerMovementException ipme) {
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
 
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
   }
 
@@ -120,11 +111,9 @@ public class SkeletonTest {
     character.placeTo(pipe);
     try {
       character.moveTo(pump);
-    } catch (InvalidPlayerMovementException ipme) {
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
 
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
   }
 
@@ -182,14 +171,10 @@ public class SkeletonTest {
     }
     p1.placeTo(Pipe1);
     try {
-      p1.moveTo((Node) c1);
-    } catch (InvalidPlayerMovementException ipme) {
-
+      p1.moveTo(c1);
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
-    ;
     p1.PlacePump();
   }
 
@@ -204,12 +189,10 @@ public class SkeletonTest {
     }
     p1.placeTo(Pipe1);
     try {
-      p1.moveTo((Node) c1);
-    } catch (InvalidPlayerMovementException ipme) {
+      p1.moveTo(c1);
+    } catch (InvalidPlayerMovementException | ObjectFullException ipme) {
 
       System.out.println(ipme.getMessage());
-    } catch (ObjectFullException ofe) {
-      System.out.println(ofe.getMessage());
     }
   }
 }
