@@ -176,7 +176,6 @@ public class SkeletonTest {
     p1.repair();
     System.out.println("\tplumber:repair param: -");
     System.out.println(p1.getUuid() + " has repaired " + pumpa.getUuid());
-
   }
 
   public void PlumberPicksUpPipe() {
