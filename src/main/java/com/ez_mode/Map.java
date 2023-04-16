@@ -125,10 +125,7 @@ public class Map implements Tickable {
       StringBuilder sb = new StringBuilder();
       for (Node node : gameMap) {
           sb.append(node.toString());
-          sb.append("""
-                  \n
-                  \s
-                  """);
+          sb.append("\n ");
       }
       return sb.toString();
   }

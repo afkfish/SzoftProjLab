@@ -35,79 +35,97 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         switch (input) {
-          case "add" -> {
+          case "add": {
             System.out.println("What do you want to add?");
-            System.out.println("""
-                                - plumber
-                                - nomad
-                                - pipe
-                                - pump
-                                - cistern
-                                - water source
-                                """
-            );
+            System.out.println("- plumber\n- nomad\n- pipe\n- pump\n- cistern\n- water source");
             switch (scanner.nextLine()) {
-              case "plumber" -> {
+              case "plumber": {
                 if (Map.getNodeCount() == 0) {
                   Map.addNode(new Cistern());
                 }
                 Map.addPlayer(new Plumber("Plumber"), Map.getNode(0));
                 logger.info("Added character");
+                break;
               }
-              case "nomad" -> {
+              case "nomad": {
                 if (Map.getNodeCount() == 0) {
                   Map.addNode(new Cistern());
                 }
                 Map.addPlayer(new Nomad("Nomad"), Map.getNode(0));
                 logger.info("Added character");
+                break;
               }
-              case "pipe" -> {
+              case "pipe": {
                 Map.addNode(new Pipe());
                 logger.info("Added pipe");
+                break;
               }
-              case "pump" -> {
+              case "pump": {
                 Map.addNode(new Pump());
                 logger.info("Added pump");
+                break;
               }
-              case "cistern" -> {
+              case "cistern": {
                 Map.addNode(new Cistern());
                 logger.info("Added cistern");
+                break;
               }
-              case "water source" -> {
+              case "water source": {
                 Map.addNode(new WaterSpring());
                 logger.info("Added water source");
+                break;
               }
-              default -> System.out.println("Unknown command");
+              default: {
+                System.out.println("Unknown command");
+                break;
+              }
             }
+            break;
           }
-          case "edit" -> {
+          case "edit": {
             switch (scanner.nextLine()) {
-              case "remove", "connect" -> {
+              case "remove", "connect": {
                 // TODO: implement
+                break;
               }
-              default -> System.out.println("Unknown command");
+              default: {
+                System.out.println("Unknown command");
+                break;
+              }
             }
           }
-          case "character" -> {
+          case "character": {
             switch (scanner.nextLine()) {
-              case "place", "move", "break", "repair", "set" -> {
+              case "place", "move", "break", "repair", "set": {
                 // TODO: list the characters then the nodes and let the user choose
+                break;
               }
-              default -> System.out.println("Unknown command");
+              default: {
+                System.out.println("Unknown command");
+                break;
+              }
             }
           }
-          case "map" -> System.out.println(map);
-          case "help" -> {
+          case "map": {
+            System.out.println(map);
+            break;
+          }
+          case "help": {
             System.out.println("add - adds an object or a character to the map");
             System.out.println("map - shows the map");
             System.out.println("help - shows this message");
             System.out.println("exit - exits the program");
+            break;
           }
-          case "exit" -> {
+          case "exit": {
             logger.info("Exiting");
             System.exit(0);
+            break;
           }
-          default -> System.out.println("Unknown command");
+          default: {
+            System.out.println("Unknown command");
+            break;
+          }
         }
       }
     } else if (version == Version.GRAPGHICAL) {
