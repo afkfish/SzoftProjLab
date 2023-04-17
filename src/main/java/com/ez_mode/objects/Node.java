@@ -18,7 +18,7 @@ public abstract class Node implements Tickable {
    */
   protected final Logger logger;
   /** The unique identifier for this object. */
-  private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 1000000);
+  protected final String uuid;
   /** The characters currently on this object. */
   protected final ArrayList<Character> characters = new ArrayList<>();
 
@@ -37,6 +37,7 @@ public abstract class Node implements Tickable {
   protected double flowRate = 0;
 
   protected Node(int maxCharacters, int maxConnections) {
+    this.uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
     this.logger = LogManager.getLogger(this.getClass());
     this.maxCharacters = maxCharacters;
     this.maxConnections = maxConnections;
@@ -65,6 +66,7 @@ public abstract class Node implements Tickable {
     for (Node neighbour : neighbours) {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
+        System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
     }
@@ -81,6 +83,7 @@ public abstract class Node implements Tickable {
               "Player <%s> tried to remove a character from an object they are not" + " on.",
               character.getName()));
     characters.remove(character);
+    System.out.println("\t" + character.getUuid() + " removed from " + this.uuid);
   }
 
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
@@ -117,6 +120,10 @@ public abstract class Node implements Tickable {
     this.logger.debug("Flow rate is at {}", this.flowRate);
   }
 
+  public ArrayList<Node> getNeighbours() {
+    return neighbours;
+  }
+
   protected void calculateFlowRate() {
     // If the pipe is broken or any of its connectors are not connected, then it loses water
     if (this.isBroken) {
@@ -132,39 +139,40 @@ public abstract class Node implements Tickable {
   }
 
   public void connect(Node node) throws ObjectFullException {
+    System.out.println("\t" + this.uuid + ":connect param: " + node.uuid);
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
-        this.neighbours.add(node);
-    }
+    this.neighbours.add(node);
+  }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.uuid);
-        sb.append(" (");
-        sb.append(this.getClass().getSimpleName());
-        sb.append(") \n");
-        sb.append("Characters: ");
-        sb.append(this.characters.size());
-        sb.append("/");
-        sb.append(this.maxCharacters);
-        sb.append("\n");
-        for (Character character : this.characters) {
-            sb.append(character.toString());
-        }
-        sb.append("\nNeighbours: ");
-        sb.append(this.neighbours.size());
-        sb.append("/");
-        sb.append(this.maxConnections);
-        sb.append("\nSources: ");
-        sb.append(this.sources.size());
-        sb.append("\nAbsorbers: ");
-        sb.append(this.absorbers.size());
-        sb.append("\nFlow Rate: ");
-        sb.append(this.flowRate);
-        sb.append("\nBroken: ");
-        sb.append(this.isBroken);
-
-        return sb.toString();
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(this.uuid);
+    sb.append(" (");
+    sb.append(this.getClass().getSimpleName());
+    sb.append(") \n");
+    sb.append("Characters: ");
+    sb.append(this.characters.size());
+    sb.append("/");
+    sb.append(this.maxCharacters);
+    sb.append("\n");
+    for (Character character : this.characters) {
+      sb.append(character.toString());
     }
+    sb.append("\nNeighbours: ");
+    sb.append(this.neighbours.size());
+    sb.append("/");
+    sb.append(this.maxConnections);
+    sb.append("\nSources: ");
+    sb.append(this.sources.size());
+    sb.append("\nAbsorbers: ");
+    sb.append(this.absorbers.size());
+    sb.append("\nFlow Rate: ");
+    sb.append(this.flowRate);
+    sb.append("\nBroken: ");
+    sb.append(this.isBroken);
+
+    return sb.toString();
+  }
 }

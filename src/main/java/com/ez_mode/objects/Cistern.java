@@ -3,9 +3,13 @@ package com.ez_mode.objects;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+import com.ez_mode.exceptions.ObjectFullException;
+import java.util.ArrayList;
 
 public class Cistern extends Node {
-  public  Cistern() {
+  private ArrayList<Pump> producedPumps = new ArrayList<>();
+
+  public Cistern() {
     super(Integer.MAX_VALUE, 4);
   }
 
@@ -33,8 +37,29 @@ public class Cistern extends Node {
     }
   }
 
+  public Pump GivePump() {
+    if (producedPumps.size() >= 1) {
+      return producedPumps.remove(producedPumps.size() - 1);
+    }
+    return null;
+  }
+
   public Pipe MakePipe() {
     // Stakeholder
-    return (new Pipe());
+    System.out.println("\t" + this.uuid + " made a pipe");
+    Pipe temp = new Pipe();
+    try {
+      temp.connect(this);
+    } catch (ObjectFullException e) {
+      throw new RuntimeException(e);
+    }
+    return temp;
+  }
+
+  public void MakePump() {
+    // Stakeholder
+    System.out.println("\t" + this.uuid + " made a pump");
+    Pump temp = new Pump();
+    producedPumps.add(temp);
   }
 }

@@ -1,0 +1,4 @@
+forditas:
+mkdir .\out; cp .\lib\*.jar .\out; javac -d .\out\ .\src\main\java\com\ez_mode\Main.java .\src\main\java\com\ez_mode\*.java .\src\main\java\com\ez_mode\characters\* .\src\main\java\com\ez_mode\exceptions\* .\src\main\java\com\ez_mode\gui\* .\src\main\java\com\ez_mode\gui\* .\src\main\java\com\ez_mode\objects\* -cp .\lib\log4j-api-2.20.0.jar;.\lib\log4j-core-2.20.0.jar
+futtatas:
+cd ./out; java -cp ";%CLASSPATH%;.\log4j-api-2.20.0.jar;.\log4j-core-2.20.0.jar" com.ez_mode.Main

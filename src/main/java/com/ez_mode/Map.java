@@ -33,7 +33,7 @@ public class Map implements Tickable {
   public static double waterArrived = 0;
 
   public Map() {
-      //this.fillMap();
+    // this.fillMap();
   }
 
   /**
@@ -41,37 +41,37 @@ public class Map implements Tickable {
    * positions.
    */
   private void fillMap() {
-      // TODO: implement a way to fill the map
-      WaterSpring waterSpring1 = new WaterSpring();
-      gameMap.add(waterSpring1);
+    // TODO: implement a way to fill the map
+    WaterSpring waterSpring1 = new WaterSpring();
+    gameMap.add(waterSpring1);
 
-      WaterSpring waterSpring2 = new WaterSpring();
-      gameMap.add(waterSpring2);
+    WaterSpring waterSpring2 = new WaterSpring();
+    gameMap.add(waterSpring2);
 
-      Pipe pipe = new Pipe();
-      gameMap.add(pipe);
+    Pipe pipe = new Pipe();
+    gameMap.add(pipe);
 
-      Plumber plumber = new Plumber("Plummer");
-      players.add(plumber);
+    Plumber plumber = new Plumber("Plummer");
+    players.add(plumber);
 
-      try {
-          pipe.connect(waterSpring1);
-          pipe.connect(waterSpring2);
-      } catch (ObjectFullException e) {
-          this.logger.error("The pipe is full, but it shouldn't be.");
-      }
-      for (int i = 0; i < 4; i++) {
-          this.tick();
-      }
+    try {
+      pipe.connect(waterSpring1);
+      pipe.connect(waterSpring2);
+    } catch (ObjectFullException e) {
+      this.logger.error("The pipe is full, but it shouldn't be.");
+    }
+    for (int i = 0; i < 4; i++) {
+      this.tick();
+    }
 
-      plumber.placeTo(waterSpring1);
+    plumber.placeTo(waterSpring1);
 
-      try {
-          plumber.moveTo(pipe);
-          plumber.moveTo(waterSpring2);
-      } catch (Exception e) {
-          throw new RuntimeException(e);
-      }
+    try {
+      plumber.moveTo(pipe);
+      plumber.moveTo(waterSpring2);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -80,20 +80,20 @@ public class Map implements Tickable {
    * @param node the node to be added
    */
   public static void addNode(Node node) {
-      gameMap.add(node);
+    gameMap.add(node);
   }
 
   public static void addPlayer(Character player, Node node) {
-      players.add(player);
-      player.placeTo(node);
+    players.add(player);
+    player.placeTo(node);
   }
 
   public static int getNodeCount() {
-      return gameMap.size();
+    return gameMap.size();
   }
 
   public static Node getNode(int index) {
-      return gameMap.get(index);
+    return gameMap.get(index);
   }
 
   /**
@@ -104,10 +104,10 @@ public class Map implements Tickable {
    */
   public static void playerLostHandler(Character character) {
     Node playerTruePos =
-            gameMap.stream()
-                    .filter(node -> node.getCharacters().contains(character))
-                    .findFirst()
-                    .orElse(null);
+        gameMap.stream()
+            .filter(node -> node.getCharacters().contains(character))
+            .findFirst()
+            .orElse(null);
 
     // TODO: move to start if null
     assert playerTruePos != null;
@@ -116,20 +116,17 @@ public class Map implements Tickable {
 
   @Override
   public void tick() {
-      gameMap.forEach(Tickable::tick);
-      this.logger.debug("Current water loss: {}", Map.waterLost);
+    gameMap.forEach(Tickable::tick);
+    this.logger.debug("Current water loss: {}", Map.waterLost);
   }
 
   @Override
   public String toString() {
-      StringBuilder sb = new StringBuilder();
-      for (Node node : gameMap) {
-          sb.append(node.toString());
-          sb.append("""
-                  \n
-                  \s
-                  """);
-      }
-      return sb.toString();
+    StringBuilder sb = new StringBuilder();
+    for (Node node : gameMap) {
+      sb.append(node.toString());
+      sb.append("\n ");
+    }
+    return sb.toString();
   }
 }
