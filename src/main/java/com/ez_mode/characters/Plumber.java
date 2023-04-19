@@ -39,9 +39,9 @@ public class Plumber extends Character {
     }
   }
 
-  public void MovePipe() {
-    // Stakeholder
-
+  public void PlacePipe() {
+    /// Placeholder
+    /// TODO
   }
 
   public void PickupPump() {
