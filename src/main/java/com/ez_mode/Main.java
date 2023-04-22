@@ -129,6 +129,8 @@ public class Main {
         System.out.println("save - saves the map to a file");
         System.out.println("character - shows the character actions");
         System.out.println("node - shows the node actions");
+        System.out.println("add - create new nodes or characters");
+        System.out.println("map - shows the map in text form");
         System.out.println("exit - exits the program");
 
         switch (scanner.nextLine()) {
@@ -365,6 +367,16 @@ public class Main {
           case "node":
             {
               // TODO: node actions
+              break;
+            }
+          case "add":
+            {
+              // TODO: character creation or node creation
+              break;
+            }
+          case "map":
+            {
+              // TODO: map actions
               break;
             }
           case "exit":
