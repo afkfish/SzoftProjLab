@@ -244,8 +244,8 @@ public class Map implements Tickable {
 
   public static int getNodeCount() {
     int count = 0;
-    for (Node[] columns: gameMap) {
-      for (Node node: columns) {
+    for (Node[] columns : gameMap) {
+      for (Node node : columns) {
         if (node != null) {
           count++;
         }

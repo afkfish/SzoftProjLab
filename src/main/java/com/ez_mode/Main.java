@@ -2,15 +2,14 @@ package com.ez_mode;
 
 // import com.ez_mode.gui.Menu;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -166,18 +165,21 @@ public class Main {
                   int type = scanner.nextInt();
                   scanner.nextLine();
                   switch (type) {
-                    case 1: {
-                      temp = new Plumber(name);
-                      break;
-                    }
-                    case 2: {
-                      temp = new Nomad(name);
-                      break;
-                    }
-                    default: {
-                      System.out.println("Unknown character type!");
-                      break;
-                    }
+                    case 1:
+                      {
+                        temp = new Plumber(name);
+                        break;
+                      }
+                    case 2:
+                      {
+                        temp = new Nomad(name);
+                        break;
+                      }
+                    default:
+                      {
+                        System.out.println("Unknown character type!");
+                        break;
+                      }
                   }
                   if (temp == null) {
                     System.out.println("Character creation aborted!");
@@ -186,7 +188,8 @@ public class Main {
                   if (Map.getNodeCount() > 0) {
                     System.out.println("Where do you want to place the character?");
                     Map.printNodes();
-                    System.out.println("Please provide the coordinates of the node like this: x \\n y");
+                    System.out.println(
+                        "Please provide the coordinates of the node like this: x \\n y");
                     int x = Integer.parseInt(scanner.nextLine());
                     int y = Integer.parseInt(scanner.nextLine());
                     Node node = Map.getNode(x, y);
@@ -203,32 +206,38 @@ public class Main {
                       System.out.println("4 - WaterSpring");
                       int type2 = scanner.nextInt();
                       System.out.println("Where do you want to place the node?");
-                      System.out.println("Please provide the coordinates of the node like this: x \\n y");
+                      System.out.println(
+                          "Please provide the coordinates of the node like this: x \\n y");
                       int x = Integer.parseInt(scanner.nextLine());
                       int y = Integer.parseInt(scanner.nextLine());
                       Node node = null;
                       switch (type2) {
-                        case 1: {
-                          node = new Pipe(x, y);
-                          break;
-                        }
-                        case 2: {
-                          node = new Pump(x, y);
-                          break;
-                        }
-                        case 3: {
-                          node = new Cistern(x, y);
-                          break;
-                        }
-                        case 4: {
-                          node = new WaterSpring(x, y);
-                          break;
-                        }
-                        default: {
-                          System.out.println("Unknown node type");
-                          System.out.println("Character creation aborted!");
-                          break;
-                        }
+                        case 1:
+                          {
+                            node = new Pipe(x, y);
+                            break;
+                          }
+                        case 2:
+                          {
+                            node = new Pump(x, y);
+                            break;
+                          }
+                        case 3:
+                          {
+                            node = new Cistern(x, y);
+                            break;
+                          }
+                        case 4:
+                          {
+                            node = new WaterSpring(x, y);
+                            break;
+                          }
+                        default:
+                          {
+                            System.out.println("Unknown node type");
+                            System.out.println("Character creation aborted!");
+                            break;
+                          }
                       }
                       if (node == null) {
                         break;
@@ -259,105 +268,109 @@ public class Main {
                 int action = Integer.parseInt(scanner.nextLine());
                 switch (action) {
                   case 1:
-                  {
-                    if (character.getStandingOn().getNeighbours().isEmpty()) {
-                      System.out.println("There are no neighbours to move to.");
-                      break;
-                    }
-                    System.out.println("Where do you want to move with the character?");
-                    ArrayList<Node> neighbours = character.getStandingOn().getNeighbours();
-                    for (int j = 0; j < neighbours.size(); j++) {
-                      Node temp = neighbours.get(j);
-                      System.out.println(j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() +"]");
-                    }
-                    int index = scanner.nextInt();
-                    try {
-                      character.moveTo(neighbours.get(index));
-                      } catch (ObjectFullException | InvalidPlayerMovementException e) {
-                      System.out.println("The character could not move to the selected node.");
-                      System.out.println(e.getMessage());
-                    }
-                    break;
-                  }
-                  case 2:
-                  {
-                    System.out.println("Trying to break the node...");
-                    character.breakNode();
-                    break;
-                  }
-                  case 3:
-                  {
-                    System.out.println("Trying to repair the node...");
-                    try {
-                      Plumber temp = (Plumber) character;
-                      temp.repair();
-                    } catch (ClassCastException e) {
-                      System.out.println("Only plumbers can repair nodes.");
-                    }
-                    break;
-                  }
-                  case 4:
-                  {
-                    ArrayList<Node> neighbours = character.getStandingOn().getNeighbours();
-                    if (neighbours.isEmpty()) {
-                      System.out.println("There are no neighbours to set the node to.");
-                    } else if (neighbours.size() == 1) {
-                      System.out.println("There is only one neighbour to set the node to.");
-                      System.out.println("Trying to set the node...");
-                      try {
-                        Pipe temp = (Pipe) neighbours.get(0);
-                        character.setPump(temp, null);
-                      } catch (ClassCastException e) {
-                        System.out.println("The neighbour is not a pipe.");
-                      }
-                    } else {
-                      System.out.println("Select an input pipe:");
-                      for (int j = 0; j < neighbours.size(); j++) {
-                          Node temp = neighbours.get(j);
-                          System.out.println(j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() +"]");
-                      }
-                      int index = scanner.nextInt();
-                      Pipe input;
-                      try {
-                        input = (Pipe) neighbours.get(index);
-                      } catch (ClassCastException e) {
-                        System.out.println("The selected node is not a pipe.");
+                    {
+                      if (character.getStandingOn().getNeighbours().isEmpty()) {
+                        System.out.println("There are no neighbours to move to.");
                         break;
                       }
-                      System.out.println("Select an output pipe:");
+                      System.out.println("Where do you want to move with the character?");
+                      ArrayList<Node> neighbours = character.getStandingOn().getNeighbours();
                       for (int j = 0; j < neighbours.size(); j++) {
                         Node temp = neighbours.get(j);
-                        if (temp != input) {
-                          System.out.println(j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() +"]");
-                        }
+                        System.out.println(
+                            j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() + "]");
                       }
-                      index = scanner.nextInt();
-                      Pipe output;
+                      int index = scanner.nextInt();
                       try {
-                        output = (Pipe) neighbours.get(index);
-                      } catch (ClassCastException e) {
-                        System.out.println("The selected node is not a pipe.");
-                        break;
+                        character.moveTo(neighbours.get(index));
+                      } catch (ObjectFullException | InvalidPlayerMovementException e) {
+                        System.out.println("The character could not move to the selected node.");
+                        System.out.println(e.getMessage());
                       }
-                      System.out.println("Trying to set the node...");
-                      character.setPump(input, output);
+                      break;
                     }
-                    break;
-                  }
+                  case 2:
+                    {
+                      System.out.println("Trying to break the node...");
+                      character.breakNode();
+                      break;
+                    }
+                  case 3:
+                    {
+                      System.out.println("Trying to repair the node...");
+                      try {
+                        Plumber temp = (Plumber) character;
+                        temp.repair();
+                      } catch (ClassCastException e) {
+                        System.out.println("Only plumbers can repair nodes.");
+                      }
+                      break;
+                    }
+                  case 4:
+                    {
+                      ArrayList<Node> neighbours = character.getStandingOn().getNeighbours();
+                      if (neighbours.isEmpty()) {
+                        System.out.println("There are no neighbours to set the node to.");
+                      } else if (neighbours.size() == 1) {
+                        System.out.println("There is only one neighbour to set the node to.");
+                        System.out.println("Trying to set the node...");
+                        try {
+                          Pipe temp = (Pipe) neighbours.get(0);
+                          character.setPump(temp, null);
+                        } catch (ClassCastException e) {
+                          System.out.println("The neighbour is not a pipe.");
+                        }
+                      } else {
+                        System.out.println("Select an input pipe:");
+                        for (int j = 0; j < neighbours.size(); j++) {
+                          Node temp = neighbours.get(j);
+                          System.out.println(
+                              j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() + "]");
+                        }
+                        int index = scanner.nextInt();
+                        Pipe input;
+                        try {
+                          input = (Pipe) neighbours.get(index);
+                        } catch (ClassCastException e) {
+                          System.out.println("The selected node is not a pipe.");
+                          break;
+                        }
+                        System.out.println("Select an output pipe:");
+                        for (int j = 0; j < neighbours.size(); j++) {
+                          Node temp = neighbours.get(j);
+                          if (temp != input) {
+                            System.out.println(
+                                j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() + "]");
+                          }
+                        }
+                        index = scanner.nextInt();
+                        Pipe output;
+                        try {
+                          output = (Pipe) neighbours.get(index);
+                        } catch (ClassCastException e) {
+                          System.out.println("The selected node is not a pipe.");
+                          break;
+                        }
+                        System.out.println("Trying to set the node...");
+                        character.setPump(input, output);
+                      }
+                      break;
+                    }
                   case 5:
-                  {
-                    System.out.println("Trying to pick up the node...");
-                    try {
-                      Plumber temp = (Plumber) character;
-                      // TODO: Pick up node and move it to the inventory
-                      // TODO: move away from the node to a neighbour
-                      // if there is no neighbour, the character goes to the first cistern on the map
-                      // playerLostHandler()
-                    } catch (ClassCastException e) {
-                      System.out.println("Only plumbers can pick up nodes.");
+                    {
+                      System.out.println("Trying to pick up the node...");
+                      try {
+                        Plumber temp = (Plumber) character;
+                        // TODO: Pick up node and move it to the inventory
+                        // TODO: move away from the node to a neighbour
+                        // if there is no neighbour, the character goes to the first cistern on the
+                        // map
+                        // playerLostHandler()
+                      } catch (ClassCastException e) {
+                        System.out.println("Only plumbers can pick up nodes.");
+                      }
+                      break;
                     }
-                    break;
-                  }
                 }
               }
               break;
