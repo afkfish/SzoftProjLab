@@ -1,6 +1,5 @@
 package com.ez_mode.characters;
 
-import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.objects.Pipe;
 
 /**

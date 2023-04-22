@@ -100,7 +100,7 @@ public abstract class Character {
       pump.setActiveOutput(out);
       System.out.println("\t" + this.uuid + " is setting the pump.");
     } catch (ClassCastException e) {
-      System.out.println("Player " +  this.uuid + " tried to set a pump on a non-pump object.");
+      System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
     }
   }
 
