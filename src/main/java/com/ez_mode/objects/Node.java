@@ -95,7 +95,7 @@ public abstract class Node implements Tickable {
   }
 
   public int getY() {
-      return y;
+    return y;
   }
 
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
