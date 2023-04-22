@@ -15,7 +15,7 @@ public class Pipe extends Node {
   }
 
   public Pipe() {
-      super(1, 2, -1, -1);
+    super(1, 2, -1, -1);
   }
 
   public double getCapacity() {

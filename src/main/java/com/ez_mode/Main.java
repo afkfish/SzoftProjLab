@@ -2,11 +2,9 @@ package com.ez_mode;
 
 // import com.ez_mode.gui.Menu;
 
+import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Scanner;
-
 
 public class Main {
   private enum Version {

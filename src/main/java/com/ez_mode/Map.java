@@ -5,16 +5,15 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -68,30 +67,30 @@ public class Map implements Tickable {
         Node temp;
         switch (node.getString("type")) {
           case "cistern":
-          {
-            temp = new Cistern(node.getInt("x"), node.getInt("y"));
-            break;
-          }
+            {
+              temp = new Cistern(node.getInt("x"), node.getInt("y"));
+              break;
+            }
           case "pipe":
-          {
-            temp = new Pipe(node.getInt("x"), node.getInt("y"));
-            break;
-          }
+            {
+              temp = new Pipe(node.getInt("x"), node.getInt("y"));
+              break;
+            }
           case "pump":
-          {
-            temp = new Pump(node.getInt("x"), node.getInt("y"));
-            break;
-          }
+            {
+              temp = new Pump(node.getInt("x"), node.getInt("y"));
+              break;
+            }
           case "waterspring":
-          {
-            temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
-            break;
-          }
+            {
+              temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
+              break;
+            }
           default:
-          {
-            System.out.println("Unknown node type!");
-            continue;
-          }
+            {
+              System.out.println("Unknown node type!");
+              continue;
+            }
         }
         gameMap[node.getInt("x")][node.getInt("y")] = temp;
         System.out.println(node);
@@ -101,7 +100,8 @@ public class Map implements Tickable {
       for (int i = 0; i < nodeList.length(); i++) {
         JSONObject node = nodeList.getJSONObject(i);
         Node temp = gameMap[node.getInt("x")][node.getInt("y")];
-        if (node.getString("type").equals("waterspring") || node.getString("type").equals("cistern")) {
+        if (node.getString("type").equals("waterspring")
+            || node.getString("type").equals("cistern")) {
           continue;
         }
         JSONArray connections = node.getJSONArray("connections");
@@ -110,7 +110,12 @@ public class Map implements Tickable {
           JSONObject connection = connections.getJSONObject(j);
           Node neighbour = gameMap[connection.getInt("x")][connection.getInt("y")];
           if (neighbour == null) {
-            System.out.println("There is no node at the given coordinates: " + connection.getInt("x") + ", " + connection.getInt("y") + "!");
+            System.out.println(
+                "There is no node at the given coordinates: "
+                    + connection.getInt("x")
+                    + ", "
+                    + connection.getInt("y")
+                    + "!");
             System.out.println("Skipping connection...");
             continue;
           }
@@ -124,20 +129,20 @@ public class Map implements Tickable {
         Character temp;
         switch (player.getString("type")) {
           case "plumber":
-          {
-            temp = new Plumber(player.getString("name"));
-            break;
-          }
+            {
+              temp = new Plumber(player.getString("name"));
+              break;
+            }
           case "nomad":
-          {
-            temp = new Nomad(player.getString("name"));
-            break;
-          }
+            {
+              temp = new Nomad(player.getString("name"));
+              break;
+            }
           default:
-          {
-            System.out.println("Unknown player type!");
-            continue;
-          }
+            {
+              System.out.println("Unknown player type!");
+              continue;
+            }
         }
         System.out.println(player);
         players.add(temp);
@@ -147,7 +152,8 @@ public class Map implements Tickable {
     } catch (SecurityException | IOException e) {
       System.out.println("There was an error loading the map!");
     } catch (ObjectFullException e) {
-      System.out.println("Some objects are full and cannot have more connections! The map is invalid!");
+      System.out.println(
+          "Some objects are full and cannot have more connections! The map is invalid!");
     }
   }
 
@@ -180,7 +186,8 @@ public class Map implements Tickable {
           node.put("type", gameMap[i][j].getClass().getSimpleName().toLowerCase());
           node.put("x", i);
           node.put("y", j);
-          if (node.getString("type").equals("waterspring") || node.getString("type").equals("cistern")) {
+          if (node.getString("type").equals("waterspring")
+              || node.getString("type").equals("cistern")) {
             nodeList.put(node);
             continue;
           }
@@ -235,16 +242,16 @@ public class Map implements Tickable {
    * @param character the player who is lost
    */
   public static void playerLostHandler(Character character) {
-//    Node playerTruePos =
-//        gameMap.stream()
-//            .flatMap(ArrayList::stream)
-//            .filter(node -> node.getCharacters().contains(character))
-//            .findFirst()
-//            .orElse(null);
+    //    Node playerTruePos =
+    //        gameMap.stream()
+    //            .flatMap(ArrayList::stream)
+    //            .filter(node -> node.getCharacters().contains(character))
+    //            .findFirst()
+    //            .orElse(null);
 
     // TODO: move to start if null
-//    assert playerTruePos != null;
-//    character.placeTo(playerTruePos);
+    //    assert playerTruePos != null;
+    //    character.placeTo(playerTruePos);
   }
 
   public void clearMap() {
@@ -264,10 +271,10 @@ public class Map implements Tickable {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-//    for (Node node : gameMap) {
-//      sb.append(node.toString());
-//      sb.append("\n ");
-//    }
+    //    for (Node node : gameMap) {
+    //      sb.append(node.toString());
+    //      sb.append("\n ");
+    //    }
     return sb.toString();
   }
 }
