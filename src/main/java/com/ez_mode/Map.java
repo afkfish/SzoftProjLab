@@ -222,13 +222,46 @@ public class Map implements Tickable {
     gameMap[x][y] = node;
   }
 
+  public static int playerCount() {
+    return players.size();
+  }
+
   public static void addPlayer(Character player, Node node) {
     players.add(player);
     player.placeTo(node);
   }
 
+  public static Character getPlayer(int index) {
+    return players.get(index);
+  }
+
+  public static void printPlayers() {
+    for (int i = 0; i < players.size(); i++) {
+      Character player = players.get(i);
+      System.out.println(i + " - " + player.getName() + " - " + player.getStandingOn().getUuid());
+    }
+  }
+
   public static int getNodeCount() {
-    return gameMap.length * gameMap[0].length;
+    int count = 0;
+    for (Node[] columns: gameMap) {
+      for (Node node: columns) {
+        if (node != null) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  public static void printNodes() {
+    for (Node[] nodes : gameMap) {
+      for (Node node : nodes) {
+        if (node != null) {
+          System.out.print(node.getX() + ", " + node.getY() + " - " + node.getUuid());
+        }
+      }
+    }
   }
 
   public static Node getNode(int x, int y) {

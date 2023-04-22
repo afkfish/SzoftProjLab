@@ -21,7 +21,7 @@ public class SkeletonTest {
       System.out.println(oe.getMessage());
     }
     character.placeTo(pump);
-    character.SetPump();
+    character.setPump(source, absorber);
   }
 
   public void PlumberMovesToPumpTest() {

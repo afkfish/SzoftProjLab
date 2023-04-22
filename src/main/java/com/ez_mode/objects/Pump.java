@@ -46,11 +46,11 @@ public class Pump extends Node {
     }
   }
 
-  public void SetActiveInput(Pipe p) {
+  public void setActiveInput(Pipe p) {
     activeInput = p;
   }
 
-  public void SetActiveOutput(Pipe p) {
+  public void setActiveOutput(Pipe p) {
     activeOutput = p;
   }
 

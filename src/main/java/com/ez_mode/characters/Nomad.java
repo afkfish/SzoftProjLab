@@ -1,6 +1,7 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+import com.ez_mode.objects.Pipe;
 
 /**
  * Class representing a Nomad character. The nomad can break pipes and adjust pumps in order to
@@ -12,17 +13,7 @@ public class Nomad extends Character {
   }
 
   @Override
-  public void SetPump() {
+  public void setPump(Pipe in, Pipe out) {
     System.out.println("\t" + this.getUuid() + " has set " + standingOn.getUuid());
-  }
-
-  /** Breaks the node the player is standing on. */
-  public void breakNode() {
-    try {
-      this.standingOn.breakNode(this);
-      System.out.println("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
-    } catch (InvalidPlayerActionException e) {
-      this.logger.error(e.getMessage());
-    }
   }
 }
