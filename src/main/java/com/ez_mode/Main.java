@@ -1,9 +1,12 @@
 package com.ez_mode;
 
 // import com.ez_mode.gui.Menu;
-import java.util.Scanner;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Scanner;
+
 
 public class Main {
   private enum Version {
@@ -12,14 +15,14 @@ public class Main {
     GRAPGHICAL
   }
 
-  public static Version version = Version.SKELETON;
+  public static Version version = Version.PROTOTYPE;
 
   public static void main(String[] args) {
     Logger logger = LogManager.getLogger(Main.class);
     logger.info("Starting");
 
     if (version == Version.SKELETON) {
-      Map map = new Map();
+      Map map = new Map(10);
       SkeletonTest skeletonTest = new SkeletonTest();
       System.out.println("Hello! This is the skeleton version of the game.");
 
@@ -108,6 +111,42 @@ public class Main {
             }
         }
       }
+    } else if (version == Version.PROTOTYPE) {
+      Map map = new Map(10);
+      Scanner scanner = new Scanner(System.in);
+      while (scanner.hasNext()) {
+        switch (scanner.nextLine()) {
+          case "fill":
+            {
+              map.fillMap(4);
+              break;
+            }
+          case "load":
+            {
+              System.out.println("What is the path to the game file?");
+              map.clearMap();
+              map.loadMap(scanner.nextLine());
+              break;
+            }
+          case "save":
+            {
+              System.out.println("Where do you want to save the game?");
+              map.saveMap(scanner.nextLine());
+              break;
+            }
+          case "exit":
+            {
+              System.exit(0);
+              break;
+            }
+          default:
+            {
+              System.out.println("Unknown command");
+              break;
+            }
+        }
+      }
+
     } else if (version == Version.GRAPGHICAL) {
       // new Menu();
     }

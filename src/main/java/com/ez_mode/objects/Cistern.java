@@ -7,10 +7,10 @@ import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
 
 public class Cistern extends Node {
-  private ArrayList<Pump> producedPumps = new ArrayList<>();
+  private final ArrayList<Pump> producedPumps = new ArrayList<>();
 
-  public Cistern() {
-    super(Integer.MAX_VALUE, 4);
+  public Cistern(int x, int y) {
+    super(Integer.MAX_VALUE, 4, x, y);
   }
 
   @Override

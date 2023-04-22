@@ -13,8 +13,12 @@ public class Pump extends Node {
   // TODO: Make that this is used when calculating the flow rate
   private double internalBufferLevel = 0;
 
+  public Pump(int x, int y) {
+    super(5, 4, x, y);
+  }
+
   public Pump() {
-    super(5, 4);
+    super(5, 4, -1, -1);
   }
 
   private Pipe activeInput;

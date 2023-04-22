@@ -18,13 +18,13 @@ public abstract class Character {
    */
   protected final Logger logger;
 
+  /** The name of the player. */
+  private final String name;
+
   /*
    * The uuid of the character.
    */
-  private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
-
-  /** The name of the player. */
-  private final String name;
+  private final String uuid;
 
   /** The StandableObject the player is standing on. */
   protected Node standingOn;
@@ -32,6 +32,7 @@ public abstract class Character {
   public Character(String name) {
     this.logger = LogManager.getLogger(this.getClass());
     this.name = name;
+    this.uuid = this.name + (int) (Math.random() * 100);
   }
 
   public String getUuid() {

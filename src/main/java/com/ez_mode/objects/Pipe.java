@@ -10,8 +10,12 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 public class Pipe extends Node {
   private double capacity;
 
+  public Pipe(int x, int y) {
+    super(1, 2, x, y);
+  }
+
   public Pipe() {
-    super(1, 2);
+      super(1, 2, -1, -1);
   }
 
   public double getCapacity() {

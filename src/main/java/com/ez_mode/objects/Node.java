@@ -32,15 +32,19 @@ public abstract class Node implements Tickable {
   protected final int maxCharacters;
 
   protected final int maxConnections;
+  protected final int x;
+  protected final int y;
   protected boolean isBroken = false;
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
 
-  protected Node(int maxCharacters, int maxConnections) {
+  protected Node(int maxCharacters, int maxConnections, int x, int y) {
     this.uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
     this.logger = LogManager.getLogger(this.getClass());
     this.maxCharacters = maxCharacters;
     this.maxConnections = maxConnections;
+    this.x = x;
+    this.y = y;
   }
 
   public String getUuid() {
@@ -84,6 +88,14 @@ public abstract class Node implements Tickable {
               character.getName()));
     characters.remove(character);
     System.out.println("\t" + character.getUuid() + " removed from " + this.uuid);
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+      return y;
   }
 
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
