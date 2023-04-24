@@ -8,7 +8,9 @@ import javax.swing.*;
 public class Game implements ActionListener {
   String imagePath1 = "src/main/resources/pixil-frame-5.png";
   String imagePath2 = "src/main/resources/pixil-frame-1.png";
-  int gridNum = 20;
+  String imagePath3 = "src/main/resources/plumber.png";
+  String imagePath4 = "src/main/resources/nomad.png";
+  int gridNum = 15;
 
   JFrame frame = new JFrame();
   JPanel titlePanel = new JPanel();
@@ -22,13 +24,21 @@ public class Game implements ActionListener {
 
   ImageIcon icon1 = new ImageIcon(imagePath1);
   ImageIcon icon2 = new ImageIcon(imagePath2);
+  ImageIcon icon3 = new ImageIcon(imagePath3);
+  ImageIcon icon4 = new ImageIcon(imagePath4);
+
 
   public String getImagePath1() {
     return imagePath1;
   }
-
   public String getImagePath2() {
     return imagePath2;
+  }
+  public String getImagePath3() {
+    return imagePath3;
+  }
+  public String getImagePath4() {
+    return imagePath4;
   }
 
   public Game() {
@@ -76,9 +86,22 @@ public class Game implements ActionListener {
       Image i2 = icon2.getImage();
       Image modIcon2 = i2.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
       buttons[i].setIcon(new ImageIcon(modIcon2));
-      buttons[i].setIcon(new ImageIcon(modIcon2));
       buttons[i].addActionListener(this);
     }
+
+
+    buttons[10].setBackground(new Color(180, 180, 180));
+    icon3 = new ImageIcon(String.valueOf(getImagePath3()));
+    Image i3 = icon3.getImage();
+    Image modIcon3 = i3.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
+    buttons[10].setIcon(new ImageIcon(modIcon3));
+
+    buttons[24].setBackground(new Color(180, 180, 180));
+    icon4 = new ImageIcon(String.valueOf(getImagePath4()));
+    Image i4 = icon4.getImage();
+    Image modIcon4 = i4.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
+    buttons[24].setIcon(new ImageIcon(modIcon4));
+
 
     exitButton.setBounds(600, 13, 150, 40);
     exitButton.setFont(new Font("Monospace", Font.BOLD, 20));
@@ -109,6 +132,7 @@ public class Game implements ActionListener {
           icon1 = new ImageIcon(String.valueOf(getImagePath1()));
           Image i1 = icon1.getImage();
           Image modIcon1 = i1.getScaledInstance(40, 32, Image.SCALE_DEFAULT);
+          buttons[i].setBackground(new Color(180, 180, 180));
           buttons[i].setIcon(new ImageIcon(modIcon1));
         }
       }
