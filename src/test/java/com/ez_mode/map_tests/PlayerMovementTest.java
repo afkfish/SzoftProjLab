@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerMovementTest {
-  WaterSpring waterSpring1 = new WaterSpring();
-  Pipe pipe1 = new Pipe();
+  WaterSpring waterSpring1 = new WaterSpring(0, 0);
+  Pipe pipe1 = new Pipe(0, 1);
   Plumber plumber = new Plumber("Plumber");
   Nomad nomad = new Nomad("Nomad");
 

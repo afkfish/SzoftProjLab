@@ -9,8 +9,8 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
  * capacity and unlimited water.
  */
 public class WaterSpring extends Node {
-  public WaterSpring() {
-    super(Integer.MAX_VALUE, 4);
+  public WaterSpring(int x, int y) {
+    super(Integer.MAX_VALUE, 4, x, y);
     this.flowRate = 1;
   }
 

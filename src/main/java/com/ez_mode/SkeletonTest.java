@@ -8,9 +8,9 @@ import com.ez_mode.objects.*;
 public class SkeletonTest {
   public void SetPumpTest() {
     Character character = new Plumber("Character");
-    Pump pump = new Pump();
-    Pipe absorber = new Pipe();
-    Pipe source = new Pipe();
+    Pump pump = new Pump(0, 0);
+    Pipe absorber = new Pipe(0, 1);
+    Pipe source = new Pipe(1, 0);
     System.out.println("SkeletonTest:SetPumpTest param: -");
     try {
       pump.connect(absorber);
@@ -21,13 +21,13 @@ public class SkeletonTest {
       System.out.println(oe.getMessage());
     }
     character.placeTo(pump);
-    character.SetPump();
+    character.setPump(source, absorber);
   }
 
   public void PlumberMovesToPumpTest() {
     Plumber plumber = new Plumber("Plumber");
-    Pipe pipe = new Pipe();
-    Pump pump = new Pump();
+    Pipe pipe = new Pipe(0, 0);
+    Pump pump = new Pump(0, 1);
     System.out.println("SkeletonTest:PlumberMovesToPumpTest param: -");
     try {
       pump.connect(pipe);
@@ -46,8 +46,8 @@ public class SkeletonTest {
 
   public void PlumberMovesToPipeTest() {
     Plumber plumber = new Plumber("Plumber");
-    Pipe pipe = new Pipe();
-    Pump pump = new Pump();
+    Pipe pipe = new Pipe(0, 0);
+    Pump pump = new Pump(0, 1);
     System.out.println("SkeletonTest:PlumberMovesToPipeTest param: -");
     try {
       pipe.connect(pump);
@@ -67,7 +67,7 @@ public class SkeletonTest {
 
   public void NomadBreaksPipeTest() {
     Nomad nomad = new Nomad("Nomad");
-    Pipe pipe = new Pipe();
+    Pipe pipe = new Pipe(0, 0);
     System.out.println("SkeletonTest:NomadBreaksPipeTest param: -");
     nomad.placeTo(pipe);
     System.out.println("\tnomad:placeTo param: pipe");
@@ -78,8 +78,8 @@ public class SkeletonTest {
 
   public void NomadMovesToPipeTest() {
     Nomad nomad = new Nomad("Nomad");
-    Pipe pipe = new Pipe();
-    Pump pump = new Pump();
+    Pipe pipe = new Pipe(0, 0);
+    Pump pump = new Pump(0, 1);
     System.out.println("SkeletonTest:NomadMovesToPipeTest param: -");
     try {
       pipe.connect(pump);
@@ -99,8 +99,8 @@ public class SkeletonTest {
 
   public void CharacterMovesTest() {
     Character character = new Nomad("Character");
-    Node node1 = new Pump();
-    Node node2 = new Pipe();
+    Node node1 = new Pump(0, 0);
+    Node node2 = new Pipe(0, 1);
     System.out.println("SkeletonTest:CharacterMovesTest param: -");
     try {
       node2.connect(node1);
@@ -120,8 +120,8 @@ public class SkeletonTest {
 
   public void CharacterMovesToPumpTest() {
     Character character = new Plumber("Character");
-    Pipe pipe = new Pipe();
-    Pump pump = new Pump();
+    Pipe pipe = new Pipe(0, 0);
+    Pump pump = new Pump(0, 1);
     System.out.println("SkeletonTest:CharacterMovesToPumpTest param: -");
     try {
       pump.connect(pipe);
@@ -140,7 +140,7 @@ public class SkeletonTest {
   }
 
   public void PlumberRepairsPipeTest() {
-    Pipe pipe = new Pipe();
+    Pipe pipe = new Pipe(0, 0);
     System.out.println("SkeletonTest:PlumberRepairsPipeTest param: -");
     try {
       pipe.breakNode(new Nomad("Testnomad"));
@@ -156,7 +156,7 @@ public class SkeletonTest {
   }
 
   public void PlumberRepairsPumpTest() {
-    Pump pumpa = new Pump();
+    Pump pumpa = new Pump(0, 0);
     System.out.println("SkeletonTest:PlumberRepairsPumpTest param: -");
     try {
       pumpa.breakNode(new Nomad("Testnomad"));
@@ -173,7 +173,7 @@ public class SkeletonTest {
   }
 
   public void PlumberPicksUpPipe() {
-    Cistern c1 = new Cistern();
+    Cistern c1 = new Cistern(0, 0);
     Plumber p1 = new Plumber("Plumber1");
     System.out.println("SkeletonTest:PlumberPicksUpPipe param: -");
     p1.placeTo(c1);
@@ -186,7 +186,7 @@ public class SkeletonTest {
   }
 
   public void PlumberPicksUpPump() {
-    Cistern c1 = new Cistern();
+    Cistern c1 = new Cistern(0, 0);
     Plumber p1 = new Plumber("Plumber1");
     System.out.println("SkeletonTest:PlumberPicksUpPump param: -");
     p1.placeTo(c1);
@@ -199,7 +199,7 @@ public class SkeletonTest {
   }
 
   public void PlumberDeploysPump() {
-    Cistern c1 = new Cistern();
+    Cistern c1 = new Cistern(0, 0);
     Plumber p1 = new Plumber("Plumber1");
     System.out.println("SkeletonTest:PlumberDeploysPump param: -");
     p1.placeTo(c1);
@@ -208,7 +208,7 @@ public class SkeletonTest {
     System.out.println("\tcistern:MakePump param: -");
     p1.PickupPump();
     System.out.println("\tplumber:PickupPump param: -");
-    Pipe Pipe1 = new Pipe();
+    Pipe Pipe1 = new Pipe(0, 1);
     try {
       Pipe1.connect(c1);
       System.out.println("\tpipe:connect param: cistern");
@@ -227,8 +227,8 @@ public class SkeletonTest {
   }
 
   public void PlumberMovesToCistern() {
-    Cistern c1 = new Cistern();
-    Pipe Pipe1 = new Pipe();
+    Cistern c1 = new Cistern(0, 0);
+    Pipe Pipe1 = new Pipe(0, 1);
     Plumber p1 = new Plumber("Plumber1");
     System.out.println("SkeletonTest:PlumberMovesToCistern param: -");
     try {

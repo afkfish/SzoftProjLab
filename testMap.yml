@@ -1,0 +1,28 @@
+name: "testMap"
+player_count: 2
+players:
+  - name: "Mario"
+    properties:
+      type: "plumber"
+      position: [0, 0]
+  - name: "Bowser"
+    properties:
+      type: "nomad"
+      position: [0, 0]
+map:
+  size: [10, 10]
+  nodes:
+    - [0, 0]:
+        type: "cistern"
+    - [0, 1]:
+        type: "pipe"
+        properties:
+          broken: false
+          connections:
+            - [0, 0]
+    - [5, 3]:
+        type: "cistern"
+    - [9, 9]:
+        type: "pipe"
+        properties:
+          broken: true

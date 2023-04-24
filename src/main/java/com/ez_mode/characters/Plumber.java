@@ -16,7 +16,7 @@ public class Plumber extends Character {
   private Pipe draggedpipe;
 
   @Override
-  public void SetPump() {
+  public void setPump(Pipe in, Pipe out) {
     System.out.println("\t" + this.getUuid() + " has set " + standingOn.getUuid());
   }
 
@@ -39,9 +39,9 @@ public class Plumber extends Character {
     }
   }
 
-  public void MovePipe() {
-    // Stakeholder
-
+  public void PlacePipe() {
+    /// Placeholder
+    /// TODO
   }
 
   public void PickupPump() {

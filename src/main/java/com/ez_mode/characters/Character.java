@@ -1,10 +1,13 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.Map;
+import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
+import com.ez_mode.objects.Pipe;
+import com.ez_mode.objects.Pump;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,13 +21,13 @@ public abstract class Character {
    */
   protected final Logger logger;
 
+  /** The name of the player. */
+  private final String name;
+
   /*
    * The uuid of the character.
    */
-  private final String uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
-
-  /** The name of the player. */
-  private final String name;
+  private final String uuid;
 
   /** The StandableObject the player is standing on. */
   protected Node standingOn;
@@ -32,6 +35,7 @@ public abstract class Character {
   public Character(String name) {
     this.logger = LogManager.getLogger(this.getClass());
     this.name = name;
+    this.uuid = this.name + (int) (Math.random() * 100);
   }
 
   public String getUuid() {
@@ -76,9 +80,28 @@ public abstract class Character {
     node.placeCharacter(this);
   }
 
+  /** Breaks the node the player is standing on. */
+  public void breakNode() {
+    try {
+      this.standingOn.breakNode(this);
+      System.out.println("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
+    } catch (InvalidPlayerActionException e) {
+      this.logger.error(e.getMessage());
+    }
+  }
+
   // TODO: Override in children
-  public void SetPump() {
-    System.out.println("\t" + this.uuid + " is setting the pump.");
+  public void setPump(Pipe in, Pipe out) {
+    try {
+      Pump pump = (Pump) this.standingOn;
+      assert in != out : "Input and output pipes must be different.";
+      // TODO: Do the connecting logic this is just shit.
+      pump.setActiveInput(in);
+      pump.setActiveOutput(out);
+      System.out.println("\t" + this.uuid + " is setting the pump.");
+    } catch (ClassCastException e) {
+      System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
+    }
   }
 
   @Override
