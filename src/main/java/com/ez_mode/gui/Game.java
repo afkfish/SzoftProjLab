@@ -27,16 +27,18 @@ public class Game implements ActionListener {
   ImageIcon icon3 = new ImageIcon(imagePath3);
   ImageIcon icon4 = new ImageIcon(imagePath4);
 
-
   public String getImagePath1() {
     return imagePath1;
   }
+
   public String getImagePath2() {
     return imagePath2;
   }
+
   public String getImagePath3() {
     return imagePath3;
   }
+
   public String getImagePath4() {
     return imagePath4;
   }
@@ -89,7 +91,6 @@ public class Game implements ActionListener {
       buttons[i].addActionListener(this);
     }
 
-
     buttons[10].setBackground(new Color(180, 180, 180));
     icon3 = new ImageIcon(String.valueOf(getImagePath3()));
     Image i3 = icon3.getImage();
@@ -101,7 +102,6 @@ public class Game implements ActionListener {
     Image i4 = icon4.getImage();
     Image modIcon4 = i4.getScaledInstance(45, 45, Image.SCALE_DEFAULT);
     buttons[24].setIcon(new ImageIcon(modIcon4));
-
 
     exitButton.setBounds(600, 13, 150, 40);
     exitButton.setFont(new Font("Monospace", Font.BOLD, 20));

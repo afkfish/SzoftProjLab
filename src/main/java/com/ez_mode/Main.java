@@ -7,7 +7,6 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
-import com.ez_mode.gui.Menu;
 import com.ez_mode.objects.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -407,7 +406,7 @@ public class Main {
         }
       }
     } else if (version == Version.GRAPGHICAL) {
-      //new Menu();
+      // new Menu();
     }
   }
 }
