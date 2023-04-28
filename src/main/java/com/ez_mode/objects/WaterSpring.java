@@ -22,13 +22,19 @@ public class WaterSpring extends Node {
   @Override
   public void repairNode(Character character) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
-        String.format("Player <%s> tried to repair a cistern.", character.getName()));
+        String.format("Player <%s> tried to repair a waterSpring.", character.getName()));
   }
 
   @Override
   public void breakNode(Character character) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
-        String.format("Player <%s> tried to break a cistern.", character.getName()));
+        String.format("Player <%s> tried to break a waterSpring.", character.getName()));
+  }
+
+  @Override
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
+    throw new InvalidPlayerActionException(
+            String.format("Player <%s> tried to make a waterSpring sticky/slippery.", c.getName()));
   }
 
   @Override

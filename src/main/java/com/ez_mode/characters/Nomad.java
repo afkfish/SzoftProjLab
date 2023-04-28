@@ -1,5 +1,6 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.objects.Pipe;
 
 /**
@@ -13,6 +14,11 @@ public class Nomad extends Character {
 
   @Override
   public void setPump(Pipe in, Pipe out) {
+    try {
+      this.standingOn.setSurface("slippery", this);
+    } catch (InvalidPlayerActionException e) {
+      throw new RuntimeException(e);
+    }
     System.out.println("\t" + this.getUuid() + " has set " + standingOn.getUuid());
   }
 }

@@ -43,4 +43,10 @@ public class Pipe extends Node {
               "Player <%s> tried to break a pipe that was already broken.", character.getName()));
     }
   }
+
+  @Override
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
+
+  }
+
 }

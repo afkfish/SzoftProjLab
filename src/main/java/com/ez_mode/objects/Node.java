@@ -101,6 +101,9 @@ public abstract class Node implements Tickable {
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
 
   public abstract void breakNode(Character character) throws InvalidPlayerActionException;
+  public abstract void setSurface(String type, Character c)throws InvalidPlayerActionException;//TODO implement is childs
+
+
 
   public void addFlowRate(Node source, double excededFlow) {
     if (!this.sources.contains(source)) {
