@@ -1,6 +1,5 @@
 package com.ez_mode.characters;
 
-import com.ez_mode.Map;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
@@ -23,15 +22,13 @@ public class Plumber extends Character {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
       // TODO: Do the connecting logic this is just shit.
-      if(pump.getNeighbours().contains(in))
-        pump.setActiveInput(in);
+      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
       else {
         System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
         return;
       }
-      if(pump.getNeighbours().contains(out))
-        pump.setActiveOutput(out);
-      else{
+      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
+      else {
         System.out.println("\t" + in.getUuid() + " out Pipe not connected to the pump.");
         return;
       }
@@ -51,21 +48,20 @@ public class Plumber extends Character {
     }
   }
 
-  public void PlacePump() { //TODO implemet the placing
+  public void PlacePump() { // TODO implemet the placing
     // Stakeholder
     if (this.pickedupPump != null) {
       try {
         Pipe temp = ((Pipe) standingOn);
         Pipe newPipe = new Pipe();
-        //Map.addNode(new Pipe(), temp.getX()+5, temp.getY() +5);
+        // Map.addNode(new Pipe(), temp.getX()+5, temp.getY() +5);
         try {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
         } catch (ObjectFullException e) {
           throw new RuntimeException(e);
         }
-      }
-      catch(ClassCastException e) {
+      } catch (ClassCastException e) {
         System.out.println(this.getUuid() + " is not standing on a Pipe");
         System.out.println("\t" + pickedupPump.getUuid() + " has been placed ");
       }

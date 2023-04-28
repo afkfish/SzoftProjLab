@@ -45,8 +45,5 @@ public class Pipe extends Node {
   }
 
   @Override
-  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
-
-  }
-
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {}
 }

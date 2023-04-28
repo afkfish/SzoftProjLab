@@ -34,7 +34,7 @@ public class WaterSpring extends Node {
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
-            String.format("Player <%s> tried to make a waterSpring sticky/slippery.", c.getName()));
+        String.format("Player <%s> tried to make a waterSpring sticky/slippery.", c.getName()));
   }
 
   @Override

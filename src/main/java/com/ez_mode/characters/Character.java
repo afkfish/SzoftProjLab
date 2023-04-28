@@ -12,8 +12,6 @@ import com.ez_mode.objects.Pump;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Random;
-
 /**
  * This class is responsible for the characters in the game. This is tha abstract class for all
  * characters. It contains a name and a reference to the StandableObject it is standing on.
@@ -34,6 +32,7 @@ public abstract class Character implements Tickable {
 
   /** The StandableObject the player is standing on. */
   protected Node standingOn;
+
   protected int stuckedInPipe;
 
   public Character(String name) {
@@ -108,19 +107,22 @@ public abstract class Character implements Tickable {
       System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
     }
   }
-  public void makePipeSticky(){
+
+  public void makePipeSticky() {
     try {
       standingOn.setSurface("sticky", this);
     } catch (InvalidPlayerActionException e) {
       this.logger.error(e.getMessage());
     }
   }
-  public void tick(){
-    if(stuckedInPipe > 0){
+
+  public void tick() {
+    if (stuckedInPipe > 0) {
       stuckedInPipe--;
     }
   }
-  public void stucked(){
+
+  public void stucked() {
     stuckedInPipe = ((int) (Math.random() * 100)) + 1;
   }
 

@@ -28,7 +28,7 @@ public class Cistern extends Node {
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
-            String.format("Player <%s> tried to make a cistern sticky/slippery.", c.getName()));
+        String.format("Player <%s> tried to make a cistern sticky/slippery.", c.getName()));
   }
 
   @Override

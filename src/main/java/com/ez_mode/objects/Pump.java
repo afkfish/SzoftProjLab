@@ -47,9 +47,7 @@ public class Pump extends Node {
   }
 
   @Override
-  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
-
-  }
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {}
 
   public void setActiveInput(Pipe p) {
     activeInput = p;
