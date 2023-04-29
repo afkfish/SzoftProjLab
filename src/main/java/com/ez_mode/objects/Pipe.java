@@ -35,7 +35,7 @@ public class Pipe extends Node {
   public void repairNode(Character character) throws InvalidPlayerActionException {
     if (this.isBroken) {
       this.isBroken = false;
-      unbreakableTill = ((int)(Math.random() * 100))+1;
+      unbreakableTill = ((int) (Math.random() * 100)) + 1;
     } else {
       throw new InvalidPlayerActionException(
           String.format(
@@ -53,21 +53,22 @@ public class Pipe extends Node {
               "Player <%s> tried to break a pipe that was already broken.", character.getName()));
     }
   }
+
   @Override
   public void tick() {
     assert this.neighbours.size() <= this.maxConnections
-            : this.getClass().getName() + " has more than max neighbours";
+        : this.getClass().getName() + " has more than max neighbours";
 
     this.calculateFlowRate();
-    if(unbreakableTill > 0) this.unbreakableTill--;
+    if (unbreakableTill > 0) this.unbreakableTill--;
     this.logger.debug("Flow rate is at {}", this.flowRate);
   }
 
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
-    if(type.equals("sticky")) isStikcy = true;
-    else if(type.equals("slippery")) isSlippery = true;
-    else{
+    if (type.equals("sticky")) isStikcy = true;
+    else if (type.equals("slippery")) isSlippery = true;
+    else {
       isStikcy = false;
       isSlippery = false;
     }

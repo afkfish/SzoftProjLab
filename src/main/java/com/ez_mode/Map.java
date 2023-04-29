@@ -230,7 +230,8 @@ public class Map implements Tickable {
     players.add(player);
     player.placeTo(node);
   }
-  public static void removeNode(Node node){//TODO implement remove logic
+
+  public static void removeNode(Node node) { // TODO implement remove logic
   }
 
   public static Character getPlayer(int index) {
