@@ -15,8 +15,8 @@ public class NotJSONPointer {
   private static final String ENCODING = "utf-8";
 
   /**
-   * This class allows the user to build a JSONPointer in steps, using
-   * exactly one segment in each step.
+   * This class allows the user to build a JSONPointer in steps, using exactly one segment in each
+   * step.
    */
   public static class Builder {
 
@@ -24,8 +24,9 @@ public class NotJSONPointer {
     private final List<String> refTokens = new ArrayList<String>();
 
     /**
-     * Creates a {@code JSONPointer} instance using the tokens previously set using the
-     * {@link #append(String)} method calls.
+     * Creates a {@code JSONPointer} instance using the tokens previously set using the {@link
+     * #append(String)} method calls.
+     *
      * @return a JSONPointer object
      */
     public NotJSONPointer build() {
@@ -35,10 +36,10 @@ public class NotJSONPointer {
     /**
      * Adds an arbitrary token to the list of reference tokens. It can be any non-null value.
      *
-     * Unlike in the case of JSON string or URI fragment representation of JSON pointers, the
-     * argument of this method MUST NOT be escaped. If you want to query the property called
-     * {@code "a~b"} then you should simply pass the {@code "a~b"} string as-is, there is no
-     * need to escape it as {@code "a~0b"}.
+     * <p>Unlike in the case of JSON string or URI fragment representation of JSON pointers, the
+     * argument of this method MUST NOT be escaped. If you want to query the property called {@code
+     * "a~b"} then you should simply pass the {@code "a~b"} string as-is, there is no need to escape
+     * it as {@code "a~0b"}.
      *
      * @param token the new token to be appended to the list
      * @return {@code this}
@@ -54,7 +55,7 @@ public class NotJSONPointer {
 
     /**
      * Adds an integer to the reference token list. Although not necessarily, mostly this token will
-     * denote an array index. 
+     * denote an array index.
      *
      * @param arrayIndex the array index to be added to the token list
      * @return {@code this}
@@ -77,8 +78,8 @@ public class NotJSONPointer {
    *       .build();
    * </code></pre>
    *
-   *  @return a builder instance which can be used to construct a {@code JSONPointer} instance by chained
-   *  {@link Builder#append(String)} calls.
+   * @return a builder instance which can be used to construct a {@code JSONPointer} instance by
+   *     chained {@link Builder#append(String)} calls.
    */
   public static Builder builder() {
     return new Builder();
@@ -88,9 +89,9 @@ public class NotJSONPointer {
   private final List<String> refTokens;
 
   /**
-   * Pre-parses and initializes a new {@code JSONPointer} instance. If you want to
-   * evaluate the same JSON Pointer on different JSON documents then it is recommended
-   * to keep the {@code JSONPointer} instances due to performance considerations.
+   * Pre-parses and initializes a new {@code JSONPointer} instance. If you want to evaluate the same
+   * JSON Pointer on different JSON documents then it is recommended to keep the {@code JSONPointer}
+   * instances due to performance considerations.
    *
    * @param pointer the JSON String or URI Fragment representation of the JSON pointer.
    * @throws IllegalArgumentException if {@code pointer} is not a valid JSON pointer
@@ -122,7 +123,7 @@ public class NotJSONPointer {
     do {
       prevSlashIdx = slashIdx + 1;
       slashIdx = refs.indexOf('/', prevSlashIdx);
-      if(prevSlashIdx == slashIdx || prevSlashIdx == refs.length()) {
+      if (prevSlashIdx == slashIdx || prevSlashIdx == refs.length()) {
         // found 2 slashes in a row ( obj//next )
         // or single slash at the end of a string ( obj/test/ )
         this.refTokens.add("");
@@ -136,9 +137,9 @@ public class NotJSONPointer {
       }
     } while (slashIdx >= 0);
     // using split does not take into account consecutive separators or "ending nulls"
-    //for (String token : refs.split("/")) {
+    // for (String token : refs.split("/")) {
     //    this.refTokens.add(unescape(token));
-    //}
+    // }
   }
 
   public NotJSONPointer(List<String> refTokens) {
@@ -153,10 +154,10 @@ public class NotJSONPointer {
   }
 
   /**
-   * Evaluates this JSON Pointer on the given {@code document}. The {@code document}
-   * is usually a {@link NotJSONObject} or a {@link NotJSONArray} instance, but the empty
-   * JSON Pointer ({@code ""}) can be evaluated on any JSON values and in such case the
-   * returned value will be {@code document} itself. 
+   * Evaluates this JSON Pointer on the given {@code document}. The {@code document} is usually a
+   * {@link NotJSONObject} or a {@link NotJSONArray} instance, but the empty JSON Pointer ({@code
+   * ""}) can be evaluated on any JSON values and in such case the returned value will be {@code
+   * document} itself.
    *
    * @param document the JSON document which should be the subject of querying.
    * @return the result of the evaluation
@@ -173,9 +174,10 @@ public class NotJSONPointer {
       } else if (current instanceof NotJSONArray) {
         current = readByIndexToken(current, token);
       } else {
-        throw new NotJSONPointerException(format(
-                "value [%s] is not an array or object therefore its key %s cannot be resolved", current,
-                token));
+        throw new NotJSONPointerException(
+            format(
+                "value [%s] is not an array or object therefore its key %s cannot be resolved",
+                current, token));
       }
     }
     return current;
@@ -183,18 +185,22 @@ public class NotJSONPointer {
 
   /**
    * Matches a NotJSONArray element by ordinal position
+   *
    * @param current the NotJSONArray to be evaluated
    * @param indexToken the array index in string form
    * @return the matched object. If no matching item is found a
    * @throws NotJSONPointerException is thrown if the index is out of bounds
    */
-  private static Object readByIndexToken(Object current, String indexToken) throws NotJSONPointerException {
+  private static Object readByIndexToken(Object current, String indexToken)
+      throws NotJSONPointerException {
     try {
       int index = Integer.parseInt(indexToken);
       NotJSONArray currentArr = (NotJSONArray) current;
       if (index >= currentArr.length()) {
-        throw new NotJSONPointerException(format("index %s is out of bounds - the array has %d elements", indexToken,
-                Integer.valueOf(currentArr.length())));
+        throw new NotJSONPointerException(
+            format(
+                "index %s is out of bounds - the array has %d elements",
+                indexToken, Integer.valueOf(currentArr.length())));
       }
       try {
         return currentArr.get(index);
@@ -206,36 +212,32 @@ public class NotJSONPointer {
     }
   }
 
-  /**
-   * Returns a string representing the JSONPointer path value using string
-   * representation
-   */
+  /** Returns a string representing the JSONPointer path value using string representation */
   @Override
   public String toString() {
     StringBuilder rval = new StringBuilder("");
-    for (String token: this.refTokens) {
+    for (String token : this.refTokens) {
       rval.append('/').append(escape(token));
     }
     return rval.toString();
   }
 
   /**
-   * Escapes path segment values to an unambiguous form.
-   * The escape char to be inserted is '~'. The chars to be escaped 
-   * are ~, which maps to ~0, and /, which maps to ~1.
+   * Escapes path segment values to an unambiguous form. The escape char to be inserted is '~'. The
+   * chars to be escaped are ~, which maps to ~0, and /, which maps to ~1.
+   *
    * @param token the JSONPointer segment value to be escaped
    * @return the escaped value for the token
-   *
    * @see <a href="https://tools.ietf.org/html/rfc6901#section-3">rfc6901 section 3</a>
    */
   private static String escape(String token) {
-    return token.replace("~", "~0")
-            .replace("/", "~1");
+    return token.replace("~", "~0").replace("/", "~1");
   }
 
   /**
-   * Returns a string representing the JSONPointer path value using URI
-   * fragment identifier representation
+   * Returns a string representing the JSONPointer path value using URI fragment identifier
+   * representation
+   *
    * @return a uri fragment string
    */
   public String toURIFragment() {
@@ -249,5 +251,4 @@ public class NotJSONPointer {
       throw new RuntimeException(e);
     }
   }
-
 }

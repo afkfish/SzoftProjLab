@@ -5,8 +5,8 @@ Public Domain.
 */
 
 /**
- * The JSONPointerException is thrown by {@link NotJSONPointer} if an error occurs
- * during evaluating a pointer.
+ * The JSONPointerException is thrown by {@link NotJSONPointer} if an error occurs during evaluating
+ * a pointer.
  *
  * @author JSON.org
  * @version 2016-05-13
@@ -21,5 +21,4 @@ public class NotJSONPointerException extends NotJSONException {
   public NotJSONPointerException(String message, Throwable cause) {
     super(message, cause);
   }
-
 }
