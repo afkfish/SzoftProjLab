@@ -58,7 +58,7 @@ public class Pump extends Node {
   }
 
   @Override
-  public void calculateFlowRate() {
+  public void   calculateFlowRate() {
     if (!this.isBroken) {
       if (sources.contains(activeInput)) {
         if (absorbers.contains(activeOutput)) {

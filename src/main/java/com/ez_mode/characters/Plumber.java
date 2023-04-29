@@ -1,5 +1,6 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.Map;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
@@ -15,6 +16,7 @@ public class Plumber extends Character {
 
   private Pump pickedupPump;
   private Pipe draggedpipe;
+  private Pipe pickedUpPipe;
 
   @Override
   public void setPump(Pipe in, Pipe out) {
@@ -48,13 +50,13 @@ public class Plumber extends Character {
     }
   }
 
-  public void PlacePump() { // TODO implemet the placing
+  public void PlacePump() {
     // Stakeholder
     if (this.pickedupPump != null) {
       try {
         Pipe temp = ((Pipe) standingOn);
         Pipe newPipe = new Pipe();
-        // Map.addNode(new Pipe(), temp.getX()+5, temp.getY() +5);
+        //Map.addNode(new Pipe(), temp.getX()+5, temp.getY() +5);
         try {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
@@ -71,8 +73,22 @@ public class Plumber extends Character {
   }
 
   public void PlacePipe() {
-    /// Placeholder
-    /// TODO
+    try {
+      if(draggedpipe != null){
+          standingOn.connect(draggedpipe);
+          draggedpipe = null;
+          return;
+      }
+      else if(pickedUpPipe != null){
+          standingOn.connect(pickedUpPipe);
+          //Map.addNode(pickedUpPipe, standingOn.getX()+5, standingOn.getY()+5);
+          pickedUpPipe = null;
+          return;
+      }
+    }
+    catch (ObjectFullException e) {
+      System.out.println(this.getUuid() + "tried to place and connect a pipe to a full node");
+    }
   }
 
   public void PickupPump() {
@@ -95,8 +111,14 @@ public class Plumber extends Character {
           break;
         }
       }
-      if ((draggedpipe != null)) {
+      if (draggedpipe != null && !draggedpipe.getNeighbours().isEmpty()) {
         System.out.println("\t" + draggedpipe + " has been picked up by " + this.getUuid());
+      }
+      else if(draggedpipe != null && draggedpipe.getNeighbours().isEmpty()){
+        pickedUpPipe = draggedpipe;
+        draggedpipe = null;
+        //Map.removeNode(pickedUpPipe);
+        System.out.println("\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
       }
     } catch (ClassCastException e) {
       System.out.println(this.getUuid() + " is not standing on a Cistern");
