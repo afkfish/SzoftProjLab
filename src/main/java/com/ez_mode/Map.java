@@ -4,6 +4,9 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.notJson.NotJSONArray;
+import com.ez_mode.notJson.NotJSONObject;
+import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,9 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -60,12 +60,12 @@ public class Map implements Tickable {
       return;
     }
     try (FileInputStream fileInputStream = new FileInputStream("testMap.json")) {
-      JSONTokener root = new JSONTokener(fileInputStream);
-      JSONObject rootObject = new JSONObject(root);
+      NotJSONTokener root = new NotJSONTokener(fileInputStream);
+      NotJSONObject rootObject = new NotJSONObject(root);
 
-      JSONArray nodeList = rootObject.getJSONArray("map");
+      NotJSONArray nodeList = rootObject.getNotJSONArray("map");
       for (int i = 0; i < nodeList.length(); i++) {
-        JSONObject node = nodeList.getJSONObject(i);
+        NotJSONObject node = nodeList.getJSONObject(i);
         Node temp;
         switch (node.getString("type")) {
           case "cistern":
@@ -100,16 +100,16 @@ public class Map implements Tickable {
 
       // iterate over the nodes again and set the connections
       for (int i = 0; i < nodeList.length(); i++) {
-        JSONObject node = nodeList.getJSONObject(i);
+        NotJSONObject node = nodeList.getJSONObject(i);
         Node temp = gameMap[node.getInt("x")][node.getInt("y")];
         if (node.getString("type").equals("waterspring")
             || node.getString("type").equals("cistern")) {
           continue;
         }
-        JSONArray connections = node.getJSONArray("connections");
+        NotJSONArray connections = node.getNotJSONArray("connections");
 
         for (int j = 0; j < connections.length(); j++) {
-          JSONObject connection = connections.getJSONObject(j);
+          NotJSONObject connection = connections.getJSONObject(j);
           Node neighbour = gameMap[connection.getInt("x")][connection.getInt("y")];
           if (neighbour == null) {
             System.out.println(
@@ -125,9 +125,9 @@ public class Map implements Tickable {
         }
       }
 
-      JSONArray playerList = rootObject.getJSONArray("players");
+      NotJSONArray playerList = rootObject.getNotJSONArray("players");
       for (int i = 0; i < playerList.length(); i++) {
-        JSONObject player = playerList.getJSONObject(i);
+        NotJSONObject player = playerList.getJSONObject(i);
         Character temp;
         switch (player.getString("type")) {
           case "plumber":
@@ -164,27 +164,27 @@ public class Map implements Tickable {
     assert path.endsWith(".json") : "The file must be a .json configuration file!";
     try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
       // create the root object
-      JSONObject root = new JSONObject();
+      NotJSONObject root = new NotJSONObject();
       root.put("size", gameMap.length);
-      JSONArray playerList = new JSONArray();
+      NotJSONArray playerList = new NotJSONArray();
       // iterate over the players and add them to the list
       for (Character player : players) {
-        JSONObject playerObject = new JSONObject();
+        NotJSONObject playerObject = new NotJSONObject();
         playerObject.put("name", player.getName());
         playerObject.put("type", player.getClass().getSimpleName().toLowerCase());
         playerObject.put("x", player.getStandingOn().getX());
         playerObject.put("y", player.getStandingOn().getY());
-        playerObject.put("inventory", new JSONObject());
+        playerObject.put("inventory", new NotJSONObject());
         playerList.put(playerObject);
       }
-      JSONArray nodeList = new JSONArray();
+      NotJSONArray nodeList = new NotJSONArray();
       // iterate over the nodes and add them to the list
       for (int i = 0; i < gameMap.length; i++) {
         for (int j = 0; j < gameMap[i].length; j++) {
           if (gameMap[i][j] == null) {
             continue;
           }
-          JSONObject node = new JSONObject();
+          NotJSONObject node = new NotJSONObject();
           node.put("type", gameMap[i][j].getClass().getSimpleName().toLowerCase());
           node.put("x", i);
           node.put("y", j);
@@ -193,9 +193,9 @@ public class Map implements Tickable {
             nodeList.put(node);
             continue;
           }
-          JSONArray connections = new JSONArray();
+          NotJSONArray connections = new NotJSONArray();
           for (Node neighbour : gameMap[i][j].getNeighbours()) {
-            JSONObject connection = new JSONObject();
+            NotJSONObject connection = new NotJSONObject();
             connection.put("x", neighbour.getX());
             connection.put("y", neighbour.getY());
             connections.put(connection);

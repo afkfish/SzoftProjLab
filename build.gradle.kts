@@ -24,7 +24,6 @@ dependencies {
     // log4j2 for logging
     implementation("org.apache.logging.log4j:log4j-api:2.20.0")
     implementation("org.apache.logging.log4j:log4j-core:2.20.0")
-    implementation("org.json:json:20230227")
 
     // JUnit for testing
     testImplementation("junit:junit:4.13.2")
