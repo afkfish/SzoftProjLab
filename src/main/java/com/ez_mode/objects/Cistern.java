@@ -26,14 +26,20 @@ public class Cistern extends Node {
   }
 
   @Override
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
+    throw new InvalidPlayerActionException(
+        String.format("Player <%s> tried to make a cistern sticky/slippery.", c.getName()));
+  }
+
+  @Override
   public void tick() {
     super.tick();
 
     if (sources.size() < maxConnections) sources.add(MakePipe());
 
     // this.sources.forEach(node -> Map.waterLost += node.flowRate);
-    for (Node nodi : this.sources) {
-      Map.waterArrived += nodi.flowRate;
+    for (Node node : this.sources) {
+      Map.waterArrived += node.flowRate;
     }
   }
 

@@ -21,18 +21,25 @@ Public Domain.
 public class NotJSONTokener {
   /** current read character position on the current line. */
   private long character;
+
   /** flag to indicate if the end of the input has been found. */
   private boolean eof;
+
   /** current read index of the input. */
   private long index;
+
   /** current line of the input. */
   private long line;
+
   /** previous character read from the input. */
   private char previous;
+
   /** Reader for the input. */
   private final Reader reader;
+
   /** flag to indicate that a previous character was requested. */
   private boolean usePrevious;
+
   /** the number of characters read in the previous line. */
   private long characterPreviousLine;
 

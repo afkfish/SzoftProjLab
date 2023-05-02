@@ -53,6 +53,7 @@ public class NotJSONObject {
     public boolean equals(Object object) {
       return object == null || object == this;
     }
+
     /**
      * A Null object is equal to the null value and to itself.
      *
@@ -1705,6 +1706,7 @@ public class NotJSONObject {
   public Object query(String NotJSONPointer) {
     return query(new NotJSONPointer(NotJSONPointer));
   }
+
   /**
    * Uses a user initialized NotJSONPointer and tries to match it to an item within this JSONObject.
    * For example, given a JSONObject initialized with this document:

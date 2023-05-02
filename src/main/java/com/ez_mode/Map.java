@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class Map implements Tickable {
 
   private final Logger logger = LogManager.getLogger(Map.class);
+
   /**
    * The ArrayList representation of the game. This map contains every object. TODO: store the
    * objects with their coordinates
@@ -34,6 +35,7 @@ public class Map implements Tickable {
 
   /** The amount of water, lost by the nomads sabotaging the nodes. */
   public static double waterLost = 0;
+
   /** The amount of water, arrived to the cisterns. */
   public static double waterArrived = 0;
 
@@ -229,6 +231,9 @@ public class Map implements Tickable {
   public static void addPlayer(Character player, Node node) {
     players.add(player);
     player.placeTo(node);
+  }
+
+  public static void removeNode(Node node) { // TODO implement remove logic
   }
 
   public static Character getPlayer(int index) {

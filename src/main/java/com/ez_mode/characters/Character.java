@@ -1,6 +1,7 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.Map;
+import com.ez_mode.Tickable;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
@@ -15,7 +16,7 @@ import org.apache.logging.log4j.Logger;
  * This class is responsible for the characters in the game. This is tha abstract class for all
  * characters. It contains a name and a reference to the StandableObject it is standing on.
  */
-public abstract class Character {
+public abstract class Character implements Tickable {
   /*
    * The logger for this class.
    */
@@ -32,10 +33,13 @@ public abstract class Character {
   /** The StandableObject the player is standing on. */
   protected Node standingOn;
 
+  protected int stuckedInPipe;
+
   public Character(String name) {
     this.logger = LogManager.getLogger(this.getClass());
     this.name = name;
     this.uuid = this.name + (int) (Math.random() * 100);
+    this.stuckedInPipe = 0;
   }
 
   public String getUuid() {
@@ -102,6 +106,24 @@ public abstract class Character {
     } catch (ClassCastException e) {
       System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
     }
+  }
+
+  public void makePipeSticky() {
+    try {
+      standingOn.setSurface("sticky", this);
+    } catch (InvalidPlayerActionException e) {
+      this.logger.error(e.getMessage());
+    }
+  }
+
+  public void tick() {
+    if (stuckedInPipe > 0) {
+      stuckedInPipe--;
+    }
+  }
+
+  public void stucked() {
+    stuckedInPipe = ((int) (Math.random() * 100)) + 1;
   }
 
   @Override

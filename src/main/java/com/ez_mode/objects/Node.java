@@ -17,17 +17,22 @@ public abstract class Node implements Tickable {
    * The logger for this class.
    */
   protected final Logger logger;
+
   /** The unique identifier for this object. */
   protected final String uuid;
+
   /** The characters currently on this object. */
   protected final ArrayList<Character> characters = new ArrayList<>();
 
   /** The objects that are neighbours to this object. */
   protected final ArrayList<Node> neighbours = new ArrayList<>();
+
   /** The objects that are sources of water to this object. */
   protected final ArrayList<Node> sources = new ArrayList<>();
+
   /** The objects that are absorbers of water from this object. */
   protected final ArrayList<Node> absorbers = new ArrayList<>();
+
   /** The maximum number of characters that can be on this object. */
   protected final int maxCharacters;
 
@@ -35,6 +40,7 @@ public abstract class Node implements Tickable {
   protected final int x;
   protected final int y;
   protected boolean isBroken = false;
+
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
 
@@ -101,6 +107,9 @@ public abstract class Node implements Tickable {
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
 
   public abstract void breakNode(Character character) throws InvalidPlayerActionException;
+
+  public abstract void setSurface(String type, Character c)
+      throws InvalidPlayerActionException; // TODO implement is childs
 
   public void addFlowRate(Node source, double excededFlow) {
     if (!this.sources.contains(source)) {
