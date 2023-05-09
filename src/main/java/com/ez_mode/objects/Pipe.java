@@ -48,18 +48,18 @@ public class Pipe extends Node {
 
   @Override
   public void addCharacter(Character character)
-          throws ObjectFullException, InvalidPlayerMovementException {
+      throws ObjectFullException, InvalidPlayerMovementException {
     if (this.characters.size() >= maxCharacters)
       throw new ObjectFullException(
-              String.format(
-                      "Player <%s> tried to add a character to a full object.", character.getName()));
+          String.format(
+              "Player <%s> tried to add a character to a full object.", character.getName()));
 
     for (Node neighbour : neighbours) {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
-        if(isSlippery){
+        if (isSlippery) {
           int RNG = (int) (Math.random() * 100);
-          if(RNG < 50) this.neighbours.get(1).addCharacter(character);
+          if (RNG < 50) this.neighbours.get(1).addCharacter(character);
           else this.neighbours.get(0).addCharacter(character);
           try {
             this.removeCharacter(character);
@@ -67,15 +67,15 @@ public class Pipe extends Node {
             throw new RuntimeException(e);
           }
         }
-        if(isStikcy) character.stucked();
+        if (isStikcy) character.stucked();
         System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
     }
     // If the character is not on a neighbour, then they cannot be added to this object.
     throw new InvalidPlayerMovementException(
-            String.format(
-                    "Player <%s> tried to move to a non-neighbouring object.", character.getName()));
+        String.format(
+            "Player <%s> tried to move to a non-neighbouring object.", character.getName()));
   }
 
   @Override
