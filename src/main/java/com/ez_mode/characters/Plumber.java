@@ -23,7 +23,6 @@ public class Plumber extends Character {
     try {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
-      // TODO: Do the connecting logic this is just shit.
       if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
       else {
         System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
@@ -103,18 +102,17 @@ public class Plumber extends Character {
 
   public void PickupPipe(Pipe pipe) {
     try {
-    if(pipe==null){
-      for (Node nodi : standingOn.getNeighbours()) {
-        if (nodi!= null&&nodi.getNeighbours().size() > 2) {
-          draggedpipe = (Pipe) nodi;
-          draggedpipe.disconnect(this.standingOn);
-          break;
+      if (pipe == null) {
+        for (Node nodi : standingOn.getNeighbours()) {
+          if (nodi != null && nodi.getNeighbours().size() > 2) {
+            draggedpipe = (Pipe) nodi;
+            draggedpipe.disconnect(this.standingOn);
+            break;
+          }
         }
+      } else if (this.standingOn.getNeighbours().contains(pipe)) {
+        draggedpipe = pipe;
       }
-    }
-    else if(this.standingOn.getNeighbours().contains(pipe)) {
-      draggedpipe=pipe;
-    }
 
       if (draggedpipe != null && !draggedpipe.getNeighbours().isEmpty()) {
         System.out.println("\t" + draggedpipe + " has been picked up by " + this.getUuid());
@@ -123,11 +121,10 @@ public class Plumber extends Character {
         draggedpipe = null;
         // Map.removeNode(pickedUpPipe);
         System.out.println(
-                "\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
+            "\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
+      } else if (draggedpipe == null) {
+        throw new NotFoundExeption("Pipe Not Found!");
       }
-    else if(draggedpipe==null){
-      throw new NotFoundExeption("Pipe Not Found!");
-    }
     } catch (ClassCastException cce) {
       System.out.println(this.getUuid() + " is not standing on a Cistern");
     } catch (NotFoundExeption nfe) {

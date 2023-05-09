@@ -34,9 +34,9 @@ public class Cistern extends Node {
   @Override
   public void tick() {
     super.tick();
-    if(Math.random()*100<40){
-    MakePump();
-    MakePipe();
+    if (Math.random() * 100 < 40) {
+      MakePump();
+      MakePipe();
     }
     if (sources.size() < maxConnections) sources.add(MakePipe());
 
