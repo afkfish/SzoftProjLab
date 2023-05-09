@@ -1,6 +1,7 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
 
@@ -100,14 +101,21 @@ public class Plumber extends Character {
     }
   }
 
-  public void PickupPipe() {
+  public void PickupPipe(Pipe pipe) {
     try {
+    if(pipe==null){
       for (Node nodi : standingOn.getNeighbours()) {
-        if (nodi.getNeighbours().size() > 2) {
+        if (nodi!= null&&nodi.getNeighbours().size() > 2) {
           draggedpipe = (Pipe) nodi;
+          draggedpipe.disconnect(this.standingOn);
           break;
         }
       }
+    }
+    else if(this.standingOn.getNeighbours().contains(pipe)) {
+      draggedpipe=pipe;
+    }
+
       if (draggedpipe != null && !draggedpipe.getNeighbours().isEmpty()) {
         System.out.println("\t" + draggedpipe + " has been picked up by " + this.getUuid());
       } else if (draggedpipe != null && draggedpipe.getNeighbours().isEmpty()) {
@@ -115,10 +123,15 @@ public class Plumber extends Character {
         draggedpipe = null;
         // Map.removeNode(pickedUpPipe);
         System.out.println(
-            "\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
+                "\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
       }
-    } catch (ClassCastException e) {
+    else if(draggedpipe==null){
+      throw new NotFoundExeption("Pipe Not Found!");
+    }
+    } catch (ClassCastException cce) {
       System.out.println(this.getUuid() + " is not standing on a Cistern");
+    } catch (NotFoundExeption nfe) {
+      System.out.println(nfe.getMessage());
     }
   }
 }

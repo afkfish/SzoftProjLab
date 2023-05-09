@@ -1,9 +1,10 @@
 package com.ez_mode.objects;
 
-import static java.lang.Double.min;
-
 import com.ez_mode.characters.Character;
+import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+
+import static java.lang.Double.min;
 
 /**
  * A pump is a node that can be audjusted and repaired. It is bound to break after a certain amount
@@ -82,8 +83,15 @@ public class Pump extends Node {
 
   @Override
   public void tick() {
-    calculateFlowRate();
-
-    // TODO: Implement the pump breaking randomly and other stuff
+    calculateFlowRate( );
+    if((Math.random()*100)<80){
+      Nomad temp= new Nomad("temp");
+      temp.placeTo(this);
+      try {
+        this.breakNode(temp);
+      } catch (InvalidPlayerActionException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 }

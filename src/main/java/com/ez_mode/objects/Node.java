@@ -7,9 +7,10 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
 
 /** The Node class is the base class for all objects that can be placed on the map. */
 public abstract class Node implements Tickable {
@@ -109,7 +110,7 @@ public abstract class Node implements Tickable {
   public abstract void breakNode(Character character) throws InvalidPlayerActionException;
 
   public abstract void setSurface(String type, Character c)
-      throws InvalidPlayerActionException; // TODO implement is childs
+      throws InvalidPlayerActionException;
 
   public void addFlowRate(Node source, double excededFlow) {
     if (!this.sources.contains(source)) {
