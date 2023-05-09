@@ -90,14 +90,13 @@ public abstract class Character implements Tickable {
   /** Breaks the node the player is standing on. */
   public void breakNode() {
     try {
-      this.standingOn.breakNode(this);
+      ((Pipe) this.standingOn).breakNode(this);
       System.out.println("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
-    } catch (InvalidPlayerActionException e) {
+    } catch (InvalidPlayerActionException | ClassCastException e) {
       this.logger.error(e.getMessage());
     }
   }
 
-  // TODO: Override in children
   public void setPump(Pipe in, Pipe out) {
     try {
       Pump pump = (Pump) this.standingOn;
