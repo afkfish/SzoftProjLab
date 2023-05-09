@@ -2,6 +2,9 @@ package com.ez_mode.objects;
 
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+import com.ez_mode.exceptions.InvalidPlayerMovementException;
+import com.ez_mode.exceptions.NotFoundExeption;
+import com.ez_mode.exceptions.ObjectFullException;
 
 /**
  * A pipe is a node that can be broken and repaired. It can also be connected to other pipes. A pipe
@@ -44,7 +47,36 @@ public class Pipe extends Node {
   }
 
   @Override
-  public void addCharacter(Character character) {}
+  public void addCharacter(Character character)
+          throws ObjectFullException, InvalidPlayerMovementException {
+    if (this.characters.size() >= maxCharacters)
+      throw new ObjectFullException(
+              String.format(
+                      "Player <%s> tried to add a character to a full object.", character.getName()));
+
+    for (Node neighbour : neighbours) {
+      if (neighbour.characters.contains(character)) {
+        this.characters.add(character);
+        if(isSlippery){
+          int RNG = (int) (Math.random() * 100);
+          if(RNG < 50) this.neighbours.get(1).addCharacter(character);
+          else this.neighbours.get(0).addCharacter(character);
+          try {
+            this.removeCharacter(character);
+          } catch (NotFoundExeption e) {
+            throw new RuntimeException(e);
+          }
+        }
+        if(isStikcy) character.stucked();
+        System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
+        return;
+      }
+    }
+    // If the character is not on a neighbour, then they cannot be added to this object.
+    throw new InvalidPlayerMovementException(
+            String.format(
+                    "Player <%s> tried to move to a non-neighbouring object.", character.getName()));
+  }
 
   @Override
   public void breakNode(Character character) throws InvalidPlayerActionException {

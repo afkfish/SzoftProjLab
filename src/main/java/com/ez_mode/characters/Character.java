@@ -61,6 +61,8 @@ public abstract class Character implements Tickable {
    */
   public void moveTo(Node node) throws ObjectFullException, InvalidPlayerMovementException {
     try {
+      if(this.stuckedInPipe > 0)
+        throw new InvalidPlayerMovementException(this.uuid + "Player tried to move, but cant because it stucked in a pipe");
       node.addCharacter(this);
       standingOn.removeCharacter(this);
       this.logger.debug("Moved {} to {} from {}", this.uuid, node.getUuid(), standingOn.getUuid());
