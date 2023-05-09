@@ -49,7 +49,7 @@ public class Pump extends Node {
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
-            String.format("Player <%s> tried to make a pump sticky/slippery.", c.getName()));
+        String.format("Player <%s> tried to make a pump sticky/slippery.", c.getName()));
   }
 
   public void setActiveInput(Pipe p) {

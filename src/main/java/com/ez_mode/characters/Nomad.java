@@ -21,7 +21,8 @@ public class Nomad extends Character {
     }
     System.out.println("\t" + this.getUuid() + " has set " + standingOn.getUuid());
   }
-  public void setSlippery(){
+
+  public void setSlippery() {
     try {
       standingOn.setSurface("slippery", this);
     } catch (InvalidPlayerActionException e) {

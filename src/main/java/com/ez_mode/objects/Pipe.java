@@ -44,9 +44,7 @@ public class Pipe extends Node {
   }
 
   @Override
-  public void addCharacter(Character character){
-
-  }
+  public void addCharacter(Character character) {}
 
   @Override
   public void breakNode(Character character) throws InvalidPlayerActionException {
