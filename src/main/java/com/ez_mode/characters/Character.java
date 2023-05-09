@@ -97,12 +97,11 @@ public abstract class Character implements Tickable {
     }
   }
 
-  // TODO: Override in children
+
   public void setPump(Pipe in, Pipe out) {
     try {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
-      // TODO: Do the connecting logic this is just shit.
       pump.setActiveInput(in);
       pump.setActiveOutput(out);
       System.out.println("\t" + this.uuid + " is setting the pump.");

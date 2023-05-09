@@ -23,7 +23,6 @@ public class Plumber extends Character {
     try {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
-      // TODO: Do the connecting logic this is just shit.
       if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
       else {
         System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
