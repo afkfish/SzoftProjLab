@@ -44,6 +44,11 @@ public class Pipe extends Node {
   }
 
   @Override
+  public void addCharacter(Character character){
+
+  }
+
+  @Override
   public void breakNode(Character character) throws InvalidPlayerActionException {
     if (!this.isBroken && unbreakableTill == 0) {
       this.isBroken = true;
