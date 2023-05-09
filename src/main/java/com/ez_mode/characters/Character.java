@@ -97,7 +97,6 @@ public abstract class Character implements Tickable {
     }
   }
 
-
   public void setPump(Pipe in, Pipe out) {
     try {
       Pump pump = (Pump) this.standingOn;
