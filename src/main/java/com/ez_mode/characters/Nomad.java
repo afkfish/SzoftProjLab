@@ -25,7 +25,7 @@ public class Nomad extends Character {
       }
       if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
       else {
-        System.out.println("\t" + in.getUuid() + " out Pipe not connected to the pump.");
+        System.out.println("\t" + in.getUuid() + " out Pipe is not a neighbour of the pump.");
         return;
       }
       System.out.println("\t" + this.getUuid() + " is setting the pump.");

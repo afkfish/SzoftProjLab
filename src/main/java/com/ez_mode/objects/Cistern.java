@@ -5,6 +5,7 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Cistern extends Node {
   private final ArrayList<Pump> producedPumps = new ArrayList<>();
@@ -34,7 +35,8 @@ public class Cistern extends Node {
   @Override
   public void tick() {
     super.tick();
-    if (Math.random() * 100 < 40) {
+    Random random=new Random();
+    if (random.nextInt(100) < 40) {
       MakePump();
       MakePipe();
     }

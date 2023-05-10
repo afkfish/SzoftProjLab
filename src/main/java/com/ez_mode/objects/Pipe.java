@@ -6,6 +6,8 @@ import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 
+import java.util.Random;
+
 /**
  * A pipe is a node that can be broken and repaired. It can also be connected to other pipes. A pipe
  * can only be connected to 2 other nodes and the maximum player capacity is 1.
@@ -38,7 +40,8 @@ public class Pipe extends Node {
   public void repairNode(Character character) throws InvalidPlayerActionException {
     if (this.isBroken) {
       this.isBroken = false;
-      unbreakableTill = ((int) (Math.random() * 100)) + 1;
+      Random random= new Random();
+      unbreakableTill = ((random.nextInt(100)) + 1);
     } else {
       throw new InvalidPlayerActionException(
           String.format(
@@ -58,7 +61,8 @@ public class Pipe extends Node {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
         if (isSlippery) {
-          int RNG = (int) (Math.random() * 100);
+          Random random= new Random();
+          int RNG = random.nextInt(100);
           if (RNG < 50) this.neighbours.get(1).addCharacter(character);
           else this.neighbours.get(0).addCharacter(character);
           try {
