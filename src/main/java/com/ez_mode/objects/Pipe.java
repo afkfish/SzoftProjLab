@@ -5,7 +5,6 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-
 import java.util.Random;
 
 /**
@@ -40,7 +39,7 @@ public class Pipe extends Node {
   public void repairNode(Character character) throws InvalidPlayerActionException {
     if (this.isBroken) {
       this.isBroken = false;
-      Random random= new Random();
+      Random random = new Random();
       unbreakableTill = ((random.nextInt(100)) + 1);
     } else {
       throw new InvalidPlayerActionException(
@@ -61,7 +60,7 @@ public class Pipe extends Node {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
         if (isSlippery) {
-          Random random= new Random();
+          Random random = new Random();
           int RNG = random.nextInt(100);
           if (RNG < 50) this.neighbours.get(1).addCharacter(character);
           else this.neighbours.get(0).addCharacter(character);
