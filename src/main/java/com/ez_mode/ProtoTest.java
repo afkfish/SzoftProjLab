@@ -122,7 +122,7 @@ public class ProtoTest {
       return;
     }
     try {
-      ((Nomad) c).breakNode();
+      c.breakNode();
       if (!((Pipe) (c.getStandingOn())).isBroken()) {
         System.out.println("Pipe has been brocken successfully!");
         return;
