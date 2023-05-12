@@ -7,9 +7,10 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
 
 /** The Node class is the base class for all objects that can be placed on the map. */
 public abstract class Node implements Tickable {
@@ -43,7 +44,7 @@ public abstract class Node implements Tickable {
 
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
-
+  public boolean isBroken(){return isBroken;}
   protected Node(int maxCharacters, int maxConnections, int x, int y) {
     this.uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
     this.logger = LogManager.getLogger(this.getClass());

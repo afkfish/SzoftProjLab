@@ -1,14 +1,22 @@
 package com.ez_mode;
 
 
+import com.ez_mode.characters.Character;
+import com.ez_mode.characters.Nomad;
+import com.ez_mode.characters.Plumber;
+import com.ez_mode.objects.Pipe;
+import com.ez_mode.objects.Pump;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import static com.ez_mode.Main.map;
+
+
 public class ProtoTest {
-  private HashMap<String, Runnable> commands;
-  private Map gameMap;
+  private final HashMap<String, Runnable> commands;
   private static ArrayList<String> args = new ArrayList<>();
   private boolean exited = false;
   private Scanner input = new Scanner(System.in);
@@ -29,8 +37,7 @@ public class ProtoTest {
     commands.put("character slippery", () -> MakePipeSlipperyTest());
     commands.put("character sticky", () -> MakePipeStickyTest());
     commands.put("exit", () -> exit());
-    gameMap = new Map(5);
-    gameMap.fillMap(2);
+    map.fillMap(2);
   }
 
   public void processCommand() {
@@ -50,7 +57,6 @@ public class ProtoTest {
       else System.out.println(cmd + "is an invalid command");
     }
   }
-
   public void MapPrintTest() {
     System.out.println("\tmap: ");
   }
@@ -65,19 +71,108 @@ public class ProtoTest {
 
   public void PlacePipeTest() {}
 
-  public void MoveCharacterTest() {}
+  public void MoveCharacterTest() {
 
-  public void BreakPipeTest() {}
+  }
+//
+  public void BreakPipeTest() {
+    Character c= Map.getPlayer(args.get(0));
+    assert c != null;
+    try{
+      ((Nomad)c).breakNode();
+      if(!((Pipe)(c.getStandingOn())).isBroken()){
+        System.out.println("Pipe has been brocken successfully!");
+        return;
+      }
+    }catch(ClassCastException   e){
+      System.out.println("the player is not standing on a Pump");
+      return;
+    }
+    System.err.println("BreakPipeTest failed!");
+  }
 
-  public void SetPumpTest() {}
+  public void SetPumpTest() {
 
-  public void RepairPumpTest() {}
+    Character c= Map.getPlayer(args.get(0));
+    assert c != null;
+    try{
+      ((Plumber)c).repair();
+      if(!((Pump)(c.getStandingOn())).isBroken()){
+        System.out.println("Pump has been repaired successfully!");
+        return;
+      }
+    }catch(ClassCastException   e){
+      System.out.println("the player is not standing on a Pump");
+      return;
+    }
+    System.err.println("RepairPipeTest failed!");
+  }
+  }
 
-  public void RepairPipeTest() {}
+  public void RepairPumpTest() {
+    Character c= Map.getPlayer(args.get(0));
+    assert c != null;
+    try{
+      ((Plumber)c).repair();
+      if(!((Pump)(c.getStandingOn())).isBroken()){
+        System.out.println("Pump has been repaired successfully!");
+        return;
+      }
+    }catch(ClassCastException   e){
+      System.out.println("the player is not standing on a Pump");
+      return;
+    }
+    System.err.println("RepairPipeTest failed!");
+  }
 
-  public void MakePipeSlipperyTest() {}
+  public void RepairPipeTest() {
+    Character c= Map.getPlayer(args.get(0));
+    assert c != null;
+    try{
+      ((Plumber)c).repair();
+      if(!((Pipe)(c.getStandingOn())).isBroken()){
+        System.out.println("Pipe has been repaired successfully!");
+        return;
+      }
+    }catch(ClassCastException   e){
+      System.out.println("the player is not standing on a pipe");
+      return;
+    }
+    System.err.println("RepairPipeTest failed!");
+  }
 
-  public void MakePipeStickyTest() {}
+
+  public void MakePipeSlipperyTest() {
+    Character c= Map.getPlayer(args.get(0));
+    assert c != null;
+    try{
+      ((Nomad)c).setSlippery();
+      if(((Pipe)(c.getStandingOn())).isSlippery()){
+        System.out.println("Pipe has been made slippery successfully!");
+        return;
+      }
+    }catch(ClassCastException  e){
+      System.out.println("the player is not standing on a pipe");
+      return;
+    }
+    System.err.println("MakePipeSlipperyTest failed!");
+  }
+
+  public void MakePipeStickyTest()  {
+    Character c= Map.getPlayer(args.get(0));
+    assert c != null;
+    try{
+      (c).makePipeSticky();
+    if(((Pipe)(c.getStandingOn())).isSticky()){
+      System.out.println("Pipe has been made sticky successfully!");
+      return;
+    }
+    }catch(ClassCastException e){
+      System.out.println("\n\tThe player is not standing on a pipe");
+      return;
+    }
+    System.err.println("MakePipeStickyTest failed!");
+  }
 
   public void exit() {
     exited = true;

@@ -8,11 +8,12 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Main {
   private enum Version {
@@ -22,7 +23,7 @@ public class Main {
   }
 
   private static final HashMap<String, Runnable> commands = new HashMap<>();
-  private static final Map map = new Map(10);
+  public static final Map map = new Map(10);
 
   public static Version version = Version.PROTOTYPE;
 
