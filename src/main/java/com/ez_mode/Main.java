@@ -28,7 +28,11 @@ public class Main {
 
   private static void init() {
     Scanner scanner = new Scanner(System.in);
-    commands.put("test", () -> {new ProtoTest().processCommand();});
+    commands.put(
+        "test",
+        () -> {
+          new ProtoTest().processCommand();
+        });
     commands.put("fill", () -> map.fillMap(4));
     commands.put(
         "load",
