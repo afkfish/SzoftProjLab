@@ -314,7 +314,7 @@ public class Map implements Tickable {
     //    character.placeTo(playerTruePos);
   }
 
-  public void clearMap() {
+  public static void clearMap() {
     gameMap = new Node[gameMap.length][gameMap[0].length];
   }
 
