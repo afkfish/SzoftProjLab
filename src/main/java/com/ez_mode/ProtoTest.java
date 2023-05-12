@@ -1,5 +1,3 @@
 package com.ez_mode;
 
-public class ProtoTest {
-
-}
+public class ProtoTest {}
