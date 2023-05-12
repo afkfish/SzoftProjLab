@@ -180,7 +180,7 @@ public class SkeletonTest {
     System.out.println("\tplumber:placeTo param: cistern");
     c1.MakePipe();
     System.out.println("\tcistern:MakePipe param: -");
-    p1.PickupPipe();
+    p1.PickupPipe(null);
     System.out.println("\tplumber:PickupPipe param: -");
     System.out.println("\t" + p1.getUuid() + " has picked up a new pipe.");
   }

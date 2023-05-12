@@ -108,8 +108,7 @@ public abstract class Node implements Tickable {
 
   public abstract void breakNode(Character character) throws InvalidPlayerActionException;
 
-  public abstract void setSurface(String type, Character c)
-      throws InvalidPlayerActionException; // TODO implement is childs
+  public abstract void setSurface(String type, Character c) throws InvalidPlayerActionException;
 
   public void addFlowRate(Node source, double excededFlow) {
     if (!this.sources.contains(source)) {
@@ -164,6 +163,13 @@ public abstract class Node implements Tickable {
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
     this.neighbours.add(node);
+    if (!node.getNeighbours().contains(this)) node.connect(this);
+  }
+
+  public void disconnect(Node node) {
+    System.out.println("\t" + this.uuid + ":connect param: " + node.uuid);
+    this.neighbours.remove(node);
+    if (node.getNeighbours().contains(this)) node.disconnect(this);
   }
 
   @Override
