@@ -8,13 +8,12 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -240,28 +239,29 @@ public class Map implements Tickable {
   public static Character getPlayer(int index) {
     return players.get(index);
   }
+
   public static Character getPlayer(String name) {
-    for(Character c: players){
+    for (Character c : players) {
       if (c.getName().equals(name)) {
         return c;
-      }
-      else{
+      } else {
         return null;
       }
     }
     return null;
   }
-  public static Node getNode(String name){
-    for(Node[] asd: gameMap){
-      for(Node nodi: asd) {
+
+  public static Node getNode(String name) {
+    for (Node[] asd : gameMap) {
+      for (Node nodi : asd) {
         if (nodi.getUuid().equals(name)) {
           return nodi;
         }
       }
-
     }
     return null;
   }
+
   public static void printPlayers() {
     for (int i = 0; i < players.size(); i++) {
       Character player = players.get(i);
