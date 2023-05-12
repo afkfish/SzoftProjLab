@@ -1,5 +1,7 @@
 package com.ez_mode;
 
+import static com.ez_mode.Main.map;
+
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
@@ -9,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import static com.ez_mode.Main.map;
-
 
 public class ProtoTest {
   private final HashMap<String, Runnable> commands;
@@ -86,7 +85,7 @@ public class ProtoTest {
 
   public void PlacePumpTest() {
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
@@ -117,7 +116,7 @@ public class ProtoTest {
 
   public void BreakPipeTest() {
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
@@ -137,14 +136,14 @@ public class ProtoTest {
   public void SetPumpTest() {
 
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
-    try{
-      c.setPump((Pipe)Map.getNode(args.get(1)),(Pipe)Map.getNode(args.get(2)));
-      if(((Pump)(c.getStandingOn())).getActiveInput().getUuid().equals(args.get(1)) &&
-              ((Pump)(c.getStandingOn())).getActiveOutput().getUuid().equals(args.get(2))){
+    try {
+      c.setPump((Pipe) Map.getNode(args.get(1)), (Pipe) Map.getNode(args.get(2)));
+      if (((Pump) (c.getStandingOn())).getActiveInput().getUuid().equals(args.get(1))
+          && ((Pump) (c.getStandingOn())).getActiveOutput().getUuid().equals(args.get(2))) {
         System.out.println("Pump has been set right successfully!");
         return;
       }
@@ -157,7 +156,7 @@ public class ProtoTest {
 
   public void RepairPumpTest() {
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
@@ -176,7 +175,7 @@ public class ProtoTest {
 
   public void RepairPipeTest() {
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
@@ -195,7 +194,7 @@ public class ProtoTest {
 
   public void MakePipeSlipperyTest() {
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
@@ -214,7 +213,7 @@ public class ProtoTest {
 
   public void MakePipeStickyTest() {
     Character c = Map.getPlayer(args.get(0));
-    if(c==null){
+    if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
