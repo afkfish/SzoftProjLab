@@ -74,7 +74,7 @@ public class ProtoTest {
   public void MoveCharacterTest() {
 
   }
-//
+
   public void BreakPipeTest() {
     Character c= Map.getPlayer(args.get(0));
     assert c != null;
@@ -96,18 +96,19 @@ public class ProtoTest {
     Character c= Map.getPlayer(args.get(0));
     assert c != null;
     try{
-      ((Plumber)c).repair();
-      if(!((Pump)(c.getStandingOn())).isBroken()){
-        System.out.println("Pump has been repaired successfully!");
+      c.setPump((Pipe)Map.getNode(args.get(1)),(Pipe)Map.getNode(args.get(2)));
+      if(((Pump)(c.getStandingOn())).getActiveInput().getUuid().equals(args.get(1)) &&
+              ((Pump)(c.getStandingOn())).getActiveOutput().getUuid().equals(args.get(2))){
+        System.out.println("Pump has been set right successfully!");
         return;
       }
     }catch(ClassCastException   e){
       System.out.println("the player is not standing on a Pump");
       return;
     }
-    System.err.println("RepairPipeTest failed!");
+    System.err.println("SetPumpTest failed!");
   }
-  }
+
 
   public void RepairPumpTest() {
     Character c= Map.getPlayer(args.get(0));
