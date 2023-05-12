@@ -7,14 +7,10 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import static com.ez_mode.Main.map;
-
 
 public class ProtoTest {
   private final HashMap<String, Runnable> commands;
@@ -135,10 +131,10 @@ public class ProtoTest {
 
     Character c = Map.getPlayer(args.get(0));
     assert c != null;
-    try{
-      c.setPump((Pipe)Map.getNode(args.get(1)),(Pipe)Map.getNode(args.get(2)));
-      if(((Pump)(c.getStandingOn())).getActiveInput().getUuid().equals(args.get(1)) &&
-              ((Pump)(c.getStandingOn())).getActiveOutput().getUuid().equals(args.get(2))){
+    try {
+      c.setPump((Pipe) Map.getNode(args.get(1)), (Pipe) Map.getNode(args.get(2)));
+      if (((Pump) (c.getStandingOn())).getActiveInput().getUuid().equals(args.get(1))
+          && ((Pump) (c.getStandingOn())).getActiveOutput().getUuid().equals(args.get(2))) {
         System.out.println("Pump has been set right successfully!");
         return;
       }
@@ -148,7 +144,6 @@ public class ProtoTest {
     }
     System.err.println("SetPumpTest failed!");
   }
-
 
   public void RepairPumpTest() {
     Character c = Map.getPlayer(args.get(0));
