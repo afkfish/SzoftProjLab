@@ -5,7 +5,6 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -155,7 +154,6 @@ public class ProtoTest {
     }
     System.err.println("SetPumpTest failed!");
   }
-
 
   public void RepairPumpTest() {
     Character c = Map.getPlayer(args.get(0));
