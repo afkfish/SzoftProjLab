@@ -1,5 +1,6 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.Main;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
@@ -20,17 +21,17 @@ public class Nomad extends Character {
       assert in != out : "Input and output pipes must be different.";
       if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
       else {
-        System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
+        Main.log("\t" + in.getUuid() + " in Pipe not connected to the pump.");
         return;
       }
       if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
       else {
-        System.out.println("\t" + in.getUuid() + " out Pipe is not a neighbour of the pump.");
+        Main.log("\t" + in.getUuid() + " out Pipe is not a neighbour of the pump.");
         return;
       }
-      System.out.println("\t" + this.getUuid() + " is setting the pump.");
+      Main.log("\t" + this.getUuid() + " is setting the pump.");
     } catch (ClassCastException e) {
-      System.out.println("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
+      Main.log("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
     }
   }
 
