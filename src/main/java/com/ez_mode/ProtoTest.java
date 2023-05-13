@@ -5,6 +5,9 @@ import static com.ez_mode.Main.map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
+import com.ez_mode.exceptions.InvalidPlayerMovementException;
+import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
 import java.util.ArrayList;
@@ -99,19 +102,36 @@ public class ProtoTest {
   }
 
   public void PlacePipeTest() {
-    String characterName = args.get(0);
-    int X = Integer.parseInt(args.get(1));
-    int Y = Integer.parseInt(args.get(2));
-    Plumber plumber = new Plumber(characterName);
-    plumber.placeTo(Map.getNode(X, Y));
-    plumber.PlacePipe();
+    Character c = Map.getPlayer(args.get(0));
+    if (c == null) {
+      System.out.println("Character couldn't be found on the map");
+      return;
+    }
+    Plumber p = (Plumber) c;
+    if(p.getDraggedpipe() != null &&p.getPickedUpPipe() != null) {
+      p.PlacePipe();
+      return;
+    }else System.out.println("Plumber has no pipe to place");
+    System.err.println("BreakPipeTest failed!");
   }
 
   public void MoveCharacterTest() {
-    String characterName = args.get(0);
-    int Up = Integer.parseInt(args.get(1));
-    int Right = Integer.parseInt(args.get(2));
-    Plumber plumber = new Plumber(characterName);
+   Character c = Map.getPlayer(args.get(0));
+   int Up = Integer.parseInt(args.get(1));
+   int Right = Integer.parseInt(args.get(2));
+   if(c == null){
+     System.out.println("Character couldn't be found on the map");
+     return;
+   }
+   try{
+     Node move = new Pump(c.getStandingOn().getX() + Up, c.getStandingOn().getY() + Right);
+     c.moveTo(move);
+     return;
+   }
+   catch(InvalidPlayerMovementException | ObjectFullException e){
+     System.out.println("Player can't move because it stucked or the given Node is full");
+    }
+    System.err.println("MoveCharacterTest failed");
   }
 
   public void BreakPipeTest() {

@@ -13,26 +13,6 @@ public class Nomad extends Character {
     super(name);
   }
 
-  @Override
-  public void setPump(Pipe in, Pipe out) {
-    try {
-      Pump pump = (Pump) this.standingOn;
-      assert in != out : "Input and output pipes must be different.";
-      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
-      else {
-        System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
-        return;
-      }
-      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
-      else {
-        System.out.println("\t" + in.getUuid() + " out Pipe is not a neighbour of the pump.");
-        return;
-      }
-      System.out.println("\t" + this.getUuid() + " is setting the pump.");
-    } catch (ClassCastException e) {
-      System.out.println("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
-    }
-  }
 
   public void setSlippery() {
     try {

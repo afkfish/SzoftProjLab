@@ -18,26 +18,7 @@ public class Plumber extends Character {
   private Pipe draggedpipe;
   private Pipe pickedUpPipe;
 
-  @Override
-  public void setPump(Pipe in, Pipe out) {
-    try {
-      Pump pump = (Pump) this.standingOn;
-      assert in != out : "Input and output pipes must be different.";
-      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
-      else {
-        System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
-        return;
-      }
-      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
-      else {
-        System.out.println("\t" + in.getUuid() + " out Pipe not connected to the pump.");
-        return;
-      }
-      System.out.println("\t" + this.getUuid() + " is setting the pump.");
-    } catch (ClassCastException e) {
-      System.out.println("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
-    }
-  }
+
 
   /** Repairs the node the player is standing on. */
   public void repair() {
@@ -59,18 +40,21 @@ public class Plumber extends Character {
         try {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
+          System.out.println("\t" + pickedupPump.getUuid() + " has been placed ");
         } catch (ObjectFullException e) {
           throw new RuntimeException(e);
         }
       } catch (ClassCastException e) {
         System.out.println(this.getUuid() + " is not standing on a Pipe");
-        System.out.println("\t" + pickedupPump.getUuid() + " has been placed ");
+
       }
     } else {
       System.out.println(this.getUuid() + " doesn't have a pump to place");
     }
   }
 
+  public  Pipe getDraggedpipe(){return draggedpipe;}
+  public  Pipe getPickedUpPipe(){return pickedUpPipe;}
   public void PlacePipe() {
     try {
       if (draggedpipe != null) {

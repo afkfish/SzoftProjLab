@@ -101,12 +101,19 @@ public abstract class Character implements Tickable {
     try {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
-      // TODO: Do the connecting logic this is just shit.
-      pump.setActiveInput(in);
-      pump.setActiveOutput(out);
-      System.out.println("\t" + this.uuid + " is setting the pump.");
+      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
+      else {
+        System.out.println("\t" + in.getUuid() + " in Pipe not connected to the pump.");
+        return;
+      }
+      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
+      else {
+        System.out.println("\t" + in.getUuid() + " out Pipe not connected to the pump.");
+        return;
+      }
+      System.out.println("\t" + this.getUuid() + " is setting the pump.");
     } catch (ClassCastException e) {
-      System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
+      System.out.println("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
     }
   }
 
