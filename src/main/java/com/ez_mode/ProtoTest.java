@@ -48,7 +48,7 @@ public class ProtoTest {
       ArrayList<String> parts = new ArrayList<String>(Arrays.asList(tmp));
       for (String str : parts) {
         if (str.endsWith(">") && str.startsWith("<")) {
-          args.add(str);
+          args.add(str.substring(1, str.length()-1));
           parts.remove(str);
         }
       }
@@ -142,8 +142,8 @@ public class ProtoTest {
     }
     try {
       c.breakNode();
-      if (!((Pipe) (c.getStandingOn())).isBroken()) {
-        System.out.println("Pipe has been brocken successfully!");
+      if (((Pipe) (c.getStandingOn())).isBroken()) {
+        System.out.println("Pipe has been broken successfully!");
         return;
       }
     } catch (ClassCastException e) {
