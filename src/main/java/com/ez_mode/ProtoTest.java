@@ -48,7 +48,7 @@ public class ProtoTest {
       ArrayList<String> parts = new ArrayList<String>(Arrays.asList(tmp));
       for (String str : parts) {
         if (str.endsWith(">") && str.startsWith("<")) {
-          args.add(str.substring(1, str.length()-1));
+          args.add(str.substring(1, str.length() - 1));
           parts.remove(str);
         }
       }
