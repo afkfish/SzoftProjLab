@@ -77,7 +77,7 @@ public abstract class Character implements Tickable {
 
   /**
    * This method places the character on the given Node. Useful when a character has to respawn, or
-   * placen at the game start.
+   * be placed at the game start.
    *
    * @param node The destination Node.
    */

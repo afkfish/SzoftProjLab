@@ -3,6 +3,7 @@ package com.ez_mode;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
+import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
@@ -12,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,8 +52,63 @@ public class Map implements Tickable {
    */
   public void fillMap(int playerCount) {
     System.out.println("Filling map with random objects...");
-    System.out.println("Not implemented yet!");
-    // TODO: fill the map with random objects
+
+    gameMap = new Node[10][10];
+
+    //evenly distribute the players into two teams
+    int plumberCount = 0;
+    if (playerCount % 2 == 0) {
+      plumberCount = playerCount / 2;
+    }
+    else {
+      plumberCount = playerCount / 2 + 1;
+    }
+    for (int i = 0; i < plumberCount; i++) {
+      players.add(new Plumber("plumber" + (i+1) ));
+    }
+    for (int i = 0; i < playerCount - plumberCount; i++) {
+      players.add(new Nomad("nomad" + (i+1) ));
+    }
+
+    //create one of each node, to make sure we have each type on the map
+    gameMap[0][0] = new Cistern(0, 0);
+    gameMap[0][1] = new WaterSpring(0, 1);
+    gameMap[0][2] = new Pipe(0, 2);
+    gameMap[0][3] = new Pump(0, 3);
+
+    //create the rest of the map
+    for(int i = 0; i < 10; i++) {
+      for(int j = 4; j < 10; j++) {
+        Random rand = new Random();
+        int randomInt = rand.nextInt(100);
+        if (randomInt <= 60) {
+          gameMap[i][j] = new Pipe(i, j);
+        }
+        else if (randomInt <= 80) {
+          gameMap[i][j] = new Pump(i, j);
+        }
+        else if (randomInt <= 90) {
+          gameMap[i][j] = new Cistern(i, j);
+        }
+        else {
+          gameMap[i][j] = new WaterSpring(i, j);
+        }
+      }
+    }
+
+    //place the characters
+    for (int i = 0; i < playerCount; i++) {
+      Random random = new Random();
+      boolean success = false;
+      while (!success) {
+        int row = random.nextInt(10);
+        int col = random.nextInt(10);
+        if (gameMap[row][col] != null && gameMap[row][col].getCharacters().isEmpty()) {
+          players.get(i).placeTo(gameMap[row][col]);
+          success = true;
+        }
+      }
+    }
   }
 
   public void loadMap(String path) {

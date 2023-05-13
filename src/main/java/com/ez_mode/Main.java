@@ -18,7 +18,7 @@ public class Main {
   private enum Version {
     SKELETON,
     PROTOTYPE,
-    GRAPGHICAL
+    GRAPHICAL
   }
 
   private static final HashMap<String, Runnable> commands = new HashMap<>();
@@ -387,7 +387,7 @@ public class Main {
           System.out.println("Unknown command");
         }
       }
-    } else if (version == Version.GRAPGHICAL) {
+    } else if (version == Version.GRAPHICAL) {
       // new Menu();
     }
   }
