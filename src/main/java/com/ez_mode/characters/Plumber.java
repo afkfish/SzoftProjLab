@@ -18,8 +18,6 @@ public class Plumber extends Character {
   private Pipe draggedpipe;
   private Pipe pickedUpPipe;
 
-
-
   /** Repairs the node the player is standing on. */
   public void repair() {
     try {
@@ -46,15 +44,20 @@ public class Plumber extends Character {
         }
       } catch (ClassCastException e) {
         System.out.println(this.getUuid() + " is not standing on a Pipe");
-
       }
     } else {
       System.out.println(this.getUuid() + " doesn't have a pump to place");
     }
   }
 
-  public  Pipe getDraggedpipe(){return draggedpipe;}
-  public  Pipe getPickedUpPipe(){return pickedUpPipe;}
+  public Pipe getDraggedpipe() {
+    return draggedpipe;
+  }
+
+  public Pipe getPickedUpPipe() {
+    return pickedUpPipe;
+  }
+
   public void PlacePipe() {
     try {
       if (draggedpipe != null) {

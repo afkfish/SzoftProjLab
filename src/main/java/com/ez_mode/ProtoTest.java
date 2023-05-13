@@ -108,28 +108,27 @@ public class ProtoTest {
       return;
     }
     Plumber p = (Plumber) c;
-    if(p.getDraggedpipe() != null &&p.getPickedUpPipe() != null) {
+    if (p.getDraggedpipe() != null && p.getPickedUpPipe() != null) {
       p.PlacePipe();
       return;
-    }else System.out.println("Plumber has no pipe to place");
+    } else System.out.println("Plumber has no pipe to place");
     System.err.println("BreakPipeTest failed!");
   }
 
   public void MoveCharacterTest() {
-   Character c = Map.getPlayer(args.get(0));
-   int Up = Integer.parseInt(args.get(1));
-   int Right = Integer.parseInt(args.get(2));
-   if(c == null){
-     System.out.println("Character couldn't be found on the map");
-     return;
-   }
-   try{
-     Node move = new Pump(c.getStandingOn().getX() + Up, c.getStandingOn().getY() + Right);
-     c.moveTo(move);
-     return;
-   }
-   catch(InvalidPlayerMovementException | ObjectFullException e){
-     System.out.println("Player can't move because it stucked or the given Node is full");
+    Character c = Map.getPlayer(args.get(0));
+    int Up = Integer.parseInt(args.get(1));
+    int Right = Integer.parseInt(args.get(2));
+    if (c == null) {
+      System.out.println("Character couldn't be found on the map");
+      return;
+    }
+    try {
+      Node move = new Pump(c.getStandingOn().getX() + Up, c.getStandingOn().getY() + Right);
+      c.moveTo(move);
+      return;
+    } catch (InvalidPlayerMovementException | ObjectFullException e) {
+      System.out.println("Player can't move because it stucked or the given Node is full");
     }
     System.err.println("MoveCharacterTest failed");
   }
