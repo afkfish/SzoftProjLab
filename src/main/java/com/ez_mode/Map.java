@@ -154,8 +154,7 @@ public class Map implements Tickable {
     } catch (SecurityException | IOException e) {
       Main.log("There was an error loading the map!");
     } catch (ObjectFullException e) {
-      Main.log(
-          "Some objects are full and cannot have more connections! The map is invalid!");
+      Main.log("Some objects are full and cannot have more connections! The map is invalid!");
     }
   }
 

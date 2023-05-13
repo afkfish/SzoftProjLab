@@ -119,8 +119,7 @@ public class Plumber extends Character {
         pickedUpPipe = draggedpipe;
         draggedpipe = null;
         // Map.removeNode(pickedUpPipe);
-        Main.log(
-            "\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
+        Main.log("\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
       } else if (draggedpipe == null) {
         throw new NotFoundExeption("Pipe Not Found!");
       }

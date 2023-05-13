@@ -8,7 +8,6 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
-
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class Main {
     PROTOTYPE,
     GRAPGHICAL
   }
+
   private static boolean running = true;
   private static final StringBuilder logs = new StringBuilder();
   private static final HashMap<String, Runnable> commands = new HashMap<>();
@@ -95,8 +95,7 @@ public class Main {
                     return;
                   }
                   log("Where do you want to place the node?");
-                  log(
-                      "Please provide the coordinates of the node like this: x \\n y");
+                  log("Please provide the coordinates of the node like this: x \\n y");
                   int x = Integer.parseInt(scanner.nextLine());
                   int y = Integer.parseInt(scanner.nextLine());
                   Node node = null;
@@ -201,8 +200,7 @@ public class Main {
                     for (int j = 0; j < neighbours.size(); j++) {
                       Node temp = neighbours.get(j);
                       if (temp != input) {
-                        log(
-                            j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() + "]");
+                        log(j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() + "]");
                       }
                     }
                     index = Integer.parseInt(scanner.nextLine());
@@ -283,78 +281,78 @@ public class Main {
         String input = scanner.nextLine();
         switch (input) {
           case "character":
-          {
-            System.out.println("What do you want to do?");
-            System.out.println("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
-            switch (scanner.nextLine()) {
-              case "place":
-              {
-                skeletonTest.PlumberDeploysPump();
-                break;
+            {
+              System.out.println("What do you want to do?");
+              System.out.println("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
+              switch (scanner.nextLine()) {
+                case "place":
+                  {
+                    skeletonTest.PlumberDeploysPump();
+                    break;
+                  }
+                case "pickup":
+                  {
+                    skeletonTest.PlumberPicksUpPipe();
+                    skeletonTest.PlumberPicksUpPump();
+                    break;
+                  }
+                case "move":
+                  {
+                    skeletonTest.CharacterMovesTest();
+                    skeletonTest.CharacterMovesToPumpTest();
+                    skeletonTest.PlumberMovesToPipeTest();
+                    skeletonTest.PlumberMovesToPumpTest();
+                    skeletonTest.PlumberMovesToCistern();
+                    skeletonTest.NomadMovesToPipeTest();
+                    break;
+                  }
+                case "break":
+                  {
+                    skeletonTest.NomadBreaksPipeTest();
+                    break;
+                  }
+                case "repair":
+                  {
+                    skeletonTest.PlumberRepairsPipeTest();
+                    skeletonTest.PlumberRepairsPumpTest();
+                    break;
+                  }
+                case "set":
+                  {
+                    skeletonTest.SetPumpTest();
+                    break;
+                  }
+                default:
+                  {
+                    System.out.println("Unknown command");
+                    break;
+                  }
               }
-              case "pickup":
-              {
-                skeletonTest.PlumberPicksUpPipe();
-                skeletonTest.PlumberPicksUpPump();
-                break;
-              }
-              case "move":
-              {
-                skeletonTest.CharacterMovesTest();
-                skeletonTest.CharacterMovesToPumpTest();
-                skeletonTest.PlumberMovesToPipeTest();
-                skeletonTest.PlumberMovesToPumpTest();
-                skeletonTest.PlumberMovesToCistern();
-                skeletonTest.NomadMovesToPipeTest();
-                break;
-              }
-              case "break":
-              {
-                skeletonTest.NomadBreaksPipeTest();
-                break;
-              }
-              case "repair":
-              {
-                skeletonTest.PlumberRepairsPipeTest();
-                skeletonTest.PlumberRepairsPumpTest();
-                break;
-              }
-              case "set":
-              {
-                skeletonTest.SetPumpTest();
-                break;
-              }
-              default:
-              {
-                System.out.println("Unknown command");
-                break;
-              }
+              break;
             }
-            break;
-          }
           case "map":
-          {
-            System.out.println(map);
-            break;
-          }
+            {
+              System.out.println(map);
+              break;
+            }
           case "help":
-          {
-            System.out.println("map - shows the map");
-            System.out.println("help - shows this message");
-            System.out.println("exit - exits the program");
-            break;
-          }
+            {
+              System.out.println("map - shows the map");
+              System.out.println("help - shows this message");
+              System.out.println("exit - exits the program");
+              break;
+            }
           case "exit":
-          {
-            System.out.println("Exiting");
-            System.exit(0);
-            break;
-          }
+            {
+              System.out.println("Exiting");
+              System.exit(0);
+              break;
+            }
           default:
-          {
-            System.out.println("Unknown command");
-            break;
-          }
+            {
+              System.out.println("Unknown command");
+              break;
+            }
         }
       }
     } else if (version == Version.PROTOTYPE) {
@@ -391,12 +389,12 @@ public class Main {
       // new Menu();
     }
   }
-  
+
   public static void log(String message) {
     logs.append(message).append("\n");
     System.out.println(message);
   }
-  
+
   private static void saveLog(String fileName) {
     fileName = fileName.endsWith(".txt") ? fileName : fileName + ".txt";
     try (PrintWriter out = new PrintWriter(fileName)) {
