@@ -380,10 +380,13 @@ public class Map implements Tickable {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    // for (Node node : gameMap) {
-    // sb.append(node.toString());
-    // sb.append("\n ");
-    // }
+    for (int i = 0; i < gameMap.length; i++) {
+      for (int j = 0; j < gameMap[i].length; j++) {
+        Node node = gameMap[i][j];
+        sb.append(String.format("[%d, %d]:\n%s", i, j, node.toString()));
+      }
+      sb.append("\n\n");
+    }
     return sb.toString();
   }
 }

@@ -338,7 +338,7 @@ public class Main {
             }
           case "map":
             {
-              Main.log(map);
+              Main.log(map.toString());
               break;
             }
           case "help":
@@ -398,7 +398,7 @@ public class Main {
 
   public static void log(String message) {
     logs.append(message).append("\n");
-    Main.log(message);
+    System.out.println(message);
   }
 
   private static void saveLog(String fileName) {
