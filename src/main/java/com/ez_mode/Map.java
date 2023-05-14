@@ -17,10 +17,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This class is responsible for the map of the game. It contains a HashMap of
- * StandableObjects and
- * the Characters standing on them. It also contains a method to handle the case
- * when a player is
+ * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
+ * the Characters standing on them. It also contains a method to handle the case when a player is
  * lost somehow.
  */
 public class Map implements Tickable {
@@ -28,8 +26,7 @@ public class Map implements Tickable {
   private final Logger logger = LogManager.getLogger(Map.class);
 
   /**
-   * The ArrayList representation of the game. This map contains every object.
-   * TODO: store the
+   * The ArrayList representation of the game. This map contains every object. TODO: store the
    * objects with their coordinates
    */
   private static Node[][] gameMap = null;
@@ -48,8 +45,7 @@ public class Map implements Tickable {
   }
 
   /**
-   * This method fills the map with the objects and places the characters to their
-   * startiing
+   * This method fills the map with the objects and places the characters to their startiing
    * positions.
    */
   public void fillMap(int playerCount) {
@@ -124,26 +120,31 @@ public class Map implements Tickable {
         NotJSONObject node = nodeList.getJSONObject(i);
         Node temp;
         switch (node.getString("type")) {
-          case "cistern": {
-            temp = new Cistern(node.getInt("x"), node.getInt("y"));
-            break;
-          }
-          case "pipe": {
-            temp = new Pipe(node.getInt("x"), node.getInt("y"));
-            break;
-          }
-          case "pump": {
-            temp = new Pump(node.getInt("x"), node.getInt("y"));
-            break;
-          }
-          case "waterspring": {
-            temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
-            break;
-          }
-          default: {
-            Main.log("Unknown node type!");
-            continue;
-          }
+          case "cistern":
+            {
+              temp = new Cistern(node.getInt("x"), node.getInt("y"));
+              break;
+            }
+          case "pipe":
+            {
+              temp = new Pipe(node.getInt("x"), node.getInt("y"));
+              break;
+            }
+          case "pump":
+            {
+              temp = new Pump(node.getInt("x"), node.getInt("y"));
+              break;
+            }
+          case "waterspring":
+            {
+              temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
+              break;
+            }
+          default:
+            {
+              Main.log("Unknown node type!");
+              continue;
+            }
         }
         gameMap[node.getInt("x")][node.getInt("y")] = temp;
         Main.log(String.valueOf(node));
@@ -181,18 +182,21 @@ public class Map implements Tickable {
         NotJSONObject player = playerList.getJSONObject(i);
         Character temp;
         switch (player.getString("type")) {
-          case "plumber": {
-            temp = new Plumber(player.getString("name"));
-            break;
-          }
-          case "nomad": {
-            temp = new Nomad(player.getString("name"));
-            break;
-          }
-          default: {
-            Main.log("Unknown player type!");
-            continue;
-          }
+          case "plumber":
+            {
+              temp = new Plumber(player.getString("name"));
+              break;
+            }
+          case "nomad":
+            {
+              temp = new Nomad(player.getString("name"));
+              break;
+            }
+          default:
+            {
+              Main.log("Unknown player type!");
+              continue;
+            }
         }
         Main.log(String.valueOf(player));
         players.add(temp);
@@ -341,8 +345,7 @@ public class Map implements Tickable {
   }
 
   /**
-   * If a player character lost somehow, this method will move it to the position
-   * it is supposed to
+   * If a player character lost somehow, this method will move it to the position it is supposed to
    * be, or to the start position.
    *
    * @param character the player who is lost

@@ -14,10 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This class is responsible for the characters in the game. This is tha
- * abstract class for all
- * characters. It contains a name and a reference to the StandableObject it is
- * standing on.
+ * This class is responsible for the characters in the game. This is tha abstract class for all
+ * characters. It contains a name and a reference to the StandableObject it is standing on.
  */
 public abstract class Character implements Tickable {
   /*
@@ -79,8 +77,7 @@ public abstract class Character implements Tickable {
   }
 
   /**
-   * This method places the character on the given Node. Useful when a character
-   * has to respawn, or
+   * This method places the character on the given Node. Useful when a character has to respawn, or
    * be placed at the game start.
    *
    * @param node The destination Node.
@@ -105,14 +102,12 @@ public abstract class Character implements Tickable {
     try {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
-      if (pump.getNeighbours().contains(in))
-        pump.setActiveInput(in);
+      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
       else {
         Main.log("\t" + in.getUuid() + " in Pipe not connected to the pump.");
         return;
       }
-      if (pump.getNeighbours().contains(out))
-        pump.setActiveOutput(out);
+      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
       else {
         Main.log("\t" + in.getUuid() + " out Pipe not connected to the pump.");
         return;

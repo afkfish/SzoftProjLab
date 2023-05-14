@@ -7,8 +7,7 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
 
 /**
- * Class representing a Plummer character. The plummer can repair pipes and
- * pumps, place new pipes
+ * Class representing a Plummer character. The plummer can repair pipes and pumps, place new pipes
  * and pupms and reroute the water to the cisterns.
  */
 public class Plumber extends Character {

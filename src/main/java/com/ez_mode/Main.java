@@ -286,67 +286,79 @@ public class Main {
 
         String input = scanner.nextLine();
         switch (input) {
-          case "character": {
-            Main.log("What do you want to do?");
-            Main.log("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
-            switch (scanner.nextLine()) {
-              case "place": {
-                skeletonTest.PlumberDeploysPump();
-                break;
+          case "character":
+            {
+              Main.log("What do you want to do?");
+              Main.log("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
+              switch (scanner.nextLine()) {
+                case "place":
+                  {
+                    skeletonTest.PlumberDeploysPump();
+                    break;
+                  }
+                case "pickup":
+                  {
+                    skeletonTest.PlumberPicksUpPipe();
+                    skeletonTest.PlumberPicksUpPump();
+                    break;
+                  }
+                case "move":
+                  {
+                    skeletonTest.CharacterMovesTest();
+                    skeletonTest.CharacterMovesToPumpTest();
+                    skeletonTest.PlumberMovesToPipeTest();
+                    skeletonTest.PlumberMovesToPumpTest();
+                    skeletonTest.PlumberMovesToCistern();
+                    skeletonTest.NomadMovesToPipeTest();
+                    break;
+                  }
+                case "break":
+                  {
+                    skeletonTest.NomadBreaksPipeTest();
+                    break;
+                  }
+                case "repair":
+                  {
+                    skeletonTest.PlumberRepairsPipeTest();
+                    skeletonTest.PlumberRepairsPumpTest();
+                    break;
+                  }
+                case "set":
+                  {
+                    skeletonTest.SetPumpTest();
+                    break;
+                  }
+                default:
+                  {
+                    Main.log("Unknown command");
+                    break;
+                  }
               }
-              case "pickup": {
-                skeletonTest.PlumberPicksUpPipe();
-                skeletonTest.PlumberPicksUpPump();
-                break;
-              }
-              case "move": {
-                skeletonTest.CharacterMovesTest();
-                skeletonTest.CharacterMovesToPumpTest();
-                skeletonTest.PlumberMovesToPipeTest();
-                skeletonTest.PlumberMovesToPumpTest();
-                skeletonTest.PlumberMovesToCistern();
-                skeletonTest.NomadMovesToPipeTest();
-                break;
-              }
-              case "break": {
-                skeletonTest.NomadBreaksPipeTest();
-                break;
-              }
-              case "repair": {
-                skeletonTest.PlumberRepairsPipeTest();
-                skeletonTest.PlumberRepairsPumpTest();
-                break;
-              }
-              case "set": {
-                skeletonTest.SetPumpTest();
-                break;
-              }
-              default: {
-                Main.log("Unknown command");
-                break;
-              }
+              break;
             }
-            break;
-          }
-          case "map": {
-            Main.log(map);
-            break;
-          }
-          case "help": {
-            Main.log("map - shows the map");
-            Main.log("help - shows this message");
-            Main.log("exit - exits the program");
-            break;
-          }
-          case "exit": {
-            Main.log("Exiting");
-            System.exit(0);
-            break;
-          }
-          default: {
-            Main.log("Unknown command");
-            break;
-          }
+          case "map":
+            {
+              Main.log(map);
+              break;
+            }
+          case "help":
+            {
+              Main.log("map - shows the map");
+              Main.log("help - shows this message");
+              Main.log("exit - exits the program");
+              break;
+            }
+          case "exit":
+            {
+              Main.log("Exiting");
+              System.exit(0);
+              break;
+            }
+          default:
+            {
+              Main.log("Unknown command");
+              break;
+            }
         }
       }
     } else if (version == Version.PROTOTYPE) {
