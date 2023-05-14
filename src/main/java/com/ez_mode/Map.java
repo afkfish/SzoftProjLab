@@ -67,15 +67,9 @@ public class Map implements Tickable {
       players.add(new Nomad("nomad" + (i + 1)));
     }
 
-    // create one of each node, to make sure we have each type on the map
-    gameMap[0][0] = new Cistern(0, 0);
-    gameMap[0][1] = new WaterSpring(0, 1);
-    gameMap[0][2] = new Pipe(0, 2);
-    gameMap[0][3] = new Pump(0, 3);
-
     // create the rest of the map
     for (int i = 0; i < 10; i++) {
-      for (int j = 4; j < 10; j++) {
+      for (int j = 0; j < 10; j++) {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
         if (randomInt <= 60) {
@@ -89,6 +83,12 @@ public class Map implements Tickable {
         }
       }
     }
+
+    // create one of each node, to make sure we have each type on the map
+    gameMap[0][0] = new Cistern(0, 0);
+    gameMap[0][1] = new WaterSpring(0, 1);
+    gameMap[0][2] = new Pipe(0, 2);
+    gameMap[0][3] = new Pump(0, 3);
 
     // place the characters
     for (int i = 0; i < playerCount; i++) {
@@ -285,7 +285,7 @@ public class Map implements Tickable {
     player.placeTo(node);
   }
 
-  public static void removeNode(Node node) { // TODO implement remove logic
+  public static void removeNode(Node node) { // TODO: implement remove logic
   }
 
   public static Character getPlayer(int index) {
@@ -296,8 +296,6 @@ public class Map implements Tickable {
     for (Character c : players) {
       if (c.getName().equals(name)) {
         return c;
-      } else {
-        return null;
       }
     }
     return null;

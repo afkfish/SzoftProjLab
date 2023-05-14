@@ -40,7 +40,8 @@ public class Plumber extends Character {
           newPipe.connect(pickedupPump);
           System.out.println("\t" + pickedupPump.getUuid() + " has been placed ");
         } catch (ObjectFullException e) {
-          throw new RuntimeException(e);
+          System.err.println("Object is full!");
+          return;
         }
       } catch (ClassCastException e) {
         System.out.println(this.getUuid() + " is not standing on a Pipe");
@@ -57,6 +58,8 @@ public class Plumber extends Character {
   public Pipe getPickedUpPipe() {
     return pickedUpPipe;
   }
+  public void setPickedUpPipe(Pipe p) { pickedUpPipe = p; }
+  public void setPickedupPump(Pump p) { pickedupPump = p; }
 
   public void PlacePipe() {
     try {

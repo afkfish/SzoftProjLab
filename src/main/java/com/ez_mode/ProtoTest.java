@@ -7,6 +7,7 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Cistern;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
@@ -37,7 +38,51 @@ public class ProtoTest {
     commands.put("character slippery", () -> MakePipeSlipperyTest());
     commands.put("character sticky", () -> MakePipeStickyTest());
     commands.put("exit", () -> exit());
-    map.fillMap(2);
+    //map.fillMap(2);
+    mapInit(map);
+  }
+
+  private void mapInit(Map map) {
+    map = new Map(10);
+
+    map.addNode(new Cistern(0, 0), 0, 0);
+    map.addNode(new Cistern(0, 9), 0, 9);
+    map.addNode(new Pump(0, 3), 0, 3);
+    map.addNode(new Pump(0, 6), 0, 6);
+
+    map.addNode(new Pipe(0, 1), 0, 1);
+    map.addNode(new Pipe(0, 2), 0, 2);
+    map.addNode(new Pipe(0, 4), 0, 4);
+    map.addNode(new Pipe(0, 5), 0, 5);
+    map.addNode(new Pipe(0, 7), 0, 7);
+    map.addNode(new Pipe(0, 8), 0, 8);
+
+    for (int i = 1; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        map.addNode(new Pipe(i, j), i, j);
+      }
+    }
+
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        try {
+          map.getNode(i, j).connect(map.getNode(i + 1, j));
+          map.getNode(i, j).connect(map.getNode(i, j+1));
+        } catch (ObjectFullException e) {
+          //System.err.println("Couldn't connect nodes.");
+        }
+      }
+    }
+
+    map.addPlayer(new Nomad("nomad1"), map.getNode(0, 0));
+    map.addPlayer(new Nomad("nomad2"), map.getNode(0, 3));
+    map.addPlayer(new Nomad("nomad3"), map.getNode(0, 4));
+
+    map.addPlayer(new Plumber("plumber1"), map.getNode(0, 6));
+    ((Plumber)(map.getPlayer("plumber1"))).setPickedUpPipe(new Pipe());
+    map.addPlayer(new Plumber("plumber2"), map.getNode(0, 7));
+    ((Plumber)(map.getPlayer("plumber2"))).setPickedupPump(new Pump());
+    map.addPlayer(new Plumber("plumber3"), map.getNode(0, 9));
   }
 
   public void processCommand() {
@@ -49,7 +94,13 @@ public class ProtoTest {
       for (String str : parts) {
         if (str.endsWith(">") && str.startsWith("<")) {
           args.add(str.substring(1, str.length() - 1));
-          parts.remove(str);
+          //parts.remove(str);
+        }
+      }
+      for (int i = 0; i < parts.size(); i++) {
+        if (args.contains(parts.get(i).substring(1, parts.get(i).length()-1)) ) {
+          parts.remove(parts.get(i));
+          i--;
         }
       }
       cmd = String.join(" ", parts);
@@ -68,8 +119,17 @@ public class ProtoTest {
     String characterName = args.get(0);
     int X = Integer.parseInt(args.get(1));
     int Y = Integer.parseInt(args.get(2));
-    Character character = new Plumber(characterName);
-    Map.addPlayer(character, Map.getNode(X, Y));
+    Character character;
+    if (characterName.contains("p") || characterName.contains("P"))
+      character = new Plumber(characterName);
+    else
+      character = new Nomad(characterName);
+
+    try {
+      Map.addPlayer(character, Map.getNode(X, Y));
+    } catch (NullPointerException e) {
+      System.err.println("Tried to place character on an unavailable node!");
+    }
   }
 
   public void AddNewPumpTest() {
@@ -77,6 +137,7 @@ public class ProtoTest {
     int Y = Integer.parseInt(args.get(1));
     Pump pump = new Pump(X, Y);
     Map.addNode(pump, pump.getX(), pump.getX());
+    System.out.println("Successfully added pump!");
   }
 
   public void AddNewPipeTest() {
@@ -84,6 +145,7 @@ public class ProtoTest {
     int Y = Integer.parseInt(args.get(1));
     Pipe pipe = new Pipe(X, Y);
     Map.addNode(pipe, pipe.getX(), pipe.getX());
+    System.out.println("Successfully added pipe!");
   }
 
   public void PlacePumpTest() {
@@ -98,7 +160,7 @@ public class ProtoTest {
       System.out.println("the player is not standing on a Pipe");
       return;
     }
-    System.err.println("BreakPipeTest failed!");
+    System.err.println("PlacePumpTest failed!");
   }
 
   public void PlacePipeTest() {
@@ -119,16 +181,24 @@ public class ProtoTest {
     Character c = Map.getPlayer(args.get(0));
     int Up = Integer.parseInt(args.get(1));
     int Right = Integer.parseInt(args.get(2));
+    if (Up > 1 || Right > 1) {
+      System.err.println("Too much movement.");
+      return;
+    }
     if (c == null) {
       System.out.println("Character couldn't be found on the map");
       return;
     }
     try {
-      Node move = new Pump(c.getStandingOn().getX() + Up, c.getStandingOn().getY() + Right);
+      Node move = Map.getNode(c.getStandingOn().getX() + Right, c.getStandingOn().getY() + Up);
+      if (move == null) {
+        System.err.println("Cannot move there.");
+        return;
+      }
       c.moveTo(move);
       return;
     } catch (InvalidPlayerMovementException | ObjectFullException e) {
-      System.out.println("Player can't move because it stucked or the given Node is full");
+      System.out.println("Player can't move because it is stuck or the given Node is full");
     }
     System.err.println("MoveCharacterTest failed");
   }
@@ -146,7 +216,7 @@ public class ProtoTest {
         return;
       }
     } catch (ClassCastException e) {
-      System.out.println("the player is not standing on a Pump");
+      System.err.println("The player is not standing on a Pump.");
       return;
     }
     System.err.println("BreakPipeTest failed!");
@@ -160,12 +230,23 @@ public class ProtoTest {
       return;
     }
     try {
-      c.setPump((Pipe) Map.getNode(args.get(1)), (Pipe) Map.getNode(args.get(2)));
-      if (((Pump) (c.getStandingOn())).getActiveInput().getUuid().equals(args.get(1))
-          && ((Pump) (c.getStandingOn())).getActiveOutput().getUuid().equals(args.get(2))) {
+      ArrayList<Node> neighbours = c.getStandingOn().getNeighbours();
+      ArrayList<Pipe> pipes = new ArrayList<>();
+      for (Node n : neighbours) {
+        if (n.getUuid().contains("Pipe"))
+          pipes.add((Pipe)n);
+      }
+      if (pipes.size() < 2)
+        System.err.println("There are not enough pipe neighbours!");
+      else
+        c.setPump(pipes.get(0), pipes.get(1));
+
+      if ( ((Pump)c.getStandingOn()).getActiveInput().equals(pipes.get(0))
+              && ((Pump)c.getStandingOn()).getActiveInput().equals(pipes.get(1)) ) {
         System.out.println("Pump has been set right successfully!");
         return;
       }
+
     } catch (ClassCastException e) {
       System.out.println("the player is not standing on a Pump");
       return;
