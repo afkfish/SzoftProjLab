@@ -1,5 +1,6 @@
 package com.ez_mode.objects;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.Tickable;
 import com.ez_mode.characters.Character;
@@ -82,7 +83,7 @@ public abstract class Node implements Tickable {
     for (Node neighbour : neighbours) {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
-        System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
+        Main.log("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
     }
@@ -99,7 +100,7 @@ public abstract class Node implements Tickable {
               "Player <%s> tried to remove a character from an object they are not" + " on.",
               character.getName()));
     characters.remove(character);
-    System.out.println("\t" + character.getUuid() + " removed from " + this.uuid);
+    Main.log("\t" + character.getUuid() + " removed from " + this.uuid);
   }
 
   public int getX() {
@@ -165,7 +166,7 @@ public abstract class Node implements Tickable {
   }
 
   public void connect(Node node) throws ObjectFullException {
-    System.out.println("\t" + this.uuid + ":connect param: " + node.uuid);
+    Main.log("\t" + this.uuid + ":connect param: " + node.uuid);
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
     this.neighbours.add(node);
@@ -173,7 +174,7 @@ public abstract class Node implements Tickable {
   }
 
   public void disconnect(Node node) {
-    System.out.println("\t" + this.uuid + ":connect param: " + node.uuid);
+    Main.log("\t" + this.uuid + ":connect param: " + node.uuid);
     this.neighbours.remove(node);
     if (node.getNeighbours().contains(this)) node.disconnect(this);
   }

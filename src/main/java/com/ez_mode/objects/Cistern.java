@@ -1,5 +1,6 @@
 package com.ez_mode.objects;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
@@ -57,7 +58,7 @@ public class Cistern extends Node {
 
   public Pipe MakePipe() {
     // Stakeholder
-    System.out.println("\t" + this.uuid + " made a pipe");
+    Main.log("\t" + this.uuid + " made a pipe");
     Pipe temp = new Pipe();
     try {
       temp.connect(this);
@@ -69,7 +70,7 @@ public class Cistern extends Node {
 
   public void MakePump() {
     // Stakeholder
-    System.out.println("\t" + this.uuid + " made a pump");
+    Main.log("\t" + this.uuid + " made a pump");
     Pump temp = new Pump();
     producedPumps.add(temp);
   }
