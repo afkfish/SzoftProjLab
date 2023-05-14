@@ -71,7 +71,7 @@ public abstract class Character implements Tickable {
       this.standingOn = node;
       Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
       Map.playerLostHandler(this);
     }
   }
@@ -94,7 +94,7 @@ public abstract class Character implements Tickable {
       this.standingOn.breakNode(this);
       Main.log("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
     } catch (InvalidPlayerActionException | ClassCastException e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
     }
   }
 
@@ -122,7 +122,7 @@ public abstract class Character implements Tickable {
     try {
       standingOn.setSurface("sticky", this);
     } catch (InvalidPlayerActionException e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
     }
   }
 

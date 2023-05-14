@@ -15,30 +15,28 @@ public class ProtoTest {
   private final HashMap<String, Runnable> commands;
   private static ArrayList<String> args = new ArrayList<>();
   private boolean exited = false;
-  private final Scanner input = new Scanner(System.in);
 
   public ProtoTest() {
     commands = new HashMap<>();
-    commands.put("print map", () -> MapPrintTest());
-    commands.put("add character", () -> CharacterAddTest());
-    commands.put("add node pump", () -> AddNewPumpTest());
-    commands.put("add node pipe", () -> AddNewPipeTest());
-    commands.put("character place pump", () -> PlacePumpTest());
-    commands.put("character place pipe", () -> PlacePipeTest());
-    commands.put("character move", () -> MoveCharacterTest());
-    commands.put("character break", () -> BreakPipeTest());
-    commands.put("character set", () -> SetPumpTest());
-    commands.put("character repair pump", () -> RepairPumpTest());
-    commands.put("character repair pipe", () -> RepairPipeTest());
-    commands.put("character slippery", () -> MakePipeSlipperyTest());
-    commands.put("character sticky", () -> MakePipeStickyTest());
-    commands.put("exit", () -> exit());
+    commands.put("print map", this::MapPrintTest);
+    commands.put("add character", this::CharacterAddTest);
+    commands.put("add node pump", this::AddNewPumpTest);
+    commands.put("add node pipe", this::AddNewPipeTest);
+    commands.put("character place pump", this::PlacePumpTest);
+    commands.put("character place pipe", this::PlacePipeTest);
+    commands.put("character move", this::MoveCharacterTest);
+    commands.put("character break", this::BreakPipeTest);
+    commands.put("character set", this::SetPumpTest);
+    commands.put("character repair pump", this::RepairPumpTest);
+    commands.put("character repair pipe", this::RepairPipeTest);
+    commands.put("character slippery", this::MakePipeSlipperyTest);
+    commands.put("character sticky", this::MakePipeStickyTest);
+    commands.put("exit", this::exit);
     // map.fillMap(2);
     mapInit();
   }
 
   private void mapInit() {
-
     Map.addNode(new Cistern(0, 0), 0, 0);
     Map.addNode(new Cistern(0, 9), 0, 9);
     Map.addNode(new Pump(0, 3), 0, 3);
@@ -79,10 +77,10 @@ public class ProtoTest {
     Map.addPlayer(new Plumber("plumber3"), Map.getNode(0, 9));
   }
 
-  public void processCommand() {
+  public void processCommand(Scanner scanner) {
     while (!exited) {
       args.clear();
-      String cmd = input.nextLine();
+      String cmd = scanner.nextLine();
       String[] tmp = cmd.split(" ");
       ArrayList<String> parts = new ArrayList<>(Arrays.asList(tmp));
       for (String str : parts) {
@@ -99,7 +97,8 @@ public class ProtoTest {
       }
       cmd = String.join(" ", parts);
       if (commands.containsKey(cmd)) commands.get(cmd).run();
-      else Main.log(cmd + "is an invalid command");
+      else
+        Main.log(cmd + " is an invalid command");
     }
   }
 
@@ -151,9 +150,8 @@ public class ProtoTest {
       ((Plumber) c).PlacePump();
     } catch (ClassCastException e) {
       Main.log("the player is not standing on a Pipe");
-      return;
+      Main.log("PlacePumpTest failed!");
     }
-    Main.log("PlacePumpTest failed!");
   }
 
   public void PlacePipeTest() {
@@ -163,18 +161,23 @@ public class ProtoTest {
       return;
     }
     Plumber p = (Plumber) c;
-    if (p.getDraggedpipe() != null && p.getPickedUpPipe() != null) {
+    if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
       p.PlacePipe();
-      return;
-    } else Main.log("Plumber has no pipe to place");
-    Main.log("BreakPipeTest failed!");
+      if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
+        Main.log("Plumber still has a pipe to place");
+        Main.log("PlacePipeTest failed!");
+      } else
+        Main.log("Plumber placed pipe successfully");
+    } else {
+      Main.log("Plumber has no pipe to place");
+    }
   }
 
   public void MoveCharacterTest() {
     Character c = Map.getPlayer(args.get(0));
     int Up = Integer.parseInt(args.get(1));
     int Right = Integer.parseInt(args.get(2));
-    if (Up > 1 || Right > 1) {
+    if (Math.abs(Up) > 1 || Math.abs(Right) > 1) {
       Main.log("Too much movement.");
       return;
     }
@@ -216,14 +219,14 @@ public class ProtoTest {
   }
 
   public void SetPumpTest() {
-
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
       Main.log("Character couldn't be found on the map");
       return;
     }
+    Pump node = (Pump) c.getStandingOn();
     try {
-      ArrayList<Node> neighbours = c.getStandingOn().getNeighbours();
+      ArrayList<Node> neighbours = node.getNeighbours();
       ArrayList<Pipe> pipes = new ArrayList<>();
       for (Node n : neighbours) {
         if (n.getUuid().contains("Pipe")) pipes.add((Pipe) n);
@@ -231,12 +234,11 @@ public class ProtoTest {
       if (pipes.size() < 2) Main.log("There are not enough pipe neighbours!");
       else c.setPump(pipes.get(0), pipes.get(1));
 
-      if (((Pump) c.getStandingOn()).getActiveInput().equals(pipes.get(0))
-          && ((Pump) c.getStandingOn()).getActiveInput().equals(pipes.get(1))) {
+      if (node.getActiveInput().equals(pipes.get(0))
+          && node.getActiveOutput().equals(pipes.get(1))) {
         Main.log("Pump has been set right successfully!");
         return;
       }
-
     } catch (ClassCastException e) {
       Main.log("the player is not standing on a Pump");
       return;

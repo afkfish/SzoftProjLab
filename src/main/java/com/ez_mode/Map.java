@@ -48,7 +48,7 @@ public class Map implements Tickable {
    * This method fills the map with the objects and places the characters to their startiing
    * positions.
    */
-  public void fillMap(int playerCount) {
+  public static void fillMap(int playerCount) {
     Main.log("Filling map with random objects...");
 
     gameMap = new Node[10][10];
@@ -103,6 +103,7 @@ public class Map implements Tickable {
         }
       }
     }
+    Main.log("Map filled!");
   }
 
   public void loadMap(String path) {
@@ -334,10 +335,11 @@ public class Map implements Tickable {
     for (Node[] nodes : gameMap) {
       for (Node node : nodes) {
         if (node != null) {
-          System.out.print(node.getX() + ", " + node.getY() + " - " + node.getUuid());
+          Main.log(node.getX() + ", " + node.getY() + " - " + node.getUuid());
         }
       }
     }
+
   }
 
   public static Node getNode(int x, int y) {
@@ -382,10 +384,13 @@ public class Map implements Tickable {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < gameMap.length; i++) {
       for (int j = 0; j < gameMap[i].length; j++) {
-        Node node = gameMap[i][j];
-        sb.append(String.format("[%d, %d]:\n%s", i, j, node.toString()));
+        Node node;
+        if ((node = gameMap[i][j]) == null) {
+          continue;
+        }
+        sb.append(String.format("[%d, %d]:\n%s", i, j, node));
+        sb.append("\n\n");
       }
-      sb.append("\n\n");
     }
     return sb.toString();
   }
