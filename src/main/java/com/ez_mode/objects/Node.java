@@ -9,6 +9,7 @@ import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
+import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,8 +46,13 @@ public abstract class Node implements Tickable {
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
 
+  public boolean isBroken() {
+    return isBroken;
+  }
+
   protected Node(int maxCharacters, int maxConnections, int x, int y) {
-    this.uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
+    Random random = new Random();
+    this.uuid = this.getClass().getSimpleName() + random.nextInt(100);
     this.logger = LogManager.getLogger(this.getClass());
     this.maxCharacters = maxCharacters;
     this.maxConnections = maxConnections;
@@ -111,11 +117,11 @@ public abstract class Node implements Tickable {
 
   public abstract void setSurface(String type, Character c) throws InvalidPlayerActionException;
 
-  public void addFlowRate(Node source, double excededFlow) {
+  public void addFlowRate(Node source, double exceededFlow) {
     if (!this.sources.contains(source)) {
-      this.flowRate += excededFlow;
+      this.flowRate += exceededFlow;
       this.sources.add(source);
-      this.absorbers.forEach(node -> node.addFlowRate(this, excededFlow));
+      this.absorbers.forEach(node -> node.addFlowRate(this, exceededFlow));
     }
   }
 

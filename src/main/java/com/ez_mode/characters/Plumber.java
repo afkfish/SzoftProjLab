@@ -19,27 +19,6 @@ public class Plumber extends Character {
   private Pipe draggedpipe;
   private Pipe pickedUpPipe;
 
-  @Override
-  public void setPump(Pipe in, Pipe out) {
-    try {
-      Pump pump = (Pump) this.standingOn;
-      assert in != out : "Input and output pipes must be different.";
-      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
-      else {
-        Main.log("\t" + in.getUuid() + " in Pipe not connected to the pump.");
-        return;
-      }
-      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
-      else {
-        Main.log("\t" + in.getUuid() + " out Pipe not connected to the pump.");
-        return;
-      }
-      Main.log("\t" + this.getUuid() + " is setting the pump.");
-    } catch (ClassCastException e) {
-      Main.log("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
-    }
-  }
-
   /** Repairs the node the player is standing on. */
   public void repair() {
     try {
@@ -60,16 +39,33 @@ public class Plumber extends Character {
         try {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
+          Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
         } catch (ObjectFullException e) {
-          throw new RuntimeException(e);
+          System.err.println("Object is full!");
+          return;
         }
       } catch (ClassCastException e) {
         Main.log(this.getUuid() + " is not standing on a Pipe");
-        Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
       }
     } else {
       Main.log(this.getUuid() + " doesn't have a pump to place");
     }
+  }
+
+  public Pipe getDraggedpipe() {
+    return draggedpipe;
+  }
+
+  public Pipe getPickedUpPipe() {
+    return pickedUpPipe;
+  }
+
+  public void setPickedUpPipe(Pipe p) {
+    pickedUpPipe = p;
+  }
+
+  public void setPickedupPump(Pump p) {
+    pickedupPump = p;
   }
 
   public void PlacePipe() {
@@ -77,10 +73,12 @@ public class Plumber extends Character {
       if (draggedpipe != null) {
         standingOn.connect(draggedpipe);
         draggedpipe = null;
+        return;
       } else if (pickedUpPipe != null) {
         standingOn.connect(pickedUpPipe);
         // Map.addNode(pickedUpPipe, standingOn.getX()+5, standingOn.getY()+5);
         pickedUpPipe = null;
+        return;
       }
     } catch (ObjectFullException e) {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");

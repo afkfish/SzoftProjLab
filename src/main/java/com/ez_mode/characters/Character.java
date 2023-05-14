@@ -78,7 +78,7 @@ public abstract class Character implements Tickable {
 
   /**
    * This method places the character on the given Node. Useful when a character has to respawn, or
-   * placen at the game start.
+   * be placed at the game start.
    *
    * @param node The destination Node.
    */
@@ -102,12 +102,19 @@ public abstract class Character implements Tickable {
     try {
       Pump pump = (Pump) this.standingOn;
       assert in != out : "Input and output pipes must be different.";
-      // TODO: Do the connecting logic this is just shit.
-      pump.setActiveInput(in);
-      pump.setActiveOutput(out);
-      Main.log("\t" + this.uuid + " is setting the pump.");
+      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
+      else {
+        Main.log("\t" + in.getUuid() + " in Pipe not connected to the pump.");
+        return;
+      }
+      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
+      else {
+        Main.log("\t" + in.getUuid() + " out Pipe not connected to the pump.");
+        return;
+      }
+      Main.log("\t" + this.getUuid() + " is setting the pump.");
     } catch (ClassCastException e) {
-      Main.log("Player " + this.uuid + " tried to set a pump on a non-pump object.");
+      Main.log("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
     }
   }
 

@@ -26,6 +26,14 @@ public class Pump extends Node {
   private Pipe activeInput;
   private Pipe activeOutput;
 
+  public Pipe getActiveOutput() {
+    return activeOutput;
+  }
+
+  public Pipe getActiveInput() {
+    return activeInput;
+  }
+
   @Override
   public void repairNode(Character character) throws InvalidPlayerActionException {
     if (this.isBroken) {

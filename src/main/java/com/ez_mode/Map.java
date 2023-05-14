@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,8 +50,59 @@ public class Map implements Tickable {
    */
   public void fillMap(int playerCount) {
     Main.log("Filling map with random objects...");
-    Main.log("Not implemented yet!");
-    // TODO: fill the map with random objects
+
+    gameMap = new Node[10][10];
+
+    // evenly distribute the players into two teams
+    int plumberCount;
+    if (playerCount % 2 == 0) {
+      plumberCount = playerCount / 2;
+    } else {
+      plumberCount = playerCount / 2 + 1;
+    }
+    for (int i = 0; i < plumberCount; i++) {
+      players.add(new Plumber("plumber" + (i + 1)));
+    }
+    for (int i = 0; i < playerCount - plumberCount; i++) {
+      players.add(new Nomad("nomad" + (i + 1)));
+    }
+
+    // create the rest of the map
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        Random rand = new Random();
+        int randomInt = rand.nextInt(100);
+        if (randomInt <= 60) {
+          gameMap[i][j] = new Pipe(i, j);
+        } else if (randomInt <= 80) {
+          gameMap[i][j] = new Pump(i, j);
+        } else if (randomInt <= 90) {
+          gameMap[i][j] = new Cistern(i, j);
+        } else {
+          gameMap[i][j] = new WaterSpring(i, j);
+        }
+      }
+    }
+
+    // create one of each node, to make sure we have each type on the map
+    gameMap[0][0] = new Cistern(0, 0);
+    gameMap[0][1] = new WaterSpring(0, 1);
+    gameMap[0][2] = new Pipe(0, 2);
+    gameMap[0][3] = new Pump(0, 3);
+
+    // place the characters
+    for (int i = 0; i < playerCount; i++) {
+      Random random = new Random();
+      boolean success = false;
+      while (!success) {
+        int row = random.nextInt(10);
+        int col = random.nextInt(10);
+        if (gameMap[row][col] != null && gameMap[row][col].getCharacters().isEmpty()) {
+          players.get(i).placeTo(gameMap[row][col]);
+          success = true;
+        }
+      }
+    }
   }
 
   public void loadMap(String path) {
@@ -232,11 +284,31 @@ public class Map implements Tickable {
     player.placeTo(node);
   }
 
-  public static void removeNode(Node node) { // TODO implement remove logic
+  public static void removeNode(Node node) { // TODO: implement remove logic
   }
 
   public static Character getPlayer(int index) {
     return players.get(index);
+  }
+
+  public static Character getPlayer(String name) {
+    for (Character c : players) {
+      if (c.getName().equals(name)) {
+        return c;
+      }
+    }
+    return null;
+  }
+
+  public static Node getNode(String name) {
+    for (Node[] asd : gameMap) {
+      for (Node nodi : asd) {
+        if (nodi.getUuid().equals(name)) {
+          return nodi;
+        }
+      }
+    }
+    return null;
   }
 
   public static void printPlayers() {
@@ -279,19 +351,19 @@ public class Map implements Tickable {
    * @param character the player who is lost
    */
   public static void playerLostHandler(Character character) {
-    //    Node playerTruePos =
-    //        gameMap.stream()
-    //            .flatMap(ArrayList::stream)
-    //            .filter(node -> node.getCharacters().contains(character))
-    //            .findFirst()
-    //            .orElse(null);
+    // Node playerTruePos =
+    // gameMap.stream()
+    // .flatMap(ArrayList::stream)
+    // .filter(node -> node.getCharacters().contains(character))
+    // .findFirst()
+    // .orElse(null);
 
     // TODO: move to start if null
-    //    assert playerTruePos != null;
-    //    character.placeTo(playerTruePos);
+    // assert playerTruePos != null;
+    // character.placeTo(playerTruePos);
   }
 
-  public void clearMap() {
+  public static void clearMap() {
     gameMap = new Node[gameMap.length][gameMap[0].length];
   }
 
@@ -308,7 +380,13 @@ public class Map implements Tickable {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    // TODO: map to string
+    for (int i = 0; i < gameMap.length; i++) {
+      for (int j = 0; j < gameMap[i].length; j++) {
+        Node node = gameMap[i][j];
+        sb.append(String.format("[%d, %d]:\n%s", i, j, node.toString()));
+      }
+      sb.append("\n\n");
+    }
     return sb.toString();
   }
 }

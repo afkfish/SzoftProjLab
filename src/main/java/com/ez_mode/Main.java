@@ -18,17 +18,23 @@ public class Main {
   private enum Version {
     SKELETON,
     PROTOTYPE,
-    GRAPGHICAL
+    GRAPHICAL
   }
 
   private static boolean running = true;
   private static final StringBuilder logs = new StringBuilder();
   private static final HashMap<String, Runnable> commands = new HashMap<>();
-  private static final Map map = new Map(10);
+  public static final Map map = new Map(10);
+
   public static Version version = Version.PROTOTYPE;
 
   private static void init() {
     Scanner scanner = new Scanner(System.in);
+    commands.put(
+        "test",
+        () -> {
+          new ProtoTest().processCommand();
+        });
     commands.put("fill", () -> map.fillMap(4));
     commands.put(
         "load",
@@ -98,7 +104,7 @@ public class Main {
                   log("Please provide the coordinates of the node like this: x \\n y");
                   int x = Integer.parseInt(scanner.nextLine());
                   int y = Integer.parseInt(scanner.nextLine());
-                  Node node = null;
+                  Node node;
                   HashMap<Integer, Node> nodeType = new HashMap<>();
                   nodeType.put(1, new Pipe(x, y));
                   nodeType.put(2, new Pump(x, y));
@@ -269,21 +275,21 @@ public class Main {
     if (version == Version.SKELETON) {
       Map map = new Map(10);
       SkeletonTest skeletonTest = new SkeletonTest();
-      System.out.println("Hello! This is the skeleton version of the game.");
+      Main.log("Hello! This is the skeleton version of the game.");
 
       while (true) {
-        System.out.println("\nWhat do you want to do?");
-        System.out.println("character - shows the character tests");
-        System.out.println("map - shows the map in text form");
-        System.out.println("help - shows this message");
-        System.out.println("exit - exits the program");
+        Main.log("\nWhat do you want to do?");
+        Main.log("character - shows the character tests");
+        Main.log("map - shows the map in text form");
+        Main.log("help - shows this message");
+        Main.log("exit - exits the program");
 
         String input = scanner.nextLine();
         switch (input) {
           case "character":
             {
-              System.out.println("What do you want to do?");
-              System.out.println("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
+              Main.log("What do you want to do?");
+              Main.log("- place\n- pickup\n- move\n- break\n- repair\n- set\n");
               switch (scanner.nextLine()) {
                 case "place":
                   {
@@ -324,7 +330,7 @@ public class Main {
                   }
                 default:
                   {
-                    System.out.println("Unknown command");
+                    Main.log("Unknown command");
                     break;
                   }
               }
@@ -332,25 +338,25 @@ public class Main {
             }
           case "map":
             {
-              System.out.println(map);
+              Main.log(map.toString());
               break;
             }
           case "help":
             {
-              System.out.println("map - shows the map");
-              System.out.println("help - shows this message");
-              System.out.println("exit - exits the program");
+              Main.log("map - shows the map");
+              Main.log("help - shows this message");
+              Main.log("exit - exits the program");
               break;
             }
           case "exit":
             {
-              System.out.println("Exiting");
+              Main.log("Exiting");
               System.exit(0);
               break;
             }
           default:
             {
-              System.out.println("Unknown command");
+              Main.log("Unknown command");
               break;
             }
         }
@@ -385,7 +391,7 @@ public class Main {
         input = scanner.nextLine();
         saveLog(input);
       }
-    } else if (version == Version.GRAPGHICAL) {
+    } else if (version == Version.GRAPHICAL) {
       // new Menu();
     }
   }
