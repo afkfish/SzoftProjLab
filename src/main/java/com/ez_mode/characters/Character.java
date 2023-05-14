@@ -1,5 +1,6 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.Tickable;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
@@ -68,7 +69,7 @@ public abstract class Character implements Tickable {
       standingOn.removeCharacter(this);
       this.logger.debug("Moved {} to {} from {}", this.uuid, node.getUuid(), standingOn.getUuid());
       this.standingOn = node;
-      System.out.println("\t" + this.uuid + " moved to " + node.getUuid());
+      Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
       this.logger.error(e.getMessage());
       Map.playerLostHandler(this);
@@ -82,7 +83,7 @@ public abstract class Character implements Tickable {
    * @param node The destination Node.
    */
   public void placeTo(Node node) {
-    System.out.println("\tPlaced " + this.uuid + " on " + node.getUuid());
+    Main.log("\tPlaced " + this.uuid + " on " + node.getUuid());
     this.standingOn = node;
     node.placeCharacter(this);
   }
@@ -90,8 +91,8 @@ public abstract class Character implements Tickable {
   /** Breaks the node the player is standing on. */
   public void breakNode() {
     try {
-      ((Pipe) this.standingOn).breakNode(this);
-      System.out.println("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
+      this.standingOn.breakNode(this);
+      Main.log("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
     } catch (InvalidPlayerActionException | ClassCastException e) {
       this.logger.error(e.getMessage());
     }
@@ -104,9 +105,9 @@ public abstract class Character implements Tickable {
       // TODO: Do the connecting logic this is just shit.
       pump.setActiveInput(in);
       pump.setActiveOutput(out);
-      System.out.println("\t" + this.uuid + " is setting the pump.");
+      Main.log("\t" + this.uuid + " is setting the pump.");
     } catch (ClassCastException e) {
-      System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
+      Main.log("Player " + this.uuid + " tried to set a pump on a non-pump object.");
     }
   }
 

@@ -1,5 +1,6 @@
 package com.ez_mode.objects;
 
+import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
@@ -71,7 +72,7 @@ public class Pipe extends Node {
           }
         }
         if (isStikcy) character.stucked();
-        System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
+        Main.log("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
     }
@@ -103,7 +104,7 @@ public class Pipe extends Node {
   }
 
   @Override
-  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
+  public void setSurface(String type, Character c) {
     if (type.equals("sticky")) isStikcy = true;
     else if (type.equals("slippery")) isSlippery = true;
     else {
