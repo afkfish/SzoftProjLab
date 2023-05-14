@@ -58,7 +58,7 @@ public class Map implements Tickable {
     gameMap = new Node[10][10];
 
     // evenly distribute the players into two teams
-    int plumberCount = 0;
+    int plumberCount;
     if (playerCount % 2 == 0) {
       plumberCount = playerCount / 2;
     } else {
@@ -377,7 +377,10 @@ public class Map implements Tickable {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    // TODO: map to string
+    // for (Node node : gameMap) {
+    // sb.append(node.toString());
+    // sb.append("\n ");
+    // }
     return sb.toString();
   }
 }

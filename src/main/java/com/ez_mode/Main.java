@@ -104,7 +104,7 @@ public class Main {
                   log("Please provide the coordinates of the node like this: x \\n y");
                   int x = Integer.parseInt(scanner.nextLine());
                   int y = Integer.parseInt(scanner.nextLine());
-                  Node node = null;
+                  Node node;
                   HashMap<Integer, Node> nodeType = new HashMap<>();
                   nodeType.put(1, new Pipe(x, y));
                   nodeType.put(2, new Pump(x, y));
