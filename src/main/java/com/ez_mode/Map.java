@@ -17,8 +17,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
- * the Characters standing on them. It also contains a method to handle the case when a player is
+ * This class is responsible for the map of the game. It contains a HashMap of
+ * StandableObjects and
+ * the Characters standing on them. It also contains a method to handle the case
+ * when a player is
  * lost somehow.
  */
 public class Map implements Tickable {
@@ -26,7 +28,8 @@ public class Map implements Tickable {
   private final Logger logger = LogManager.getLogger(Map.class);
 
   /**
-   * The ArrayList representation of the game. This map contains every object. TODO: store the
+   * The ArrayList representation of the game. This map contains every object.
+   * TODO: store the
    * objects with their coordinates
    */
   private static Node[][] gameMap = null;
@@ -45,11 +48,12 @@ public class Map implements Tickable {
   }
 
   /**
-   * This method fills the map with the objects and places the characters to their startiing
+   * This method fills the map with the objects and places the characters to their
+   * startiing
    * positions.
    */
   public void fillMap(int playerCount) {
-    System.out.println("Filling map with random objects...");
+    Main.log("Filling map with random objects...");
 
     gameMap = new Node[10][10];
 
@@ -106,9 +110,9 @@ public class Map implements Tickable {
   }
 
   public void loadMap(String path) {
-    System.out.println("Loading map...");
+    Main.log("Loading map...");
     if (!path.endsWith(".json")) {
-      System.out.println("The file must be a .json configuration file!");
+      Main.log("The file must be a .json configuration file!");
       return;
     }
     try (FileInputStream fileInputStream = new FileInputStream("testMap.json")) {
@@ -120,34 +124,29 @@ public class Map implements Tickable {
         NotJSONObject node = nodeList.getJSONObject(i);
         Node temp;
         switch (node.getString("type")) {
-          case "cistern":
-            {
-              temp = new Cistern(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          case "pipe":
-            {
-              temp = new Pipe(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          case "pump":
-            {
-              temp = new Pump(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          case "waterspring":
-            {
-              temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          default:
-            {
-              System.out.println("Unknown node type!");
-              continue;
-            }
+          case "cistern": {
+            temp = new Cistern(node.getInt("x"), node.getInt("y"));
+            break;
+          }
+          case "pipe": {
+            temp = new Pipe(node.getInt("x"), node.getInt("y"));
+            break;
+          }
+          case "pump": {
+            temp = new Pump(node.getInt("x"), node.getInt("y"));
+            break;
+          }
+          case "waterspring": {
+            temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
+            break;
+          }
+          default: {
+            Main.log("Unknown node type!");
+            continue;
+          }
         }
         gameMap[node.getInt("x")][node.getInt("y")] = temp;
-        System.out.println(node);
+        Main.log(String.valueOf(node));
       }
 
       // iterate over the nodes again and set the connections
@@ -164,13 +163,13 @@ public class Map implements Tickable {
           NotJSONObject connection = connections.getJSONObject(j);
           Node neighbour = gameMap[connection.getInt("x")][connection.getInt("y")];
           if (neighbour == null) {
-            System.out.println(
+            Main.log(
                 "There is no node at the given coordinates: "
                     + connection.getInt("x")
                     + ", "
                     + connection.getInt("y")
                     + "!");
-            System.out.println("Skipping connection...");
+            Main.log("Skipping connection...");
             continue;
           }
           temp.connect(neighbour);
@@ -182,37 +181,33 @@ public class Map implements Tickable {
         NotJSONObject player = playerList.getJSONObject(i);
         Character temp;
         switch (player.getString("type")) {
-          case "plumber":
-            {
-              temp = new Plumber(player.getString("name"));
-              break;
-            }
-          case "nomad":
-            {
-              temp = new Nomad(player.getString("name"));
-              break;
-            }
-          default:
-            {
-              System.out.println("Unknown player type!");
-              continue;
-            }
+          case "plumber": {
+            temp = new Plumber(player.getString("name"));
+            break;
+          }
+          case "nomad": {
+            temp = new Nomad(player.getString("name"));
+            break;
+          }
+          default: {
+            Main.log("Unknown player type!");
+            continue;
+          }
         }
-        System.out.println(player);
+        Main.log(String.valueOf(player));
         players.add(temp);
         temp.placeTo(gameMap[player.getInt("x")][player.getInt("y")]);
       }
-      System.out.println("Map loaded successfully!");
+      Main.log("Map loaded successfully!");
     } catch (SecurityException | IOException e) {
-      System.out.println("There was an error loading the map!");
+      Main.log("There was an error loading the map!");
     } catch (ObjectFullException e) {
-      System.out.println(
-          "Some objects are full and cannot have more connections! The map is invalid!");
+      Main.log("Some objects are full and cannot have more connections! The map is invalid!");
     }
   }
 
   public void saveMap(String path) {
-    System.out.println("Saving map...");
+    Main.log("Saving map...");
     assert path.endsWith(".json") : "The file must be a .json configuration file!";
     try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
       // create the root object
@@ -261,9 +256,9 @@ public class Map implements Tickable {
       root.put("map", nodeList);
 
       fileOutputStream.write(root.toString(2).getBytes());
-      System.out.println("Map saved successfully!");
+      Main.log("Map saved successfully!");
     } catch (IOException e) {
-      System.out.println("There was an error saving the map!");
+      Main.log("There was an error saving the map!");
     }
   }
 
@@ -315,7 +310,7 @@ public class Map implements Tickable {
   public static void printPlayers() {
     for (int i = 0; i < players.size(); i++) {
       Character player = players.get(i);
-      System.out.println(i + " - " + player.getName() + " - " + player.getStandingOn().getUuid());
+      Main.log(i + " - " + player.getName() + " - " + player.getStandingOn().getUuid());
     }
   }
 
@@ -346,22 +341,23 @@ public class Map implements Tickable {
   }
 
   /**
-   * If a player character lost somehow, this method will move it to the position it is supposed to
+   * If a player character lost somehow, this method will move it to the position
+   * it is supposed to
    * be, or to the start position.
    *
    * @param character the player who is lost
    */
   public static void playerLostHandler(Character character) {
-    //    Node playerTruePos =
-    //        gameMap.stream()
-    //            .flatMap(ArrayList::stream)
-    //            .filter(node -> node.getCharacters().contains(character))
-    //            .findFirst()
-    //            .orElse(null);
+    // Node playerTruePos =
+    // gameMap.stream()
+    // .flatMap(ArrayList::stream)
+    // .filter(node -> node.getCharacters().contains(character))
+    // .findFirst()
+    // .orElse(null);
 
     // TODO: move to start if null
-    //    assert playerTruePos != null;
-    //    character.placeTo(playerTruePos);
+    // assert playerTruePos != null;
+    // character.placeTo(playerTruePos);
   }
 
   public static void clearMap() {
@@ -381,10 +377,7 @@ public class Map implements Tickable {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    //    for (Node node : gameMap) {
-    //      sb.append(node.toString());
-    //      sb.append("\n ");
-    //    }
+    // TODO: map to string
     return sb.toString();
   }
 }

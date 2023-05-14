@@ -1,12 +1,14 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.Main;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
 
 /**
- * Class representing a Plummer character. The plummer can repair pipes and pumps, place new pipes
+ * Class representing a Plummer character. The plummer can repair pipes and
+ * pumps, place new pipes
  * and pupms and reroute the water to the cisterns.
  */
 public class Plumber extends Character {
@@ -22,7 +24,7 @@ public class Plumber extends Character {
   public void repair() {
     try {
       this.standingOn.repairNode(this);
-      System.out.println("\t" + this.getUuid() + " has repaired " + standingOn.getUuid());
+      Main.log("\t" + this.getUuid() + " has repaired " + standingOn.getUuid());
     } catch (InvalidPlayerActionException e) {
       this.logger.error(e.getMessage());
     }
@@ -38,16 +40,16 @@ public class Plumber extends Character {
         try {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
-          System.out.println("\t" + pickedupPump.getUuid() + " has been placed ");
+          Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
         } catch (ObjectFullException e) {
           System.err.println("Object is full!");
           return;
         }
       } catch (ClassCastException e) {
-        System.out.println(this.getUuid() + " is not standing on a Pipe");
+        Main.log(this.getUuid() + " is not standing on a Pipe");
       }
     } else {
-      System.out.println(this.getUuid() + " doesn't have a pump to place");
+      Main.log(this.getUuid() + " doesn't have a pump to place");
     }
   }
 
@@ -72,15 +74,13 @@ public class Plumber extends Character {
       if (draggedpipe != null) {
         standingOn.connect(draggedpipe);
         draggedpipe = null;
-        return;
       } else if (pickedUpPipe != null) {
         standingOn.connect(pickedUpPipe);
         // Map.addNode(pickedUpPipe, standingOn.getX()+5, standingOn.getY()+5);
         pickedUpPipe = null;
-        return;
       }
     } catch (ObjectFullException e) {
-      System.out.println(this.getUuid() + "tried to place and connect a pipe to a full node");
+      Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
     }
   }
 
@@ -89,10 +89,10 @@ public class Plumber extends Character {
       Pump temp = ((Cistern) standingOn).GivePump();
       if ((temp != null)) {
         pickedupPump = temp;
-        System.out.println("\t" + temp.getUuid() + " has been picked up by " + this.getUuid());
+        Main.log("\t" + temp.getUuid() + " has been picked up by " + this.getUuid());
       }
     } catch (ClassCastException e) {
-      System.out.println(this.getUuid() + " is not standing on a Cistern");
+      Main.log(this.getUuid() + " is not standing on a Cistern");
     }
   }
 
@@ -111,20 +111,19 @@ public class Plumber extends Character {
       }
 
       if (draggedpipe != null && !draggedpipe.getNeighbours().isEmpty()) {
-        System.out.println("\t" + draggedpipe + " has been picked up by " + this.getUuid());
+        Main.log("\t" + draggedpipe + " has been picked up by " + this.getUuid());
       } else if (draggedpipe != null && draggedpipe.getNeighbours().isEmpty()) {
         pickedUpPipe = draggedpipe;
         draggedpipe = null;
         // Map.removeNode(pickedUpPipe);
-        System.out.println(
-            "\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
+        Main.log("\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
       } else if (draggedpipe == null) {
         throw new NotFoundExeption("Pipe Not Found!");
       }
     } catch (ClassCastException cce) {
-      System.out.println(this.getUuid() + " is not standing on a Cistern");
+      Main.log(this.getUuid() + " is not standing on a Cistern");
     } catch (NotFoundExeption nfe) {
-      System.out.println(nfe.getMessage());
+      Main.log(nfe.getMessage());
     }
   }
 }
