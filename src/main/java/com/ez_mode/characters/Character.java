@@ -1,6 +1,7 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.Map;
+import com.ez_mode.Main;
 import com.ez_mode.Tickable;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;

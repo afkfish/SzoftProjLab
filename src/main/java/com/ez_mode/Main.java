@@ -24,7 +24,7 @@ public class Main {
   private static boolean running = true;
   private static final StringBuilder logs = new StringBuilder();
   private static final HashMap<String, Runnable> commands = new HashMap<>();
-  private static final Map map = new Map(10);
+  static final Map map = new Map(10);
   public static Version version = Version.PROTOTYPE;
 
   private static void init() {
@@ -390,7 +390,7 @@ public class Main {
         input = scanner.nextLine();
         saveLog(input);
       }
-    } else if (version == Version.GRAPGHICAL) {
+    } else if (version == Version.GRAPHICAL) {
       // new Menu();
     }
   }

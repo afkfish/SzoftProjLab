@@ -1,7 +1,5 @@
 package com.ez_mode;
 
-import static com.ez_mode.Main.map;
-
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
@@ -11,16 +9,22 @@ import com.ez_mode.objects.Cistern;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import static com.ez_mode.Main.map;
 
 public class ProtoTest {
   private final HashMap<String, Runnable> commands;
   private static ArrayList<String> args = new ArrayList<>();
   private boolean exited = false;
   private Scanner input = new Scanner(System.in);
+  private final Logger logger = LogManager.getLogger(Map.class);
 
   public ProtoTest() {
     commands = new HashMap<>();
@@ -69,7 +73,7 @@ public class ProtoTest {
           map.getNode(i, j).connect(map.getNode(i + 1, j));
           map.getNode(i, j).connect(map.getNode(i, j + 1));
         } catch (ObjectFullException e) {
-          // System.err.println("Couldn't connect nodes.");
+          // Main.log();("Couldn't connect nodes.");
         }
       }
     }
@@ -90,7 +94,7 @@ public class ProtoTest {
       args.clear();
       String cmd = input.nextLine();
       String[] tmp = cmd.split(" ");
-      ArrayList<String> parts = new ArrayList<String>(Arrays.asList(tmp));
+      ArrayList<String> parts = new ArrayList<>(Arrays.asList(tmp));
       for (String str : parts) {
         if (str.endsWith(">") && str.startsWith("<")) {
           args.add(str.substring(1, str.length() - 1));
@@ -105,12 +109,12 @@ public class ProtoTest {
       }
       cmd = String.join(" ", parts);
       if (commands.containsKey(cmd)) commands.get(cmd).run();
-      else System.out.println(cmd + "is an invalid command");
+      else Main.log(cmd + "is an invalid command");
     }
   }
 
   public void MapPrintTest() {
-    System.out.println("Printing map: ");
+    Main.log("Printing map: ");
     Map.printPlayers();
     Map.printNodes();
   }
@@ -127,7 +131,7 @@ public class ProtoTest {
     try {
       Map.addPlayer(character, Map.getNode(X, Y));
     } catch (NullPointerException e) {
-      System.err.println("Tried to place character on an unavailable node!");
+      Main.log("Tried to place character on an unavailable node!");
     }
   }
 
@@ -136,7 +140,7 @@ public class ProtoTest {
     int Y = Integer.parseInt(args.get(1));
     Pump pump = new Pump(X, Y);
     Map.addNode(pump, pump.getX(), pump.getX());
-    System.out.println("Successfully added pump!");
+    Main.log("Successfully added pump!");
   }
 
   public void AddNewPipeTest() {
@@ -144,36 +148,36 @@ public class ProtoTest {
     int Y = Integer.parseInt(args.get(1));
     Pipe pipe = new Pipe(X, Y);
     Map.addNode(pipe, pipe.getX(), pipe.getX());
-    System.out.println("Successfully added pipe!");
+    Main.log("Successfully added pipe!");
   }
 
   public void PlacePumpTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       ((Plumber) c).PlacePump();
     } catch (ClassCastException e) {
-      System.out.println("the player is not standing on a Pipe");
+      Main.log("the player is not standing on a Pipe");
       return;
     }
-    System.err.println("PlacePumpTest failed!");
+    Main.log("PlacePumpTest failed!");
   }
 
   public void PlacePipeTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     Plumber p = (Plumber) c;
     if (p.getDraggedpipe() != null && p.getPickedUpPipe() != null) {
       p.PlacePipe();
       return;
-    } else System.out.println("Plumber has no pipe to place");
-    System.err.println("BreakPipeTest failed!");
+    } else Main.log("Plumber has no pipe to place");
+    Main.log("BreakPipeTest failed!");
   }
 
   public void MoveCharacterTest() {
@@ -181,51 +185,51 @@ public class ProtoTest {
     int Up = Integer.parseInt(args.get(1));
     int Right = Integer.parseInt(args.get(2));
     if (Up > 1 || Right > 1) {
-      System.err.println("Too much movement.");
+      Main.log("Too much movement.");
       return;
     }
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       Node move = Map.getNode(c.getStandingOn().getX() + Right, c.getStandingOn().getY() + Up);
       if (move == null) {
-        System.err.println("Cannot move there.");
+        Main.log("Cannot move there.");
         return;
       }
       c.moveTo(move);
       return;
     } catch (InvalidPlayerMovementException | ObjectFullException e) {
-      System.out.println("Player can't move because it is stuck or the given Node is full");
+      Main.log("Player can't move because it is stuck or the given Node is full");
     }
-    System.err.println("MoveCharacterTest failed");
+    Main.log("MoveCharacterTest failed");
   }
 
   public void BreakPipeTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       c.breakNode();
       if (((Pipe) (c.getStandingOn())).isBroken()) {
-        System.out.println("Pipe has been broken successfully!");
+        Main.log("Pipe has been broken successfully!");
         return;
       }
     } catch (ClassCastException e) {
-      System.err.println("The player is not standing on a Pump.");
+      Main.log("The player is not standing on a Pump.");
       return;
     }
-    System.err.println("BreakPipeTest failed!");
+    Main.log("BreakPipeTest failed!");
   }
 
   public void SetPumpTest() {
 
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
@@ -234,96 +238,96 @@ public class ProtoTest {
       for (Node n : neighbours) {
         if (n.getUuid().contains("Pipe")) pipes.add((Pipe) n);
       }
-      if (pipes.size() < 2) System.err.println("There are not enough pipe neighbours!");
+      if (pipes.size() < 2) Main.log("There are not enough pipe neighbours!");
       else c.setPump(pipes.get(0), pipes.get(1));
 
       if (((Pump) c.getStandingOn()).getActiveInput().equals(pipes.get(0))
           && ((Pump) c.getStandingOn()).getActiveInput().equals(pipes.get(1))) {
-        System.out.println("Pump has been set right successfully!");
+        Main.log("Pump has been set right successfully!");
         return;
       }
 
     } catch (ClassCastException e) {
-      System.out.println("the player is not standing on a Pump");
+      Main.log("the player is not standing on a Pump");
       return;
     }
-    System.err.println("SetPumpTest failed!");
+    Main.log("SetPumpTest failed!");
   }
 
   public void RepairPumpTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       ((Plumber) c).repair();
       if (!((Pump) (c.getStandingOn())).isBroken()) {
-        System.out.println("Pump has been repaired successfully!");
+        Main.log("Pump has been repaired successfully!");
         return;
       }
     } catch (ClassCastException e) {
-      System.out.println("the player is not standing on a Pump");
+      Main.log("the player is not standing on a Pump");
       return;
     }
-    System.err.println("RepairPipeTest failed!");
+    Main.log("RepairPipeTest failed!");
   }
 
   public void RepairPipeTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       ((Plumber) c).repair();
       if (!((Pipe) (c.getStandingOn())).isBroken()) {
-        System.out.println("Pipe has been repaired successfully!");
+        Main.log("Pipe has been repaired successfully!");
         return;
       }
     } catch (ClassCastException e) {
-      System.out.println("the player is not standing on a pipe");
+      Main.log("the player is not standing on a pipe");
       return;
     }
-    System.err.println("RepairPipeTest failed!");
+    Main.log("RepairPipeTest failed!");
   }
 
   public void MakePipeSlipperyTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       ((Nomad) c).setSlippery();
       if (((Pipe) (c.getStandingOn())).isSlippery()) {
-        System.out.println("Pipe has been made slippery successfully!");
+        Main.log("Pipe has been made slippery successfully!");
         return;
       }
     } catch (ClassCastException e) {
-      System.out.println("the player is not standing on a pipe");
+      Main.log("the player is not standing on a pipe");
       return;
     }
-    System.err.println("MakePipeSlipperyTest failed!");
+    Main.log("MakePipeSlipperyTest failed!");
   }
 
   public void MakePipeStickyTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
-      System.out.println("Character couldn't be found on the map");
+      Main.log("Character couldn't be found on the map");
       return;
     }
     try {
       (c).makePipeSticky();
       if (((Pipe) (c.getStandingOn())).isSticky()) {
-        System.out.println("Pipe has been made sticky successfully!");
+        Main.log("Pipe has been made sticky successfully!");
         return;
       }
     } catch (ClassCastException e) {
-      System.out.println("\n\tThe player is not standing on a pipe");
+      Main.log("\n\tThe player is not standing on a pipe");
       return;
     }
-    System.err.println("MakePipeStickyTest failed!");
+    Main.log("MakePipeStickyTest failed!");
   }
 
   public void exit() {
