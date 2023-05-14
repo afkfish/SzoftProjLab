@@ -169,7 +169,10 @@ public abstract class Node implements Tickable {
     Main.log("\t" + this.uuid + ":connect param: " + node.uuid);
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
-    if (node.x == this.x + 1 || node.x == this.x - 1 || node.y == this.y + 1 || node.y == this.y - 1) {
+    if (node.x == this.x + 1
+        || node.x == this.x - 1
+        || node.y == this.y + 1
+        || node.y == this.y - 1) {
       this.neighbours.add(node);
       if (!node.getNeighbours().contains(this)) node.connect(this);
       return;

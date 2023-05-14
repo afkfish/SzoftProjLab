@@ -339,7 +339,6 @@ public class Map implements Tickable {
         }
       }
     }
-
   }
 
   public static Node getNode(int x, int y) {

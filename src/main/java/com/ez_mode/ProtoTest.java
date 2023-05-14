@@ -97,8 +97,7 @@ public class ProtoTest {
       }
       cmd = String.join(" ", parts);
       if (commands.containsKey(cmd)) commands.get(cmd).run();
-      else
-        Main.log(cmd + " is an invalid command");
+      else Main.log(cmd + " is an invalid command");
     }
   }
 
@@ -166,8 +165,7 @@ public class ProtoTest {
       if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
         Main.log("Plumber still has a pipe to place");
         Main.log("PlacePipeTest failed!");
-      } else
-        Main.log("Plumber placed pipe successfully");
+      } else Main.log("Plumber placed pipe successfully");
     } else {
       Main.log("Plumber has no pipe to place");
     }

@@ -31,9 +31,7 @@ public class Main {
   public static Version version = Version.PROTOTYPE;
 
   private static void init() {
-    commands.put(
-        "test",
-        () -> new ProtoTest().processCommand(scanner));
+    commands.put("test", () -> new ProtoTest().processCommand(scanner));
     commands.put("fill", () -> Map.fillMap(4));
     commands.put(
         "load",
@@ -257,50 +255,50 @@ public class Main {
                 }
               });
           actions.put(
-                  3,
-                  () -> {
-                    log("Select a surface:");
-                    log("1 - sticky");
-                    log("2 - slippery");
-                    log("3 - normal");
-                    int surface = Integer.parseInt(scanner.nextLine());
-                    try {
-                      if (surface == 1) {
-                        node.setSurface("sticky", character);
-                      } else if (surface == 2) {
-                        node.setSurface("slippery", character);
-                      } else {
-                        node.setSurface(" " , character);
-                      }
-                    } catch (InvalidPlayerActionException e) {
-                      log(e.getMessage());
-                    }
-                  });
-            actions.put(
-                    4,
-                    () -> {
-                      log("Select an neighbour:");
-                      Map.printNodes();
-                      int x1 = Integer.parseInt(scanner.nextLine());
-                      int y1 = Integer.parseInt(scanner.nextLine());
-                      Node node1 = Map.getNode(x1, y1);
-                      try {
-                        node.connect(node1);
-                      } catch (ObjectFullException e) {
-                        throw new RuntimeException(e);
-                      }
-                    });
-            actions.put(
-                    5,
-                    () -> {
-                      log("Select an neighbour:");
-                      node.getNeighbours().forEach(alma -> log(alma.toString()));
-                      int x1 = Integer.parseInt(scanner.nextLine());
-                      int y1 = Integer.parseInt(scanner.nextLine());
-                      Node node1 = Map.getNode(x1, y1);
-                      node.disconnect(node1);
-                    });
-            actions.get(action).run();
+              3,
+              () -> {
+                log("Select a surface:");
+                log("1 - sticky");
+                log("2 - slippery");
+                log("3 - normal");
+                int surface = Integer.parseInt(scanner.nextLine());
+                try {
+                  if (surface == 1) {
+                    node.setSurface("sticky", character);
+                  } else if (surface == 2) {
+                    node.setSurface("slippery", character);
+                  } else {
+                    node.setSurface(" ", character);
+                  }
+                } catch (InvalidPlayerActionException e) {
+                  log(e.getMessage());
+                }
+              });
+          actions.put(
+              4,
+              () -> {
+                log("Select an neighbour:");
+                Map.printNodes();
+                int x1 = Integer.parseInt(scanner.nextLine());
+                int y1 = Integer.parseInt(scanner.nextLine());
+                Node node1 = Map.getNode(x1, y1);
+                try {
+                  node.connect(node1);
+                } catch (ObjectFullException e) {
+                  throw new RuntimeException(e);
+                }
+              });
+          actions.put(
+              5,
+              () -> {
+                log("Select an neighbour:");
+                node.getNeighbours().forEach(alma -> log(alma.toString()));
+                int x1 = Integer.parseInt(scanner.nextLine());
+                int y1 = Integer.parseInt(scanner.nextLine());
+                Node node1 = Map.getNode(x1, y1);
+                node.disconnect(node1);
+              });
+          actions.get(action).run();
         });
     commands.put(
         "add",
@@ -331,22 +329,22 @@ public class Main {
           actions.put(
               1,
               () -> {
-                  log("Printing the map...");
-                  log(map.toString());
+                log("Printing the map...");
+                log(map.toString());
               });
           actions.put(
               2,
               () -> {
-                  log("Clearing the map...");
-                  Map.clearMap();
+                log("Clearing the map...");
+                Map.clearMap();
               });
           actions.put(
               3,
               () -> {
-                  log("Generating the map...");
-                  log("How many players do you want to have?");
-                  int size = Integer.parseInt(scanner.nextLine());
-                  Map.fillMap(size);
+                log("Generating the map...");
+                log("How many players do you want to have?");
+                int size = Integer.parseInt(scanner.nextLine());
+                Map.fillMap(size);
               });
           actions.get(action).run();
         });
