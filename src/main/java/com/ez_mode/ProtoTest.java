@@ -9,7 +9,6 @@ import com.ez_mode.objects.Cistern;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-
 import java.util.*;
 
 public class ProtoTest {
