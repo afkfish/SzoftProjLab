@@ -38,7 +38,7 @@ public class ProtoTest {
     commands.put("character slippery", () -> MakePipeSlipperyTest());
     commands.put("character sticky", () -> MakePipeStickyTest());
     commands.put("exit", () -> exit());
-    //map.fillMap(2);
+    // map.fillMap(2);
     mapInit(map);
   }
 
@@ -67,9 +67,9 @@ public class ProtoTest {
       for (int j = 0; j < 9; j++) {
         try {
           map.getNode(i, j).connect(map.getNode(i + 1, j));
-          map.getNode(i, j).connect(map.getNode(i, j+1));
+          map.getNode(i, j).connect(map.getNode(i, j + 1));
         } catch (ObjectFullException e) {
-          //System.err.println("Couldn't connect nodes.");
+          // System.err.println("Couldn't connect nodes.");
         }
       }
     }
@@ -79,9 +79,9 @@ public class ProtoTest {
     map.addPlayer(new Nomad("nomad3"), map.getNode(0, 4));
 
     map.addPlayer(new Plumber("plumber1"), map.getNode(0, 6));
-    ((Plumber)(map.getPlayer("plumber1"))).setPickedUpPipe(new Pipe());
+    ((Plumber) (map.getPlayer("plumber1"))).setPickedUpPipe(new Pipe());
     map.addPlayer(new Plumber("plumber2"), map.getNode(0, 7));
-    ((Plumber)(map.getPlayer("plumber2"))).setPickedupPump(new Pump());
+    ((Plumber) (map.getPlayer("plumber2"))).setPickedupPump(new Pump());
     map.addPlayer(new Plumber("plumber3"), map.getNode(0, 9));
   }
 
@@ -94,11 +94,11 @@ public class ProtoTest {
       for (String str : parts) {
         if (str.endsWith(">") && str.startsWith("<")) {
           args.add(str.substring(1, str.length() - 1));
-          //parts.remove(str);
+          // parts.remove(str);
         }
       }
       for (int i = 0; i < parts.size(); i++) {
-        if (args.contains(parts.get(i).substring(1, parts.get(i).length()-1)) ) {
+        if (args.contains(parts.get(i).substring(1, parts.get(i).length() - 1))) {
           parts.remove(parts.get(i));
           i--;
         }
@@ -122,8 +122,7 @@ public class ProtoTest {
     Character character;
     if (characterName.contains("p") || characterName.contains("P"))
       character = new Plumber(characterName);
-    else
-      character = new Nomad(characterName);
+    else character = new Nomad(characterName);
 
     try {
       Map.addPlayer(character, Map.getNode(X, Y));
@@ -233,16 +232,13 @@ public class ProtoTest {
       ArrayList<Node> neighbours = c.getStandingOn().getNeighbours();
       ArrayList<Pipe> pipes = new ArrayList<>();
       for (Node n : neighbours) {
-        if (n.getUuid().contains("Pipe"))
-          pipes.add((Pipe)n);
+        if (n.getUuid().contains("Pipe")) pipes.add((Pipe) n);
       }
-      if (pipes.size() < 2)
-        System.err.println("There are not enough pipe neighbours!");
-      else
-        c.setPump(pipes.get(0), pipes.get(1));
+      if (pipes.size() < 2) System.err.println("There are not enough pipe neighbours!");
+      else c.setPump(pipes.get(0), pipes.get(1));
 
-      if ( ((Pump)c.getStandingOn()).getActiveInput().equals(pipes.get(0))
-              && ((Pump)c.getStandingOn()).getActiveInput().equals(pipes.get(1)) ) {
+      if (((Pump) c.getStandingOn()).getActiveInput().equals(pipes.get(0))
+          && ((Pump) c.getStandingOn()).getActiveInput().equals(pipes.get(1))) {
         System.out.println("Pump has been set right successfully!");
         return;
       }
