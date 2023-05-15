@@ -23,6 +23,7 @@ import org.json.JSONTokener;
 public class Map implements Tickable {
 
   private final Logger logger = LogManager.getLogger(Map.class);
+
   /**
    * The ArrayList representation of the game. This map contains every object. TODO: store the
    * objects with their coordinates
@@ -34,6 +35,7 @@ public class Map implements Tickable {
 
   /** The amount of water, lost by the nomads sabotaging the nodes. */
   public static double waterLost = 0;
+
   /** The amount of water, arrived to the cisterns. */
   public static double waterArrived = 0;
 
