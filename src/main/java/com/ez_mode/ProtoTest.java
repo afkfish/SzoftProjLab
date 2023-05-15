@@ -16,6 +16,9 @@ public class ProtoTest {
   private static ArrayList<String> args = new ArrayList<>();
   private boolean exited = false;
 
+  /**
+   * Constructor for the Prototoest, it fills the command list with the tests, and initializes the map for the tests
+   */
   public ProtoTest() {
     commands = new HashMap<>();
     commands.put("print map", this::MapPrintTest);
@@ -36,6 +39,9 @@ public class ProtoTest {
     mapInit();
   }
 
+  /**
+   * Initializes the map for the tests, with an appropriate map, it's not random because this way the test are deterministic by nature
+   */
   private void mapInit() {
     Map.addNode(new Cistern(0, 0), 0, 0);
     Map.addNode(new Cistern(0, 9), 0, 9);
@@ -77,6 +83,10 @@ public class ProtoTest {
     Map.addPlayer(new Plumber("plumber3"), Map.getNode(0, 9));
   }
 
+  /**
+   * This function processes the command with inputs from the scanner, and runs them.
+   * @param scanner
+   */
   public void processCommand(Scanner scanner) {
     while (!exited) {
       args.clear();
@@ -101,12 +111,18 @@ public class ProtoTest {
     }
   }
 
+  /**
+   * This tests printing the map.
+   */
   public void MapPrintTest() {
     Main.log("Printing map: ");
     Map.printPlayers();
     Map.printNodes();
   }
 
+  /**
+   * This function tests if we can add a player to the map at given coordinates.
+   */
   public void CharacterAddTest() {
     String characterName = args.get(0);
     int X = Integer.parseInt(args.get(1));
@@ -123,6 +139,9 @@ public class ProtoTest {
     }
   }
 
+  /**
+   * This function tests if we can add a new pump to the map at given coordinates.
+   */
   public void AddNewPumpTest() {
     int X = Integer.parseInt(args.get(0));
     int Y = Integer.parseInt(args.get(1));
@@ -131,6 +150,9 @@ public class ProtoTest {
     Main.log("Successfully added pump!");
   }
 
+  /**
+   * This function tests if we can add a new pipe to the map at given coordinates.
+   */
   public void AddNewPipeTest() {
     int X = Integer.parseInt(args.get(0));
     int Y = Integer.parseInt(args.get(1));
@@ -139,6 +161,9 @@ public class ProtoTest {
     Main.log("Successfully added pipe!");
   }
 
+  /**
+   * This tests if the given character can place a pump where it stands.
+   */
   public void PlacePumpTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -153,6 +178,9 @@ public class ProtoTest {
     }
   }
 
+  /**
+   * This tests if the given character can place a pipe where it stands.
+   */
   public void PlacePipeTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -171,6 +199,9 @@ public class ProtoTest {
     }
   }
 
+  /**
+   * This tests if a player character can move a given amount.
+   */
   public void MoveCharacterTest() {
     Character c = Map.getPlayer(args.get(0));
     int Up = Integer.parseInt(args.get(1));
@@ -197,6 +228,9 @@ public class ProtoTest {
     Main.log("MoveCharacterTest failed");
   }
 
+  /**
+   * This function tests if given character can break the pipe it stands on.
+   */
   public void BreakPipeTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -216,6 +250,9 @@ public class ProtoTest {
     Main.log("BreakPipeTest failed!");
   }
 
+  /**
+   * This tests if given character can set the active input and active output to the pump it stands on.
+   */
   public void SetPumpTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -244,6 +281,9 @@ public class ProtoTest {
     Main.log("SetPumpTest failed!");
   }
 
+  /**
+   * This function tests if the given character can repair the pump it stands on.
+   */
   public void RepairPumpTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -263,6 +303,9 @@ public class ProtoTest {
     Main.log("RepairPipeTest failed!");
   }
 
+  /**
+   * This function tests if the given character can repair the pipe it stands on.
+   */
   public void RepairPipeTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -282,6 +325,9 @@ public class ProtoTest {
     Main.log("RepairPipeTest failed!");
   }
 
+  /**
+   * This function tests if given character can make the pipe it stands on slippery.
+   */
   public void MakePipeSlipperyTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -301,6 +347,9 @@ public class ProtoTest {
     Main.log("MakePipeSlipperyTest failed!");
   }
 
+  /**
+   * This function tests if given character can make the pipe it stands on sticky.
+   */
   public void MakePipeStickyTest() {
     Character c = Map.getPlayer(args.get(0));
     if (c == null) {
@@ -320,6 +369,9 @@ public class ProtoTest {
     Main.log("MakePipeStickyTest failed!");
   }
 
+  /**
+   * Exists the testprogram.
+   */
   public void exit() {
     exited = true;
     Map.clearMap();
