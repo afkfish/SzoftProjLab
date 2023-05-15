@@ -21,7 +21,7 @@ public class Main {
     GRAPGHICAL
   }
 
-  public static Version version = Version.PROTOTYPE;
+  public static Version version = Version.GRAPGHICAL;
 
   public static void main(String[] args) {
     Logger logger = LogManager.getLogger(Main.class);
@@ -407,7 +407,7 @@ public class Main {
         }
       }
     } else if (version == Version.GRAPGHICAL) {
-      //new Menu();
+      new Menu();
     }
   }
 }
