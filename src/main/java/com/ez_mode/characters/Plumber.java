@@ -29,6 +29,9 @@ public class Plumber extends Character {
     }
   }
 
+  /**
+   * A plumber can place a pump onto a pipe if it has one in its inventory.
+   */
   public void PlacePump() {
     if (this.pickedupPump != null) {
       try {
@@ -69,6 +72,9 @@ public class Plumber extends Character {
     pickedupPump = p;
   }
 
+  /**
+   * A plumber can place a pipe onto an empty field if it has one in its inventory.
+   */
   public void PlacePipe() {
     try {
       if (draggedpipe != null) {
@@ -84,6 +90,9 @@ public class Plumber extends Character {
     }
   }
 
+  /**
+   * A plumber can pick up pumps from a cistern if it has one.
+   */
   public void PickupPump() {
     try {
       Pump temp = ((Cistern) standingOn).GivePump();
@@ -98,6 +107,11 @@ public class Plumber extends Character {
     }
   }
 
+  /**
+   * A plumber can pick up a pipe from its neighbours.
+   * @param pipe the pipe to be picked up
+   * @throws NotFoundExeption when a pipe is not found then it throws an exceptions
+   */
   public void PickupPipe(Pipe pipe) throws NotFoundExeption {
     try {
       if (pipe == null) {

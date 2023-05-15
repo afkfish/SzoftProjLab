@@ -8,7 +8,7 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import java.util.Random;
 
 /**
- * A pump is a node that can be audjusted and repaired. It is bound to break after a certain amount
+ * A pump is a node that can be adjusted and repaired. It is bound to break after a certain amount
  * of time. The pump can hold 5 players at once.
  */
 public class Pump extends Node {
@@ -34,6 +34,11 @@ public class Pump extends Node {
     return activeInput;
   }
 
+  /**
+   * Repairs the node if it is broken and the actor is a plumber.
+   * @param character the actor
+   * @throws InvalidPlayerActionException if the node is not broken this is thrown
+   */
   @Override
   public void repairNode(Character character) throws InvalidPlayerActionException {
     if (this.isBroken) {
@@ -45,6 +50,11 @@ public class Pump extends Node {
     }
   }
 
+  /**
+   * Breaks the node
+   * @param character the actor
+   * @throws InvalidPlayerActionException if the node is broken already this is thrown
+   */
   @Override
   public void breakNode(Character character) throws InvalidPlayerActionException {
     if (!this.isBroken) {
@@ -56,6 +66,12 @@ public class Pump extends Node {
     }
   }
 
+  /**
+   * Sets a surface type to the node.
+   * @param type Surface type
+   * @param c the actor
+   * @throws InvalidPlayerActionException this action is always invalid since a pump can't be set to a given surface type
+   */
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
@@ -70,6 +86,9 @@ public class Pump extends Node {
     activeOutput = p;
   }
 
+  /**
+   * Calculates the water flow rate
+   */
   @Override
   public void calculateFlowRate() {
     if (!this.isBroken) {
@@ -90,6 +109,9 @@ public class Pump extends Node {
     }
   }
 
+  /**
+   * Randomly breaks.
+   */
   @Override
   public void tick() {
     calculateFlowRate();

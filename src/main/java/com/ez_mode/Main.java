@@ -12,9 +12,7 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
   private enum Version {
@@ -30,6 +28,9 @@ public class Main {
   private static Scanner scanner;
   public static Version version = Version.PROTOTYPE;
 
+  /**
+   * Sets up the actions in the menu
+   */
   private static void init() {
     commands.put("test", () -> new ProtoTest().processCommand(scanner));
     commands.put("fill", () -> Map.fillMap(4));
@@ -54,8 +55,8 @@ public class Main {
             log("Do you want to create a new character? (y/n): ");
             String input = scanner.nextLine();
             if (input.contains("y")) {
-              Character character = createCharacter(scanner);
-              if (character == null) {
+              Optional<Character> character = createCharacter(scanner);
+              if (character.isEmpty()) {
                 log("Character creation aborted!");
                 return;
               }
@@ -67,15 +68,15 @@ public class Main {
                 int x = Integer.parseInt(scanner.nextLine());
                 int y = Integer.parseInt(scanner.nextLine());
                 Node node = Map.getNode(x, y);
-                Map.addPlayer(character, node);
+                Map.addPlayer(character.get(), node);
               } else {
                 log("There are no nodes on the map.");
                 log("Do you want to create a new node? (y/n): ");
                 String input2 = scanner.nextLine();
                 if (input2.contains("y")) {
-                  Node node = createNode(scanner);
-                  if (node != null) {
-                    Map.addPlayer(character, node);
+                  Optional<Node> node = createNode(scanner);
+                  if (node.isPresent()) {
+                    Map.addPlayer(character.get(), node.get());
                   } else {
                     log("Character creation aborted!");
                   }
@@ -206,25 +207,25 @@ public class Main {
     commands.put(
         "node",
         () -> {
-          Node node;
+          Optional<Node> node;
           if (Map.getNodeCount() > 0) {
             log("Select a node:");
             Map.printNodes();
             int x = Integer.parseInt(scanner.nextLine());
             int y = Integer.parseInt(scanner.nextLine());
-            node = Map.getNode(x, y);
+            node = Optional.ofNullable(Map.getNode(x, y));
           } else {
             log("There are no nodes on the map.");
             log("Do you want to create a new node? (y/n): ");
             String input = scanner.nextLine();
             if (input.contains("y")) {
               node = createNode(scanner);
+              if (node.isEmpty()) return;
             } else {
               log("Node creation aborted!");
               return;
             }
           }
-          assert node != null : "Anyad";
           HashMap<Integer, Runnable> actions = new HashMap<>();
           log("What do you want to do with the node?");
           log("1 - break");
@@ -239,7 +240,7 @@ public class Main {
               () -> {
                 log("Trying to break the node...");
                 try {
-                  node.breakNode(character);
+                  node.get().breakNode(character);
                 } catch (InvalidPlayerActionException e) {
                   log(e.getMessage());
                 }
@@ -249,7 +250,7 @@ public class Main {
               () -> {
                 log("Trying to repair the node...");
                 try {
-                  node.repairNode(character);
+                  node.get().repairNode(character);
                 } catch (InvalidPlayerActionException e) {
                   log(e.getMessage());
                 }
@@ -264,11 +265,11 @@ public class Main {
                 int surface = Integer.parseInt(scanner.nextLine());
                 try {
                   if (surface == 1) {
-                    node.setSurface("sticky", character);
+                    node.get().setSurface("sticky", character);
                   } else if (surface == 2) {
-                    node.setSurface("slippery", character);
+                    node.get().setSurface("slippery", character);
                   } else {
-                    node.setSurface(" ", character);
+                    node.get().setSurface(" ", character);
                   }
                 } catch (InvalidPlayerActionException e) {
                   log(e.getMessage());
@@ -283,7 +284,7 @@ public class Main {
                 int y1 = Integer.parseInt(scanner.nextLine());
                 Node node1 = Map.getNode(x1, y1);
                 try {
-                  node.connect(node1);
+                  node.get().connect(node1);
                 } catch (ObjectFullException e) {
                   throw new RuntimeException(e);
                 }
@@ -292,11 +293,11 @@ public class Main {
               5,
               () -> {
                 log("Select an neighbour:");
-                node.getNeighbours().forEach(alma -> log(alma.toString()));
+                node.get().getNeighbours().forEach(alma -> log(alma.toString()));
                 int x1 = Integer.parseInt(scanner.nextLine());
                 int y1 = Integer.parseInt(scanner.nextLine());
                 Node node1 = Map.getNode(x1, y1);
-                node.disconnect(node1);
+                node.get().disconnect(node1);
               });
           actions.get(action).run();
         });
@@ -308,7 +309,8 @@ public class Main {
           log("2 - Node");
           int type = Integer.parseInt(scanner.nextLine());
           if (type == 1) {
-            if (createCharacter(scanner) == null) {
+            Optional<Character> character = createCharacter(scanner);
+            if (character.isEmpty()) {
               log("Character creation aborted!");
             }
           } else if (type == 2) {
@@ -356,6 +358,12 @@ public class Main {
         });
   }
 
+  /**
+   * Prints the neighbours of a given node.
+   * @param scanner static scanner
+   * @param neighbours the node's neighbours
+   * @return Integer of the chosen index
+   */
   private static int printNeighbours(Scanner scanner, ArrayList<Node> neighbours) {
     for (int j = 0; j < neighbours.size(); j++) {
       Node temp = neighbours.get(j);
@@ -373,11 +381,19 @@ public class Main {
     }
   }
 
+  /**
+   * Logger func.
+   * @param message the message to be logged
+   */
   public static void log(String message) {
     logs.append(message).append("\n");
     System.out.println(message);
   }
 
+  /**
+   * Saves the log to a file
+   * @param fileName the file name
+   */
   private static void saveLog(String fileName) {
     fileName = fileName.endsWith(".txt") ? fileName : fileName + ".txt";
     try (PrintWriter out = new PrintWriter(fileName)) {
@@ -388,7 +404,12 @@ public class Main {
     }
   }
 
-  private static Node createNode(Scanner scanner) {
+  /**
+   * Creates a new node
+   * @param scanner
+   * @return
+   */
+  private static Optional<Node> createNode(Scanner scanner) {
     log("What is the type of the node?");
     log("1 - Pipe");
     log("2 - Pump");
@@ -398,7 +419,7 @@ public class Main {
     if (type2 < 1 || type2 > 4) {
       log("Unknown node type");
       log("Character creation aborted!");
-      return null;
+      return Optional.empty();
     }
     log("Where do you want to place the node?");
     log("Please provide the coordinates of the node like this: x \\n y");
@@ -414,14 +435,19 @@ public class Main {
     if (node == null) {
       log("Unknown node type");
       log("Node creation aborted!");
-      return null;
+      return Optional.empty();
     }
     Map.addNode(node, node.getX(), node.getY());
     log("Node succesfuly created!");
-    return node;
+    return Optional.of(node);
   }
 
-  private static Character createCharacter(Scanner scanner) {
+  /**
+   * The Character creation menu
+   * @param scanner static scanner
+   * @return a new character that is optional
+   */
+  private static Optional<Character> createCharacter(Scanner scanner) {
     log("What is the name of the character?");
     String name = scanner.nextLine();
     log("What is the type of the character?");
@@ -438,12 +464,16 @@ public class Main {
     } else {
       log("Unknown character type!");
       log("Character creation aborted!");
-      return null;
+      return Optional.empty();
     }
     log("Character succesfuly created!");
-    return character;
+    return Optional.of(character);
   }
 
+  /**
+   * The prototype of the program
+   * @param scanner static scanner
+   */
   private static void proto(Scanner scanner) {
     init();
     log("Hello! This is the prototype version of the game.");

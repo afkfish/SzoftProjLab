@@ -15,24 +15,43 @@ public class Cistern extends Node {
     super(Integer.MAX_VALUE, 4, x, y);
   }
 
+  /**
+   * The Cistern is not breakable.
+   * @param character the actor
+   * @throws InvalidPlayerActionException  this action is always invalid
+   */
   @Override
   public void repairNode(Character character) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
         String.format("Player <%s> tried to repair a cistern.", character.getName()));
   }
 
+  /**
+   * The Cistern cannot be broken.
+   * @param character the actor
+   * @throws InvalidPlayerActionException this action is always invalid
+   */
   @Override
   public void breakNode(Character character) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
         String.format("Player <%s> tried to break a cistern.", character.getName()));
   }
 
+  /**
+   * The Cistern's surface cannot be set.
+   * @param type the type of surface
+   * @param c actor
+   * @throws InvalidPlayerActionException this action is always invalid
+   */
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
     throw new InvalidPlayerActionException(
         String.format("Player <%s> tried to make a cistern sticky/slippery.", c.getName()));
   }
 
+  /**
+   * Update the neighbouring nodes.
+   */
   @Override
   public void tick() {
     super.tick();
@@ -49,6 +68,10 @@ public class Cistern extends Node {
     }
   }
 
+  /**
+   * Gives a Pump to the Plumber if it has one
+   * @return a Pump object
+   */
   public Pump GivePump() {
     if (producedPumps.size() >= 1) {
       return producedPumps.remove(producedPumps.size() - 1);
@@ -56,6 +79,10 @@ public class Cistern extends Node {
     return null;
   }
 
+  /**
+   * Makes a Pipe.
+   * @return
+   */
   public Pipe MakePipe() {
     // Stakeholder
     Main.log("\t" + this.uuid + " made a pipe");
@@ -68,6 +95,9 @@ public class Cistern extends Node {
     return temp;
   }
 
+  /**
+   * Makes a pump.
+   */
   public void MakePump() {
     // Stakeholder
     Main.log("\t" + this.uuid + " made a pump");
