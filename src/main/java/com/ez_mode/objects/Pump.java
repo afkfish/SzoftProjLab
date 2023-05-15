@@ -3,7 +3,9 @@ package com.ez_mode.objects;
 import static java.lang.Double.min;
 
 import com.ez_mode.characters.Character;
+import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+import java.util.Random;
 
 /**
  * A pump is a node that can be audjusted and repaired. It is bound to break after a certain amount
@@ -23,6 +25,14 @@ public class Pump extends Node {
 
   private Pipe activeInput;
   private Pipe activeOutput;
+
+  public Pipe getActiveOutput() {
+    return activeOutput;
+  }
+
+  public Pipe getActiveInput() {
+    return activeInput;
+  }
 
   @Override
   public void repairNode(Character character) throws InvalidPlayerActionException {
@@ -44,6 +54,12 @@ public class Pump extends Node {
           String.format(
               "Player <%s> tried to break a pump that was already broken.", character.getName()));
     }
+  }
+
+  @Override
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
+    throw new InvalidPlayerActionException(
+        String.format("Player <%s> tried to make a pump sticky/slippery.", c.getName()));
   }
 
   public void setActiveInput(Pipe p) {
@@ -77,7 +93,15 @@ public class Pump extends Node {
   @Override
   public void tick() {
     calculateFlowRate();
-
-    // TODO: Implement the pump breaking randomly and other stuff
+    Random random = new Random();
+    if (random.nextInt(100) < 80) {
+      Nomad temp = new Nomad("temp");
+      temp.placeTo(this);
+      try {
+        this.breakNode(temp);
+      } catch (InvalidPlayerActionException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 }

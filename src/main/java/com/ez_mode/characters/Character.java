@@ -1,6 +1,8 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
+import com.ez_mode.Tickable;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
@@ -15,7 +17,7 @@ import org.apache.logging.log4j.Logger;
  * This class is responsible for the characters in the game. This is tha abstract class for all
  * characters. It contains a name and a reference to the StandableObject it is standing on.
  */
-public abstract class Character {
+public abstract class Character implements Tickable {
   /*
    * The logger for this class.
    */
@@ -32,10 +34,13 @@ public abstract class Character {
   /** The StandableObject the player is standing on. */
   protected Node standingOn;
 
+  protected int stuckedInPipe;
+
   public Character(String name) {
     this.logger = LogManager.getLogger(this.getClass());
     this.name = name;
     this.uuid = this.name + (int) (Math.random() * 100);
+    this.stuckedInPipe = 0;
   }
 
   public String getUuid() {
@@ -57,11 +62,14 @@ public abstract class Character {
    */
   public void moveTo(Node node) throws ObjectFullException, InvalidPlayerMovementException {
     try {
+      if (this.stuckedInPipe > 0)
+        throw new InvalidPlayerMovementException(
+            this.uuid + "Player tried to move, but cant because it stucked in a pipe");
       node.addCharacter(this);
       standingOn.removeCharacter(this);
       this.logger.debug("Moved {} to {} from {}", this.uuid, node.getUuid(), standingOn.getUuid());
       this.standingOn = node;
-      System.out.println("\t" + this.uuid + " moved to " + node.getUuid());
+      Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
       this.logger.error(e.getMessage());
       Map.playerLostHandler(this);
@@ -70,12 +78,12 @@ public abstract class Character {
 
   /**
    * This method places the character on the given Node. Useful when a character has to respawn, or
-   * placen at the game start.
+   * be placed at the game start.
    *
    * @param node The destination Node.
    */
   public void placeTo(Node node) {
-    System.out.println("\tPlaced " + this.uuid + " on " + node.getUuid());
+    Main.log("\tPlaced " + this.uuid + " on " + node.getUuid());
     this.standingOn = node;
     node.placeCharacter(this);
   }
@@ -84,24 +92,48 @@ public abstract class Character {
   public void breakNode() {
     try {
       this.standingOn.breakNode(this);
-      System.out.println("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
+      Main.log("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
+    } catch (InvalidPlayerActionException | ClassCastException e) {
+      this.logger.error(e.getMessage());
+    }
+  }
+
+  public void setPump(Pipe in, Pipe out) {
+    try {
+      Pump pump = (Pump) this.standingOn;
+      assert in != out : "Input and output pipes must be different.";
+      if (pump.getNeighbours().contains(in)) pump.setActiveInput(in);
+      else {
+        Main.log("\t" + in.getUuid() + " in Pipe not connected to the pump.");
+        return;
+      }
+      if (pump.getNeighbours().contains(out)) pump.setActiveOutput(out);
+      else {
+        Main.log("\t" + in.getUuid() + " out Pipe not connected to the pump.");
+        return;
+      }
+      Main.log("\t" + this.getUuid() + " is setting the pump.");
+    } catch (ClassCastException e) {
+      Main.log("Player " + this.getUuid() + " tried to set a pump on a non-pump object.");
+    }
+  }
+
+  public void makePipeSticky() {
+    try {
+      standingOn.setSurface("sticky", this);
     } catch (InvalidPlayerActionException e) {
       this.logger.error(e.getMessage());
     }
   }
 
-  // TODO: Override in children
-  public void setPump(Pipe in, Pipe out) {
-    try {
-      Pump pump = (Pump) this.standingOn;
-      assert in != out : "Input and output pipes must be different.";
-      // TODO: Do the connecting logic this is just shit.
-      pump.setActiveInput(in);
-      pump.setActiveOutput(out);
-      System.out.println("\t" + this.uuid + " is setting the pump.");
-    } catch (ClassCastException e) {
-      System.out.println("Player " + this.uuid + " tried to set a pump on a non-pump object.");
+  public void tick() {
+    if (stuckedInPipe > 0) {
+      stuckedInPipe--;
     }
+  }
+
+  public void stucked() {
+    stuckedInPipe = ((int) (Math.random() * 100)) + 1;
   }
 
   @Override

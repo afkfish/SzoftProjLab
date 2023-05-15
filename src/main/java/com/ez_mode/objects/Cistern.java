@@ -1,10 +1,12 @@
 package com.ez_mode.objects;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Cistern extends Node {
   private final ArrayList<Pump> producedPumps = new ArrayList<>();
@@ -26,14 +28,24 @@ public class Cistern extends Node {
   }
 
   @Override
+  public void setSurface(String type, Character c) throws InvalidPlayerActionException {
+    throw new InvalidPlayerActionException(
+        String.format("Player <%s> tried to make a cistern sticky/slippery.", c.getName()));
+  }
+
+  @Override
   public void tick() {
     super.tick();
-
+    Random random = new Random();
+    if (random.nextInt(100) < 40) {
+      MakePump();
+      MakePipe();
+    }
     if (sources.size() < maxConnections) sources.add(MakePipe());
 
     // this.sources.forEach(node -> Map.waterLost += node.flowRate);
-    for (Node nodi : this.sources) {
-      Map.waterArrived += nodi.flowRate;
+    for (Node node : this.sources) {
+      Map.waterArrived += node.flowRate;
     }
   }
 
@@ -46,7 +58,7 @@ public class Cistern extends Node {
 
   public Pipe MakePipe() {
     // Stakeholder
-    System.out.println("\t" + this.uuid + " made a pipe");
+    Main.log("\t" + this.uuid + " made a pipe");
     Pipe temp = new Pipe();
     try {
       temp.connect(this);
@@ -58,7 +70,7 @@ public class Cistern extends Node {
 
   public void MakePump() {
     // Stakeholder
-    System.out.println("\t" + this.uuid + " made a pump");
+    Main.log("\t" + this.uuid + " made a pump");
     Pump temp = new Pump();
     producedPumps.add(temp);
   }

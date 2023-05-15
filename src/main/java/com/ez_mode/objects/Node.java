@@ -1,5 +1,6 @@
 package com.ez_mode.objects;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.Tickable;
 import com.ez_mode.characters.Character;
@@ -8,6 +9,7 @@ import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
+import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,17 +19,22 @@ public abstract class Node implements Tickable {
    * The logger for this class.
    */
   protected final Logger logger;
+
   /** The unique identifier for this object. */
   protected final String uuid;
+
   /** The characters currently on this object. */
   protected final ArrayList<Character> characters = new ArrayList<>();
 
   /** The objects that are neighbours to this object. */
   protected final ArrayList<Node> neighbours = new ArrayList<>();
+
   /** The objects that are sources of water to this object. */
   protected final ArrayList<Node> sources = new ArrayList<>();
+
   /** The objects that are absorbers of water from this object. */
   protected final ArrayList<Node> absorbers = new ArrayList<>();
+
   /** The maximum number of characters that can be on this object. */
   protected final int maxCharacters;
 
@@ -35,11 +42,17 @@ public abstract class Node implements Tickable {
   protected final int x;
   protected final int y;
   protected boolean isBroken = false;
+
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
 
+  public boolean isBroken() {
+    return isBroken;
+  }
+
   protected Node(int maxCharacters, int maxConnections, int x, int y) {
-    this.uuid = this.getClass().getSimpleName() + (int) (Math.random() * 100);
+    Random random = new Random();
+    this.uuid = this.getClass().getSimpleName() + random.nextInt(100);
     this.logger = LogManager.getLogger(this.getClass());
     this.maxCharacters = maxCharacters;
     this.maxConnections = maxConnections;
@@ -70,7 +83,7 @@ public abstract class Node implements Tickable {
     for (Node neighbour : neighbours) {
       if (neighbour.characters.contains(character)) {
         this.characters.add(character);
-        System.out.println("\t" + character.getUuid() + " added to " + this.uuid);
+        Main.log("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
     }
@@ -87,7 +100,7 @@ public abstract class Node implements Tickable {
               "Player <%s> tried to remove a character from an object they are not" + " on.",
               character.getName()));
     characters.remove(character);
-    System.out.println("\t" + character.getUuid() + " removed from " + this.uuid);
+    Main.log("\t" + character.getUuid() + " removed from " + this.uuid);
   }
 
   public int getX() {
@@ -102,11 +115,13 @@ public abstract class Node implements Tickable {
 
   public abstract void breakNode(Character character) throws InvalidPlayerActionException;
 
-  public void addFlowRate(Node source, double excededFlow) {
+  public abstract void setSurface(String type, Character c) throws InvalidPlayerActionException;
+
+  public void addFlowRate(Node source, double exceededFlow) {
     if (!this.sources.contains(source)) {
-      this.flowRate += excededFlow;
+      this.flowRate += exceededFlow;
       this.sources.add(source);
-      this.absorbers.forEach(node -> node.addFlowRate(this, excededFlow));
+      this.absorbers.forEach(node -> node.addFlowRate(this, exceededFlow));
     }
   }
 
@@ -151,10 +166,17 @@ public abstract class Node implements Tickable {
   }
 
   public void connect(Node node) throws ObjectFullException {
-    System.out.println("\t" + this.uuid + ":connect param: " + node.uuid);
+    Main.log("\t" + this.uuid + ":connect param: " + node.uuid);
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
     this.neighbours.add(node);
+    if (!node.getNeighbours().contains(this)) node.connect(this);
+  }
+
+  public void disconnect(Node node) {
+    Main.log("\t" + this.uuid + ":connect param: " + node.uuid);
+    this.neighbours.remove(node);
+    if (node.getNeighbours().contains(this)) node.disconnect(this);
   }
 
   @Override
