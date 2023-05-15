@@ -165,7 +165,7 @@ public class ProtoTest {
       if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
         Main.log("Plumber still has a pipe to place");
         Main.log("PlacePipeTest failed!");
-      } else Main.log("Plumber placed pipe successfully");
+      } else Main.log("PlacePipeTest ran successfully");
     } else {
       Main.log("Plumber has no pipe to place");
     }
@@ -206,7 +206,7 @@ public class ProtoTest {
     try {
       c.breakNode();
       if (((Pipe) (c.getStandingOn())).isBroken()) {
-        Main.log("Pipe has been broken successfully!");
+        Main.log("BreakPipeTest ran successfully!");
         return;
       }
     } catch (ClassCastException e) {
@@ -234,7 +234,7 @@ public class ProtoTest {
 
       if (node.getActiveInput().equals(pipes.get(0))
           && node.getActiveOutput().equals(pipes.get(1))) {
-        Main.log("Pump has been set right successfully!");
+        Main.log("SetPumpTest ran successfully!");
         return;
       }
     } catch (ClassCastException e) {
@@ -253,7 +253,7 @@ public class ProtoTest {
     try {
       ((Plumber) c).repair();
       if (!((Pump) (c.getStandingOn())).isBroken()) {
-        Main.log("Pump has been repaired successfully!");
+        Main.log("RepairTest ran successfully!");
         return;
       }
     } catch (ClassCastException e) {
@@ -272,7 +272,7 @@ public class ProtoTest {
     try {
       ((Plumber) c).repair();
       if (!((Pipe) (c.getStandingOn())).isBroken()) {
-        Main.log("Pipe has been repaired successfully!");
+        Main.log("RepairPipeTest successfully!");
         return;
       }
     } catch (ClassCastException e) {
@@ -291,7 +291,7 @@ public class ProtoTest {
     try {
       ((Nomad) c).setSlippery();
       if (((Pipe) (c.getStandingOn())).isSlippery()) {
-        Main.log("Pipe has been made slippery successfully!");
+        Main.log("MakePipeSlipperyTest ran successfully!");
         return;
       }
     } catch (ClassCastException e) {
@@ -310,7 +310,7 @@ public class ProtoTest {
     try {
       (c).makePipeSticky();
       if (((Pipe) (c.getStandingOn())).isSticky()) {
-        Main.log("Pipe has been made sticky successfully!");
+        Main.log("MakePipeStickyTest ran successfully!");
         return;
       }
     } catch (ClassCastException e) {
