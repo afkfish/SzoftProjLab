@@ -108,6 +108,7 @@ public class Map implements Tickable {
 
   /**
    * Loads a map from a file
+   *
    * @param path the file's path
    */
   public void loadMap(String path) {
@@ -217,6 +218,7 @@ public class Map implements Tickable {
 
   /**
    * Saves the map to a file
+   *
    * @param path the file's path
    */
   public void saveMap(String path) {
@@ -302,6 +304,7 @@ public class Map implements Tickable {
 
   /**
    * Gives a player by its name
+   *
    * @param name the name of the player
    * @return a player
    */
@@ -316,6 +319,7 @@ public class Map implements Tickable {
 
   /**
    * Gives a node by its name
+   *
    * @param name name of the node
    * @return a node
    */
@@ -330,9 +334,7 @@ public class Map implements Tickable {
     return null;
   }
 
-  /**
-   * Prints the players on the map with an index
-   */
+  /** Prints the players on the map with an index */
   public static void printPlayers() {
     for (int i = 0; i < players.size(); i++) {
       Character player = players.get(i);
@@ -342,6 +344,7 @@ public class Map implements Tickable {
 
   /**
    * The node count on the map
+   *
    * @return node count
    */
   public static int getNodeCount() {
@@ -356,9 +359,7 @@ public class Map implements Tickable {
     return count;
   }
 
-  /**
-   * Prints the nodes with an index
-   */
+  /** Prints the nodes with an index */
   public static void printNodes() {
     for (Node[] nodes : gameMap) {
       for (Node node : nodes) {
@@ -392,16 +393,12 @@ public class Map implements Tickable {
     // character.placeTo(playerTruePos);
   }
 
-  /**
-   * Clears the map
-   */
+  /** Clears the map */
   public static void clearMap() {
     gameMap = new Node[gameMap.length][gameMap[0].length];
   }
 
-  /**
-   * ticks every node on map
-   */
+  /** ticks every node on map */
   @Override
   public void tick() {
     for (Node[] nodes : gameMap) {
@@ -414,7 +411,8 @@ public class Map implements Tickable {
 
   /**
    * Map printing
-   * @return the  string version of the map
+   *
+   * @return the string version of the map
    */
   @Override
   public String toString() {

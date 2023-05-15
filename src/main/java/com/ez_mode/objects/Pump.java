@@ -36,6 +36,7 @@ public class Pump extends Node {
 
   /**
    * Repairs the node if it is broken and the actor is a plumber.
+   *
    * @param character the actor
    * @throws InvalidPlayerActionException if the node is not broken this is thrown
    */
@@ -52,6 +53,7 @@ public class Pump extends Node {
 
   /**
    * Breaks the node
+   *
    * @param character the actor
    * @throws InvalidPlayerActionException if the node is broken already this is thrown
    */
@@ -68,9 +70,11 @@ public class Pump extends Node {
 
   /**
    * Sets a surface type to the node.
+   *
    * @param type Surface type
    * @param c the actor
-   * @throws InvalidPlayerActionException this action is always invalid since a pump can't be set to a given surface type
+   * @throws InvalidPlayerActionException this action is always invalid since a pump can't be set to
+   *     a given surface type
    */
   @Override
   public void setSurface(String type, Character c) throws InvalidPlayerActionException {
@@ -86,9 +90,7 @@ public class Pump extends Node {
     activeOutput = p;
   }
 
-  /**
-   * Calculates the water flow rate
-   */
+  /** Calculates the water flow rate */
   @Override
   public void calculateFlowRate() {
     if (!this.isBroken) {
@@ -109,9 +111,7 @@ public class Pump extends Node {
     }
   }
 
-  /**
-   * Randomly breaks.
-   */
+  /** Randomly breaks. */
   @Override
   public void tick() {
     calculateFlowRate();

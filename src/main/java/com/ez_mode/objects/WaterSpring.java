@@ -16,6 +16,7 @@ public class WaterSpring extends Node {
 
   /**
    * This can accept a character indefinitely
+   *
    * @param character the character to be placed
    */
   @Override
@@ -25,6 +26,7 @@ public class WaterSpring extends Node {
 
   /**
    * Repairs the node.
+   *
    * @param character the actor
    * @throws InvalidPlayerActionException this action is always invalid
    */
@@ -36,6 +38,7 @@ public class WaterSpring extends Node {
 
   /**
    * Breaks the node.
+   *
    * @param character the actor
    * @throws InvalidPlayerActionException this action is always invalid
    */
@@ -47,6 +50,7 @@ public class WaterSpring extends Node {
 
   /**
    * Sets the surface of the node.
+   *
    * @param type the surface type
    * @param c the actor
    * @throws InvalidPlayerActionException this action is always invalid
@@ -57,9 +61,7 @@ public class WaterSpring extends Node {
         String.format("Player <%s> tried to make a waterSpring sticky/slippery.", c.getName()));
   }
 
-  /**
-   * Controls the water flow.
-   */
+  /** Controls the water flow. */
   @Override
   public void tick() {
     this.neighbours.stream()

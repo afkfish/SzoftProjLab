@@ -17,8 +17,9 @@ public class Cistern extends Node {
 
   /**
    * The Cistern is not breakable.
+   *
    * @param character the actor
-   * @throws InvalidPlayerActionException  this action is always invalid
+   * @throws InvalidPlayerActionException this action is always invalid
    */
   @Override
   public void repairNode(Character character) throws InvalidPlayerActionException {
@@ -28,6 +29,7 @@ public class Cistern extends Node {
 
   /**
    * The Cistern cannot be broken.
+   *
    * @param character the actor
    * @throws InvalidPlayerActionException this action is always invalid
    */
@@ -39,6 +41,7 @@ public class Cistern extends Node {
 
   /**
    * The Cistern's surface cannot be set.
+   *
    * @param type the type of surface
    * @param c actor
    * @throws InvalidPlayerActionException this action is always invalid
@@ -49,9 +52,7 @@ public class Cistern extends Node {
         String.format("Player <%s> tried to make a cistern sticky/slippery.", c.getName()));
   }
 
-  /**
-   * Update the neighbouring nodes.
-   */
+  /** Update the neighbouring nodes. */
   @Override
   public void tick() {
     super.tick();
@@ -70,6 +71,7 @@ public class Cistern extends Node {
 
   /**
    * Gives a Pump to the Plumber if it has one
+   *
    * @return a Pump object
    */
   public Pump GivePump() {
@@ -81,6 +83,7 @@ public class Cistern extends Node {
 
   /**
    * Makes a Pipe.
+   *
    * @return
    */
   public Pipe MakePipe() {
@@ -95,9 +98,7 @@ public class Cistern extends Node {
     return temp;
   }
 
-  /**
-   * Makes a pump.
-   */
+  /** Makes a pump. */
   public void MakePump() {
     // Stakeholder
     Main.log("\t" + this.uuid + " made a pump");

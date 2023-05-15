@@ -28,9 +28,7 @@ public class Main {
   private static Scanner scanner;
   public static Version version = Version.PROTOTYPE;
 
-  /**
-   * Sets up the actions in the menu
-   */
+  /** Sets up the actions in the menu */
   private static void init() {
     commands.put("test", () -> new ProtoTest().processCommand(scanner));
     commands.put("fill", () -> Map.fillMap(4));
@@ -360,6 +358,7 @@ public class Main {
 
   /**
    * Prints the neighbours of a given node.
+   *
    * @param scanner static scanner
    * @param neighbours the node's neighbours
    * @return Integer of the chosen index
@@ -383,6 +382,7 @@ public class Main {
 
   /**
    * Logger func.
+   *
    * @param message the message to be logged
    */
   public static void log(String message) {
@@ -392,6 +392,7 @@ public class Main {
 
   /**
    * Saves the log to a file
+   *
    * @param fileName the file name
    */
   private static void saveLog(String fileName) {
@@ -406,6 +407,7 @@ public class Main {
 
   /**
    * Creates a new node
+   *
    * @param scanner
    * @return
    */
@@ -444,6 +446,7 @@ public class Main {
 
   /**
    * The Character creation menu
+   *
    * @param scanner static scanner
    * @return a new character that is optional
    */
@@ -472,6 +475,7 @@ public class Main {
 
   /**
    * The prototype of the program
+   *
    * @param scanner static scanner
    */
   private static void proto(Scanner scanner) {

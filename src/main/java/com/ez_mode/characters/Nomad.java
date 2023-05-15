@@ -12,9 +12,7 @@ public class Nomad extends Character {
     super(name);
   }
 
-  /**
-   * Sets a surface of a node slippery.
-   */
+  /** Sets a surface of a node slippery. */
   public void setSlippery() {
     try {
       standingOn.setSurface("slippery", this);
