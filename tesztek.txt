@@ -1,0 +1,19 @@
+test
+print map
+add character <plumber4> <0> <1>
+add node pump <1> <1>
+add node pipe <1> <2>
+character place pump <plumber2>
+character place pipe <plumber1>
+character move <nomad3> <0> <1>
+character break <plumber4>
+character repair pipe <plumber4>
+character repair pump <plumber1>
+character set <plumber1>
+character slippery <nomad2>
+character move <nomad1> <0> <1>
+character sticky <nomad1>
+exit
+exit
+y
+kimenet.txt

@@ -169,8 +169,15 @@ public abstract class Node implements Tickable {
     Main.log("\t" + this.uuid + ":connect param: " + node.uuid);
     if (this.neighbours.size() >= this.maxConnections)
       throw new ObjectFullException("Tried to connect to a full object.");
-    this.neighbours.add(node);
-    if (!node.getNeighbours().contains(this)) node.connect(this);
+    if (node.x == this.x + 1
+        || node.x == this.x - 1
+        || node.y == this.y + 1
+        || node.y == this.y - 1) {
+      this.neighbours.add(node);
+      if (!node.getNeighbours().contains(this)) node.connect(this);
+      return;
+    }
+    Main.log("This node is not a neighbour");
   }
 
   public void disconnect(Node node) {
@@ -183,6 +190,7 @@ public abstract class Node implements Tickable {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(this.uuid);
+    sb.append("\n").append(this.x).append(",").append(this.y).append("\n");
     sb.append(" (");
     sb.append(this.getClass().getSimpleName());
     sb.append(") \n");
