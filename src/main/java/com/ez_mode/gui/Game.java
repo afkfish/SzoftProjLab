@@ -102,20 +102,23 @@ public class Game implements ActionListener {
     }
 
     Image cisternImage = cisternIcon.getImage();
-    Image cisternModIcon = cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    Image cisternModIcon =
+        cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
     buttons[0].setIcon(new ImageIcon(cisternModIcon));
     buttons[1].setIcon(new ImageIcon(cisternModIcon));
     buttons[2].setIcon(new ImageIcon(cisternModIcon));
 
     Image waterspringImage = waterspringIcon.getImage();
-    Image waterspringModIcon = waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    buttons[gridNum*gridNum-1].setIcon(new ImageIcon(waterspringModIcon));
-    buttons[gridNum*gridNum-2].setIcon(new ImageIcon(waterspringModIcon));
-    buttons[gridNum*gridNum-3].setIcon(new ImageIcon(waterspringModIcon));
+    Image waterspringModIcon =
+        waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    buttons[gridNum * gridNum - 1].setIcon(new ImageIcon(waterspringModIcon));
+    buttons[gridNum * gridNum - 2].setIcon(new ImageIcon(waterspringModIcon));
+    buttons[gridNum * gridNum - 3].setIcon(new ImageIcon(waterspringModIcon));
 
     buttons[10].setBackground(new Color(180, 180, 180));
     Image plumberImage = plumberIcon.getImage();
-    Image plumberModIcon = plumberImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    Image plumberModIcon =
+        plumberImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
     buttons[10].setIcon(new ImageIcon(plumberModIcon));
 
     buttons[24].setBackground(new Color(180, 180, 180));
@@ -150,7 +153,8 @@ public class Game implements ActionListener {
       if (e.getSource() == buttons[i]) {
         if (buttons[i].getText().equals("")) {
           Image pipeImage = pipeIcon.getImage();
-          Image pipeModIcon = pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          Image pipeModIcon =
+              pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           buttons[i].setBackground(new Color(180, 180, 180));
           buttons[i].setIcon(new ImageIcon(pipeModIcon));
         }
