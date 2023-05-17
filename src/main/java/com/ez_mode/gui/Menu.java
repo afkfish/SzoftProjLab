@@ -23,7 +23,7 @@ public class Menu implements ActionListener {
     startButton.setFont(new Font("Monospace", Font.BOLD, 25));
     startButton.setText("Start game");
     startButton.setBackground(new Color(0, 0, 0));
-    startButton.setForeground(new Color(250, 250, 250));
+    startButton.setForeground(new Color(50, 50, 50));
     startButton.setFocusable(false);
     startButton.addActionListener((this));
 
