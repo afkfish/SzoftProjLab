@@ -1,5 +1,6 @@
 package com.ez_mode.characters;
 
+import com.ez_mode.Main;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
 /**
@@ -11,11 +12,12 @@ public class Nomad extends Character {
     super(name);
   }
 
+  /** Sets a surface of a node slippery. */
   public void setSlippery() {
     try {
       standingOn.setSurface("slippery", this);
     } catch (InvalidPlayerActionException e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
     }
   }
 }

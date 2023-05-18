@@ -25,24 +25,26 @@ public class Plumber extends Character {
       this.standingOn.repairNode(this);
       Main.log("\t" + this.getUuid() + " has repaired " + standingOn.getUuid());
     } catch (InvalidPlayerActionException e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
     }
   }
 
+  /** A plumber can place a pump onto a pipe if it has one in its inventory. */
   public void PlacePump() {
-    // Stakeholder
     if (this.pickedupPump != null) {
       try {
         Pipe temp = ((Pipe) standingOn);
         Pipe newPipe = new Pipe();
         // Map.addNode(new Pipe(), temp.getX()+5, temp.getY() +5);
         try {
+          Node a = temp.getNeighbours().get(0);
+          temp.disconnect(a);
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
+          newPipe.connect(a);
           Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
         } catch (ObjectFullException e) {
-          System.err.println("Object is full!");
-          return;
+          Main.log("Object is full!");
         }
       } catch (ClassCastException e) {
         Main.log(this.getUuid() + " is not standing on a Pipe");
@@ -68,36 +70,44 @@ public class Plumber extends Character {
     pickedupPump = p;
   }
 
+  /** A plumber can place a pipe onto an empty field if it has one in its inventory. */
   public void PlacePipe() {
     try {
       if (draggedpipe != null) {
         standingOn.connect(draggedpipe);
         draggedpipe = null;
-        return;
       } else if (pickedUpPipe != null) {
         standingOn.connect(pickedUpPipe);
         // Map.addNode(pickedUpPipe, standingOn.getX()+5, standingOn.getY()+5);
         pickedUpPipe = null;
-        return;
       }
     } catch (ObjectFullException e) {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
     }
   }
 
+  /** A plumber can pick up pumps from a cistern if it has one. */
   public void PickupPump() {
     try {
       Pump temp = ((Cistern) standingOn).GivePump();
       if ((temp != null)) {
         pickedupPump = temp;
         Main.log("\t" + temp.getUuid() + " has been picked up by " + this.getUuid());
+        return;
       }
+      Main.log("There is no pump to pick up");
     } catch (ClassCastException e) {
       Main.log(this.getUuid() + " is not standing on a Cistern");
     }
   }
 
-  public void PickupPipe(Pipe pipe) {
+  /**
+   * A plumber can pick up a pipe from its neighbours.
+   *
+   * @param pipe the pipe to be picked up
+   * @throws NotFoundExeption when a pipe is not found then it throws an exceptions
+   */
+  public void PickupPipe(Pipe pipe) throws NotFoundExeption {
     try {
       if (pipe == null) {
         for (Node nodi : standingOn.getNeighbours()) {
@@ -123,8 +133,6 @@ public class Plumber extends Character {
       }
     } catch (ClassCastException cce) {
       Main.log(this.getUuid() + " is not standing on a Cistern");
-    } catch (NotFoundExeption nfe) {
-      Main.log(nfe.getMessage());
     }
   }
 }

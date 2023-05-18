@@ -34,13 +34,14 @@ public abstract class Character implements Tickable {
   /** The StandableObject the player is standing on. */
   protected Node standingOn;
 
-  protected int stuckedInPipe;
+  /** When a Character is stuck on a sticky pipe. */
+  protected int stuckOnPipe;
 
   public Character(String name) {
     this.logger = LogManager.getLogger(this.getClass());
     this.name = name;
     this.uuid = this.name + (int) (Math.random() * 100);
-    this.stuckedInPipe = 0;
+    this.stuckOnPipe = 0;
   }
 
   public String getUuid() {
@@ -62,7 +63,7 @@ public abstract class Character implements Tickable {
    */
   public void moveTo(Node node) throws ObjectFullException, InvalidPlayerMovementException {
     try {
-      if (this.stuckedInPipe > 0)
+      if (this.stuckOnPipe > 0)
         throw new InvalidPlayerMovementException(
             this.uuid + "Player tried to move, but cant because it stucked in a pipe");
       node.addCharacter(this);
@@ -71,7 +72,7 @@ public abstract class Character implements Tickable {
       this.standingOn = node;
       Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
       Map.playerLostHandler(this);
     }
   }
@@ -94,10 +95,16 @@ public abstract class Character implements Tickable {
       this.standingOn.breakNode(this);
       Main.log("\t" + this.getUuid() + " has broken " + standingOn.getUuid());
     } catch (InvalidPlayerActionException | ClassCastException e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
     }
   }
 
+  /**
+   * A character can set the input and output of a pump.
+   *
+   * @param in the input pipe
+   * @param out the output pipe
+   */
   public void setPump(Pipe in, Pipe out) {
     try {
       Pump pump = (Pump) this.standingOn;
@@ -118,22 +125,25 @@ public abstract class Character implements Tickable {
     }
   }
 
+  /** Sets a Pipe sticky. */
   public void makePipeSticky() {
     try {
       standingOn.setSurface("sticky", this);
     } catch (InvalidPlayerActionException e) {
-      this.logger.error(e.getMessage());
+      Main.log(e.getMessage());
     }
   }
 
+  /** Reduces the sticky timer. */
   public void tick() {
-    if (stuckedInPipe > 0) {
-      stuckedInPipe--;
+    if (stuckOnPipe > 0) {
+      stuckOnPipe--;
     }
   }
 
-  public void stucked() {
-    stuckedInPipe = ((int) (Math.random() * 100)) + 1;
+  /** When a pipe is sticky the Character is not able to move so the stuck flag is true. */
+  public void stuck() {
+    stuckOnPipe = ((int) (Math.random() * 100)) + 1;
   }
 
   @Override

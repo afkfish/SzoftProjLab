@@ -79,7 +79,7 @@ public class Pipe extends Node {
             throw new RuntimeException(e);
           }
         }
-        if (isStikcy) character.stucked();
+        if (isStikcy) character.stuck();
         Main.log("\t" + character.getUuid() + " added to " + this.uuid);
         return;
       }
