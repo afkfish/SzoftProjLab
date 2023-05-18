@@ -378,7 +378,6 @@ public class Main {
       proto(scanner);
     } else if (version == Version.GRAPHICAL) {
       new Menu();
-
     }
   }
 
