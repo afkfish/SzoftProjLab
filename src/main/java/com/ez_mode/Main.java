@@ -9,6 +9,7 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.gui.Menu;
 import com.ez_mode.objects.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -25,8 +26,8 @@ public class Main {
   private static final StringBuilder logs = new StringBuilder();
   private static final HashMap<String, Runnable> commands = new HashMap<>();
   public static final Map map = new Map(10);
+  public static Version version = Version.GRAPHICAL;
   private static Scanner scanner;
-  public static Version version = Version.PROTOTYPE;
 
   /** Sets up the actions in the menu */
   private static void init() {
@@ -376,7 +377,7 @@ public class Main {
     if (version == Version.PROTOTYPE) {
       proto(scanner);
     } else if (version == Version.GRAPHICAL) {
-      // TODO
+      new Menu();
     }
   }
 

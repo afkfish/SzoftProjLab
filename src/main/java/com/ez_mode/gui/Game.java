@@ -6,9 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Game implements ActionListener {
-  String imagePath1 = "src/main/resources/pixil-frame-5.png";
-  String imagePath2 = "src/main/resources/pixil-frame-1.png";
-  int gridNum = 20;
+  int gridNum = 10;
+  int fieldSize = 68;
 
   JFrame frame = new JFrame();
   JPanel titlePanel = new JPanel();
@@ -20,16 +19,39 @@ public class Game implements ActionListener {
   JButton[] buttons = new JButton[gridNum * gridNum];
   JButton exitButton = new JButton();
 
-  ImageIcon icon1 = new ImageIcon(imagePath1);
-  ImageIcon icon2 = new ImageIcon(imagePath2);
+  public String pipeImagePath = "src/main/resources/pipe.png";
+  public String sandImagePath = "src/main/resources/sand.png";
+  public String plumberImagePath = "src/main/resources/plumber.png";
+  public String nomadImagePath = "src/main/resources/nomad.png";
+  public String waterspringImagePath = "src/main/resources/waterspring.png";
+  public String waterpumpImagePath = "src/main/resources/waterpump.png";
+  public String waterpipeImagePath = "src/main/resources/waterpipe.png";
+  public String waterImagePath = "src/main/resources/water.png";
+  public String stickypipeImagePath = "src/main/resources/stickypipe.png";
+  public String slipperypipeImagePath = "src/main/resources/slipperypipe.png";
+  public String repairImagePath = "src/main/resources/repair.png";
+  public String emptypumpImagePath = "src/main/resources/emptypump.png";
+  public String cisternImagePath = "src/main/resources/cistern.png";
+  public String brokenpumpImagePath = "src/main/resources/brokenpump.png";
+  public String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
+  public String breakImagePath = "src/main/resources/break.png";
 
-  public String getImagePath1() {
-    return imagePath1;
-  }
-
-  public String getImagePath2() {
-    return imagePath2;
-  }
+  public ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
+  public ImageIcon sandIcon = new ImageIcon(sandImagePath);
+  public ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
+  public ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
+  public ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
+  public ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
+  public ImageIcon waterpipeIcon = new ImageIcon(waterpipeImagePath);
+  public ImageIcon waterIcon = new ImageIcon(waterImagePath);
+  public ImageIcon stickypipeIcon = new ImageIcon(stickypipeImagePath);
+  public ImageIcon slipperypipeIcon = new ImageIcon(slipperypipeImagePath);
+  public ImageIcon repairIcon = new ImageIcon(repairImagePath);
+  public ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
+  public ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
+  public ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
+  public ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
+  public ImageIcon breakIcon = new ImageIcon(breakImagePath);
 
   public Game() {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,19 +90,43 @@ public class Game implements ActionListener {
       buttonPanel.add(buttons[i]);
       buttons[i].setFocusable(false);
       buttons[i].setSize(20, 20);
-      // buttons[i].setBackground(new Color(50, 50, 50));
+      buttons[i].setMaximumSize(buttons[i].getPreferredSize());
       buttons[i].setBackground(new Color(244, 228, 156));
       buttons[i].setBorderPainted(false);
       buttons[i].setHorizontalAlignment(JLabel.HORIZONTAL);
-      icon2 = new ImageIcon(String.valueOf(getImagePath2()));
-      Image i2 = icon2.getImage();
-      Image modIcon2 = i2.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-      buttons[i].setIcon(new ImageIcon(modIcon2));
+      sandIcon = new ImageIcon(String.valueOf(sandImagePath));
+      Image sandImage = sandIcon.getImage();
+      Image modIcon2 = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
       buttons[i].setIcon(new ImageIcon(modIcon2));
       buttons[i].addActionListener(this);
     }
 
-    exitButton.setBounds(600, 13, 150, 40);
+    Image cisternImage = cisternIcon.getImage();
+    Image cisternModIcon =
+        cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    buttons[0].setIcon(new ImageIcon(cisternModIcon));
+    buttons[1].setIcon(new ImageIcon(cisternModIcon));
+    buttons[2].setIcon(new ImageIcon(cisternModIcon));
+
+    Image waterspringImage = waterspringIcon.getImage();
+    Image waterspringModIcon =
+        waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    buttons[gridNum * gridNum - 1].setIcon(new ImageIcon(waterspringModIcon));
+    buttons[gridNum * gridNum - 2].setIcon(new ImageIcon(waterspringModIcon));
+    buttons[gridNum * gridNum - 3].setIcon(new ImageIcon(waterspringModIcon));
+
+    buttons[10].setBackground(new Color(180, 180, 180));
+    Image plumberImage = plumberIcon.getImage();
+    Image plumberModIcon =
+        plumberImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    buttons[10].setIcon(new ImageIcon(plumberModIcon));
+
+    buttons[24].setBackground(new Color(180, 180, 180));
+    Image nomadImage = nomadIcon.getImage();
+    Image nomadModIcon = nomadImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    buttons[24].setIcon(new ImageIcon(nomadModIcon));
+
+    exitButton.setBounds(500, 13, 150, 40);
     exitButton.setFont(new Font("Monospace", Font.BOLD, 20));
     exitButton.setText("End Game");
     exitButton.setBackground(new Color(250, 250, 250));
@@ -97,7 +143,7 @@ public class Game implements ActionListener {
     mainPanel.add(buttonPanel, BorderLayout.CENTER);
     frame.add(mainPanel);
     frame.pack();
-    frame.setSize(800, 800);
+    frame.setSize(700, 800);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
   }
@@ -106,10 +152,11 @@ public class Game implements ActionListener {
     for (int i = 0; i < gridNum * gridNum; i++) {
       if (e.getSource() == buttons[i]) {
         if (buttons[i].getText().equals("")) {
-          icon1 = new ImageIcon(String.valueOf(getImagePath1()));
-          Image i1 = icon1.getImage();
-          Image modIcon1 = i1.getScaledInstance(40, 32, Image.SCALE_DEFAULT);
-          buttons[i].setIcon(new ImageIcon(modIcon1));
+          Image pipeImage = pipeIcon.getImage();
+          Image pipeModIcon =
+              pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          buttons[i].setBackground(new Color(180, 180, 180));
+          buttons[i].setIcon(new ImageIcon(pipeModIcon));
         }
       }
     }
