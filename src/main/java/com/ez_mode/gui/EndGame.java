@@ -65,6 +65,5 @@ public class EndGame {
     frame.setLayout(null);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
-
   }
 }

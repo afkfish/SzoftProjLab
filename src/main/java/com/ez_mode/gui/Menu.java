@@ -4,10 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Menu {
-  /**
-   * Java Swing components for the Menu class
-   */
+  /** Java Swing components for the Menu class */
   static JFrame frame = new JFrame();
+
   JButton startButton = new JButton();
   JTextField title = new JTextField();
   JTextField loadText = new JTextField();
@@ -85,6 +84,5 @@ public class Menu {
     frame.setLayout(null);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
-
   }
 }

@@ -15,10 +15,9 @@ public class Game {
   static int actionSize = fieldSize - 10;
   public static boolean nomadTurn = false;
 
-  /**
-   * Java Swing components for the Game class
-   */
+  /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
+
   JPanel titlePanel = new JPanel();
   static JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
@@ -26,10 +25,9 @@ public class Game {
   static JButton[] mapButtons = new JButton[gridNum * gridNum + 1];
   JPanel actionPanel = new JPanel();
 
-  /**
-   * Adding all the images' path that will be used in the game
-   */
+  /** Adding all the images' path that will be used in the game */
   public String outImagePath = "out.png";
+
   public String pipeImagePath = "src/main/resources/pipe.png";
   public String sandImagePath = "src/main/resources/sand.png";
   public String plumberImagePath = "src/main/resources/transplumber.png";
@@ -54,12 +52,9 @@ public class Game {
   public String moverightImagePath = "src/main/resources/moveright.png";
   public static String setpumpImagePath = "src/main/resources/setpump.png";
 
-  /**
-   * Adding all the images as ImageIcons,
-   * using the path given previously
-   */
-
+  /** Adding all the images as ImageIcons, using the path given previously */
   public ImageIcon outIcon = new ImageIcon(outImagePath);
+
   public ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
   public ImageIcon sandIcon = new ImageIcon(sandImagePath);
   public ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
@@ -86,19 +81,14 @@ public class Game {
 
   public Game() {
 
-    /**
-     * Properties of the frame
-     */
+    /** Properties of the frame */
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Game");
     frame.setResizable(false);
 
     titlePanel.setLayout(new BorderLayout());
 
-
-    /**
-     * Properties of the text field
-     */
+    /** Properties of the text field */
     textField.setBackground(new Color(0, 0, 0));
     textField.setForeground(new Color(230, 230, 230));
     textField.setFont(new Font("Monospace", Font.BOLD, 50));
@@ -106,9 +96,7 @@ public class Game {
     textField.setText("Plumbers turn");
     textField.setOpaque(true);
 
-    /**
-     * Properties of the end game button
-     */
+    /** Properties of the end game button */
     endGameButton.setBounds(500, 13, 20, 30);
     endGameButton.setFont(new Font("Monospace", Font.BOLD, 20));
     endGameButton.setText("End Game");
@@ -117,10 +105,7 @@ public class Game {
     endGameButton.setFocusable(false);
     endGameButton.addActionListener(Controller::GameExitAction);
 
-
-    /**
-     * Filling the map
-     */
+    /** Filling the map */
     mapPanel.setLayout(new GridLayout(gridNum, gridNum + 1));
     mapPanel.setBorder(null);
 
@@ -182,9 +167,7 @@ public class Game {
     Image nomadModIcon = nomadImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
     mapButtons[15].setIcon(new ImageIcon(nomadModIcon));
 
-    /**
-     * Icons of the action bar
-     */
+    /** Icons of the action bar */
     for (int i = (gridNum * gridNum - gridNum); i < (gridNum * gridNum); i++) {
       mapButtons[i].setBackground(new Color(255, 255, 255));
     }
@@ -214,8 +197,7 @@ public class Game {
     mapButtons[gridNum * gridNum - gridNum + 3].addActionListener(Controller::MoveRightAction);
 
     Image breakImage = breakIcon.getImage();
-    Image breakModIcon =
-            breakImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    Image breakModIcon = breakImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
     mapButtons[gridNum * gridNum - gridNum + 4].setIcon(new ImageIcon(breakModIcon));
     mapButtons[gridNum * gridNum - gridNum + 4].addActionListener(Controller::BreakAction);
 
@@ -227,31 +209,29 @@ public class Game {
 
     Image stickypipeImage = stickypipeIcon.getImage();
     Image stickypipeModIcon =
-            stickypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+        stickypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
     mapButtons[gridNum * gridNum - gridNum + 6].setIcon(new ImageIcon(stickypipeModIcon));
     mapButtons[gridNum * gridNum - gridNum + 6].addActionListener(Controller::StickyAction);
 
     Image pickuppipeImage = pickuppipeIcon.getImage();
     Image pickuppipeModIcon =
-            pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+        pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
     mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(pickuppipeModIcon));
     mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(Controller::PickUpPipeAction);
 
     Image pickuppumpImage = pickuppumpIcon.getImage();
     Image pickuppumpModIcon =
-            pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+        pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
     mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppumpModIcon));
     mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPumpAction);
 
     Image setpumpImage = setpumpIcon.getImage();
     Image setpumpModIcon =
-            setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+        setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
     mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
     mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::SetPumpAction);
 
-    /**
-     * Adding the components to the frame and setting their layouts
-     */
+    /** Adding the components to the frame and setting their layouts */
     frame.add(titlePanel, BorderLayout.NORTH);
     titlePanel.add(textField);
     titlePanel.add(endGameButton, BorderLayout.EAST);
@@ -264,20 +244,19 @@ public class Game {
   }
 
   /**
-   * After one team's turn the action bar will be updated to suit for the next team's actions
-   * The mutual actions are the movements, making the pipe sticky or breaking a pipe
-   * The plumbers' team can repair, set pump, pick up pump and pick up pipe
-   * The nomad's team can break, make a pipe slippery
+   * After one team's turn the action bar will be updated to suit for the next team's actions The
+   * mutual actions are the movements, making the pipe sticky or breaking a pipe The plumbers' team
+   * can repair, set pump, pick up pump and pick up pipe The nomad's team can break, make a pipe
+   * slippery
    */
 
-
-  //TODO fix the double change of the bool nomadTurn
+  // TODO fix the double change of the bool nomadTurn
   static void updateAction() {
     System.out.println(nomadTurn);
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
       Image slipperypipeModIcon =
-              slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(slipperypipeModIcon));
       mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::SlipperyAction);
 
@@ -294,25 +273,25 @@ public class Game {
     } else {
       Image repairImage = repairIcon.getImage();
       Image repairModIcon =
-              repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
       mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::RepairAction);
 
       Image pickuppipeImage = pickuppipeIcon.getImage();
       Image pickuppipeModIcon =
-              pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(pickuppipeModIcon));
       mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(Controller::PickUpPipeAction);
 
       Image pickuppumpImage = pickuppumpIcon.getImage();
       Image pickuppumpModIcon =
-              pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppumpModIcon));
       mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPumpAction);
 
       Image setpumpImage = setpumpIcon.getImage();
       Image setpumpModIcon =
-              setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
       mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::SetPumpAction);
 
