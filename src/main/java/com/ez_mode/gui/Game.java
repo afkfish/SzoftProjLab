@@ -20,6 +20,9 @@ public class Game {
   static int fieldSize = windowWidth / gridNum;
   static int actionSize = fieldSize - 10;
   public static boolean nomadTurn = false;
+  static String[] plumberNames;
+  static String[] nomadNames;
+  static int playerIdx = 0;
 
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
@@ -37,7 +40,7 @@ public class Game {
   public String pipeImagePath = "src/main/resources/pipe.png";
   public String sandImagePath = "src/main/resources/sand.png";
   public String plumberImagePath = "src/main/resources/transplumber.png";
-  public String nomadImagePath = "src/main/resources/nomad.png";
+  public String nomadImagePath = "src/main/resources/transnomad.png";
   public String waterspringImagePath = "src/main/resources/waterspring.png";
   public String waterpumpImagePath = "src/main/resources/waterpump.png";
   public String waterpipeImagePath = "src/main/resources/waterpipe.png";
@@ -116,7 +119,6 @@ public class Game {
     mapPanel.setBorder(null);
 
     int nodeType = 0;
-    Map.printNodes();
     for (int i = 0; i < gridNum; i++) {
       for (int j = 0; j < gridNum; j++) {
         Node temp = Map.getNode(j, i);
@@ -283,6 +285,8 @@ public class Game {
     mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::SetPumpAction);
 
     /** Adding the components to the frame and setting their layouts */
+    textField.setText(plumberNames[playerIdx] + " Plumbers turn");
+    playerIdx++;
     frame.add(titlePanel, BorderLayout.NORTH);
     titlePanel.add(textField);
     titlePanel.add(endGameButton, BorderLayout.EAST);
@@ -303,50 +307,40 @@ public class Game {
 
   // TODO fix the double change of the bool nomadTurn
   static void updateAction() {
-    System.out.println(nomadTurn);
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
       Image slipperypipeModIcon =
           slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(slipperypipeModIcon));
-      mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::SlipperyAction);
-
       mapButtons[gridNum * gridNum - gridNum + 7].setIcon(null);
-      mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(null);
-
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
-      mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(null);
-
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
-      mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(null);
 
-      textField.setText("Nomads turn");
+      textField.setText(nomadNames[(playerIdx-- % Menu.playerCount)] + " Nomads turn");
+      playerIdx++;
     } else {
       Image repairImage = repairIcon.getImage();
       Image repairModIcon =
           repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
-      mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::RepairAction);
 
       Image pickuppipeImage = pickuppipeIcon.getImage();
       Image pickuppipeModIcon =
           pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(pickuppipeModIcon));
-      mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(Controller::PickUpPipeAction);
 
       Image pickuppumpImage = pickuppumpIcon.getImage();
       Image pickuppumpModIcon =
           pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppumpModIcon));
-      mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPumpAction);
 
       Image setpumpImage = setpumpIcon.getImage();
       Image setpumpModIcon =
           setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
-      mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::SetPumpAction);
 
-      textField.setText("Plumbers turn");
+      textField.setText(plumberNames[(playerIdx % Menu.playerCount)] + " Plumbers turn");
+      playerIdx++;
     }
   }
 }

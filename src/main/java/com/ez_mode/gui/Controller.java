@@ -12,16 +12,26 @@ public class Controller {
    * @param e action event when a button is pressed
    */
   public static void MenuStartAction(ActionEvent e) {
+    String pNames;
+    String nNames;
     Menu.frame.dispose();
     EndGame.frame.dispose();
+
     if (Menu.playerCountTextField.getText().isEmpty()) {
       Menu.playerCount = 2;
     } else {
       Menu.playerCount = Integer.parseInt(Menu.playerCountTextField.getText());
     }
+
     Menu.loadedPath = Menu.loadTextField.getText();
-    // TODO: Creat/load the map, add the players
-    Map.fillMap(Menu.playerCount);
+
+    pNames = Menu.plumberNamesTextField.getText();
+    Game.plumberNames = pNames.split(" ");
+
+    nNames = Menu.nomadNamesTextField.getText();
+    Game.nomadNames = nNames.split(" ");
+
+    Map.fillMap(Menu.playerCount*2);
     new Game();
   }
 
@@ -37,25 +47,22 @@ public class Controller {
   public static void MoveUpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
   }
 
   public static void MoveLeftAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
   }
 
   public static void MoveDownAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
   }
 
   public static void MoveRightAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
+
   }
 
   public static void RepairAction(ActionEvent e) {

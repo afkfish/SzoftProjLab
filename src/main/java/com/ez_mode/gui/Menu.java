@@ -11,6 +11,10 @@ public class Menu {
   JTextField title = new JTextField();
   JTextField loadText = new JTextField();
   static JTextField loadTextField = new JTextField();
+  JTextField plumberNamesText = new JTextField();
+  static JTextField plumberNamesTextField = new JTextField();
+  JTextField nomadNamesText = new JTextField();
+  static JTextField nomadNamesTextField = new JTextField();
   JTextField playerCountText = new JTextField();
   static JTextField playerCountTextField = new JTextField();
   JButton exitButton = new JButton();
@@ -39,12 +43,12 @@ public class Menu {
     loadText.setForeground(new Color(250, 250, 250));
     loadText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
     loadText.setFont(new Font("Monospace", Font.BOLD, 20));
-    loadText.setBounds(20, 180, 130, 40);
+    loadText.setBounds(20, 150, 130, 40);
     loadText.setText("Path of map: ");
     loadText.setEditable(false);
     loadTextField.setBackground(new Color(250, 250, 250));
     loadTextField.setFont(new Font("Monospace", Font.BOLD, 20));
-    loadTextField.setBounds(150, 180, 230, 40);
+    loadTextField.setBounds(150, 150, 230, 40);
     loadTextField.getText();
     loadTextField.addActionListener(Controller::LoadMapAction);
 
@@ -52,15 +56,39 @@ public class Menu {
     playerCountText.setForeground(new Color(250, 250, 250));
     playerCountText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
     playerCountText.setFont(new Font("Monospace", Font.BOLD, 20));
-    playerCountText.setBounds(20, 280, 300, 40);
+    playerCountText.setBounds(20, 210, 300, 40);
     playerCountText.setText("Number of players in one team: ");
     playerCountText.setEditable(false);
     playerCountTextField.setBackground(new Color(250, 250, 250));
     playerCountTextField.setFont(new Font("Monospace", Font.BOLD, 20));
-    playerCountTextField.setBounds(330, 280, 50, 40);
+    playerCountTextField.setBounds(330, 210, 50, 40);
     playerCountTextField.getText();
 
-    exitButton.setBounds(55, 380, 300, 40);
+    plumberNamesText.setBackground(new Color(50, 50, 50));
+    plumberNamesText.setForeground(new Color(250, 250, 250));
+    plumberNamesText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+    plumberNamesText.setFont(new Font("Monospace", Font.BOLD, 20));
+    plumberNamesText.setBounds(20, 270, 240, 40);
+    plumberNamesText.setText("Names of the plumbers:");
+    plumberNamesText.setEditable(false);
+    plumberNamesTextField.setBackground(new Color(250, 250, 250));
+    plumberNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
+    plumberNamesTextField.setBounds(260, 270, 100, 40);
+    plumberNamesTextField.getText();
+
+    nomadNamesText.setBackground(new Color(50, 50, 50));
+    nomadNamesText.setForeground(new Color(250, 250, 250));
+    nomadNamesText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+    nomadNamesText.setFont(new Font("Monospace", Font.BOLD, 20));
+    nomadNamesText.setBounds(20, 330, 240, 40);
+    nomadNamesText.setText("Names of the nomads:");
+    nomadNamesText.setEditable(false);
+    nomadNamesTextField.setBackground(new Color(250, 250, 250));
+    nomadNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
+    nomadNamesTextField.setBounds(260, 330, 100, 40);
+    nomadNamesTextField.getText();
+
+    exitButton.setBounds(55, 400, 300, 40);
     exitButton.setFont(new Font("Monospace", Font.BOLD, 25));
     exitButton.setText("Exit game");
     exitButton.setBackground(new Color(0, 0, 0));
@@ -72,6 +100,10 @@ public class Menu {
     frame.add(startButton);
     frame.add(loadText);
     frame.add(loadTextField);
+    frame.add(plumberNamesText);
+    frame.add(plumberNamesTextField);
+    frame.add(nomadNamesText);
+    frame.add(nomadNamesTextField);
     frame.add(playerCountText);
     frame.add(playerCountTextField);
     frame.add(exitButton);
