@@ -72,7 +72,9 @@ public class Map implements Tickable {
       for (int j = 0; j < 10; j++) {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
-        if (randomInt <= 60) {
+        if (randomInt <= 40) {
+          ;
+        } else if (randomInt <= 60) {
           gameMap[i][j] = new Pipe(i, j);
         } else if (randomInt <= 80) {
           gameMap[i][j] = new Pump(i, j);

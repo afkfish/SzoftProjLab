@@ -1,5 +1,11 @@
 package com.ez_mode.gui;
 
+import com.ez_mode.Map;
+import com.ez_mode.characters.Character;
+import com.ez_mode.characters.Nomad;
+import com.ez_mode.characters.Plumber;
+import com.ez_mode.objects.*;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -109,63 +115,108 @@ public class Game {
     mapPanel.setLayout(new GridLayout(gridNum, gridNum + 1));
     mapPanel.setBorder(null);
 
-    for (int i = 0; i < (gridNum * gridNum); i++) {
-      mapButtons[i] = new JButton();
-      mapPanel.add(mapButtons[i]);
-      mapButtons[i].setFocusable(false);
-      mapButtons[i].setSize(fieldSize, fieldSize);
-      mapButtons[i].setBorderPainted(false);
-      mapButtons[i].setHorizontalAlignment(JLabel.HORIZONTAL);
+    int nodeType = 0;
+    Map.printNodes();
+    for (int i = 0; i < gridNum; i++) {
+      for (int j = 0; j < gridNum; j++) {
+        Node temp = Map.getNode(j, i);
+        mapButtons[i*gridNum+j] = new JButton();
+        mapPanel.add(mapButtons[i*gridNum+j]);
+        mapButtons[i*gridNum+j].setFocusable(false);
+        mapButtons[i*gridNum+j].setSize(fieldSize, fieldSize);
+        mapButtons[i*gridNum+j].setBorderPainted(false);
+        mapButtons[i*gridNum+j].setHorizontalAlignment(JLabel.HORIZONTAL);
+        if (temp == null) {
+          Image sandImage = sandIcon.getImage();
+          Image sandModIcon = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[i*gridNum+j].setIcon(new ImageIcon(sandModIcon));
+        }
+        else {
+          try {
+            Cistern c = (Cistern) temp;
+            Image cisternImage = cisternIcon.getImage();
+            Image cisternModIcon = cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i * gridNum + j].setIcon(new ImageIcon(cisternModIcon));
+            nodeType = 1;
+          } catch (Exception e) {
+            try {
+              Pipe pi = (Pipe) temp;
+              Image pipeImage = pipeIcon.getImage();
+              Image pipeModIcon = pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
+              nodeType = 2;
+            } catch (Exception ex) {
+              try {
+                Pump pu = (Pump) temp;
+                Image emptypumpImage = emptypumpIcon.getImage();
+                Image emptypumpModIcon = emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
+                nodeType = 3;
+              } catch (Exception exception) {
+                try {
+                  WaterSpring ws = (WaterSpring) temp;
+                  Image waterspringImage = waterspringIcon.getImage();
+                  Image waterspringModIcon = waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                  mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterspringModIcon));
+                  nodeType = 4;
+                } catch (Exception e1) {
+                }
+              }
+            }
+          }
+        }
+        for (int k = 0; k < Map.playerCount(); k++) {
+          Character temp2 = Map.getPlayer(k);
+          if (temp == null) continue;
+          if (temp.getCharacters().contains(temp2)) {
+            BufferedImage overlay = null;
+            try {
+              Nomad n = (Nomad) temp2;
+              overlay = ImageIO.read(new File(nomadImagePath));
+            } catch (Exception e) {
+              try {
+                Plumber p = (Plumber) temp2;
+                overlay = ImageIO.read(new File(plumberImagePath));
+              } catch (Exception ex) { }
+            }
+            try {
+              BufferedImage image;
+              switch (nodeType) {
+                case 1:
+                  image = ImageIO.read(new File(cisternImagePath));
+                  break;
+                case 2:
+                  image = ImageIO.read(new File(pipeImagePath));
+                  break;
+                case 3:
+                  image = ImageIO.read(new File(emptypumpImagePath));
+                  break;
+                case 4:
+                  image = ImageIO.read(new File(waterspringImagePath));
+                  break;
+                default:
+                  image = ImageIO.read(new File(sandImagePath));
+              }
+              if (overlay == null) continue;
+              int w = Math.max(image.getWidth(), overlay.getWidth());
+              int h = Math.max(image.getHeight(), overlay.getHeight());
+              BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+              Graphics g = combined.getGraphics();
+              g.drawImage(image, 0, 0, null);
+              g.drawImage(overlay, 0, 0, null);
+              g.dispose();
+
+              ImageIO.write(combined, "PNG", new File(outImagePath));
+            } catch (IOException e) { }
+            Image outImage = outIcon.getImage();
+            Image outModIcon =
+                    outImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i*gridNum+j].setIcon(new ImageIcon(outModIcon));
+          }
+        }
+      }
     }
-    for (int i = 0; i < (gridNum * gridNum - gridNum); i++) {
-      mapButtons[i].setBackground(new Color(180, 180, 180));
-      sandIcon = new ImageIcon(String.valueOf(sandImagePath));
-      Image sandImage = sandIcon.getImage();
-      Image sandModIcon = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[i].setIcon(new ImageIcon(sandModIcon));
-    }
-
-    Image cisternImage = cisternIcon.getImage();
-    Image cisternModIcon =
-        cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    mapButtons[0].setIcon(new ImageIcon(cisternModIcon));
-    mapButtons[1].setIcon(new ImageIcon(cisternModIcon));
-    mapButtons[2].setIcon(new ImageIcon(cisternModIcon));
-
-    Image waterspringImage = waterspringIcon.getImage();
-    Image waterspringModIcon =
-        waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    mapButtons[(gridNum * gridNum - gridNum) - 1].setIcon(new ImageIcon(waterspringModIcon));
-    mapButtons[(gridNum * gridNum - gridNum) - 2].setIcon(new ImageIcon(waterspringModIcon));
-    mapButtons[(gridNum * gridNum - gridNum) - 3].setIcon(new ImageIcon(waterspringModIcon));
-
-    try {
-      BufferedImage image = ImageIO.read(new File(pipeImagePath));
-      BufferedImage overlay = ImageIO.read(new File(plumberImagePath));
-
-      int w = Math.max(image.getWidth(), overlay.getWidth());
-      int h = Math.max(image.getHeight(), overlay.getHeight());
-      BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
-      Graphics g = combined.getGraphics();
-      g.drawImage(image, 0, 0, null);
-      g.drawImage(overlay, 0, 0, null);
-
-      g.dispose();
-
-      ImageIO.write(combined, "PNG", new File(outImagePath));
-    } catch (IOException e) {
-
-    }
-
-    Image plumberImage = outIcon.getImage();
-    Image plumberModIcon =
-        plumberImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    mapButtons[10].setIcon(new ImageIcon(plumberModIcon));
-
-    Image nomadImage = nomadIcon.getImage();
-    Image nomadModIcon = nomadImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    mapButtons[15].setIcon(new ImageIcon(nomadModIcon));
 
     /** Icons of the action bar */
     for (int i = (gridNum * gridNum - gridNum); i < (gridNum * gridNum); i++) {

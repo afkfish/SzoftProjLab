@@ -1,5 +1,7 @@
 package com.ez_mode.gui;
 
+import com.ez_mode.Map;
+
 import java.awt.event.ActionEvent;
 
 public class Controller {
@@ -19,6 +21,7 @@ public class Controller {
     }
     Menu.loadedPath = Menu.loadTextField.getText();
     // TODO: Creat/load the map, add the players
+    Map.fillMap(Menu.playerCount);
     new Game();
   }
 
