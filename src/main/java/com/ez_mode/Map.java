@@ -48,7 +48,7 @@ public class Map implements Tickable {
    * This method fills the map with the objects and places the characters to their startiing
    * positions.
    */
-  public void fillMap(int playerCount) {
+  public static void fillMap(int playerCount) {
     Main.log("Filling map with random objects...");
 
     gameMap = new Node[10][10];
@@ -103,8 +103,14 @@ public class Map implements Tickable {
         }
       }
     }
+    Main.log("Map filled!");
   }
 
+  /**
+   * Loads a map from a file
+   *
+   * @param path the file's path
+   */
   public void loadMap(String path) {
     Main.log("Loading map...");
     if (!path.endsWith(".json")) {
@@ -210,6 +216,11 @@ public class Map implements Tickable {
     }
   }
 
+  /**
+   * Saves the map to a file
+   *
+   * @param path the file's path
+   */
   public void saveMap(String path) {
     Main.log("Saving map...");
     assert path.endsWith(".json") : "The file must be a .json configuration file!";
@@ -291,6 +302,12 @@ public class Map implements Tickable {
     return players.get(index);
   }
 
+  /**
+   * Gives a player by its name
+   *
+   * @param name the name of the player
+   * @return a player
+   */
   public static Character getPlayer(String name) {
     for (Character c : players) {
       if (c.getName().equals(name)) {
@@ -300,6 +317,12 @@ public class Map implements Tickable {
     return null;
   }
 
+  /**
+   * Gives a node by its name
+   *
+   * @param name name of the node
+   * @return a node
+   */
   public static Node getNode(String name) {
     for (Node[] asd : gameMap) {
       for (Node nodi : asd) {
@@ -311,6 +334,7 @@ public class Map implements Tickable {
     return null;
   }
 
+  /** Prints the players on the map with an index */
   public static void printPlayers() {
     for (int i = 0; i < players.size(); i++) {
       Character player = players.get(i);
@@ -318,6 +342,11 @@ public class Map implements Tickable {
     }
   }
 
+  /**
+   * The node count on the map
+   *
+   * @return node count
+   */
   public static int getNodeCount() {
     int count = 0;
     for (Node[] columns : gameMap) {
@@ -330,11 +359,12 @@ public class Map implements Tickable {
     return count;
   }
 
+  /** Prints the nodes with an index */
   public static void printNodes() {
     for (Node[] nodes : gameMap) {
       for (Node node : nodes) {
         if (node != null) {
-          System.out.print(node.getX() + ", " + node.getY() + " - " + node.getUuid());
+          Main.log(node.getX() + ", " + node.getY() + " - " + node.getUuid());
         }
       }
     }
@@ -363,10 +393,12 @@ public class Map implements Tickable {
     // character.placeTo(playerTruePos);
   }
 
+  /** Clears the map */
   public static void clearMap() {
     gameMap = new Node[gameMap.length][gameMap[0].length];
   }
 
+  /** ticks every node on map */
   @Override
   public void tick() {
     for (Node[] nodes : gameMap) {
@@ -377,15 +409,23 @@ public class Map implements Tickable {
     this.logger.debug("Current water loss: {}", Map.waterLost);
   }
 
+  /**
+   * Map printing
+   *
+   * @return the string version of the map
+   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < gameMap.length; i++) {
       for (int j = 0; j < gameMap[i].length; j++) {
-        Node node = gameMap[i][j];
-        sb.append(String.format("[%d, %d]:\n%s", i, j, node.toString()));
+        Node node;
+        if ((node = gameMap[i][j]) == null) {
+          continue;
+        }
+        sb.append(String.format("[%d, %d]:\n%s", i, j, node));
+        sb.append("\n\n");
       }
-      sb.append("\n\n");
     }
     return sb.toString();
   }
