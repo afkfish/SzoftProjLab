@@ -5,7 +5,6 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -120,43 +119,47 @@ public class Game {
     for (int i = 0; i < gridNum; i++) {
       for (int j = 0; j < gridNum; j++) {
         Node temp = Map.getNode(j, i);
-        mapButtons[i*gridNum+j] = new JButton();
-        mapPanel.add(mapButtons[i*gridNum+j]);
-        mapButtons[i*gridNum+j].setFocusable(false);
-        mapButtons[i*gridNum+j].setSize(fieldSize, fieldSize);
-        mapButtons[i*gridNum+j].setBorderPainted(false);
-        mapButtons[i*gridNum+j].setHorizontalAlignment(JLabel.HORIZONTAL);
+        mapButtons[i * gridNum + j] = new JButton();
+        mapPanel.add(mapButtons[i * gridNum + j]);
+        mapButtons[i * gridNum + j].setFocusable(false);
+        mapButtons[i * gridNum + j].setSize(fieldSize, fieldSize);
+        mapButtons[i * gridNum + j].setBorderPainted(false);
+        mapButtons[i * gridNum + j].setHorizontalAlignment(JLabel.HORIZONTAL);
         if (temp == null) {
           Image sandImage = sandIcon.getImage();
-          Image sandModIcon = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[i*gridNum+j].setIcon(new ImageIcon(sandModIcon));
-        }
-        else {
+          Image sandModIcon =
+              sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[i * gridNum + j].setIcon(new ImageIcon(sandModIcon));
+        } else {
           try {
             Cistern c = (Cistern) temp;
             Image cisternImage = cisternIcon.getImage();
-            Image cisternModIcon = cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            Image cisternModIcon =
+                cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
             mapButtons[i * gridNum + j].setIcon(new ImageIcon(cisternModIcon));
             nodeType = 1;
           } catch (Exception e) {
             try {
               Pipe pi = (Pipe) temp;
               Image pipeImage = pipeIcon.getImage();
-              Image pipeModIcon = pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              Image pipeModIcon =
+                  pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
               mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
               nodeType = 2;
             } catch (Exception ex) {
               try {
                 Pump pu = (Pump) temp;
                 Image emptypumpImage = emptypumpIcon.getImage();
-                Image emptypumpModIcon = emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                Image emptypumpModIcon =
+                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
                 mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
                 nodeType = 3;
               } catch (Exception exception) {
                 try {
                   WaterSpring ws = (WaterSpring) temp;
                   Image waterspringImage = waterspringIcon.getImage();
-                  Image waterspringModIcon = waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                  Image waterspringModIcon =
+                      waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
                   mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterspringModIcon));
                   nodeType = 4;
                 } catch (Exception e1) {
@@ -177,7 +180,8 @@ public class Game {
               try {
                 Plumber p = (Plumber) temp2;
                 overlay = ImageIO.read(new File(plumberImagePath));
-              } catch (Exception ex) { }
+              } catch (Exception ex) {
+              }
             }
             try {
               BufferedImage image;
@@ -208,11 +212,12 @@ public class Game {
               g.dispose();
 
               ImageIO.write(combined, "PNG", new File(outImagePath));
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
             Image outImage = outIcon.getImage();
             Image outModIcon =
-                    outImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i*gridNum+j].setIcon(new ImageIcon(outModIcon));
+                outImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i * gridNum + j].setIcon(new ImageIcon(outModIcon));
           }
         }
       }
