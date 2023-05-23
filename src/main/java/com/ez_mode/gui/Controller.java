@@ -30,7 +30,7 @@ public class Controller {
     nNames = Menu.nomadNamesTextField.getText();
     Game.nomadNames = nNames.split(" ");
 
-    Map.fillMap(Menu.playerCount*2);
+    Map.fillMap(Menu.playerCount * 2);
     new Game();
   }
 
@@ -61,7 +61,6 @@ public class Controller {
   public static void MoveRightAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-
   }
 
   public static void RepairAction(ActionEvent e) {
