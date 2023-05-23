@@ -1,7 +1,5 @@
 package com.ez_mode;
 
-// import com.ez_mode.gui.Menu;
-
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
@@ -409,8 +407,8 @@ public class Main {
   /**
    * Creates a new node
    *
-   * @param scanner
-   * @return
+   * @param scanner static scanner
+   * @return a new node that is optional
    */
   private static Optional<Node> createNode(Scanner scanner) {
     log("What is the type of the node?");
