@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -19,8 +20,9 @@ public class Game {
   static int fieldSize = windowWidth / gridNum;
   static int actionSize = fieldSize - 10;
   public static boolean nomadTurn = false;
-  static String[] plumberNames;
-  static String[] nomadNames;
+  public static ArrayList<String> plumberNames;
+  public static ArrayList<String> nomadNames;
+  static ArrayList<String> playerNames;
   static int playerIdx = 0;
 
   /** Java Swing components for the Game class */
@@ -290,7 +292,7 @@ public class Game {
     mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::SetPumpAction);
 
     /** Adding the components to the frame and setting their layouts */
-    textField.setText(plumberNames[playerIdx] + " Plumbers turn");
+    textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
     playerIdx++;
     frame.add(titlePanel, BorderLayout.NORTH);
     titlePanel.add(textField);
@@ -312,6 +314,7 @@ public class Game {
 
   // TODO fix the double change of the bool nomadTurn
   static void updateAction() {
+    playerIdx = playerIdx % Menu.playerCount;
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
       Image slipperypipeModIcon =
@@ -321,7 +324,7 @@ public class Game {
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
 
-      textField.setText(nomadNames[(playerIdx-- % Menu.playerCount)] + " Nomads turn");
+      textField.setText(nomadNames.get(playerIdx) + " Nomads turn");
       playerIdx++;
     } else {
       Image repairImage = repairIcon.getImage();
@@ -344,7 +347,7 @@ public class Game {
           setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
 
-      textField.setText(plumberNames[(playerIdx % Menu.playerCount)] + " Plumbers turn");
+      textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
       playerIdx++;
     }
   }

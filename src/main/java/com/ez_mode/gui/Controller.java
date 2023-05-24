@@ -1,7 +1,14 @@
 package com.ez_mode.gui;
 
 import com.ez_mode.Map;
+import com.ez_mode.characters.Character;
+import com.ez_mode.exceptions.InvalidPlayerMovementException;
+import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Node;
+
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Controller {
 
@@ -15,6 +22,9 @@ public class Controller {
     String nNames;
     Menu.frame.dispose();
     EndGame.frame.dispose();
+    int p = 0;
+    int n = 0;
+    Game.playerNames = new ArrayList<>();
 
     if (Menu.playerCountTextField.getText().isEmpty()) {
       Menu.playerCount = 2;
@@ -25,10 +35,15 @@ public class Controller {
     Menu.loadedPath = Menu.loadTextField.getText();
 
     pNames = Menu.plumberNamesTextField.getText();
-    Game.plumberNames = pNames.split(" ");
+    Game.plumberNames = new ArrayList<>(Arrays.asList(pNames.split(" ")));
 
     nNames = Menu.nomadNamesTextField.getText();
-    Game.nomadNames = nNames.split(" ");
+    Game.nomadNames = new ArrayList<>(Arrays.asList(nNames.split(" ")));
+
+    for(int i = 0; i < (Game.nomadNames.size() + Game.plumberNames.size()); i++){
+      if(i % 2 == 0) Game.playerNames.add(Game.plumberNames.get(p++));
+      else Game.playerNames.add(Game.nomadNames.get(n++));
+    }
 
     Map.fillMap(Menu.playerCount*2);
     new Game();
@@ -46,6 +61,14 @@ public class Controller {
   public static void MoveUpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    try {
+      Node tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+        try {
+          tempChar.moveTo(tempNode);
+        } catch (ObjectFullException | InvalidPlayerMovementException ex) {
+      }
+    } catch (ArrayIndexOutOfBoundsException ex) { System.out.println("legfelso sor");}
   }
 
   public static void MoveLeftAction(ActionEvent e) {

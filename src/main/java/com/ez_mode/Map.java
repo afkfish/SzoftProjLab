@@ -4,6 +4,7 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.gui.Game;
 import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
@@ -61,11 +62,13 @@ public class Map implements Tickable {
       plumberCount = playerCount / 2 + 1;
     }
     for (int i = 0; i < plumberCount; i++) {
-      players.add(new Plumber("plumber" + (i + 1)));
+      players.add(new Plumber(Game.plumberNames.get(i)));
     }
     for (int i = 0; i < playerCount - plumberCount; i++) {
-      players.add(new Nomad("nomad" + (i + 1)));
+      players.add(new Nomad(Game.nomadNames.get(i)));
     }
+
+    //TODO: connect nodes
 
     // create the rest of the map
     for (int i = 0; i < 10; i++) {
