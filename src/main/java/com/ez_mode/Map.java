@@ -68,7 +68,7 @@ public class Map implements Tickable {
       players.add(new Nomad(Game.nomadNames.get(i)));
     }
 
-    //TODO: connect nodes
+    // TODO: connect nodes
 
     // create the rest of the map
     for (int i = 0; i < 10; i++) {
