@@ -2,9 +2,14 @@ package com.ez_mode.gui;
 
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
+import com.ez_mode.characters.Nomad;
+import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
+import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
+import com.ez_mode.objects.Pipe;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,65 +67,151 @@ public class Controller {
     Game.updateAction();
     Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     try {
+      assert tempChar != null;
       Node tempNode =
-          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
       try {
+
+        assert tempNode != null;
         tempChar.moveTo(tempNode);
-      } catch (ObjectFullException | InvalidPlayerMovementException ex) {
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
-      System.out.println("legfelso sor");
+      System.out.println("Legfelso sor");
     }
   }
 
   public static void MoveLeftAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    try {
+      assert tempChar != null;
+      Node tempNode =
+              Map.getNode(tempChar.getStandingOn().getX()-1, tempChar.getStandingOn().getY() );
+      try {
+
+        assert tempNode != null;
+        tempChar.moveTo(tempNode);
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      }
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      System.out.println("balszelso sor");
+    }
   }
+
 
   public static void MoveDownAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    try {
+      assert tempChar != null;
+      Node tempNode =
+              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+      try {
+
+        assert tempNode != null;
+        tempChar.moveTo(tempNode);
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      }
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      System.out.println("legalso sor");
+    }
   }
 
-  public static void MoveRightAction(ActionEvent e) {
-    Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
-  }
+
+  public static void MoveRightAction(ActionEvent e){
+        Game.nomadTurn=!Game.nomadTurn;
+        Game.updateAction();
+        Character tempChar=Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+        try{
+        assert tempChar!=null;
+        Node tempNode=
+        Map.getNode(tempChar.getStandingOn().getX()+1,tempChar.getStandingOn().getY());
+        try{
+
+        assert tempNode!=null;
+        tempChar.moveTo(tempNode);
+        }catch(ObjectFullException|InvalidPlayerMovementException ignored){
+        }
+        }catch(ArrayIndexOutOfBoundsException ex){
+        System.out.println("jobb szelso sor");
+        }
+        }
+
+
 
   public static void RepairAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+    try {
+      Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      tempChar.repair();
+    }
+    catch(ClassCastException ignored){}
     // TODO
   }
 
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
+      Character tempChar =  Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      tempChar.breakNode();
+
   }
 
   public static void StickyAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     // TODO
+    try {
+      Character tempChar =  Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      tempChar.makePipeSticky();
+    }
+    catch(ClassCastException ignored){}
   }
 
   public static void SlipperyAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     // TODO
+    try {
+      Nomad tempChar = (Nomad) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      tempChar.setSlippery();
+    }
+    catch(ClassCastException ignored){}
   }
+
 
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
+    try {
+      Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      try {
+        tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
+      }catch ( NotFoundExeption NOTignored){
+        ///Todo
+      }
+    }
+    catch(ClassCastException ignored){}
   }
 
   public static void PickUpPumpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+    try {
+      Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      tempChar.PickupPump();
+    }
+    catch(ClassCastException ignored){}
     // TODO
   }
 
