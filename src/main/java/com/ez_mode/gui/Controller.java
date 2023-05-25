@@ -9,7 +9,6 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
-
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,7 +87,7 @@ public class Controller {
     try {
       assert tempChar != null;
       Node tempNode =
-              Map.getNode(tempChar.getStandingOn().getX()-1, tempChar.getStandingOn().getY() );
+          Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
       try {
 
         assert tempNode != null;
@@ -100,7 +99,6 @@ public class Controller {
     }
   }
 
-
   public static void MoveDownAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
@@ -108,7 +106,7 @@ public class Controller {
     try {
       assert tempChar != null;
       Node tempNode =
-              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
       try {
 
         assert tempNode != null;
@@ -120,27 +118,24 @@ public class Controller {
     }
   }
 
+  public static void MoveRightAction(ActionEvent e) {
+    Game.nomadTurn = !Game.nomadTurn;
+    Game.updateAction();
+    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    try {
+      assert tempChar != null;
+      Node tempNode =
+          Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+      try {
 
-  public static void MoveRightAction(ActionEvent e){
-        Game.nomadTurn=!Game.nomadTurn;
-        Game.updateAction();
-        Character tempChar=Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-        try{
-        assert tempChar!=null;
-        Node tempNode=
-        Map.getNode(tempChar.getStandingOn().getX()+1,tempChar.getStandingOn().getY());
-        try{
-
-        assert tempNode!=null;
+        assert tempNode != null;
         tempChar.moveTo(tempNode);
-        }catch(ObjectFullException|InvalidPlayerMovementException ignored){
-        }
-        }catch(ArrayIndexOutOfBoundsException ex){
-        System.out.println("jobb szelso sor");
-        }
-        }
-
-
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      }
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      System.out.println("jobb szelso sor");
+    }
+  }
 
   public static void RepairAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
@@ -149,18 +144,17 @@ public class Controller {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.repair();
+    } catch (ClassCastException ignored) {
     }
-    catch(ClassCastException ignored){}
     // TODO
   }
 
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-      Character tempChar =  Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-      assert tempChar != null;
-      tempChar.breakNode();
-
+    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    assert tempChar != null;
+    tempChar.breakNode();
   }
 
   public static void StickyAction(ActionEvent e) {
@@ -168,11 +162,11 @@ public class Controller {
     Game.updateAction();
     // TODO
     try {
-      Character tempChar =  Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.makePipeSticky();
+    } catch (ClassCastException ignored) {
     }
-    catch(ClassCastException ignored){}
   }
 
   public static void SlipperyAction(ActionEvent e) {
@@ -183,10 +177,9 @@ public class Controller {
       Nomad tempChar = (Nomad) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.setSlippery();
+    } catch (ClassCastException ignored) {
     }
-    catch(ClassCastException ignored){}
   }
-
 
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
@@ -196,11 +189,11 @@ public class Controller {
       assert tempChar != null;
       try {
         tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
-      }catch ( NotFoundExeption NOTignored){
-        ///Todo
+      } catch (NotFoundExeption NOTignored) {
+        /// Todo
       }
+    } catch (ClassCastException ignored) {
     }
-    catch(ClassCastException ignored){}
   }
 
   public static void PickUpPumpAction(ActionEvent e) {
@@ -210,8 +203,8 @@ public class Controller {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.PickupPump();
+    } catch (ClassCastException ignored) {
     }
-    catch(ClassCastException ignored){}
     // TODO
   }
 
