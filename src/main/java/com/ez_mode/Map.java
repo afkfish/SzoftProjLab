@@ -9,14 +9,13 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -117,8 +116,10 @@ public class Map implements Tickable {
 
     for (Node node : nodes) {
       for (Pipe pipe : pipes) {
-        if ((((node.getX() == pipe.getX() - 1|| node.getX() == pipe.getX() + 1)&&(node.getY() == pipe.getY()))
-               || ((node.getY() == pipe.getY() - 1|| node.getY() == pipe.getY() + 1)&&(node.getX() == pipe.getX())))
+        if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
+                    && (node.getY() == pipe.getY()))
+                || ((node.getY() == pipe.getY() - 1 || node.getY() == pipe.getY() + 1)
+                    && (node.getX() == pipe.getX())))
             && !pipe.fullOfConn()) {
           try {
             node.connect(pipe);
@@ -131,9 +132,11 @@ public class Map implements Tickable {
 
     for (Pipe p1 : pipes) {
       for (Pipe p2 : pipes) {
-        if ((((p1.getX() == p2.getX() - 1|| p1.getX() == p2.getX() + 1)&&(p1.getY() == p2.getY()))
-                || ((p1.getY() == p2.getY() - 1|| p1.getY() == p2.getY() + 1)&&(p1.getX() == p2.getX())))
-                && !p2.fullOfConn()) {
+        if ((((p1.getX() == p2.getX() - 1 || p1.getX() == p2.getX() + 1)
+                    && (p1.getY() == p2.getY()))
+                || ((p1.getY() == p2.getY() - 1 || p1.getY() == p2.getY() + 1)
+                    && (p1.getX() == p2.getX())))
+            && !p2.fullOfConn()) {
           try {
             p1.connect(p2);
           } catch (ObjectFullException e) {
@@ -150,7 +153,7 @@ public class Map implements Tickable {
     }
 
     // place the characters
-    for (int i = 0; i < players.size()/2; i++) {
+    for (int i = 0; i < players.size() / 2; i++) {
       players.get(i).placeTo(startPos1);
       players.get(i + plumberCount).placeTo(startPos2);
     }
