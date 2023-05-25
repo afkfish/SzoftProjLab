@@ -111,7 +111,6 @@ public class Map implements Tickable {
       WaterSpring w = new WaterSpring(0, 1);
       gameMap[0][1] = w;
       startPos2 = w;
-
     }
     if (pipes.isEmpty()) gameMap[0][2] = new Pipe(0, 2);
     if (nodes.isEmpty()) gameMap[0][3] = new Pump(0, 3);
