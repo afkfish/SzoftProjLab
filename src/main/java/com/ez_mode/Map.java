@@ -72,6 +72,8 @@ public class Map implements Tickable {
     // lists for the different generated nodes
     ArrayList<Node> nodes = new ArrayList<>();
     ArrayList<Pipe> pipes = new ArrayList<>();
+    Node startPos1 = null;
+    Node startPos2 = null;
     // generates the different node types
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
@@ -86,17 +88,30 @@ public class Map implements Tickable {
           nodes.add(new Pump(i, j));
         } else if (randomInt <= 90) {
           // gameMap[i][j] = new Cistern(i, j);
-          nodes.add(new Cistern(i, j));
+          Cistern c = new Cistern(i, j);
+          nodes.add(c);
+          startPos1 = c;
         } else {
           // gameMap[i][j] = new WaterSpring(i, j);
-          nodes.add(new WaterSpring(i, j));
+          WaterSpring w = new WaterSpring(i, j);
+          nodes.add(w);
+          startPos2 = w;
         }
       }
     }
 
     // create one of each node, to make sure we have each type on the map
-    if (nodes.isEmpty()) gameMap[0][0] = new Cistern(0, 0);
-    if (nodes.isEmpty()) gameMap[0][1] = new WaterSpring(0, 1);
+    if (nodes.isEmpty()) {
+      Cistern c = new Cistern(0, 0);
+      gameMap[0][0] = c;
+      startPos1 = c;
+    }
+    if (nodes.isEmpty()) {
+      WaterSpring w = new WaterSpring(0, 1);
+      gameMap[0][1] = w;
+      startPos2 = w;
+
+    }
     if (pipes.isEmpty()) gameMap[0][2] = new Pipe(0, 2);
     if (nodes.isEmpty()) gameMap[0][3] = new Pump(0, 3);
 
@@ -135,17 +150,9 @@ public class Map implements Tickable {
     }
 
     // place the characters
-    for (int i = 0; i < playerCount; i++) {
-      Random random = new Random();
-      boolean success = false;
-      while (!success) {
-        int row = random.nextInt(10);
-        int col = random.nextInt(10);
-        if (gameMap[row][col] != null && gameMap[row][col].getCharacters().isEmpty()) {
-          players.get(i).placeTo(gameMap[row][col]);
-          success = true;
-        }
-      }
+    for (int i = 0; i < players.size(); i++) {
+      players.get(i).placeTo(startPos1);
+      players.get(i + plumberCount - 1).placeTo(startPos2);
     }
     Main.log("Map filled!");
   }
