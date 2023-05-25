@@ -72,10 +72,12 @@ public abstract class Node implements Tickable {
     characters.add(character);
     this.logger.debug("Placed {} on {}", character.getUuid(), this.uuid);
   }
-  public boolean fullOfConn(){
-    if (this.neighbours.size() >= this.maxConnections)return true;
+
+  public boolean fullOfConn() {
+    if (this.neighbours.size() >= this.maxConnections) return true;
     return false;
   }
+
   public void addCharacter(Character character)
       throws ObjectFullException, InvalidPlayerMovementException {
     if (this.characters.size() >= maxCharacters)
