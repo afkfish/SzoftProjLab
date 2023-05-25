@@ -69,31 +69,69 @@ public class Map implements Tickable {
     }
 
     // TODO: connect nodes
-
-    // create the rest of the map
+    //lists for the different generated nodes
+    ArrayList<Node> nodes = new ArrayList<>();
+    ArrayList<Pipe> pipes = new ArrayList<>();
+    // generates the different node types
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
-        if (randomInt <= 40) {
-          ;
+        if (randomInt <= 40) {//leaves the place empty
         } else if (randomInt <= 60) {
-          gameMap[i][j] = new Pipe(i, j);
+          //gameMap[i][j] = new Pipe(i, j);
+          pipes.add(new Pipe(i, j));
         } else if (randomInt <= 80) {
-          gameMap[i][j] = new Pump(i, j);
+          //gameMap[i][j] = new Pump(i, j);
+          nodes.add(new Pump(i, j));
         } else if (randomInt <= 90) {
-          gameMap[i][j] = new Cistern(i, j);
+          //gameMap[i][j] = new Cistern(i, j);
+          nodes.add(new Cistern(i, j));
         } else {
-          gameMap[i][j] = new WaterSpring(i, j);
+          //gameMap[i][j] = new WaterSpring(i, j);
+          nodes.add(new WaterSpring(i, j));
         }
       }
     }
 
+
     // create one of each node, to make sure we have each type on the map
-    gameMap[0][0] = new Cistern(0, 0);
-    gameMap[0][1] = new WaterSpring(0, 1);
-    gameMap[0][2] = new Pipe(0, 2);
-    gameMap[0][3] = new Pump(0, 3);
+    if(nodes.isEmpty())gameMap[0][0] = new Cistern(0, 0);
+    if(nodes.isEmpty())gameMap[0][1] = new WaterSpring(0, 1);
+    if(pipes.isEmpty())gameMap[0][2] = new Pipe(0, 2);
+    if(nodes.isEmpty())gameMap[0][3] = new Pump(0, 3);
+
+    for(Node node: nodes){
+      for(Pipe pipe : pipes){
+        if((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1) &&
+                (node.getY() == pipe.getY() - 1 || node.getX() == pipe.getX() + 1) && !pipe.fullOfConn()){
+          try {
+            node.connect(pipe);
+          } catch (ObjectFullException e) {
+            Main.log(e.getMessage());
+          }
+        }
+      }
+    }
+
+    for(Pipe p1 : pipes) {
+      for (Pipe p2 : pipes) {
+        if ((p1.getX() == p2.getX() - 1 || p1.getX() == p2.getX() + 1) &&
+                (p1.getY() == p2.getY() - 1 || p1.getX() == p2.getX() + 1) && !p2.fullOfConn()) {
+          try {
+            p1.connect(p2);
+          } catch (ObjectFullException e) {
+            Main.log(e.getMessage());
+          }
+        }
+      }
+    }
+    for(Pipe p : pipes){
+      nodes.add(p);
+    }
+    for(Node node : nodes){
+      gameMap[node.getX()][node.getY()] = node;
+    }
 
     // place the characters
     for (int i = 0; i < playerCount; i++) {
