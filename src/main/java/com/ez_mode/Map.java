@@ -119,16 +119,16 @@ public class Map implements Tickable {
             Main.log(e.getMessage());
           }
         }
-        try{
-          Pump p= (Pump )node;
-          if(p.getNeighbours().size()==1)
-            p.setActiveOutput((Pipe)p.getNeighbours().get(0));
-          else if(p.getNeighbours().size()==0) ;
-          else{
-          p.setActiveInput((Pipe)p.getNeighbours().get(0));
-          p.setActiveOutput((Pipe)p.getNeighbours().get(1));
+        try {
+          Pump p = (Pump) node;
+          if (p.getNeighbours().size() == 1) p.setActiveOutput((Pipe) p.getNeighbours().get(0));
+          else if (p.getNeighbours().size() == 0)
+            ;
+          else {
+            p.setActiveInput((Pipe) p.getNeighbours().get(0));
+            p.setActiveOutput((Pipe) p.getNeighbours().get(1));
           }
-        }catch(ClassCastException ignored){
+        } catch (ClassCastException ignored) {
 
         }
       }
@@ -457,7 +457,7 @@ public class Map implements Tickable {
   public void tick() {
     for (Node[] nodes : gameMap) {
       for (Node node : nodes) {
-        if(node==null) continue;
+        if (node == null) continue;
         node.tick();
       }
     }
