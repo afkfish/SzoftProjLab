@@ -9,16 +9,25 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.swing.*;
+
+import static com.ez_mode.gui.Game.gridNum;
+import static com.ez_mode.gui.Game.mapButtons;
 
 public class Controller {
   static Character tempChar;
   static int direction;
-
+  static Node tempNode;
+  static int prevIdx;
   /**
    * Actions in Menu class
    *
@@ -69,11 +78,11 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    prevIdx = tempChar.getStandingOn().getX() + (gridNum * (tempChar.getStandingOn().getY()));
     direction = 1;
     try {
       assert tempChar != null;
-      Node tempNode =
-          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+      tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
@@ -92,8 +101,7 @@ public class Controller {
     direction = 2;
     try {
       assert tempChar != null;
-      Node tempNode =
-          Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+      tempNode = Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
@@ -112,8 +120,7 @@ public class Controller {
     direction = 3;
     try {
       assert tempChar != null;
-      Node tempNode =
-          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+      tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
@@ -132,8 +139,7 @@ public class Controller {
     direction = 5;
     try {
       assert tempChar != null;
-      Node tempNode =
-          Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+      tempNode = Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);

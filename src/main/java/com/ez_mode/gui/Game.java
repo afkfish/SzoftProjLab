@@ -65,19 +65,19 @@ public class Game {
   /** Adding all the images as ImageIcons, using the path given previously */
   public static ImageIcon outIcon = new ImageIcon(outImagePath);
 
-  public ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
+  public static ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
   public ImageIcon sandIcon = new ImageIcon(sandImagePath);
   public ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
   public ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
-  public ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
+  public static ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
   public ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
   public ImageIcon waterpipeIcon = new ImageIcon(waterpipeImagePath);
   public ImageIcon waterIcon = new ImageIcon(waterImagePath);
   public ImageIcon stickypipeIcon = new ImageIcon(stickypipeImagePath);
   public static ImageIcon slipperypipeIcon = new ImageIcon(slipperypipeImagePath);
   public static ImageIcon repairIcon = new ImageIcon(repairImagePath);
-  public ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
-  public ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
+  public static ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
+  public static ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
   public ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
   public ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
   public static ImageIcon breakIcon = new ImageIcon(breakImagePath);
@@ -355,44 +355,8 @@ public class Game {
   static void MoveCharacter() {
     int nodeType = 0;
     BufferedImage overlay = null;
-    Node tempNode = null;
-    int idx = 0;
-    if (Controller.direction == 1) {
-      tempNode =
-          Map.getNode(
-              Controller.tempChar.getStandingOn().getX(),
-              Controller.tempChar.getStandingOn().getY() - 1);
-      idx =
-          (Controller.tempChar.getStandingOn().getX())
-              + (gridNum * (Controller.tempChar.getStandingOn().getY() - 1));
-    }
-    if (Controller.direction == 2) {
-      tempNode =
-          Map.getNode(
-              Controller.tempChar.getStandingOn().getX() - 1,
-              Controller.tempChar.getStandingOn().getY());
-      idx =
-          (Controller.tempChar.getStandingOn().getX() - 1)
-              + (gridNum * (Controller.tempChar.getStandingOn().getY()));
-    }
-    if (Controller.direction == 3) {
-      tempNode =
-          Map.getNode(
-              Controller.tempChar.getStandingOn().getX(),
-              Controller.tempChar.getStandingOn().getY() + 1);
-      idx =
-          (Controller.tempChar.getStandingOn().getX())
-              + (gridNum * (Controller.tempChar.getStandingOn().getY()) + 1);
-    }
-    if (Controller.direction == 4) {
-      tempNode =
-          Map.getNode(
-              Controller.tempChar.getStandingOn().getX() + 1,
-              Controller.tempChar.getStandingOn().getY());
-      idx =
-          (Controller.tempChar.getStandingOn().getX() + 1)
-              + (gridNum * (Controller.tempChar.getStandingOn().getY()));
-    }
+    int idx;
+    idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
     try {
       Nomad n = (Nomad) Controller.tempChar;
       overlay = ImageIO.read(new File(Game.nomadImagePath));
@@ -404,19 +368,19 @@ public class Game {
       }
     }
     try {
-      Cistern c = (Cistern) tempNode;
+      Cistern c = (Cistern) Controller.tempNode;
       nodeType = 1;
     } catch (Exception e) {
       try {
-        Pipe pi = (Pipe) tempNode;
+        Pipe pi = (Pipe) Controller.tempNode;
         nodeType = 2;
       } catch (Exception ex) {
         try {
-          Pump pu = (Pump) tempNode;
+          Pump pu = (Pump) Controller.tempNode;
           nodeType = 3;
         } catch (Exception exception) {
           try {
-            WaterSpring w = (WaterSpring) tempNode;
+            WaterSpring w = (WaterSpring) Controller.tempNode;
             nodeType = 4;
           } catch (Exception e1) {
           }
@@ -428,18 +392,38 @@ public class Game {
       switch (nodeType) {
         case 1:
           image = ImageIO.read(new File(Game.cisternImagePath));
+          Image cisternImage = cisternIcon.getImage();
+          Image cisternModIcon =
+                  cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(cisternModIcon));
           break;
         case 2:
           image = ImageIO.read(new File(Game.pipeImagePath));
+          Image pipeImage = pipeIcon.getImage();
+          Image pipeModIcon =
+                  pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(pipeModIcon));
           break;
         case 3:
           image = ImageIO.read(new File(Game.emptypumpImagePath));
+          Image emptypumpImage = emptypumpIcon.getImage();
+          Image emptypumpModIcon =
+                  emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(emptypumpModIcon));
           break;
         case 4:
           image = ImageIO.read(new File(Game.waterspringImagePath));
+          Image waterspringImage = waterspringIcon.getImage();
+          Image waterspringModIcon =
+                  waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(waterspringModIcon));
           break;
         default:
           image = ImageIO.read(new File(Game.sandImagePath));
+          Image sandImage = waterspringIcon.getImage();
+          Image sandModIcon =
+                  sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(sandModIcon));
       }
 
       int w = Math.max(image.getWidth(), overlay.getWidth());
