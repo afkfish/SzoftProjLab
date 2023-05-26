@@ -1,6 +1,5 @@
 package com.ez_mode.gui;
 
-import static com.ez_mode.gui.Game.gridNum;
 
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
@@ -14,7 +13,6 @@ import com.ez_mode.objects.Pipe;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
 

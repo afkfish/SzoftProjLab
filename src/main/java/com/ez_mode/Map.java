@@ -27,9 +27,7 @@ public class Map implements Tickable {
 
   private final Logger logger = LogManager.getLogger(Map.class);
 
-  /**
-   * The ArrayList representation of the game. This map contains every object.
-   */
+  /** The ArrayList representation of the game. This map contains every object. */
   private static Node[][] gameMap = null;
 
   /** The list of all players. */
@@ -112,7 +110,8 @@ public class Map implements Tickable {
             p.setActiveInput((Pipe) p.getNeighbours().get(0));
             p.setActiveOutput((Pipe) p.getNeighbours().get(1));
           }
-        } catch (ClassCastException ignored) {}
+        } catch (ClassCastException ignored) {
+        }
       }
       // connect the pipes to other pipes if possibles
       for (Pipe otherPipe : pipes) {
@@ -344,8 +343,7 @@ public class Map implements Tickable {
     player.placeTo(node);
   }
 
-  public static void removeNode(Node ignored) {
-  }
+  public static void removeNode(Node ignored) {}
 
   public static Character getPlayer(int index) {
     return players.get(index);

@@ -7,13 +7,11 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -331,12 +329,11 @@ public class Game {
    * can repair, set pump, pick up pump and pick up pipe The nomad's team can break, make a pipe
    * slippery
    */
-
   static void updateAction() {
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
       Image slipperypipeModIcon =
-              slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(slipperypipeModIcon));
       mapButtons[gridNum * gridNum - gridNum + 7].setIcon(null);
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
@@ -347,22 +344,22 @@ public class Game {
     } else {
       Image repairImage = repairIcon.getImage();
       Image repairModIcon =
-              repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
 
       Image pickuppipeImage = pickuppipeIcon.getImage();
       Image pickuppipeModIcon =
-              pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(pickuppipeModIcon));
 
       Image pickuppumpImage = pickuppumpIcon.getImage();
       Image pickuppumpModIcon =
-              pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppumpModIcon));
 
       Image setpumpImage = setpumpIcon.getImage();
       Image setpumpModIcon =
-              setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+          setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
 
       textField.setText(plumberNames.get(playerIdx / 2) + " Plumbers turn");
@@ -385,31 +382,29 @@ public class Game {
       case 1:
         Image cisternImage = cisternIcon.getImage();
         Image cisternModIcon =
-                cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[Controller.prevIdx].setIcon(new ImageIcon(cisternModIcon));
         break;
       case 2:
         Image pipeImage = pipeIcon.getImage();
-        Image pipeModIcon =
-                pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+        Image pipeModIcon = pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[Controller.prevIdx].setIcon(new ImageIcon(pipeModIcon));
         break;
       case 3:
         Image emptypumpImage = emptypumpIcon.getImage();
         Image emptypumpModIcon =
-                emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[Controller.prevIdx].setIcon(new ImageIcon(emptypumpModIcon));
         break;
       case 4:
         Image waterspringImage = waterspringIcon.getImage();
         Image waterspringModIcon =
-                waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[Controller.prevIdx].setIcon(new ImageIcon(waterspringModIcon));
         break;
       default:
         Image sandImage = sandIcon.getImage();
-        Image sandModIcon =
-                sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+        Image sandModIcon = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[Controller.prevIdx].setIcon(new ImageIcon(sandModIcon));
         break;
     }
@@ -434,7 +429,8 @@ public class Game {
           break;
       }
       createLayeredImage(image);
-    } catch (IOException ignored) {}
+    } catch (IOException ignored) {
+    }
 
     Image outImage = Game.outIcon.getImage();
     Image outModIcon =
@@ -454,7 +450,7 @@ public class Game {
       createLayeredImage(image);
       Image outImage = Game.outIcon.getImage();
       Image outModIcon =
-              outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(outModIcon));
     } catch (Exception e) {
       try {
@@ -463,7 +459,8 @@ public class Game {
         Image brokenpumpModIcon =
             brokenpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[idx].setIcon(new ImageIcon(brokenpumpModIcon));
-      } catch (Exception ignored) {}
+      } catch (Exception ignored) {
+      }
     }
   }
 
@@ -475,7 +472,8 @@ public class Game {
       try {
         Plumber ignored = (Plumber) Controller.tempChar;
         overlay = ImageIO.read(new File(Game.plumberImagePath));
-      } catch (Exception ignored) {}
+      } catch (Exception ignored) {
+      }
     }
   }
 
@@ -496,7 +494,8 @@ public class Game {
           try {
             WaterSpring ignored = (WaterSpring) node;
             nodeType = 4;
-          } catch (Exception ignored) {}
+          } catch (Exception ignored) {
+          }
         }
       }
     }
@@ -516,7 +515,8 @@ public class Game {
       g.dispose();
 
       ImageIO.write(combined, "PNG", new File(Game.outImagePath));
-    } catch (IOException ignored) {}
+    } catch (IOException ignored) {
+    }
   }
 
   static void SetPump() {}
