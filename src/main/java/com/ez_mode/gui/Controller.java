@@ -1,6 +1,5 @@
 package com.ez_mode.gui;
 
-
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
