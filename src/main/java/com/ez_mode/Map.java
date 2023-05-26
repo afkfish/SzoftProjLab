@@ -9,13 +9,14 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -72,13 +73,28 @@ public class Map implements Tickable {
     // lists for the different generated nodes
     ArrayList<Node> nodes = new ArrayList<>();
     ArrayList<Pipe> pipes = new ArrayList<>();
-    Node startPos1 = null;
-    Node startPos2 = null;
+    ArrayList<Node> startPPositions= new ArrayList<>();
+    ArrayList<Node> startNPositions= new ArrayList<>();
     // generates the different node types
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
+        if(i==0){
+           if (randomInt <= 50) {
+            Cistern c = new Cistern(i, j);
+            nodes.add(c);
+            startPPositions.add(c);
+          }
+        }
+        else if(i==9){
+          if (randomInt <= 50) {
+            WaterSpring c = new WaterSpring(i, j);
+            nodes.add(c);
+            startNPositions.add(c);
+           }
+        }
+        else{
         if (randomInt <= 30) { // leaves the place empty
         } else if (randomInt <= 70) {
           // gameMap[i][j] = new Pipe(i, j);
@@ -90,13 +106,14 @@ public class Map implements Tickable {
           // gameMap[i][j] = new Cistern(i, j);
           Cistern c = new Cistern(i, j);
           nodes.add(c);
-          startPos1 = c;
+          startPPositions.add(c);
         } else {
           // gameMap[i][j] = new WaterSpring(i, j);
           WaterSpring w = new WaterSpring(i, j);
           nodes.add(w);
-          startPos2 = w;
+          startNPositions.add(w);
         }
+      }
       }
     }
 
@@ -104,18 +121,20 @@ public class Map implements Tickable {
     if (nodes.isEmpty()) {
       Cistern c = new Cistern(0, 0);
       gameMap[0][0] = c;
-      startPos1 = c;
+
+      startPPositions.add(c);;
     }
     if (nodes.isEmpty()) {
       WaterSpring w = new WaterSpring(0, 1);
       gameMap[0][1] = w;
-      startPos2 = w;
+      startNPositions.add(w);
     }
     if (pipes.isEmpty()) gameMap[0][2] = new Pipe(0, 2);
     if (nodes.isEmpty()) gameMap[0][3] = new Pump(0, 3);
 
-    for (Node node : nodes) {
-      for (Pipe pipe : pipes) {
+
+    for (Pipe pipe : pipes) {
+      for (Node node : nodes){
         if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
                     && (node.getY() == pipe.getY()))
                 || ((node.getY() == pipe.getY() - 1 || node.getY() == pipe.getY() + 1)
@@ -128,25 +147,22 @@ public class Map implements Tickable {
           }
         }
       }
-    }
-
-    for (Pipe p1 : pipes) {
       for (Pipe p2 : pipes) {
-        if ((((p1.getX() == p2.getX() - 1 || p1.getX() == p2.getX() + 1)
-                    && (p1.getY() == p2.getY()))
-                || ((p1.getY() == p2.getY() - 1 || p1.getY() == p2.getY() + 1)
-                    && (p1.getX() == p2.getX())))
-            && !p2.fullOfConn()) {
+        if ((((pipe.getX() == p2.getX() - 1 || pipe.getX() == p2.getX() + 1)
+                && (pipe.getY() == p2.getY()))
+                || ((pipe.getY() == p2.getY() - 1 || pipe.getY() == p2.getY() + 1)
+                && (pipe.getX() == p2.getX())))
+                && !p2.fullOfConn()) {
           try {
-            p1.connect(p2);
+            pipe.connect(p2);
           } catch (ObjectFullException e) {
             Main.log(e.getMessage());
           }
         }
       }
-    }
-    for (Pipe p : pipes) {
-      nodes.add(p);
+
+      nodes.add(pipe);
+
     }
     for (Node node : nodes) {
       gameMap[node.getX()][node.getY()] = node;
@@ -154,8 +170,8 @@ public class Map implements Tickable {
 
     // place the characters
     for (int i = 0; i < players.size() / 2; i++) {
-      players.get(i).placeTo(startPos1);
-      players.get(i + plumberCount).placeTo(startPos2);
+      players.get(i).placeTo(startPPositions.remove(startPPositions.size()-1));
+      players.get(i + plumberCount).placeTo(startPPositions.remove(startNPositions.size()-1));
     }
     Main.log("Map filled!");
   }
