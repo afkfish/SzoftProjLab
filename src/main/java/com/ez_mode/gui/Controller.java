@@ -230,14 +230,14 @@ public class Controller {
       } catch (Exception ex) {
 
       }
-      //TODO
+      // TODO
       Game.SetPump();
     } catch (Exception ex) {
 
     }
   }
 
-    // TODO: other actions for every possible action in the action bar
+  // TODO: other actions for every possible action in the action bar
 
   public static void GameExitAction(ActionEvent e) {
     Game.frame.dispose();

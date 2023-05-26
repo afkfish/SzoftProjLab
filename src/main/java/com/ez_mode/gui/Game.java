@@ -1,5 +1,7 @@
 package com.ez_mode.gui;
 
+import static com.ez_mode.Main.map;
+
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
@@ -12,8 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import static com.ez_mode.Main.map;
 
 public class Game {
   static int gridNum = 10;
@@ -150,13 +150,12 @@ public class Game {
               if (pi.getFlowRate() == 0) {
                 Image pipeImage = pipeIcon.getImage();
                 Image pipeModIcon =
-                        pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                    pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
                 mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
-              }
-              else {
+              } else {
                 Image waterpipeImage = waterpipeIcon.getImage();
                 Image waterpipeModIcon =
-                        waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                    waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
                 mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpipeModIcon));
               }
               nodeType = 2;
@@ -166,13 +165,12 @@ public class Game {
                 if (pu.getFlowRate() == 0) {
                   Image emptypumpImage = emptypumpIcon.getImage();
                   Image emptypumpModIcon =
-                          emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                      emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
                   mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
-                }
-                else {
+                } else {
                   Image waterpumpImage = waterpumpIcon.getImage();
                   Image waterpumpModIcon =
-                          waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                      waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
                   mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpumpModIcon));
                 }
                 nodeType = 3;
@@ -499,27 +497,27 @@ public class Game {
     mapButtons[idx].setIcon(new ImageIcon(outModIcon));
   }
 
-  static void BreakNode(){
-    int idx = Controller.tempChar.getStandingOn().getX() + (gridNum * Controller.tempChar.getStandingOn().getY());
+  static void BreakNode() {
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
+            + (gridNum * Controller.tempChar.getStandingOn().getY());
     try {
       Pipe pi = (Pipe) Controller.tempNode;
       Image brokenpipeImage = brokenpipeIcon.getImage();
       Image brokenpipeModIcon =
-              brokenpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+          brokenpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(brokenpipeModIcon));
     } catch (Exception e) {
       try {
         Pump pu = (Pump) Controller.tempNode;
         Image brokenpumpImage = brokenpumpIcon.getImage();
         Image brokenpumpModIcon =
-                brokenpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            brokenpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
         mapButtons[idx].setIcon(new ImageIcon(brokenpumpModIcon));
-      } catch (Exception ex) { }
+      } catch (Exception ex) {
+      }
     }
   }
 
-  static void SetPump() {
-
-  }
-
+  static void SetPump() {}
 }
