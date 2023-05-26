@@ -9,23 +9,16 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static com.ez_mode.gui.Game.gridNum;
-import static com.ez_mode.gui.Game.mapButtons;
+import javax.swing.*;
 
 public class Controller {
   static Character tempChar;
   static int direction;
+
   /**
    * Actions in Menu class
    *
@@ -80,7 +73,7 @@ public class Controller {
     try {
       assert tempChar != null;
       Node tempNode =
-              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);

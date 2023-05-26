@@ -352,28 +352,46 @@ public class Game {
     }
   }
 
-  static void MoveCharacter(){
+  static void MoveCharacter() {
     int nodeType = 0;
     BufferedImage overlay = null;
     Node tempNode = null;
     int idx = 0;
     if (Controller.direction == 1) {
-      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX(), Controller.tempChar.getStandingOn().getY() - 1);
-      idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY() - 1));
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX(),
+              Controller.tempChar.getStandingOn().getY() - 1);
+      idx =
+          (Controller.tempChar.getStandingOn().getX())
+              + (gridNum * (Controller.tempChar.getStandingOn().getY() - 1));
     }
     if (Controller.direction == 2) {
-      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX() - 1, Controller.tempChar.getStandingOn().getY());
-      idx = (Controller.tempChar.getStandingOn().getX() - 1) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX() - 1,
+              Controller.tempChar.getStandingOn().getY());
+      idx =
+          (Controller.tempChar.getStandingOn().getX() - 1)
+              + (gridNum * (Controller.tempChar.getStandingOn().getY()));
     }
     if (Controller.direction == 3) {
-      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX(), Controller.tempChar.getStandingOn().getY() + 1);
-      idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY()) + 1);
-
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX(),
+              Controller.tempChar.getStandingOn().getY() + 1);
+      idx =
+          (Controller.tempChar.getStandingOn().getX())
+              + (gridNum * (Controller.tempChar.getStandingOn().getY()) + 1);
     }
     if (Controller.direction == 4) {
-      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX() + 1, Controller.tempChar.getStandingOn().getY());
-      idx = (Controller.tempChar.getStandingOn().getX() + 1) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
-
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX() + 1,
+              Controller.tempChar.getStandingOn().getY());
+      idx =
+          (Controller.tempChar.getStandingOn().getX() + 1)
+              + (gridNum * (Controller.tempChar.getStandingOn().getY()));
     }
     try {
       Nomad n = (Nomad) Controller.tempChar;
@@ -397,10 +415,11 @@ public class Game {
           Pump pu = (Pump) tempNode;
           nodeType = 3;
         } catch (Exception exception) {
-          try{
+          try {
             WaterSpring w = (WaterSpring) tempNode;
             nodeType = 4;
-          } catch (Exception e1) { }
+          } catch (Exception e1) {
+          }
         }
       }
     }
@@ -437,7 +456,7 @@ public class Game {
     }
     Image outImage = Game.outIcon.getImage();
     Image outModIcon =
-            outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+        outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
     mapButtons[idx].setIcon(new ImageIcon(outModIcon));
   }
 }
