@@ -1,12 +1,11 @@
 package com.ez_mode.objects;
 
+import static java.lang.Double.min;
+
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
-
 import java.util.Random;
-
-import static java.lang.Double.min;
 
 /**
  * A pump is a node that can be adjusted and repaired. It is bound to break after a certain amount
@@ -102,11 +101,10 @@ public class Pump extends Node {
         } else {
           internalBufferLevel += activeInput.flowRate;
         }
-      } else if (this.internalBufferLevel > 0 &&sources.contains(activeOutput)) {
+      } else if (this.internalBufferLevel > 0 && sources.contains(activeOutput)) {
         this.setFlowRate(min(this.internalBufferLevel, activeOutput.getCapacity()));
         activeOutput.flowRate += flowRate;
-      }
-      else{
+      } else {
         return;
       }
     } else {
