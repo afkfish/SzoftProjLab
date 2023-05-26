@@ -15,12 +15,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.*;
 
 public class Controller {
   static Character tempChar;
-  static int direction;
+  static Direction direction;
   static Node tempNode;
+  static Node prevNode;
   static int prevIdx;
 
   /**
@@ -46,17 +48,17 @@ public class Controller {
     Menu.loadedPath = Menu.loadTextField.getText();
 
     pNames = Menu.plumberNamesTextField.getText();
-    Game.plumberNames = new ArrayList<>(Arrays.asList(pNames.split(" ")));
+    Game.plumberNames = new ArrayList<>(List.of(pNames.split(" ")));
 
     nNames = Menu.nomadNamesTextField.getText();
-    Game.nomadNames = new ArrayList<>(Arrays.asList(nNames.split(" ")));
+    Game.nomadNames = new ArrayList<>(List.of(nNames.split(" ")));
 
     for (int i = 0; i < (Game.nomadNames.size() + Game.plumberNames.size()); i++) {
       if (i % 2 == 0) Game.playerNames.add(Game.plumberNames.get(p++));
       else Game.playerNames.add(Game.nomadNames.get(n++));
     }
 
-    Map.fillMap(Menu.playerCount * 2);
+    Map.fillMap(Menu.playerCount);
     new Game();
   }
 
@@ -73,16 +75,18 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    prevIdx = tempChar.getStandingOn().getX() + (gridNum * (tempChar.getStandingOn().getY()));
-    direction = 1;
+    direction = Direction.UP;
     try {
       assert tempChar != null;
+      prevNode = tempChar.getStandingOn();
       tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
+        tempNode = tempChar.getStandingOn();
         Game.MoveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+        tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
       System.out.println("Legfelso sor");
@@ -93,15 +97,18 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    direction = 2;
+    direction = Direction.LEFT;
     try {
       assert tempChar != null;
+      prevNode = tempChar.getStandingOn();
       tempNode = Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
+        tempNode = tempChar.getStandingOn();
         Game.MoveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+        tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
       System.out.println("balszelso sor");
@@ -112,15 +119,18 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    direction = 3;
+    direction = Direction.DOWN;
     try {
       assert tempChar != null;
+      prevNode = tempChar.getStandingOn();
       tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
+        tempNode = tempChar.getStandingOn();
         Game.MoveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+        tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
       System.out.println("legalso sor");
@@ -131,15 +141,18 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    direction = 5;
+    direction = Direction.RIGHT;
     try {
       assert tempChar != null;
+      prevNode = tempChar.getStandingOn();
       tempNode = Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
       try {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
+        tempNode = tempChar.getStandingOn();
         Game.MoveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+        tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
       System.out.println("jobb szelso sor");
@@ -262,5 +275,12 @@ public class Controller {
 
   public static void LoadMapAction(ActionEvent e) {
     // TODO : load/create the map
+  }
+
+  public enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
   }
 }
