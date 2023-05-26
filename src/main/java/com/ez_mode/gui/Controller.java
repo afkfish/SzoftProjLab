@@ -1,5 +1,7 @@
 package com.ez_mode.gui;
 
+import static com.ez_mode.gui.Game.gridNum;
+
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
@@ -9,25 +11,18 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static com.ez_mode.gui.Game.gridNum;
-import static com.ez_mode.gui.Game.mapButtons;
+import javax.swing.*;
 
 public class Controller {
   static Character tempChar;
   static int direction;
   static Node tempNode;
   static int prevIdx;
+
   /**
    * Actions in Menu class
    *
