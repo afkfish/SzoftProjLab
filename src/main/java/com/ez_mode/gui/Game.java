@@ -36,21 +36,21 @@ public class Game {
   JPanel actionPanel = new JPanel();
 
   /** Adding all the images' path that will be used in the game */
-  public String outImagePath = "out.png";
+  public static String outImagePath = "out.png";
 
-  public String pipeImagePath = "src/main/resources/pipe.png";
-  public String sandImagePath = "src/main/resources/sand.png";
-  public String plumberImagePath = "src/main/resources/transplumber.png";
-  public String nomadImagePath = "src/main/resources/transnomad.png";
-  public String waterspringImagePath = "src/main/resources/waterspring.png";
+  public static String pipeImagePath = "src/main/resources/pipe.png";
+  public static String sandImagePath = "src/main/resources/sand.png";
+  public static String plumberImagePath = "src/main/resources/transplumber.png";
+  public static String nomadImagePath = "src/main/resources/transnomad.png";
+  public static String waterspringImagePath = "src/main/resources/waterspring.png";
   public String waterpumpImagePath = "src/main/resources/waterpump.png";
   public String waterpipeImagePath = "src/main/resources/waterpipe.png";
   public String waterImagePath = "src/main/resources/water.png";
   public String stickypipeImagePath = "src/main/resources/stickypipe.png";
   public static String slipperypipeImagePath = "src/main/resources/slipperypipe.png";
   public static String repairImagePath = "src/main/resources/repair.png";
-  public String emptypumpImagePath = "src/main/resources/emptypump.png";
-  public String cisternImagePath = "src/main/resources/cistern.png";
+  public static String emptypumpImagePath = "src/main/resources/emptypump.png";
+  public static String cisternImagePath = "src/main/resources/cistern.png";
   public String brokenpumpImagePath = "src/main/resources/brokenpump.png";
   public String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
   public static String breakImagePath = "src/main/resources/break.png";
@@ -63,7 +63,7 @@ public class Game {
   public static String setpumpImagePath = "src/main/resources/setpump.png";
 
   /** Adding all the images as ImageIcons, using the path given previously */
-  public ImageIcon outIcon = new ImageIcon(outImagePath);
+  public static ImageIcon outIcon = new ImageIcon(outImagePath);
 
   public ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
   public ImageIcon sandIcon = new ImageIcon(sandImagePath);
@@ -350,5 +350,94 @@ public class Game {
       textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
       playerIdx++;
     }
+  }
+
+  static void MoveCharacter(){
+    int nodeType = 0;
+    BufferedImage overlay = null;
+    Node tempNode = null;
+    int idx = 0;
+    if (Controller.direction == 1) {
+      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX(), Controller.tempChar.getStandingOn().getY() - 1);
+      idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY() - 1));
+    }
+    if (Controller.direction == 2) {
+      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX() - 1, Controller.tempChar.getStandingOn().getY());
+      idx = (Controller.tempChar.getStandingOn().getX() - 1) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+    }
+    if (Controller.direction == 3) {
+      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX(), Controller.tempChar.getStandingOn().getY() + 1);
+      idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY()) + 1);
+
+    }
+    if (Controller.direction == 4) {
+      tempNode = Map.getNode(Controller.tempChar.getStandingOn().getX() + 1, Controller.tempChar.getStandingOn().getY());
+      idx = (Controller.tempChar.getStandingOn().getX() + 1) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+
+    }
+    try {
+      Nomad n = (Nomad) Controller.tempChar;
+      overlay = ImageIO.read(new File(Game.nomadImagePath));
+    } catch (Exception e) {
+      try {
+        Plumber p = (Plumber) Controller.tempChar;
+        overlay = ImageIO.read(new File(Game.plumberImagePath));
+      } catch (Exception ex) {
+      }
+    }
+    try {
+      Cistern c = (Cistern) tempNode;
+      nodeType = 1;
+    } catch (Exception e) {
+      try {
+        Pipe pi = (Pipe) tempNode;
+        nodeType = 2;
+      } catch (Exception ex) {
+        try {
+          Pump pu = (Pump) tempNode;
+          nodeType = 3;
+        } catch (Exception exception) {
+          try{
+            WaterSpring w = (WaterSpring) tempNode;
+            nodeType = 4;
+          } catch (Exception e1) { }
+        }
+      }
+    }
+    try {
+      BufferedImage image;
+      switch (nodeType) {
+        case 1:
+          image = ImageIO.read(new File(Game.cisternImagePath));
+          break;
+        case 2:
+          image = ImageIO.read(new File(Game.pipeImagePath));
+          break;
+        case 3:
+          image = ImageIO.read(new File(Game.emptypumpImagePath));
+          break;
+        case 4:
+          image = ImageIO.read(new File(Game.waterspringImagePath));
+          break;
+        default:
+          image = ImageIO.read(new File(Game.sandImagePath));
+      }
+
+      int w = Math.max(image.getWidth(), overlay.getWidth());
+      int h = Math.max(image.getHeight(), overlay.getHeight());
+      BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+      Graphics g = combined.getGraphics();
+      g.drawImage(image, 0, 0, null);
+      g.drawImage(overlay, 0, 0, null);
+      g.dispose();
+
+      ImageIO.write(combined, "PNG", new File(Game.outImagePath));
+    } catch (IOException e) {
+    }
+    Image outImage = Game.outIcon.getImage();
+    Image outModIcon =
+            outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+    mapButtons[idx].setIcon(new ImageIcon(outModIcon));
   }
 }
