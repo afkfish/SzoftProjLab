@@ -80,13 +80,13 @@ public class Map implements Tickable {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
         if (j == 0) {
-          if (i%2==0) {
+          if (randomInt <= 60) {
             Cistern c = new Cistern(i, j);
             nodes.add(c);
             startPPositions.add(c);
           }
         } else if (j == 8) {
-          if ((i+2)%2==0) {
+          if (randomInt <= 60) {
             WaterSpring w = new WaterSpring(i, j);
             nodes.add(w);
             startNPositions.add(w);
@@ -103,11 +103,11 @@ public class Map implements Tickable {
            if (30<=randomInt&&randomInt <= 80) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
-          } else if(30<=randomInt){
+          } else if (30 <= randomInt) {
             nodes.add(new Pump(i, j));
           }
-          }
         }
+      }
     }
     for (Pipe pipe : pipes) {
       for (Node node : nodes) {
