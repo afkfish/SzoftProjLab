@@ -9,15 +9,14 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -80,13 +79,13 @@ public class Map implements Tickable {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
         if (j == 0) {
-          if (i%2==0) {
+          if (i % 2 == 0) {
             Cistern c = new Cistern(i, j);
             nodes.add(c);
             startPPositions.add(c);
           }
         } else if (j == 8) {
-          if ((i+2)%2==0) {
+          if ((i + 2) % 2 == 0) {
             WaterSpring w = new WaterSpring(i, j);
             nodes.add(w);
             startNPositions.add(w);
@@ -101,11 +100,11 @@ public class Map implements Tickable {
           if (30 <= randomInt && randomInt <= 80) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
-          } else if(30<=randomInt){
+          } else if (30 <= randomInt) {
             nodes.add(new Pump(i, j));
           }
-          }
         }
+      }
     }
     for (Pipe pipe : pipes) {
       for (Node node : nodes) {
@@ -120,16 +119,16 @@ public class Map implements Tickable {
             Main.log(e.getMessage());
           }
         }
-        try{
-          Pump p= (Pump )node;
-          if(p.getNeighbours().size()==1)
-            p.setActiveOutput((Pipe)p.getNeighbours().get(0));
-          else if(p.getNeighbours().size()==0) ;
-          else{
-          p.setActiveInput((Pipe)p.getNeighbours().get(0));
-          p.setActiveOutput((Pipe)p.getNeighbours().get(1));
+        try {
+          Pump p = (Pump) node;
+          if (p.getNeighbours().size() == 1) p.setActiveOutput((Pipe) p.getNeighbours().get(0));
+          else if (p.getNeighbours().size() == 0)
+            ;
+          else {
+            p.setActiveInput((Pipe) p.getNeighbours().get(0));
+            p.setActiveOutput((Pipe) p.getNeighbours().get(1));
           }
-        }catch(ClassCastException ignored){
+        } catch (ClassCastException ignored) {
 
         }
         try {
