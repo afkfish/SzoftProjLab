@@ -87,13 +87,12 @@ public class Cistern extends Node {
    * @return
    */
   public Pipe MakePipe() {
-    // Stakeholder
     Main.log("\t" + this.uuid + " made a pipe");
     Pipe temp = new Pipe();
     try {
       temp.connect(this);
-    } catch (ObjectFullException e) {
-      throw new RuntimeException(e);
+    } catch (ObjectFullException ignored) {
+      Main.log("\t" + this.uuid + " is full");
     }
     return temp;
   }

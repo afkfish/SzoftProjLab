@@ -2,6 +2,7 @@ package com.ez_mode.objects;
 
 import static java.lang.Double.min;
 
+import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
@@ -101,13 +102,17 @@ public class Pump extends Node {
         } else {
           internalBufferLevel += activeInput.flowRate;
         }
-      } else if (this.internalBufferLevel > 0) {
+      } else if (this.internalBufferLevel > 0 && sources.contains(activeOutput)) {
         this.setFlowRate(min(this.internalBufferLevel, activeOutput.getCapacity()));
         activeOutput.flowRate += flowRate;
+      } else {
+        return;
       }
     } else {
       this.setFlowRate(0);
-      internalBufferLevel += activeInput.flowRate;
+      if (activeInput != null) {
+        internalBufferLevel += activeInput.flowRate;
+      }
     }
   }
 
@@ -121,8 +126,8 @@ public class Pump extends Node {
       temp.placeTo(this);
       try {
         this.breakNode(temp);
-      } catch (InvalidPlayerActionException e) {
-        throw new RuntimeException(e);
+      } catch (InvalidPlayerActionException ignored) {
+        Main.log("Pump tried to break itself when it was already broken.");
       }
     }
   }

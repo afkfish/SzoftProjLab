@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,10 +27,7 @@ public class Map implements Tickable {
 
   private final Logger logger = LogManager.getLogger(Map.class);
 
-  /**
-   * The ArrayList representation of the game. This map contains every object. TODO: store the
-   * objects with their coordinates
-   */
+  /** The ArrayList representation of the game. This map contains every object. */
   private static Node[][] gameMap = null;
 
   /** The list of all players. */
@@ -53,62 +51,107 @@ public class Map implements Tickable {
     Main.log("Filling map with random objects...");
 
     gameMap = new Node[10][10];
-
-    // evenly distribute the players into two teams
-    int plumberCount;
-    if (playerCount % 2 == 0) {
-      plumberCount = playerCount / 2;
-    } else {
-      plumberCount = playerCount / 2 + 1;
-    }
-    for (int i = 0; i < plumberCount; i++) {
+    // creates the players
+    // each team has playersCount players
+    for (int i = 0; i < playerCount; i++) {
       players.add(new Plumber(Game.plumberNames.get(i)));
-    }
-    for (int i = 0; i < playerCount - plumberCount; i++) {
       players.add(new Nomad(Game.nomadNames.get(i)));
     }
 
-    // TODO: connect nodes
+    // lists for the different generated nodes
+    ArrayList<Node> nodes = new ArrayList<>();
+    ArrayList<Pipe> pipes = new ArrayList<>();
+    LinkedList<Node> startPPositions = new LinkedList<>();
+    LinkedList<Node> startNPositions = new LinkedList<>();
 
-    // create the rest of the map
-    for (int i = 0; i < 10; i++) {
-      for (int j = 0; j < 10; j++) {
-        Random rand = new Random();
+    Random rand = new Random();
+    // generates the different node types
+    for (int i = 0; i < Game.gridNum; i++) {
+      for (int j = 0; j < Game.gridNum - 1; j++) {
         int randomInt = rand.nextInt(100);
-        if (randomInt <= 40) {
-          ;
-        } else if (randomInt <= 60) {
-          gameMap[i][j] = new Pipe(i, j);
-        } else if (randomInt <= 80) {
-          gameMap[i][j] = new Pump(i, j);
-        } else if (randomInt <= 90) {
-          gameMap[i][j] = new Cistern(i, j);
-        } else {
-          gameMap[i][j] = new WaterSpring(i, j);
+        if (j == 0) {
+          if (i % 2 == 0) {
+            Cistern c = new Cistern(i, j);
+            nodes.add(c);
+            startPPositions.add(c);
+          }
+        } else if (j == 8) {
+          if ((i + 2) % 2 == 0) {
+            WaterSpring w = new WaterSpring(i, j);
+            nodes.add(w);
+            startNPositions.add(w);
+          }
+        } else if (j == 1 || j == 7) {
+          if (i % 2 == 0) {
+            // gameMap[i][j] = new Pipe(i, j);
+            pipes.add(new Pipe(i, j));
+          }
+
+        } else { // leaves the place empty
+          if (30 <= randomInt && randomInt <= 80) {
+            // gameMap[i][j] = new Pipe(i, j);
+            pipes.add(new Pipe(i, j));
+          } else if (80 <= randomInt) {
+            nodes.add(new Pump(i, j));
+          }
         }
       }
     }
-
-    // create one of each node, to make sure we have each type on the map
-    gameMap[0][0] = new Cistern(0, 0);
-    gameMap[0][1] = new WaterSpring(0, 1);
-    gameMap[0][2] = new Pipe(0, 2);
-    gameMap[0][3] = new Pump(0, 3);
+    for (Pipe pipe : pipes) {
+      for (Node node : nodes) {
+        // connect to a not full neighbour
+        connectIfNeighbouring(pipe, node);
+        try {
+          // if the  node is a pump, then try to connect it to its neighbours
+          Pump p = (Pump) node;
+          if (p.getNeighbours().size() == 1) {
+            p.setActiveOutput((Pipe) p.getNeighbours().get(0));
+          } else if (p.getNeighbours().size() > 1) {
+            p.setActiveInput((Pipe) p.getNeighbours().get(0));
+            p.setActiveOutput((Pipe) p.getNeighbours().get(1));
+          }
+        } catch (ClassCastException ignored) {
+        }
+      }
+      // connect the pipes to other pipes if possibles
+      for (Pipe otherPipe : pipes) {
+        connectIfNeighbouring(otherPipe, pipe);
+      }
+      // add the pipe to the map
+      nodes.add(pipe);
+    }
+    // set the nodes on the map
+    for (Node node : nodes) {
+      gameMap[node.getX()][node.getY()] = node;
+    }
 
     // place the characters
-    for (int i = 0; i < playerCount; i++) {
-      Random random = new Random();
-      boolean success = false;
-      while (!success) {
-        int row = random.nextInt(10);
-        int col = random.nextInt(10);
-        if (gameMap[row][col] != null && gameMap[row][col].getCharacters().isEmpty()) {
-          players.get(i).placeTo(gameMap[row][col]);
-          success = true;
-        }
+    for (Character player : players) {
+      try {
+        // try to cast the player to a nomad
+        Nomad ignored = (Nomad) player;
+        player.placeTo(startNPositions.removeLast());
+      } catch (ClassCastException ignored) {
+        // if it fails, then it is a plumber
+        player.placeTo(startPPositions.removeLast());
       }
     }
+
     Main.log("Map filled!");
+  }
+
+  private static void connectIfNeighbouring(Pipe pipe, Node node) {
+    if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
+                && (node.getY() == pipe.getY()))
+            || ((node.getY() == pipe.getY() - 1 || node.getY() == pipe.getY() + 1)
+                && (node.getX() == pipe.getX())))
+        && !pipe.fullOfConn()) {
+      try {
+        node.connect(pipe);
+      } catch (ObjectFullException e) {
+        Main.log(e.getMessage());
+      }
+    }
   }
 
   /**
@@ -300,8 +343,7 @@ public class Map implements Tickable {
     player.placeTo(node);
   }
 
-  public static void removeNode(Node node) { // TODO: implement remove logic
-  }
+  public static void removeNode(Node ignored) {}
 
   public static Character getPlayer(int index) {
     return players.get(index);
@@ -383,9 +425,9 @@ public class Map implements Tickable {
    * If a player character lost somehow, this method will move it to the position it is supposed to
    * be, or to the start position.
    *
-   * @param character the player who is lost
+   * @param ignored the player who is lost
    */
-  public static void playerLostHandler(Character character) {
+  public static void playerLostHandler(Character ignored) {
     // Node playerTruePos =
     // gameMap.stream()
     // .flatMap(ArrayList::stream)
@@ -408,6 +450,7 @@ public class Map implements Tickable {
   public void tick() {
     for (Node[] nodes : gameMap) {
       for (Node node : nodes) {
+        if (node == null) continue;
         node.tick();
       }
     }

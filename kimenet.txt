@@ -1,0 +1,421 @@
+Hello! This is the prototype version of the game.
+
+What do you want to do?
+test - runs the tests
+fill - fills the map with random objects
+load - loads a map from a file
+save - saves the map to a file
+character - shows the character actions
+node - shows the node actions
+add - create new nodes or characters
+map - shows the map in text form
+exit - exits the program
+	Cistern88:connect param: Pipe49
+	Pipe49:connect param: Cistern88
+	Cistern88:connect param: Pipe21
+	Pipe21:connect param: Cistern88
+	Pipe21:connect param: Pipe53
+	Pipe53:connect param: Pipe21
+	Pipe21:connect param: Pipe35
+	Pipe35:connect param: Pipe99
+	Pipe99:connect param: Pipe35
+	Pipe35:connect param: Pump93
+	Pump93:connect param: Pipe35
+	Pump93:connect param: Pipe72
+	Pipe72:connect param: Pump93
+	Pump93:connect param: Pipe36
+	Pipe36:connect param: Pump93
+	Pipe36:connect param: Pipe48
+	Pipe48:connect param: Pipe36
+	Pipe36:connect param: Pipe60
+	Pipe60:connect param: Pipe68
+	Pipe68:connect param: Pipe60
+	Pipe60:connect param: Pump94
+	Pump94:connect param: Pipe60
+	Pump94:connect param: Pipe67
+	Pipe67:connect param: Pump94
+	Pump94:connect param: Pipe14
+	Pipe14:connect param: Pump94
+	Pipe14:connect param: Pipe9
+	Pipe9:connect param: Pipe14
+	Pipe14:connect param: Pipe62
+	Pipe62:connect param: Pipe21
+	Pipe21:connect param: Pipe62
+	Pipe62:connect param: Cistern18
+	Cistern18:connect param: Pipe62
+	Pipe49:connect param: Pipe74
+	Pipe74:connect param: Pipe49
+	Pipe49:connect param: Pipe53
+	Pipe53:connect param: Pipe65
+	Pipe65:connect param: Pipe53
+	Pipe53:connect param: Pipe99
+	Pipe99:connect param: Pipe36
+	Pipe36:connect param: Pipe99
+	Pipe99:connect param: Pipe72
+	Pipe72:connect param: Pipe91
+	Pipe91:connect param: Pipe72
+	Pipe72:connect param: Pipe48
+	Pipe48:connect param: Pipe91
+	Pipe91:connect param: Pipe48
+	Pipe48:connect param: Pipe68
+	Pipe68:connect param: Pipe38
+	Pipe38:connect param: Pipe68
+	Pipe68:connect param: Pipe67
+	Pipe67:connect param: Pipe2
+	Pipe2:connect param: Pipe67
+	Pipe67:connect param: Pipe9
+	Pipe9:connect param: Pipe71
+	Pipe71:connect param: Pipe9
+	Pipe9:connect param: Pipe21
+	Pipe21:connect param: Pipe12
+	Pipe12:connect param: Pipe21
+	Pipe21:connect param: Pipe30
+	Pipe74:connect param: Pipe54
+	Pipe54:connect param: Pipe74
+	Pipe74:connect param: Pipe65
+	Pipe65:connect param: Pipe40
+	Pipe40:connect param: Pipe65
+	Pipe65:connect param: Pipe36
+	Pipe36:connect param: Pipe51
+	Pipe51:connect param: Pipe36
+	Pipe36:connect param: Pipe91
+	Pipe91:connect param: Pipe75
+	Pipe75:connect param: Pipe91
+	Pipe91:connect param: Pipe91
+	Pipe91:connect param: Pipe84
+	Pipe84:connect param: Pipe91
+	Pipe91:connect param: Pipe38
+	Pipe38:connect param: Pipe85
+	Pipe85:connect param: Pipe38
+	Pipe38:connect param: Pipe2
+	Pipe2:connect param: Pipe18
+	Pipe18:connect param: Pipe2
+	Pipe2:connect param: Pipe71
+	Pipe71:connect param: Pipe18
+	Pipe18:connect param: Pipe71
+	Pipe71:connect param: Pipe12
+	Pipe12:connect param: Pipe59
+	Pipe59:connect param: Pipe12
+	Pipe12:connect param: Pipe35
+	Pipe54:connect param: Pipe42
+	Pipe42:connect param: Pipe54
+	Pipe54:connect param: Pipe40
+	Pipe40:connect param: Pipe22
+	Pipe22:connect param: Pipe40
+	Pipe40:connect param: Pipe51
+	Pipe51:connect param: Pipe53
+	Pipe53:connect param: Pipe51
+	Pipe51:connect param: Pipe75
+	Pipe75:connect param: Pipe81
+	Pipe81:connect param: Pipe75
+	Pipe75:connect param: Pipe84
+	Pipe84:connect param: Pipe41
+	Pipe41:connect param: Pipe84
+	Pipe84:connect param: Pipe85
+	Pipe85:connect param: Pipe77
+	Pipe77:connect param: Pipe85
+	Pipe85:connect param: Pipe18
+	Pipe18:connect param: Pipe65
+	Pipe65:connect param: Pipe18
+	Pipe18:connect param: Pipe18
+	Pipe18:connect param: Pipe29
+	Pipe29:connect param: Pipe18
+	Pipe18:connect param: Pipe59
+	Pipe59:connect param: Pipe44
+	Pipe44:connect param: Pipe59
+	Pipe59:connect param: Pipe99
+	Pipe42:connect param: Pipe36
+	Pipe36:connect param: Pipe42
+	Pipe42:connect param: Pipe22
+	Pipe22:connect param: Pipe87
+	Pipe87:connect param: Pipe22
+	Pipe22:connect param: Pipe53
+	Pipe53:connect param: Pipe54
+	Pipe54:connect param: Pipe53
+	Pipe53:connect param: Pipe81
+	Pipe81:connect param: Pipe98
+	Pipe98:connect param: Pipe81
+	Pipe81:connect param: Pipe41
+	Pipe41:connect param: Pipe20
+	Pipe20:connect param: Pipe41
+	Pipe41:connect param: Pipe77
+	Pipe77:connect param: Pipe47
+	Pipe47:connect param: Pipe77
+	Pipe77:connect param: Pipe65
+	Pipe65:connect param: Pipe55
+	Pipe55:connect param: Pipe65
+	Pipe65:connect param: Pipe29
+	Pipe29:connect param: Pipe85
+	Pipe85:connect param: Pipe29
+	Pipe29:connect param: Pipe44
+	Pipe44:connect param: Pipe59
+	Pipe59:connect param: Pipe44
+	Pipe44:connect param: Pipe8
+	Pipe36:connect param: Pipe50
+	Pipe50:connect param: Pipe36
+	Pipe36:connect param: Pipe87
+	Pipe87:connect param: Pipe28
+	Pipe28:connect param: Pipe87
+	Pipe87:connect param: Pipe54
+	Pipe54:connect param: Pipe41
+	Pipe41:connect param: Pipe54
+	Pipe54:connect param: Pipe98
+	Pipe98:connect param: Pipe92
+	Pipe92:connect param: Pipe98
+	Pipe98:connect param: Pipe20
+	Pipe20:connect param: Pipe74
+	Pipe74:connect param: Pipe20
+	Pipe20:connect param: Pipe47
+	Pipe47:connect param: Pipe49
+	Pipe49:connect param: Pipe47
+	Pipe47:connect param: Pipe55
+	Pipe55:connect param: Pipe67
+	Pipe67:connect param: Pipe55
+	Pipe55:connect param: Pipe85
+	Pipe85:connect param: Pipe91
+	Pipe91:connect param: Pipe85
+	Pipe85:connect param: Pipe59
+	Pipe59:connect param: Pipe87
+	Pipe87:connect param: Pipe59
+	Pipe59:connect param: Pipe95
+	Pipe50:connect param: Pipe59
+	Pipe59:connect param: Pipe50
+	Pipe50:connect param: Pipe28
+	Pipe28:connect param: Pipe33
+	Pipe33:connect param: Pipe28
+	Pipe28:connect param: Pipe41
+	Pipe41:connect param: Pipe60
+	Pipe60:connect param: Pipe41
+	Pipe41:connect param: Pipe92
+	Pipe92:connect param: Pipe72
+	Pipe72:connect param: Pipe92
+	Pipe92:connect param: Pipe74
+	Pipe74:connect param: Pipe70
+	Pipe70:connect param: Pipe74
+	Pipe74:connect param: Pipe49
+	Pipe49:connect param: Pipe19
+	Pipe19:connect param: Pipe49
+	Pipe49:connect param: Pipe67
+	Pipe67:connect param: Pipe65
+	Pipe65:connect param: Pipe67
+	Pipe67:connect param: Pipe91
+	Pipe91:connect param: Pipe0
+	Pipe0:connect param: Pipe91
+	Pipe91:connect param: Pipe87
+	Pipe87:connect param: Pipe60
+	Pipe60:connect param: Pipe87
+	Pipe87:connect param: Pipe21
+	Pipe59:connect param: Pipe97
+	Pipe97:connect param: Pipe59
+	Pipe59:connect param: Pipe33
+	Pipe33:connect param: Pipe99
+	Pipe99:connect param: Pipe33
+	Pipe33:connect param: Pipe60
+	Pipe60:connect param: Pipe4
+	Pipe4:connect param: Pipe60
+	Pipe60:connect param: Pipe72
+	Pipe72:connect param: Pipe82
+	Pipe82:connect param: Pipe72
+	Pipe72:connect param: Pipe70
+	Pipe70:connect param: Pipe71
+	Pipe71:connect param: Pipe70
+	Pipe70:connect param: Pipe19
+	Pipe19:connect param: Pipe85
+	Pipe85:connect param: Pipe19
+	Pipe19:connect param: Pipe65
+	Pipe65:connect param: Pipe3
+	Pipe3:connect param: Pipe65
+	Pipe65:connect param: Pipe0
+	Pipe0:connect param: Pipe7
+	Pipe7:connect param: Pipe0
+	Pipe0:connect param: Pipe60
+	Pipe60:connect param: Pipe20
+	Pipe20:connect param: Pipe60
+	Pipe60:connect param: Pipe53
+	Pipe97:connect param: Pipe62
+	Pipe62:connect param: Pipe97
+	Pipe97:connect param: Pipe99
+	Pipe99:connect param: Pipe59
+	Pipe59:connect param: Pipe99
+	Pipe99:connect param: Pipe4
+	Pipe4:connect param: Pipe15
+	Pipe15:connect param: Pipe4
+	Pipe4:connect param: Pipe82
+	Pipe82:connect param: Pipe5
+	Pipe5:connect param: Pipe82
+	Pipe82:connect param: Pipe71
+	Pipe71:connect param: Pipe40
+	Pipe40:connect param: Pipe71
+	Pipe71:connect param: Pipe85
+	Pipe85:connect param: Pipe4
+	Pipe4:connect param: Pipe85
+	Pipe85:connect param: Pipe3
+	Pipe3:connect param: Pipe6
+	Pipe6:connect param: Pipe3
+	Pipe3:connect param: Pipe7
+	Pipe7:connect param: Pipe46
+	Pipe46:connect param: Pipe7
+	Pipe7:connect param: Pipe20
+	Pipe20:connect param: Pipe62
+	Pipe62:connect param: Pipe20
+	Pipe20:connect param: Pipe67
+	Placed nomad159 on Cistern88
+	Placed nomad292 on Pump93
+	Placed nomad352 on Pipe36
+	Placed plumber112 on Pump94
+	Placed plumber269 on Pipe14
+	Placed plumber311 on Cistern18
+Printing map: 
+0 - nomad1 - Cistern88
+1 - nomad2 - Pump93
+2 - nomad3 - Pipe36
+3 - plumber1 - Pump94
+4 - plumber2 - Pipe14
+5 - plumber3 - Cistern18
+0, 0 - Cistern88
+0, 1 - Pipe21
+0, 2 - Pipe35
+0, 3 - Pump93
+0, 4 - Pipe36
+0, 5 - Pipe60
+0, 6 - Pump94
+0, 7 - Pipe14
+0, 8 - Pipe62
+0, 9 - Cistern18
+1, 0 - Pipe49
+1, 1 - Pipe53
+1, 2 - Pipe99
+1, 3 - Pipe72
+1, 4 - Pipe48
+1, 5 - Pipe68
+1, 6 - Pipe67
+1, 7 - Pipe9
+1, 8 - Pipe21
+1, 9 - Pipe30
+2, 0 - Pipe74
+2, 1 - Pipe65
+2, 2 - Pipe36
+2, 3 - Pipe91
+2, 4 - Pipe91
+2, 5 - Pipe38
+2, 6 - Pipe2
+2, 7 - Pipe71
+2, 8 - Pipe12
+2, 9 - Pipe35
+3, 0 - Pipe54
+3, 1 - Pipe40
+3, 2 - Pipe51
+3, 3 - Pipe75
+3, 4 - Pipe84
+3, 5 - Pipe85
+3, 6 - Pipe18
+3, 7 - Pipe18
+3, 8 - Pipe59
+3, 9 - Pipe99
+4, 0 - Pipe42
+4, 1 - Pipe22
+4, 2 - Pipe53
+4, 3 - Pipe81
+4, 4 - Pipe41
+4, 5 - Pipe77
+4, 6 - Pipe65
+4, 7 - Pipe29
+4, 8 - Pipe44
+4, 9 - Pipe8
+5, 0 - Pipe36
+5, 1 - Pipe87
+5, 2 - Pipe54
+5, 3 - Pipe98
+5, 4 - Pipe20
+5, 5 - Pipe47
+5, 6 - Pipe55
+5, 7 - Pipe85
+5, 8 - Pipe59
+5, 9 - Pipe95
+6, 0 - Pipe50
+6, 1 - Pipe28
+6, 2 - Pipe41
+6, 3 - Pipe92
+6, 4 - Pipe74
+6, 5 - Pipe49
+6, 6 - Pipe67
+6, 7 - Pipe91
+6, 8 - Pipe87
+6, 9 - Pipe21
+7, 0 - Pipe59
+7, 1 - Pipe33
+7, 2 - Pipe60
+7, 3 - Pipe72
+7, 4 - Pipe70
+7, 5 - Pipe19
+7, 6 - Pipe65
+7, 7 - Pipe0
+7, 8 - Pipe60
+7, 9 - Pipe53
+8, 0 - Pipe97
+8, 1 - Pipe99
+8, 2 - Pipe4
+8, 3 - Pipe82
+8, 4 - Pipe71
+8, 5 - Pipe85
+8, 6 - Pipe3
+8, 7 - Pipe7
+8, 8 - Pipe20
+8, 9 - Pipe67
+9, 0 - Pipe62
+9, 1 - Pipe59
+9, 2 - Pipe15
+9, 3 - Pipe5
+9, 4 - Pipe40
+9, 5 - Pipe4
+9, 6 - Pipe6
+9, 7 - Pipe46
+9, 8 - Pipe62
+9, 9 - Pipe18
+	Placed plumber456 on Pipe21
+Successfully added pump!
+Successfully added pipe!
+	Pipe14:connect param: Pump94
+	Pump94:connect param: Pipe14
+	Pipe14:connect param: Pump44
+	Pump44:connect param: Pipe14
+	Pipe75:connect param: Pump44
+This node is not a neighbour
+	Pipe75:connect param: Pump94
+	Pump94:connect param: Pipe75
+	Pump44 has been placed 
+	Pump94:connect param: Pipe93
+	Pipe93:connect param: Pump94
+PlacePipeTest ran successfully
+	nomad352 added to Pipe48
+	nomad352 removed from Pipe36
+	nomad352 moved to Pipe48
+	plumber456 has broken Pipe21
+BreakPipeTest ran successfully!
+	plumber456 has repaired Pipe21
+RepairPipeTest successfully!
+Player <plumber1> tried to repair a pump that was not broken.
+RepairTest ran successfully!
+	plumber112 is setting the pump.
+SetPumpTest ran successfully!
+Player <nomad2> tried to make a pump sticky/slippery.
+the player is not standing on a pipe
+	nomad159 added to Pipe49
+	nomad159 removed from Cistern88
+	nomad159 moved to Pipe49
+MakePipeStickyTest ran successfully!
+
+What do you want to do?
+test - runs the tests
+fill - fills the map with random objects
+load - loads a map from a file
+save - saves the map to a file
+character - shows the character actions
+node - shows the node actions
+add - create new nodes or characters
+map - shows the map in text form
+exit - exits the program
+Exiting...
+Do you want to write out the log to a file? (y/n)
+Specify the file name:
+

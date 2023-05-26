@@ -46,6 +46,10 @@ public abstract class Node implements Tickable {
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
 
+  public double getFlowRate() {
+    return flowRate;
+  }
+
   public boolean isBroken() {
     return isBroken;
   }
@@ -71,6 +75,11 @@ public abstract class Node implements Tickable {
   public void placeCharacter(Character character) {
     characters.add(character);
     this.logger.debug("Placed {} on {}", character.getUuid(), this.uuid);
+  }
+
+  public boolean fullOfConn() {
+    if (this.neighbours.size() >= this.maxConnections) return true;
+    return false;
   }
 
   public void addCharacter(Character character)
@@ -174,6 +183,7 @@ public abstract class Node implements Tickable {
         || node.y == this.y + 1
         || node.y == this.y - 1) {
       this.neighbours.add(node);
+      Main.log("Node added to neighbours successfully");
       if (!node.getNeighbours().contains(this)) node.connect(this);
       return;
     }
