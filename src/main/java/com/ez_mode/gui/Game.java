@@ -5,13 +5,14 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 public class Game {
   static int gridNum = 10;
@@ -355,8 +356,44 @@ public class Game {
   static void MoveCharacter() {
     int nodeType = 0;
     BufferedImage overlay = null;
-    int idx;
-    idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+    Node tempNode = null;
+    int idx = 0;
+    if (Controller.direction == 1) {
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX(),
+              Controller.tempChar.getStandingOn().getY() - 1);
+      idx =
+          (Controller.tempChar.getStandingOn().getX())
+              + (gridNum * (Controller.tempChar.getStandingOn().getY() - 1));
+    }
+    if (Controller.direction == 2) {
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX() - 1,
+              Controller.tempChar.getStandingOn().getY());
+      idx =
+          (Controller.tempChar.getStandingOn().getX() - 1)
+              + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+    }
+    if (Controller.direction == 3) {
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX(),
+              Controller.tempChar.getStandingOn().getY() + 1);
+      idx =
+          (Controller.tempChar.getStandingOn().getX())
+              + (gridNum * (Controller.tempChar.getStandingOn().getY()) + 1);
+    }
+    if (Controller.direction == 4) {
+      tempNode =
+          Map.getNode(
+              Controller.tempChar.getStandingOn().getX() + 1,
+              Controller.tempChar.getStandingOn().getY());
+      idx =
+          (Controller.tempChar.getStandingOn().getX() + 1)
+              + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+    }
     try {
       Nomad n = (Nomad) Controller.tempChar;
       overlay = ImageIO.read(new File(Game.nomadImagePath));
