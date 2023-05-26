@@ -69,8 +69,6 @@ public class Map implements Tickable {
     for (int i = 0; i < playerCount - plumberCount; i++) {
       players.add(new Nomad(Game.nomadNames.get(i)));
     }
-
-    // TODO: connect nodes
     // lists for the different generated nodes
     ArrayList<Node> nodes = new ArrayList<>();
     ArrayList<Pipe> pipes = new ArrayList<>();
@@ -82,18 +80,26 @@ public class Map implements Tickable {
         Random rand = new Random();
         int randomInt = rand.nextInt(100);
         if (j == 0) {
-          if (randomInt <= 60) {
+          if (i%2==0) {
             Cistern c = new Cistern(i, j);
             nodes.add(c);
             startPPositions.add(c);
           }
         } else if (j == 8) {
-          if (randomInt <= 60) {
+          if ((i+2)%2==0) {
             WaterSpring w = new WaterSpring(i, j);
             nodes.add(w);
             startNPositions.add(w);
           }
-        } else {// leaves the place empty
+        }
+          else if(j==1||j==7){
+          if ((j==1&&(i)%2==0)||( j==7&& (i+2)%2==0)) {
+            // gameMap[i][j] = new Pipe(i, j);
+            pipes.add(new Pipe(i, j));
+          }
+
+        }
+        else {// leaves the place empty
            if (30<=randomInt&&randomInt <= 80) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
@@ -103,23 +109,6 @@ public class Map implements Tickable {
           }
         }
     }
-
-    // create one of each node, to make sure we have each type on the map
-    if (nodes.isEmpty()) {
-      Cistern c = new Cistern(0, 0);
-      gameMap[0][0] = c;
-
-      startPPositions.add(c);
-      ;
-    }
-    if (nodes.isEmpty()) {
-      WaterSpring w = new WaterSpring(0, 1);
-      gameMap[0][1] = w;
-      startNPositions.add(w);
-    }
-    if (pipes.isEmpty()) gameMap[0][2] = new Pipe(0, 2);
-    if (nodes.isEmpty()) gameMap[0][3] = new Pump(0, 3);
-
     for (Pipe pipe : pipes) {
       for (Node node : nodes) {
         if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
