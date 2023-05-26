@@ -9,15 +9,14 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -91,16 +90,14 @@ public class Map implements Tickable {
             nodes.add(w);
             startNPositions.add(w);
           }
-        }
-          else if(j==1||j==7){
-          if ((j==1&&(i)%2==0)||( j==7&& (i+2)%2==0)) {
+        } else if (j == 1 || j == 7) {
+          if ((j == 1 && (i) % 2 == 0) || (j == 7 && (i + 2) % 2 == 0)) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
           }
 
-        }
-        else {// leaves the place empty
-           if (30<=randomInt&&randomInt <= 80) {
+        } else { // leaves the place empty
+          if (30 <= randomInt && randomInt <= 80) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
           } else if (30 <= randomInt) {
