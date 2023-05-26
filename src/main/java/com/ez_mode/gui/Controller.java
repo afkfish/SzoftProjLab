@@ -161,9 +161,11 @@ public class Controller {
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     assert tempChar != null;
     tempChar.breakNode();
+    Game.BreakNode();
   }
 
   public static void StickyAction(ActionEvent e) {
@@ -220,10 +222,22 @@ public class Controller {
   public static void SetPumpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
+    try {
+      tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      assert tempChar != null;
+      try {
+        // TODO
+      } catch (Exception ex) {
+
+      }
+      //TODO
+      Game.SetPump();
+    } catch (Exception ex) {
+
+    }
   }
 
-  // TODO: other actions for every possible action in the action bar
+    // TODO: other actions for every possible action in the action bar
 
   public static void GameExitAction(ActionEvent e) {
     Game.frame.dispose();

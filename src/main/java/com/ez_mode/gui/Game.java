@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import static com.ez_mode.Main.map;
+
 public class Game {
   static int gridNum = 10;
   static int windowWidth = 800 - 100;
@@ -51,8 +53,8 @@ public class Game {
   public static String repairImagePath = "src/main/resources/repair.png";
   public static String emptypumpImagePath = "src/main/resources/emptypump.png";
   public static String cisternImagePath = "src/main/resources/cistern.png";
-  public String brokenpumpImagePath = "src/main/resources/brokenpump.png";
-  public String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
+  public static String brokenpumpImagePath = "src/main/resources/brokenpump.png";
+  public static String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
   public static String breakImagePath = "src/main/resources/break.png";
   public static String pickuppipeImagePath = "src/main/resources/pickuppipe.png";
   public static String pickuppumpImagePath = "src/main/resources/pickuppump.png";
@@ -78,8 +80,8 @@ public class Game {
   public static ImageIcon repairIcon = new ImageIcon(repairImagePath);
   public static ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
   public static ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
-  public ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
-  public ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
+  public static ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
+  public static ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
   public static ImageIcon breakIcon = new ImageIcon(breakImagePath);
   public static ImageIcon pickuppipeIcon = new ImageIcon(pickuppipeImagePath);
   public static ImageIcon pickuppumpIcon = new ImageIcon(pickuppumpImagePath);
@@ -145,18 +147,34 @@ public class Game {
           } catch (Exception e) {
             try {
               Pipe pi = (Pipe) temp;
-              Image pipeImage = pipeIcon.getImage();
-              Image pipeModIcon =
-                  pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-              mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
+              if (pi.getFlowRate() == 0) {
+                Image pipeImage = pipeIcon.getImage();
+                Image pipeModIcon =
+                        pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
+              }
+              else {
+                Image waterpipeImage = waterpipeIcon.getImage();
+                Image waterpipeModIcon =
+                        waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpipeModIcon));
+              }
               nodeType = 2;
             } catch (Exception ex) {
               try {
                 Pump pu = (Pump) temp;
-                Image emptypumpImage = emptypumpIcon.getImage();
-                Image emptypumpModIcon =
-                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-                mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
+                if (pu.getFlowRate() == 0) {
+                  Image emptypumpImage = emptypumpIcon.getImage();
+                  Image emptypumpModIcon =
+                          emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                  mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
+                }
+                else {
+                  Image waterpumpImage = waterpumpIcon.getImage();
+                  Image waterpumpModIcon =
+                          waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                  mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpumpModIcon));
+                }
                 nodeType = 3;
               } catch (Exception exception) {
                 try {
@@ -350,6 +368,7 @@ public class Game {
       textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
       playerIdx++;
     }
+    map.tick();
   }
 
   static void MoveCharacter() {
@@ -479,4 +498,28 @@ public class Game {
         outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
     mapButtons[idx].setIcon(new ImageIcon(outModIcon));
   }
+
+  static void BreakNode(){
+    int idx = Controller.tempChar.getStandingOn().getX() + (gridNum * Controller.tempChar.getStandingOn().getY());
+    try {
+      Pipe pi = (Pipe) Controller.tempNode;
+      Image brokenpipeImage = brokenpipeIcon.getImage();
+      Image brokenpipeModIcon =
+              brokenpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+      mapButtons[idx].setIcon(new ImageIcon(brokenpipeModIcon));
+    } catch (Exception e) {
+      try {
+        Pump pu = (Pump) Controller.tempNode;
+        Image brokenpumpImage = brokenpumpIcon.getImage();
+        Image brokenpumpModIcon =
+                brokenpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+        mapButtons[idx].setIcon(new ImageIcon(brokenpumpModIcon));
+      } catch (Exception ex) { }
+    }
+  }
+
+  static void SetPump() {
+
+  }
+
 }
