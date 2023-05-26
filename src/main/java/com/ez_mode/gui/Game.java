@@ -356,7 +356,9 @@ public class Game {
     int nodeType = 0;
     BufferedImage overlay = null;
     int idx;
-    idx = (Controller.tempChar.getStandingOn().getX()) + (gridNum * (Controller.tempChar.getStandingOn().getY()));
+    idx =
+        (Controller.tempChar.getStandingOn().getX())
+            + (gridNum * (Controller.tempChar.getStandingOn().getY()));
     try {
       Nomad n = (Nomad) Controller.tempChar;
       overlay = ImageIO.read(new File(Game.nomadImagePath));
@@ -394,35 +396,35 @@ public class Game {
           image = ImageIO.read(new File(Game.cisternImagePath));
           Image cisternImage = cisternIcon.getImage();
           Image cisternModIcon =
-                  cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(cisternModIcon));
           break;
         case 2:
           image = ImageIO.read(new File(Game.pipeImagePath));
           Image pipeImage = pipeIcon.getImage();
           Image pipeModIcon =
-                  pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(pipeModIcon));
           break;
         case 3:
           image = ImageIO.read(new File(Game.emptypumpImagePath));
           Image emptypumpImage = emptypumpIcon.getImage();
           Image emptypumpModIcon =
-                  emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(emptypumpModIcon));
           break;
         case 4:
           image = ImageIO.read(new File(Game.waterspringImagePath));
           Image waterspringImage = waterspringIcon.getImage();
           Image waterspringModIcon =
-                  waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(waterspringModIcon));
           break;
         default:
           image = ImageIO.read(new File(Game.sandImagePath));
           Image sandImage = waterspringIcon.getImage();
           Image sandModIcon =
-                  sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(sandModIcon));
       }
 
