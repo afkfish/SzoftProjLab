@@ -166,7 +166,8 @@ public class Controller {
         assert tempChar != null;
         tempChar.repair();
         Game.RepairNode();
-      } catch (ClassCastException ignored) { }
+      } catch (ClassCastException ignored) {
+      }
     } else {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();
@@ -198,7 +199,8 @@ public class Controller {
       assert tempChar != null;
       tempChar.makePipeSticky();
       Game.SetSticky();
-    } catch (ClassCastException ignored) { }
+    } catch (ClassCastException ignored) {
+    }
   }
 
   public static void PickUpPipeAction(ActionEvent e) {
