@@ -534,8 +534,6 @@ public class Game {
     }
   }
 
-
-
   static void SetPump() {}
 
   /** The getter for the current character's type */
@@ -600,5 +598,4 @@ public class Game {
     } catch (IOException ignored) {
     }
   }
-
 }
