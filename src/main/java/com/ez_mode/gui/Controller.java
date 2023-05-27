@@ -155,9 +155,10 @@ public class Controller {
       System.out.println("jobb szelso sor");
     }
   }
-  //two actions because one button
+
+  // two actions because one button
   public static void CaracterSpecAction(ActionEvent e) {
-    if(!Game.nomadTurn){
+    if (!Game.nomadTurn) {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();
       try {
@@ -167,8 +168,7 @@ public class Controller {
       } catch (ClassCastException ignored) {
       }
       // TODO
-    }
-    else{
+    } else {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();
       // TODO
@@ -179,7 +179,6 @@ public class Controller {
       } catch (ClassCastException ignored) {
       }
     }
-
   }
 
   public static void BreakAction(ActionEvent e) {
@@ -203,7 +202,6 @@ public class Controller {
     } catch (ClassCastException ignored) {
     }
   }
-
 
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;

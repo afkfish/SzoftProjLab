@@ -7,7 +7,6 @@ import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.NotFoundExeption;
-
 import java.util.Random;
 
 /**
