@@ -497,7 +497,7 @@ public class Game {
   }
 
   static void SetSlippery() {
-    //getPlayerType();
+    // getPlayerType();
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());

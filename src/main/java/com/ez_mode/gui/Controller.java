@@ -172,15 +172,15 @@ public class Controller {
       } catch (ClassCastException ignored) {
       }
     } else {
-        Game.nomadTurn = !Game.nomadTurn;
-        Game.updateAction();
-        tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-        try {
-          Plumber tempPlumber = (Plumber) tempChar;
-          assert tempChar != null;
-          tempPlumber.repair();
-          tempNode = tempPlumber.getStandingOn();
-          Game.RepairNode();
+      Game.nomadTurn = !Game.nomadTurn;
+      Game.updateAction();
+      tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      try {
+        Plumber tempPlumber = (Plumber) tempChar;
+        assert tempChar != null;
+        tempPlumber.repair();
+        tempNode = tempPlumber.getStandingOn();
+        Game.RepairNode();
       } catch (ClassCastException ignored) {
       }
     }
