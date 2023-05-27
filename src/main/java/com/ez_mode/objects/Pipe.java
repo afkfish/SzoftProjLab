@@ -70,9 +70,13 @@ public class Pipe extends Node {
         this.characters.add(character);
         if (isSlippery) {
           Random random = new Random();
-          int RNG = random.nextInt(100);
-          if (RNG < 50) this.neighbours.get(1).addCharacter(character);
-          else this.neighbours.get(0).addCharacter(character);
+          if (this.neighbours.size() == 1)
+            this.neighbours.get(0).addCharacter(character);
+          else {
+            int RNG = random.nextInt(100);
+            if (RNG < 50) this.neighbours.get(1).addCharacter(character);
+            else this.neighbours.get(0).addCharacter(character);
+          }
           try {
             this.removeCharacter(character);
           } catch (NotFoundExeption e) {
