@@ -367,9 +367,7 @@ public class Game {
     // map.tick();
   }
 
-  /**
-   * The character movement in the gui, with the correct images
-   */
+  /** The character movement in the gui, with the correct images */
   static void MoveCharacter() {
     // calculate the index of the node that the character is standing on
     int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
@@ -518,7 +516,7 @@ public class Game {
   }
 
   static void RepairNode() {
-    //getPlayerType();
+    // getPlayerType();
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
@@ -536,8 +534,6 @@ public class Game {
     } catch (Exception e) {
     }
   }
-
-
 
   static void SetPump() {}
 
@@ -603,5 +599,4 @@ public class Game {
     } catch (IOException ignored) {
     }
   }
-
 }
