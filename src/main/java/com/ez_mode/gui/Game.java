@@ -392,13 +392,11 @@ public class Game {
           Image stickypipeImage = stickypipeIcon.getImage();
           Image stickypipeModIcon = stickypipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(stickypipeModIcon));
-        }
-        if (Controller.prevNode.isBroken()) {
+        } else if (Controller.prevNode.isBroken()) {
           Image brokenpipeImage = brokenpipeIcon.getImage();
           Image brokenpipeModIcon = brokenpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(brokenpipeModIcon));
-        }
-        else {
+        } else {
           Image pipeImage = pipeIcon.getImage();
           Image pipeModIcon = pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
           mapButtons[Controller.prevIdx].setIcon(new ImageIcon(pipeModIcon));
@@ -498,13 +496,13 @@ public class Game {
   }
 
   static void SetSlippery() {
-    getPlayerType();
     int idx =
             Controller.tempChar.getStandingOn().getX()
                     + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {
       Nomad tempNomad = (Nomad) Controller.tempChar;
+      System.out.println("RepairNode character is a nomad");
       Pipe ignored = (Pipe) Controller.tempNode;
       BufferedImage image = ImageIO.read(new File(Game.slipperypipeImagePath));
       createLayeredImage(image);
@@ -516,7 +514,6 @@ public class Game {
   }
 
   static void RepairNode() {
-    //getPlayerType();
     int idx =
             Controller.tempChar.getStandingOn().getX()
                     + (gridNum * Controller.tempChar.getStandingOn().getY());
