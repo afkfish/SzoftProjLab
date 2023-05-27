@@ -80,7 +80,7 @@ public class Plumber extends Character {
         standingOn.connect(pickedUpPipe);
         // Map.addNode(pickedUpPipe, standingOn.getX()+5, standingOn.getY()+5);
         pickedUpPipe = null;
-      }
+      }else Main.log(this.getUuid() + "has no pipe to place");
     } catch (ObjectFullException e) {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
     }
