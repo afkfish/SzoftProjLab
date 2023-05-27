@@ -158,7 +158,6 @@ public class Controller {
 
   // two actions because one button
   public static void CharacterSpecAction(ActionEvent e) {
-
     if (Game.nomadTurn) {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();

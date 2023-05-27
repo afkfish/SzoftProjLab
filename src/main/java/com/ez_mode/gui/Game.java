@@ -371,7 +371,6 @@ public class Game {
   static void MoveCharacter() {
     // calculate the index of the node that the character is standing on
     int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
-
     Controller.prevIdx = Controller.prevNode.getX() + (gridNum * Controller.prevNode.getY());
 
     // get character type
@@ -451,11 +450,11 @@ public class Game {
       createLayeredImage(image);
     } catch (IOException ignored) {
     }
-
     Image outImage = Game.outIcon.getImage();
     Image outModIcon =
         outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
     mapButtons[idx].setIcon(new ImageIcon(outModIcon));
+    // map.tick();
   }
 
   /** The current character's break action in the gui, with the correct images */
@@ -497,7 +496,7 @@ public class Game {
   }
 
   static void SetSlippery() {
-    // getPlayerType();
+    getPlayerType();
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
@@ -516,7 +515,7 @@ public class Game {
   }
 
   static void RepairNode() {
-    // getPlayerType();
+    getPlayerType();
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
@@ -534,6 +533,8 @@ public class Game {
     } catch (Exception e) {
     }
   }
+
+
 
   static void SetPump() {}
 
@@ -599,4 +600,5 @@ public class Game {
     } catch (IOException ignored) {
     }
   }
+
 }
