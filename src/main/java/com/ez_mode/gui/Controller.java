@@ -160,7 +160,6 @@ public class Controller {
   public static void CharacterSpecAction(ActionEvent e) {
     if (Game.nomadTurn) {
       Game.nomadTurn = !Game.nomadTurn;
-      Game.updateAction();
       tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       try {
         Nomad tempNomad = (Nomad) tempChar;
@@ -170,9 +169,9 @@ public class Controller {
         Game.SetSlippery();
       } catch (ClassCastException ignored) {
       }
+      Game.updateAction();
     } else {
       Game.nomadTurn = !Game.nomadTurn;
-      Game.updateAction();
       tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       try {
         Plumber tempPlumber = (Plumber) tempChar;
@@ -182,17 +181,18 @@ public class Controller {
         Game.RepairNode();
       } catch (ClassCastException ignored) {
       }
+      Game.updateAction();
     }
   }
 
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     assert tempChar != null;
     tempChar.breakNode();
     Game.BreakNode();
+    Game.updateAction();
   }
 
   public static void StickyAction(ActionEvent e) {
