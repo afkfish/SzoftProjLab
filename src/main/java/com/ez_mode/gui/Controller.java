@@ -157,7 +157,7 @@ public class Controller {
   }
 
   // two actions because one button
-  public static void CaracterSpecAction(ActionEvent e) {
+  public static void CharacterSpecAction(ActionEvent e) {
     if (!Game.nomadTurn) {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();
@@ -165,17 +165,16 @@ public class Controller {
         Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
         assert tempChar != null;
         tempChar.repair();
-      } catch (ClassCastException ignored) {
-      }
-      // TODO
+        Game.RepairNode();
+      } catch (ClassCastException ignored) { }
     } else {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();
-      // TODO
       try {
         Nomad tempChar = (Nomad) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
         assert tempChar != null;
         tempChar.setSlippery();
+        Game.SetSlippery();
       } catch (ClassCastException ignored) {
       }
     }
@@ -194,13 +193,12 @@ public class Controller {
   public static void StickyAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO
     try {
-      Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+      tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.makePipeSticky();
-    } catch (ClassCastException ignored) {
-    }
+      Game.SetSticky();
+    } catch (ClassCastException ignored) { }
   }
 
   public static void PickUpPipeAction(ActionEvent e) {
