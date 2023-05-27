@@ -158,24 +158,29 @@ public class Controller {
 
   // two actions because one button
   public static void CharacterSpecAction(ActionEvent e) {
-    if (!Game.nomadTurn) {
+
+    if (Game.nomadTurn) {
       Game.nomadTurn = !Game.nomadTurn;
       Game.updateAction();
+      tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       try {
-        Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+        Nomad tempNomad = (Nomad) tempChar;
         assert tempChar != null;
-        tempChar.repair();
-        Game.RepairNode();
+        tempNomad.setSlippery();
+        tempNode = tempNomad.getStandingOn();
+        Game.SetSlippery();
       } catch (ClassCastException ignored) {
       }
     } else {
-      Game.nomadTurn = !Game.nomadTurn;
-      Game.updateAction();
-      try {
-        Nomad tempChar = (Nomad) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-        assert tempChar != null;
-        tempChar.setSlippery();
-        Game.SetSlippery();
+        Game.nomadTurn = !Game.nomadTurn;
+        Game.updateAction();
+        tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+        try {
+          Plumber tempPlumber = (Plumber) tempChar;
+          assert tempChar != null;
+          tempPlumber.repair();
+          tempNode = tempPlumber.getStandingOn();
+          Game.RepairNode();
       } catch (ClassCastException ignored) {
       }
     }
