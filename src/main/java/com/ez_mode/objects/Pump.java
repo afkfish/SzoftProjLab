@@ -6,6 +6,8 @@ import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
+import com.ez_mode.exceptions.NotFoundExeption;
+
 import java.util.Random;
 
 /**
@@ -128,6 +130,11 @@ public class Pump extends Node {
         this.breakNode(temp);
       } catch (InvalidPlayerActionException ignored) {
         Main.log("Pump tried to break itself when it was already broken.");
+      }
+      try {
+        this.removeCharacter(temp);
+      } catch (NotFoundExeption e) {
+        Main.log(e.getMessage());
       }
     }
   }

@@ -283,7 +283,7 @@ public class Game {
     Image repairModIcon =
         repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
     mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
-    mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::RepairAction);
+    mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::CaracterSpecAction);
 
     Image stickypipeImage = stickypipeIcon.getImage();
     Image stickypipeModIcon =

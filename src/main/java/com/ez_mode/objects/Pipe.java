@@ -49,7 +49,7 @@ public class Pipe extends Node {
     if (this.isBroken) {
       this.isBroken = false;
       Random random = new Random();
-      unbreakableTill = ((random.nextInt(100)) + 1);
+      unbreakableTill = ((random.nextInt(10)) + 1);
     } else {
       throw new InvalidPlayerActionException(
           String.format(

@@ -155,17 +155,31 @@ public class Controller {
       System.out.println("jobb szelso sor");
     }
   }
-
-  public static void RepairAction(ActionEvent e) {
-    Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
-    try {
-      Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-      assert tempChar != null;
-      tempChar.repair();
-    } catch (ClassCastException ignored) {
+  //two actions because one button
+  public static void CaracterSpecAction(ActionEvent e) {
+    if(!Game.nomadTurn){
+      Game.nomadTurn = !Game.nomadTurn;
+      Game.updateAction();
+      try {
+        Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+        assert tempChar != null;
+        tempChar.repair();
+      } catch (ClassCastException ignored) {
+      }
+      // TODO
     }
-    // TODO
+    else{
+      Game.nomadTurn = !Game.nomadTurn;
+      Game.updateAction();
+      // TODO
+      try {
+        Nomad tempChar = (Nomad) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+        assert tempChar != null;
+        tempChar.setSlippery();
+      } catch (ClassCastException ignored) {
+      }
+    }
+
   }
 
   public static void BreakAction(ActionEvent e) {
@@ -190,17 +204,6 @@ public class Controller {
     }
   }
 
-  public static void SlipperyAction(ActionEvent e) {
-    Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
-    // TODO
-    try {
-      Nomad tempChar = (Nomad) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-      assert tempChar != null;
-      tempChar.setSlippery();
-    } catch (ClassCastException ignored) {
-    }
-  }
 
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
