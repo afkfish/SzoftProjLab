@@ -349,7 +349,7 @@ public class Game {
       createLayeredImage(image);
       Image outImage = Game.outIcon.getImage();
       Image outModIcon =
-              outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(outModIcon));
     } else {
       image = image.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
