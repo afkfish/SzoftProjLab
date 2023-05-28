@@ -6,8 +6,16 @@ public class PopUp {
 
   Object[] options = {"Up-Down", "Left-Right"};
 
-  int choice = JOptionPane.showOptionDialog(null, "Which direction do you prefer?", "Direction",
-          JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+  int choice =
+      JOptionPane.showOptionDialog(
+          null,
+          "Which direction do you prefer?",
+          "Direction",
+          JOptionPane.DEFAULT_OPTION,
+          JOptionPane.QUESTION_MESSAGE,
+          null,
+          options,
+          options[0]);
 
   public PopUp() {
     if (choice == 0) {

@@ -10,7 +10,6 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class Controller {
   static int prevIdx;
   static int setChoice;
   static Pump pump = new Pump();
+
   /**
    * Actions in Menu class
    *
@@ -257,10 +257,14 @@ public class Controller {
     Game.updateAction();
     tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     int curIdx = tempChar.getStandingOn().getX() + (Game.gridNum * tempChar.getStandingOn().getY());
-    Node upNeighbour = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-    Node downNeighbour = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-    Node leftNeighbour = Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-    Node rightNeighbour = Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+    Node upNeighbour =
+        Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+    Node downNeighbour =
+        Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+    Node leftNeighbour =
+        Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+    Node rightNeighbour =
+        Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
     try {
       tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
@@ -279,7 +283,8 @@ public class Controller {
           pump.setActiveOutput(outputPipe);
         }
         Game.SetPump();
-      } catch (Exception ex) { }
+      } catch (Exception ex) {
+      }
     } catch (Exception ex) {
 
     }
