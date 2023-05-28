@@ -218,10 +218,10 @@ public class Controller {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       try {
-        //if inventory is empty pick up
-        if(tempChar.getDraggedpipe() != null || tempChar.getPickedUpPipe() != null)
+        // if inventory is empty pick up
+        if (tempChar.getDraggedpipe() != null || tempChar.getPickedUpPipe() != null)
           tempChar.PlacePipe();
-        //if not empty than place
+        // if not empty than place
         else tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
       } catch (NotFoundExeption NOTignored) {
       }
@@ -239,14 +239,12 @@ public class Controller {
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
-      //if inventory is empty pick up
-      if(tempChar.getPickedupPump() != null)
-        tempChar.PlacePump();
-      //if not empty than place
+      // if inventory is empty pick up
+      if (tempChar.getPickedupPump() != null) tempChar.PlacePump();
+      // if not empty than place
       else tempChar.PickupPump();
     } catch (ClassCastException ignored) {
     }
-
 
     /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     assert tempChar != null;

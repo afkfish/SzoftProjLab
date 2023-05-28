@@ -61,7 +61,10 @@ public class Plumber extends Character {
   public Pipe getPickedUpPipe() {
     return pickedUpPipe;
   }
-  public Pump getPickedupPump(){return pickedupPump;}
+
+  public Pump getPickedupPump() {
+    return pickedupPump;
+  }
 
   public void setPickedUpPipe(Pipe p) {
     pickedUpPipe = p;
