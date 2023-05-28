@@ -414,7 +414,7 @@ public class Game {
     }
   }
 
-  public void setPump() {} //TODO: implement
+  public void setPump() {} // TODO: implement
 
   /** The getter for the current character's type */
   private void getPlayerType(Character character) {
