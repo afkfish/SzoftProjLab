@@ -294,25 +294,25 @@ public class Game {
           case 2: // empty pipe
             Image emptypipeImage = pipeIcon.getImage();
             Image emptypipeModIcon =
-                    emptypipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                emptypipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
             mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypipeModIcon));
             break;
           case 5: // water pipe
             Image waterpipeImage = waterpipeIcon.getImage();
             Image waterpipeModIcon =
-                    waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
             mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpipeModIcon));
             break;
           case 3: // empty pump
             Image emptypumpImage = emptypumpIcon.getImage();
             Image emptypumpModIcon =
-                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
             mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
             break;
           case 6: // water pump
             Image waterpumpImage = waterpumpIcon.getImage();
             Image waterpumpModIcon =
-                    waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
             mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpumpModIcon));
             break;
           default:
@@ -368,7 +368,7 @@ public class Game {
       }
       Image outImage = Game.outIcon.getImage();
       Image outModIcon =
-              outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(outModIcon));
     } else {
       Image image;
@@ -469,7 +469,7 @@ public class Game {
     }
   }
 
-  public void setPump() {} //TODO: implement
+  public void setPump() {} // TODO: implement
 
   /** The getter for the current character's type */
   private void getPlayerType(Character character) {
