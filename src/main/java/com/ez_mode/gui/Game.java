@@ -356,7 +356,7 @@ public class Game {
       playerIdx++;
     }
     playerIdx = playerIdx % (Menu.playerCount * 2);
-
+    /*
     // TODO: if the given node is in inventory: (white the if)
     Cistern tempCis = (Cistern) tempNode;
     Image pickuppipeImage = pickuppipeIcon.getImage();
@@ -375,6 +375,7 @@ public class Game {
     mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
 
     // Game.UpdateFlow(); TODO: debug UpdateFlow()
+    */
   }
 
   // TODO: needs a LOT of debug :c
