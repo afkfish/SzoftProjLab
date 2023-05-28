@@ -34,7 +34,7 @@ public class Game {
   static JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
   JPanel mapPanel = new JPanel();
-  static JButton[] mapButtons = new JButton[gridNum * gridNum + 1];
+  JButton[] mapButtons = new JButton[gridNum * gridNum + 1];
   JPanel actionPanel = new JPanel();
 
   /** Adding all the images' path that will be used in the game */
@@ -94,15 +94,14 @@ public class Game {
   static BufferedImage overlay = null;
 
   public Game() {
-
-    /** Properties of the frame */
+    // Properties of the frame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Game");
     frame.setResizable(false);
 
     titlePanel.setLayout(new BorderLayout());
 
-    /** Properties of the text field */
+    // Properties of the text field
     textField.setBackground(new Color(0, 0, 0));
     textField.setForeground(new Color(230, 230, 230));
     textField.setFont(new Font("Monospace", Font.BOLD, 50));
@@ -110,7 +109,7 @@ public class Game {
     textField.setText("Plumbers turn");
     textField.setOpaque(true);
 
-    /** Properties of the end game button */
+    // Properties of the end game button
     endGameButton.setBounds(500, 13, 20, 30);
     endGameButton.setFont(new Font("Monospace", Font.BOLD, 20));
     endGameButton.setText("End Game");
@@ -119,11 +118,10 @@ public class Game {
     endGameButton.setFocusable(false);
     endGameButton.addActionListener(Controller::GameExitAction);
 
-    /** Filling the map */
+    // Filling the map
     mapPanel.setLayout(new GridLayout(gridNum, gridNum + 1));
     mapPanel.setBorder(null);
 
-    int nodeType = 0;
     for (int i = 0; i < gridNum; i++) {
       for (int j = 0; j < gridNum; j++) {
         Node temp = Map.getNode(j, i);
@@ -133,106 +131,12 @@ public class Game {
         mapButtons[i * gridNum + j].setSize(fieldSize, fieldSize);
         mapButtons[i * gridNum + j].setBorderPainted(false);
         mapButtons[i * gridNum + j].setHorizontalAlignment(JLabel.HORIZONTAL);
-        if (temp == null) {
-          Image sandImage = sandIcon.getImage();
-          Image sandModIcon =
-              sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[i * gridNum + j].setIcon(new ImageIcon(sandModIcon));
-        } else {
-          try {
-            Cistern c = (Cistern) temp;
-            Image cisternImage = cisternIcon.getImage();
-            Image cisternModIcon =
-                cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(cisternModIcon));
-            nodeType = 1;
-          } catch (Exception e) {
-            try {
-              Pipe pi = (Pipe) temp;
-              Image pipeImage = pipeIcon.getImage();
-              Image pipeModIcon =
-                  pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-              mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
-              nodeType = 2;
-            } catch (Exception ex) {
-              try {
-                Pump pu = (Pump) temp;
-                Image emptypumpImage = emptypumpIcon.getImage();
-                Image emptypumpModIcon =
-                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-                mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
-
-                nodeType = 3;
-              } catch (Exception exception) {
-                try {
-                  WaterSpring ws = (WaterSpring) temp;
-                  Image waterspringImage = waterspringIcon.getImage();
-                  Image waterspringModIcon =
-                      waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-                  mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterspringModIcon));
-                  nodeType = 4;
-                } catch (Exception e1) {
-                }
-              }
-            }
-          }
-        }
-        for (int k = 0; k < Map.playerCount(); k++) {
-          Character temp2 = Map.getPlayer(k);
-          if (temp == null) continue;
-          if (temp.getCharacters().contains(temp2)) {
-            BufferedImage overlay = null;
-            try {
-              Nomad n = (Nomad) temp2;
-              overlay = ImageIO.read(new File(nomadImagePath));
-            } catch (Exception e) {
-              try {
-                Plumber p = (Plumber) temp2;
-                overlay = ImageIO.read(new File(plumberImagePath));
-              } catch (Exception ex) {
-              }
-            }
-            try {
-              BufferedImage image;
-              switch (nodeType) {
-                case 1:
-                  image = ImageIO.read(new File(cisternImagePath));
-                  break;
-                case 2:
-                  image = ImageIO.read(new File(pipeImagePath));
-                  break;
-                case 3:
-                  image = ImageIO.read(new File(emptypumpImagePath));
-                  break;
-                case 4:
-                  image = ImageIO.read(new File(waterspringImagePath));
-                  break;
-                default:
-                  image = ImageIO.read(new File(sandImagePath));
-              }
-              if (overlay == null) continue;
-              int w = Math.max(image.getWidth(), overlay.getWidth());
-              int h = Math.max(image.getHeight(), overlay.getHeight());
-              BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
-              Graphics g = combined.getGraphics();
-              g.drawImage(image, 0, 0, null);
-              g.drawImage(overlay, 0, 0, null);
-              g.dispose();
-
-              ImageIO.write(combined, "PNG", new File(outImagePath));
-            } catch (IOException e) {
-            }
-            Image outImage = outIcon.getImage();
-            Image outModIcon =
-                outImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(outModIcon));
-          }
-        }
+        updateNodeImage(temp, i * gridNum + j, null);
       }
     }
+    updatePlayerNodes();
 
-    /** Icons of the action bar */
+    // Icons of the action bar
     for (int i = (gridNum * gridNum - gridNum); i < (gridNum * gridNum); i++) {
       mapButtons[i].setBackground(new Color(255, 255, 255));
     }
@@ -296,7 +200,7 @@ public class Game {
     mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
     mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::PickUpPumpAction);
 
-    /** Adding the components to the frame and setting their layouts */
+    // Adding the components to the frame and setting their layouts
     textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
     playerIdx++;
     frame.add(titlePanel, BorderLayout.NORTH);
@@ -316,7 +220,7 @@ public class Game {
    * can repair, set pump, pick up pump and pick up pipe The nomad's team can break, make a pipe
    * slippery
    */
-  static void updateAction() {
+  public void updateAction() {
     Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     Node tempNode = tempChar.getStandingOn();
     System.out.println(nomadTurn);
@@ -374,192 +278,156 @@ public class Game {
         mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
         mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
     */
-    Game.UpdateFlow(); // TODO: debug UpdateFlow()
+    updateFlow(); // TODO: debug UpdateFlow()
   }
 
   // TODO: needs a LOT of debug :c
-  static void UpdateFlow() {
+  public void updateFlow() {
     Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     Node tempNode = tempChar.getStandingOn();
-    int idx = tempChar.getStandingOn().getX() + (gridNum * tempChar.getStandingOn().getY());
-    getPlayerType();
-    BufferedImage image;
-    // checks the flowrate for every node, if it's >0, sets the water in the node
-    for (int i = 0; i < gridNum; i++) {
+    getPlayerType(Controller.tempChar);
+    // checks the flowrate for every node, if it's > 0, sets the node to watery
+    for (int i = 0; i < gridNum - 1; i++) {
       for (int j = 0; j < gridNum; j++) {
         Node tempN = Map.getNode(j, i);
-        try {
-          Pump pu = (Pump) tempN;
-          if (pu.getFlowRate() > 0) {
-            Image waterpumpImage = waterpumpIcon.getImage();
-            Image waterpumpModIcon =
-                waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpumpModIcon));
-            if (i * gridNum + j == idx) {
-              image = ImageIO.read(new File(Game.waterpumpImagePath));
-              createLayeredImage(image);
-              Image outImage = Game.outIcon.getImage();
-              Image outModIcon =
-                  outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-              mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-            }
-          } else {
+        switch (getNodeType(tempN)) {
+          case 2: // empty pipe
+            Image emptypipeImage = pipeIcon.getImage();
+            Image emptypipeModIcon =
+                    emptypipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypipeModIcon));
+            break;
+          case 5: // water pipe
+            Image waterpipeImage = waterpipeIcon.getImage();
+            Image waterpipeModIcon =
+                    waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpipeModIcon));
+            break;
+          case 3: // empty pump
             Image emptypumpImage = emptypumpIcon.getImage();
             Image emptypumpModIcon =
-                emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
             mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
-            if (i * gridNum + j == idx) {
-              image = ImageIO.read(new File(Game.emptypumpImagePath));
-              createLayeredImage(image);
-              Image outImage = Game.outIcon.getImage();
-              Image outModIcon =
-                  outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-              mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-            }
-          }
-        } catch (Exception exception) {
-          try {
-            Pipe pi = (Pipe) tempNode;
-            System.out.println(pi.getFlowRate());
-            if (pi.getFlowRate() > 0) {
-              Image waterpipeImage = waterpipeIcon.getImage();
-              Image waterpipeModIcon =
-                  waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-              mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpipeModIcon));
-              if (i * gridNum + j == idx) {
-                image = ImageIO.read(new File(Game.waterpipeImagePath));
-                createLayeredImage(image);
-                Image outImage = Game.outIcon.getImage();
-                Image outModIcon =
-                    outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-                mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-              }
-            }
-          } catch (Exception e1) {
-          }
+            break;
+          case 6: // water pump
+            Image waterpumpImage = waterpumpIcon.getImage();
+            Image waterpumpModIcon =
+                    waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpumpModIcon));
+            break;
+          default:
+            break;
         }
+        updatePlayerNodes();
       }
     }
     map.tick();
   }
 
   /** The character movement in the gui, with the correct images */
-  static void MoveCharacter() {
+  public void moveCharacter() {
     // calculate the index of the node that the character is standing on
     int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
     Controller.prevIdx = Controller.prevNode.getX() + (gridNum * Controller.prevNode.getY());
 
-    // get character type
-    getPlayerType();
+    getPlayerType(Controller.tempChar);
+    updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    updateNodeImage(Controller.prevNode, Controller.prevIdx, null);
+    updatePlayerNodes();
+  }
 
-    switch (getNodeType(Controller.prevNode)) {
-      case 1:
-        Image cisternImage = cisternIcon.getImage();
-        Image cisternModIcon =
-            cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-        mapButtons[Controller.prevIdx].setIcon(new ImageIcon(cisternModIcon));
-        break;
-      case 2:
-        Pipe tempPipe = (Pipe) Controller.prevNode;
-        if (tempPipe.isSticky()) {
-          Image stickypipeImage = stickypipeIcon.getImage();
-          Image stickypipeModIcon =
-              stickypipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(stickypipeModIcon));
+  private void updateNodeImage(Node node, int idx, Character character) {
+    if (character != null) {
+      try {
+        BufferedImage image;
+        switch (getNodeType(node)) {
+          case 1:
+            image = ImageIO.read(new File(Game.cisternImagePath));
+            break;
+          case 2:
+            image = ImageIO.read(new File(Game.pipeImagePath));
+            break;
+          case 3:
+            image = ImageIO.read(new File(Game.emptypumpImagePath));
+            break;
+          case 4:
+            image = ImageIO.read(new File(Game.waterspringImagePath));
+            break;
+          case 5:
+            image = ImageIO.read(new File(Game.waterpipeImagePath));
+            break;
+          case 6:
+            image = ImageIO.read(new File(Game.waterpumpImagePath));
+            break;
+          default:
+            image = ImageIO.read(new File(Game.sandImagePath));
+            break;
         }
-        if (Controller.prevNode.isBroken()) {
-          Image brokenpipeImage = brokenpipeIcon.getImage();
-          Image brokenpipeModIcon =
-              brokenpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(brokenpipeModIcon));
-        } else {
-          Image pipeImage = pipeIcon.getImage();
-          Image pipeModIcon =
-              pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(pipeModIcon));
-        }
-        break;
-      case 3:
-        if (Controller.prevNode.isBroken()) {
-          Image brokenpumpImage = brokenpumpIcon.getImage();
-          Image brokenpumpModIcon =
-              brokenpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(brokenpumpModIcon));
-        } else {
-          Image emptypumpImage = emptypumpIcon.getImage();
-          Image emptypumpModIcon =
-              emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          mapButtons[Controller.prevIdx].setIcon(new ImageIcon(emptypumpModIcon));
-        }
-        break;
-      case 4:
-        Image waterspringImage = waterspringIcon.getImage();
-        Image waterspringModIcon =
-            waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-        mapButtons[Controller.prevIdx].setIcon(new ImageIcon(waterspringModIcon));
-        break;
-      default:
-        Image sandImage = sandIcon.getImage();
-        Image sandModIcon = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-        mapButtons[Controller.prevIdx].setIcon(new ImageIcon(sandModIcon));
-        break;
-    }
-    try {
-      BufferedImage image;
-      switch (getNodeType(Controller.tempNode)) {
+        createLayeredImage(image);
+      } catch (IOException ignored) {
+      }
+      Image outImage = Game.outIcon.getImage();
+      Image outModIcon =
+              outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+      mapButtons[idx].setIcon(new ImageIcon(outModIcon));
+    } else {
+      Image image;
+      switch (getNodeType(node)) {
         case 1:
-          image = ImageIO.read(new File(Game.cisternImagePath));
+          image = cisternIcon.getImage();
           break;
         case 2:
-          image = ImageIO.read(new File(Game.pipeImagePath));
+          Pipe tempPipe = (Pipe) node;
+          if (tempPipe.isSticky()) {
+            image = stickypipeIcon.getImage();
+          } else if (node.isBroken()) {
+            image = brokenpipeIcon.getImage();
+          } else {
+            image = pipeIcon.getImage();
+          }
           break;
         case 3:
-          image = ImageIO.read(new File(Game.emptypumpImagePath));
+          if (node.isBroken()) {
+            image = brokenpumpIcon.getImage();
+          } else {
+            image = emptypumpIcon.getImage();
+          }
           break;
         case 4:
-          image = ImageIO.read(new File(Game.waterspringImagePath));
+          image = waterspringIcon.getImage();
           break;
         case 5:
-          image = ImageIO.read(new File(Game.waterpipeImagePath));
+          image = waterpipeIcon.getImage();
           break;
         case 6:
-          image = ImageIO.read(new File(Game.waterpumpImagePath));
+          image = waterpumpIcon.getImage();
           break;
         default:
-          image = ImageIO.read(new File(Game.sandImagePath));
+          image = sandIcon.getImage();
           break;
       }
-      createLayeredImage(image);
-    } catch (IOException ignored) {
+      image = image.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+      mapButtons[idx].setIcon(new ImageIcon(image));
     }
-    Image outImage = Game.outIcon.getImage();
-    Image outModIcon =
-        outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-    mapButtons[idx].setIcon(new ImageIcon(outModIcon));
   }
 
   /** The current character's break action in the gui, with the correct images */
-  static void BreakNode() {
+  public void breakNode() {
     // get character type
-    getPlayerType();
+    getPlayerType(Controller.tempChar);
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be broken by both characters
     try {
       Pipe ignored = (Pipe) Controller.tempNode;
-      BufferedImage image = ImageIO.read(new File(Game.brokenpipeImagePath));
-      createLayeredImage(image);
-      Image outImage = Game.outIcon.getImage();
-      Image outModIcon =
-          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-    } catch (Exception e) {
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
     }
   }
 
-  static void SetSticky() {
-    getPlayerType();
+  public void setSticky() {
+    getPlayerType(Controller.tempChar);
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
@@ -567,36 +435,27 @@ public class Game {
     try {
       Pipe ignored = (Pipe) Controller.tempNode;
       BufferedImage image = ImageIO.read(new File(Game.stickypipeImagePath));
-      createLayeredImage(image);
-      Image outImage = Game.outIcon.getImage();
-      Image outModIcon =
-          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-    } catch (Exception e) {
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
     }
   }
 
-  static void SetSlippery() {
-    getPlayerType();
+  public void setSlippery() {
+    getPlayerType(Controller.tempChar);
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {
-      Nomad tempNomad = (Nomad) Controller.tempChar;
-      Pipe ignored = (Pipe) Controller.tempNode;
-      BufferedImage image = ImageIO.read(new File(Game.slipperypipeImagePath));
-      createLayeredImage(image);
-      Image outImage = Game.outIcon.getImage();
-      Image outModIcon =
-          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-    } catch (Exception e) {
+      Nomad ignored1 = (Nomad) Controller.tempChar;
+      Pipe ignored2 = (Pipe) Controller.tempNode;
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
     }
   }
 
-  static void RepairNode() {
-    getPlayerType();
+  public void repairNode() {
+    getPlayerType(Controller.tempChar);
     int idx =
         Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
@@ -605,26 +464,21 @@ public class Game {
       Plumber tempPlumber = (Plumber) Controller.tempChar;
       System.out.println("RepairNode character is a plumber");
       Pipe ignored = (Pipe) Controller.tempNode;
-      BufferedImage image = ImageIO.read(new File(Game.pipeImagePath));
-      createLayeredImage(image);
-      Image outImage = Game.outIcon.getImage();
-      Image outModIcon =
-          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-    } catch (Exception e) {
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
     }
   }
 
-  static void SetPump() {}
+  public void setPump() {} //TODO: implement
 
   /** The getter for the current character's type */
-  private static void getPlayerType() {
+  private void getPlayerType(Character character) {
     try {
-      Nomad ignored = (Nomad) Controller.tempChar;
+      Nomad ignored = (Nomad) character;
       overlay = ImageIO.read(new File(Game.nomadImagePath));
     } catch (Exception e) {
       try {
-        Plumber ignored = (Plumber) Controller.tempChar;
+        Plumber ignored = (Plumber) character;
         overlay = ImageIO.read(new File(Game.plumberImagePath));
       } catch (Exception ignored) {
       }
@@ -632,8 +486,9 @@ public class Game {
   }
 
   /** The getter for the current node's type */
-  static int getNodeType(Node node) {
+  private int getNodeType(Node node) {
     int nodeType = 0;
+    if (node == null) return nodeType;
     try {
       Cistern ignored = (Cistern) node;
       nodeType = 1;
@@ -664,7 +519,7 @@ public class Game {
    *
    * @param image the buffered image
    */
-  static void createLayeredImage(BufferedImage image) {
+  private void createLayeredImage(BufferedImage image) {
     try {
       int w = Math.max(image.getWidth(), overlay.getWidth());
       int h = Math.max(image.getHeight(), overlay.getHeight());
@@ -679,6 +534,20 @@ public class Game {
       // writes the combined image
       ImageIO.write(combined, "PNG", new File(Game.outImagePath));
     } catch (IOException ignored) {
+    }
+  }
+
+  private void updatePlayerNodes() {
+    try {
+      for (int i = 0; i < Map.playerCount(); i++) {
+        Character tempChar = Map.getPlayer(i);
+        getPlayerType(tempChar);
+        Node temp = tempChar.getStandingOn();
+        int coord = temp.getX() + (gridNum * temp.getY());
+
+        updateNodeImage(temp, coord, tempChar);
+      }
+    } catch (NullPointerException ignored) {
     }
   }
 }

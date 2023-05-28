@@ -10,13 +10,13 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 public class Controller {
+  static Game game;
   static Character tempChar;
   static Direction direction;
   static Node tempNode;
@@ -59,7 +59,7 @@ public class Controller {
     }
 
     Map.fillMap(Menu.playerCount);
-    new Game();
+    game = new Game();
   }
 
   public static void MenuExitAction(ActionEvent e) {
@@ -73,7 +73,7 @@ public class Controller {
    */
   public static void MoveUpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+    game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.UP;
     try {
@@ -84,7 +84,7 @@ public class Controller {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
-        Game.MoveCharacter();
+        game.moveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
         tempNode = prevNode;
       }
@@ -95,7 +95,7 @@ public class Controller {
 
   public static void MoveLeftAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.LEFT;
     try {
@@ -106,7 +106,7 @@ public class Controller {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
-        Game.MoveCharacter();
+       game.moveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
         tempNode = prevNode;
       }
@@ -117,7 +117,7 @@ public class Controller {
 
   public static void MoveDownAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.DOWN;
     try {
@@ -128,7 +128,7 @@ public class Controller {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
-        Game.MoveCharacter();
+       game.moveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
         tempNode = prevNode;
       }
@@ -139,7 +139,7 @@ public class Controller {
 
   public static void MoveRightAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.RIGHT;
     try {
@@ -150,7 +150,7 @@ public class Controller {
         assert tempNode != null;
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
-        Game.MoveCharacter();
+       game.moveCharacter();
       } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
         tempNode = prevNode;
       }
@@ -169,10 +169,10 @@ public class Controller {
         assert tempChar != null;
         tempNomad.setSlippery();
         tempNode = tempNomad.getStandingOn();
-        Game.SetSlippery();
+       game.setSlippery();
       } catch (ClassCastException ignored) {
       }
-      Game.updateAction();
+     game.updateAction();
     } else {
       Game.nomadTurn = !Game.nomadTurn;
       tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
@@ -181,31 +181,31 @@ public class Controller {
         assert tempChar != null;
         tempPlumber.repair();
         tempNode = tempPlumber.getStandingOn();
-        Game.RepairNode();
+       game.repairNode();
       } catch (ClassCastException ignored) {
       }
-      Game.updateAction();
+     game.updateAction();
     }
   }
 
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     assert tempChar != null;
     tempChar.breakNode();
-    Game.BreakNode();
+   game.breakNode();
   }
 
   public static void StickyAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     try {
       tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.makePipeSticky();
-      Game.SetSticky();
+     game.setSticky();
     } catch (ClassCastException ignored) {
     }
   }
@@ -213,7 +213,7 @@ public class Controller {
   // TODO: check if its working, for that we need the cistern ticking (currently it is not)
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
@@ -235,7 +235,7 @@ public class Controller {
   // TODO: check if its working, for that we need the cistern ticking (currently it is not)
   public static void PickUpPumpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
@@ -253,7 +253,7 @@ public class Controller {
 
   public static void SetPumpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
+   game.updateAction();
     tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     int curIdx = tempChar.getStandingOn().getX() + (Game.gridNum * tempChar.getStandingOn().getY());
     Node upNeighbour =
@@ -281,7 +281,7 @@ public class Controller {
           pump.setActiveInput(inputPipe);
           pump.setActiveOutput(outputPipe);
         }
-        Game.SetPump();
+       game.setPump();
       } catch (Exception ex) {
       }
     } catch (Exception ex) {

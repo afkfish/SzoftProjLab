@@ -283,7 +283,7 @@ public class Main {
                 try {
                   node.get().connect(node1);
                 } catch (ObjectFullException e) {
-                  throw new RuntimeException(e);
+                  log(e.getMessage());
                 }
               });
           actions.put(
@@ -311,7 +311,7 @@ public class Main {
               log("Character creation aborted!");
             }
           } else if (type == 2) {
-            if (createNode(scanner) == null) {
+            if (createNode(scanner).isEmpty()) {
               log("Node creation aborted!");
             }
           }
