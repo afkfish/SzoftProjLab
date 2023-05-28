@@ -49,6 +49,7 @@ public class Controller {
 
     pNames = Menu.plumberNamesTextField.getText();
     Game.plumberNames = new ArrayList<>(List.of(pNames.split(" ")));
+    System.out.println(Game.plumberNames);
 
     nNames = Menu.nomadNamesTextField.getText();
     Game.nomadNames = new ArrayList<>(List.of(nNames.split(" ")));

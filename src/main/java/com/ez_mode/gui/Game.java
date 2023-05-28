@@ -31,7 +31,7 @@ public class Game {
   static JFrame frame = new JFrame();
 
   JPanel titlePanel = new JPanel();
-  static JLabel textField = new JLabel();
+  JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
   JPanel mapPanel = new JPanel();
   JButton[] mapButtons = new JButton[gridNum * gridNum + 1];
@@ -94,6 +94,7 @@ public class Game {
   static BufferedImage overlay = null;
 
   public Game() {
+    playerIdx = 0;
     // Properties of the frame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Game");
@@ -283,44 +284,14 @@ public class Game {
 
   // TODO: needs a LOT of debug :c
   public void updateFlow() {
-    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    Node tempNode = tempChar.getStandingOn();
-    getPlayerType(Controller.tempChar);
     // checks the flowrate for every node, if it's > 0, sets the node to watery
     for (int i = 0; i < gridNum - 1; i++) {
       for (int j = 0; j < gridNum; j++) {
-        Node tempN = Map.getNode(j, i);
-        switch (getNodeType(tempN)) {
-          case 2: // empty pipe
-            Image emptypipeImage = pipeIcon.getImage();
-            Image emptypipeModIcon =
-                    emptypipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypipeModIcon));
-            break;
-          case 5: // water pipe
-            Image waterpipeImage = waterpipeIcon.getImage();
-            Image waterpipeModIcon =
-                    waterpipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpipeModIcon));
-            break;
-          case 3: // empty pump
-            Image emptypumpImage = emptypumpIcon.getImage();
-            Image emptypumpModIcon =
-                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
-            break;
-          case 6: // water pump
-            Image waterpumpImage = waterpumpIcon.getImage();
-            Image waterpumpModIcon =
-                    waterpumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-            mapButtons[i * gridNum + j].setIcon(new ImageIcon(waterpumpModIcon));
-            break;
-          default:
-            break;
-        }
-        updatePlayerNodes();
+        Node tempNode = Map.getNode(j, i);
+        updateNodeImage(tempNode, j + (gridNum * i), null);
       }
     }
+    updatePlayerNodes();
     map.tick();
   }
 
@@ -337,75 +308,50 @@ public class Game {
   }
 
   private void updateNodeImage(Node node, int idx, Character character) {
-    if (character != null) {
-      try {
-        BufferedImage image;
-        switch (getNodeType(node)) {
-          case 1:
-            image = ImageIO.read(new File(Game.cisternImagePath));
-            break;
-          case 2:
-            image = ImageIO.read(new File(Game.pipeImagePath));
-            break;
-          case 3:
-            image = ImageIO.read(new File(Game.emptypumpImagePath));
-            break;
-          case 4:
-            image = ImageIO.read(new File(Game.waterspringImagePath));
-            break;
-          case 5:
-            image = ImageIO.read(new File(Game.waterpipeImagePath));
-            break;
-          case 6:
-            image = ImageIO.read(new File(Game.waterpumpImagePath));
-            break;
-          default:
-            image = ImageIO.read(new File(Game.sandImagePath));
-            break;
+    Image image;
+    switch (getNodeType(node)) {
+      case 1:
+        image = cisternIcon.getImage();
+        break;
+      case 2:
+        Pipe tempPipe = (Pipe) node;
+        if (tempPipe.isBroken()) {
+          image = brokenpipeIcon.getImage();
+        } else if (tempPipe.isSticky()) {
+          image = stickypipeIcon.getImage();
+        } else if (tempPipe.isSlippery()) {
+          image = slipperypipeIcon.getImage();
+        } else {
+          image = pipeIcon.getImage();
         }
-        createLayeredImage(image);
-      } catch (IOException ignored) {
-      }
+        break;
+      case 3:
+        if (node.isBroken()) {
+          image = brokenpumpIcon.getImage();
+        } else {
+          image = emptypumpIcon.getImage();
+        }
+        break;
+      case 4:
+        image = waterspringIcon.getImage();
+        break;
+      case 5:
+        image = waterpipeIcon.getImage();
+        break;
+      case 6:
+        image = waterpumpIcon.getImage();
+        break;
+      default:
+        image = sandIcon.getImage();
+        break;
+    }
+    if (character != null) {
+      createLayeredImage(image);
       Image outImage = Game.outIcon.getImage();
       Image outModIcon =
               outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(outModIcon));
     } else {
-      Image image;
-      switch (getNodeType(node)) {
-        case 1:
-          image = cisternIcon.getImage();
-          break;
-        case 2:
-          Pipe tempPipe = (Pipe) node;
-          if (tempPipe.isSticky()) {
-            image = stickypipeIcon.getImage();
-          } else if (node.isBroken()) {
-            image = brokenpipeIcon.getImage();
-          } else {
-            image = pipeIcon.getImage();
-          }
-          break;
-        case 3:
-          if (node.isBroken()) {
-            image = brokenpumpIcon.getImage();
-          } else {
-            image = emptypumpIcon.getImage();
-          }
-          break;
-        case 4:
-          image = waterspringIcon.getImage();
-          break;
-        case 5:
-          image = waterpipeIcon.getImage();
-          break;
-        case 6:
-          image = waterpumpIcon.getImage();
-          break;
-        default:
-          image = sandIcon.getImage();
-          break;
-      }
       image = image.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(image));
     }
@@ -434,7 +380,6 @@ public class Game {
     // only the Pipe nodes can be made sticky by both characters
     try {
       Pipe ignored = (Pipe) Controller.tempNode;
-      BufferedImage image = ImageIO.read(new File(Game.stickypipeImagePath));
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
     }
@@ -519,10 +464,10 @@ public class Game {
    *
    * @param image the buffered image
    */
-  private void createLayeredImage(BufferedImage image) {
+  private void createLayeredImage(Image image) {
     try {
-      int w = Math.max(image.getWidth(), overlay.getWidth());
-      int h = Math.max(image.getHeight(), overlay.getHeight());
+      int w = Math.max(image.getWidth(null), overlay.getWidth());
+      int h = Math.max(image.getHeight(null), overlay.getHeight());
       BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
       // adds the two layers of the images
