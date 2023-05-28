@@ -357,25 +357,24 @@ public class Game {
     }
     playerIdx = playerIdx % (Menu.playerCount * 2);
     /*
-    // TODO: if the given node is in inventory: (white the if)
-    Cistern tempCis = (Cistern) tempNode;
-    Image pickuppipeImage = pickuppipeIcon.getImage();
-    Image pickuppipeModIcon =
-        pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-    mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
-    mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPipeAction);
+        // TODO: if the given node is in inventory: (white the if)
+        Cistern tempCis = (Cistern) tempNode;
+        Image pickuppipeImage = pickuppipeIcon.getImage();
+        Image pickuppipeModIcon =
+            pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+        mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
+        mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPipeAction);
 
-    Image pickuppumpImage = pickuppumpIcon.getImage();
-    Image pickuppumpModIcon =
-        pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-    mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
+        Image pickuppumpImage = pickuppumpIcon.getImage();
+        Image pickuppumpModIcon =
+            pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+        mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
 
-    // TODO: else:
-    mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
-    mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
-*/
-    Game.UpdateFlow(); //TODO: debug UpdateFlow()
-
+        // TODO: else:
+        mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
+        mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
+    */
+    Game.UpdateFlow(); // TODO: debug UpdateFlow()
   }
 
   // TODO: needs a LOT of debug :c
