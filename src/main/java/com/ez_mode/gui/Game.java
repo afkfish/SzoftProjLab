@@ -149,18 +149,18 @@ public class Game {
           } catch (Exception e) {
             try {
               Pipe pi = (Pipe) temp;
-                Image pipeImage = pipeIcon.getImage();
-                Image pipeModIcon =
-                    pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-                mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
+              Image pipeImage = pipeIcon.getImage();
+              Image pipeModIcon =
+                  pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+              mapButtons[i * gridNum + j].setIcon(new ImageIcon(pipeModIcon));
               nodeType = 2;
             } catch (Exception ex) {
               try {
                 Pump pu = (Pump) temp;
-                  Image emptypumpImage = emptypumpIcon.getImage();
-                  Image emptypumpModIcon =
-                      emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-                  mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
+                Image emptypumpImage = emptypumpIcon.getImage();
+                Image emptypumpModIcon =
+                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+                mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
 
                 nodeType = 3;
               } catch (Exception exception) {
@@ -422,6 +422,7 @@ public class Game {
         } catch (Exception exception) {
           try {
             Pipe pi = (Pipe) tempNode;
+            System.out.println(pi.getFlowRate());
             if (pi.getFlowRate() > 0) {
               Image waterpipeImage = waterpipeIcon.getImage();
               Image waterpipeModIcon =
