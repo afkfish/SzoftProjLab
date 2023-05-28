@@ -373,9 +373,9 @@ public class Game {
     // TODO: else:
     mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
     mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
+*/
+    Game.UpdateFlow(); //TODO: debug UpdateFlow()
 
-    // Game.UpdateFlow(); TODO: debug UpdateFlow()
-    */
   }
 
   // TODO: needs a LOT of debug :c
