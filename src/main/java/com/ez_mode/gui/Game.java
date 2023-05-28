@@ -278,23 +278,24 @@ public class Game {
     mapButtons[gridNum * gridNum - gridNum + 6].setIcon(new ImageIcon(stickypipeModIcon));
     mapButtons[gridNum * gridNum - gridNum + 6].addActionListener(Controller::StickyAction);
 
-    Image pickuppipeImage = pickuppipeIcon.getImage();
-    Image pickuppipeModIcon =
-        pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-    mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(pickuppipeModIcon));
-    mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(Controller::PickUpPipeAction);
-
-    Image pickuppumpImage = pickuppumpIcon.getImage();
-    Image pickuppumpModIcon =
-        pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-    mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppumpModIcon));
-    mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPumpAction);
-
     Image setpumpImage = setpumpIcon.getImage();
     Image setpumpModIcon =
         setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-    mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
-    mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::SetPumpAction);
+    mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(setpumpModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(Controller::SetPumpAction);
+
+    Image pickuppipeImage = pickuppipeIcon.getImage();
+    Image pickuppipeModIcon =
+            pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPipeAction);
+
+    Image pickuppumpImage = pickuppumpIcon.getImage();
+    Image pickuppumpModIcon =
+            pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::PickUpPumpAction);
+
 
     /** Adding the components to the frame and setting their layouts */
     textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
@@ -318,7 +319,8 @@ public class Game {
    */
   static void updateAction() {
     Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    int idx = tempChar.getStandingOn().getX() + (gridNum * tempChar.getStandingOn().getY());
+    Node tempNode = tempChar.getStandingOn();
+    System.out.println(nomadTurn);
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
       Image slipperypipeModIcon =
@@ -336,44 +338,60 @@ public class Game {
               repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
 
+      Image setpumpImage = setpumpIcon.getImage();
+      Image setpumpModIcon =
+              setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(setpumpModIcon));
+
       Image pickuppipeImage = pickuppipeIcon.getImage();
       Image pickuppipeModIcon =
               pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-      mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(pickuppipeModIcon));
+      mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
 
       Image pickuppumpImage = pickuppumpIcon.getImage();
       Image pickuppumpModIcon =
               pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-      mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppumpModIcon));
-
-      Image setpumpImage = setpumpIcon.getImage();
-      Image setpumpModIcon =
-              setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-      mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(setpumpModIcon));
+      mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
 
       textField.setText(plumberNames.get(playerIdx / 2) + " Plumbers turn");
       playerIdx++;
     }
     playerIdx = playerIdx % (Menu.playerCount * 2);
-    BufferedImage overlay = null;
-    try {
-      Nomad n = (Nomad) tempChar;
-      overlay = ImageIO.read(new File(nomadImagePath));
-    } catch (Exception e) {
-      try {
-        Plumber p = (Plumber) tempChar;
-        overlay = ImageIO.read(new File(plumberImagePath));
-      } catch (Exception ex) {
-      }
-    }
+
+    //TODO: if the given node is in inventory: (white the if)
+      Cistern tempCis = (Cistern) tempNode;
+      Image pickuppipeImage = pickuppipeIcon.getImage();
+      Image pickuppipeModIcon =
+              pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
+      mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPipeAction);
+
+      Image pickuppumpImage = pickuppumpIcon.getImage();
+      Image pickuppumpModIcon =
+              pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
+
+      //TODO: else:
+      mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
+      mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
+
+    //Game.UpdateFlow(); TODO: debug UpdateFlow()
+  }
+
+
+  //TODO: needs a LOT of debug :c
+  static void UpdateFlow() {
+    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    Node tempNode = tempChar.getStandingOn();
+    int idx = tempChar.getStandingOn().getX() + (gridNum * tempChar.getStandingOn().getY());
+    getPlayerType();
     BufferedImage image;
     //checks the flowrate for every node, if it's >0, sets the water in the node
     for (int i = 0; i < gridNum; i++) {
       for (int j = 0; j < gridNum; j++) {
-        Node tempNode = Map.getNode(j, i);
+        Node tempN = Map.getNode(j, i);
         try {
-          Pump pu = (Pump) tempNode;
-          System.out.println(pu.getFlowRate());
+          Pump pu = (Pump) tempN;
           if (pu.getFlowRate() > 0) {
             Image waterpumpImage = waterpumpIcon.getImage();
             Image waterpumpModIcon =
@@ -387,11 +405,23 @@ public class Game {
                       outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
               mapButtons[idx].setIcon(new ImageIcon(outModIcon));
             }
+          } else {
+            Image emptypumpImage = emptypumpIcon.getImage();
+            Image emptypumpModIcon =
+                    emptypumpImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+            mapButtons[i * gridNum + j].setIcon(new ImageIcon(emptypumpModIcon));
+            if (i * gridNum + j == idx) {
+              image = ImageIO.read(new File(Game.emptypumpImagePath));
+              createLayeredImage(image);
+              Image outImage = Game.outIcon.getImage();
+              Image outModIcon =
+                      outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
+              mapButtons[idx].setIcon(new ImageIcon(outModIcon));
+            }
           }
         } catch (Exception exception) {
           try {
             Pipe pi = (Pipe) tempNode;
-            System.out.println(pi.getFlowRate());
             if (pi.getFlowRate() > 0) {
               Image waterpipeImage = waterpipeIcon.getImage();
               Image waterpipeModIcon =
@@ -407,11 +437,13 @@ public class Game {
               }
             }
           } catch (Exception e1) { }
-        }
+          }
       }
     }
     map.tick();
   }
+
+
 
   /** The character movement in the gui, with the correct images */
   static void MoveCharacter() {
@@ -524,8 +556,7 @@ public class Game {
       Image outModIcon =
           outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
       mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-    } catch (Exception e) {
-    }
+    } catch (Exception e) { }
   }
 
   static void SetSticky() {

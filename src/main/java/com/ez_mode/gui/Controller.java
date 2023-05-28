@@ -7,6 +7,7 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Cistern;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import java.awt.*;
@@ -187,12 +188,12 @@ public class Controller {
 
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
+    Game.updateAction();
     tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     assert tempChar != null;
     tempChar.breakNode();
     Game.BreakNode();
-    Game.updateAction();
   }
 
   public static void StickyAction(ActionEvent e) {
@@ -207,31 +208,45 @@ public class Controller {
     }
   }
 
+  // TODO: pick up when inventory is empty
+  // TODO: place when has it in inventory
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+    //TODO: if inventory is empty
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       try {
         tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
-      } catch (NotFoundExeption NOTignored) {
-        /// Todo
-      }
-    } catch (ClassCastException ignored) {
-    }
+      } catch (NotFoundExeption NOTignored) { }
+    } catch (ClassCastException ignored) { }
+
+    //TODO: if has node in inventory
+    Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    assert tempChar != null;
+    tempChar.PlacePipe();
+
   }
 
+  // TODO: pick up when inventory is empty
+  // TODO: place when has it in inventory
   public static void PickUpPumpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
+
+    //TODO: if inventory is empty
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.PickupPump();
-    } catch (ClassCastException ignored) {
-    }
-    // TODO
+    } catch (ClassCastException ignored) { }
+
+    //TODO: if has node in inventoy
+    Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    assert tempChar != null;
+    tempChar.PlacePump();
+
   }
 
   public static void SetPumpAction(ActionEvent e) {
@@ -252,23 +267,9 @@ public class Controller {
     }
   }
 
-  public static void PlacePipeAction(ActionEvent e) {
-    Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
-    Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    assert tempChar != null;
-    tempChar.PlacePipe();
-  }
 
-  public static void PlacePump(ActionEvent e) {
-    Game.nomadTurn = !Game.nomadTurn;
-    Game.updateAction();
-    Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    assert tempChar != null;
-    tempChar.PlacePump();
-  }
 
-  // TODO: other actions for every possible action in the action bar
+
 
   public static void GameExitAction(ActionEvent e) {
     Game.frame.dispose();
