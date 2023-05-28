@@ -252,8 +252,9 @@ public class Controller {
   }
 
   public static void SetPumpAction(ActionEvent e) {
-    Game.nomadTurn = !Game.nomadTurn;
+
     game.updateAction();
+    Game.nomadTurn = !Game.nomadTurn;
     tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     int curIdx = tempChar.getStandingOn().getX() + (Game.gridNum * tempChar.getStandingOn().getY());
     Node upNeighbour =
@@ -283,9 +284,10 @@ public class Controller {
         }
         game.setPump();
       } catch (Exception ex) {
+        System.out.println(ex.getMessage());
       }
     } catch (Exception ex) {
-
+      System.out.println(ex.getMessage());
     }
   }
 
