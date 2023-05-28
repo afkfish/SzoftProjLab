@@ -7,7 +7,6 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-import com.ez_mode.objects.Cistern;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import java.awt.*;
@@ -213,20 +212,21 @@ public class Controller {
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    //TODO: if inventory is empty
+    // TODO: if inventory is empty
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       try {
         tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
-      } catch (NotFoundExeption NOTignored) { }
-    } catch (ClassCastException ignored) { }
+      } catch (NotFoundExeption NOTignored) {
+      }
+    } catch (ClassCastException ignored) {
+    }
 
-    //TODO: if has node in inventory
+    // TODO: if has node in inventory
     Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     assert tempChar != null;
     tempChar.PlacePipe();
-
   }
 
   // TODO: pick up when inventory is empty
@@ -235,18 +235,18 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
 
-    //TODO: if inventory is empty
+    // TODO: if inventory is empty
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.PickupPump();
-    } catch (ClassCastException ignored) { }
+    } catch (ClassCastException ignored) {
+    }
 
-    //TODO: if has node in inventoy
+    // TODO: if has node in inventoy
     Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     assert tempChar != null;
     tempChar.PlacePump();
-
   }
 
   public static void SetPumpAction(ActionEvent e) {
@@ -266,10 +266,6 @@ public class Controller {
 
     }
   }
-
-
-
-
 
   public static void GameExitAction(ActionEvent e) {
     Game.frame.dispose();
