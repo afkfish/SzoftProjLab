@@ -91,7 +91,7 @@ public class Game {
   public ImageIcon moverightIcon = new ImageIcon(moverightImagePath);
   public static ImageIcon setpumpIcon = new ImageIcon(setpumpImagePath);
 
-  static BufferedImage overlay = null;
+  static Image overlay = null;
 
   public Game() {
     playerIdx = 0;
@@ -406,9 +406,9 @@ public class Game {
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {
-      Plumber tempPlumber = (Plumber) Controller.tempChar;
+      Plumber ignored1 = (Plumber) Controller.tempChar;
       System.out.println("RepairNode character is a plumber");
-      Pipe ignored = (Pipe) Controller.tempNode;
+      Pipe ignored2 = (Pipe) Controller.tempNode;
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
     }
@@ -420,11 +420,11 @@ public class Game {
   private void getPlayerType(Character character) {
     try {
       Nomad ignored = (Nomad) character;
-      overlay = ImageIO.read(new File(Game.nomadImagePath));
+      overlay = nomadIcon.getImage();
     } catch (Exception e) {
       try {
         Plumber ignored = (Plumber) character;
-        overlay = ImageIO.read(new File(Game.plumberImagePath));
+        overlay = plumberIcon.getImage();
       } catch (Exception ignored) {
       }
     }
@@ -466,8 +466,8 @@ public class Game {
    */
   private void createLayeredImage(Image image) {
     try {
-      int w = Math.max(image.getWidth(null), overlay.getWidth());
-      int h = Math.max(image.getHeight(null), overlay.getHeight());
+      int w = Math.max(image.getWidth(null), overlay.getWidth(null));
+      int h = Math.max(image.getHeight(null), overlay.getHeight(null));
       BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
       // adds the two layers of the images
