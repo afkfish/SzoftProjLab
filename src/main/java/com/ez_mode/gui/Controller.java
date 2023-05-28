@@ -210,46 +210,47 @@ public class Controller {
     }
   }
 
-  // TODO: pick up when inventory is empty
-  // TODO: place when has it in inventory
+  // TODO: check if its working, for that we need the cistern ticking (currently it is not)
   public static void PickUpPipeAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-    // TODO: if inventory is empty
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       try {
-        tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
+        //if inventory is empty pick up
+        if(tempChar.getDraggedpipe() != null || tempChar.getPickedUpPipe() != null)
+          tempChar.PlacePipe();
+        //if not empty than place
+        else tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
       } catch (NotFoundExeption NOTignored) {
       }
     } catch (ClassCastException ignored) {
     }
-
-    // TODO: if has node in inventory
-    Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     assert tempChar != null;
-    tempChar.PlacePipe();
+    tempChar.PlacePipe();*/
   }
 
-  // TODO: pick up when inventory is empty
-  // TODO: place when has it in inventory
+  // TODO: check if its working, for that we need the cistern ticking (currently it is not)
   public static void PickUpPumpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     Game.updateAction();
-
-    // TODO: if inventory is empty
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
-      tempChar.PickupPump();
+      //if inventory is empty pick up
+      if(tempChar.getPickedupPump() != null)
+        tempChar.PlacePump();
+      //if not empty than place
+      else tempChar.PickupPump();
     } catch (ClassCastException ignored) {
     }
 
-    // TODO: if has node in inventoy
-    Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+
+    /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     assert tempChar != null;
-    tempChar.PlacePump();
+    tempChar.PlacePump();*/
   }
 
   public static void SetPumpAction(ActionEvent e) {
