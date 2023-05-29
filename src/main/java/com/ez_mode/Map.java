@@ -27,12 +27,16 @@ public class Map implements Tickable {
 
   /** The list of all players. */
   private static final ArrayList<Character> players = new ArrayList<>();
+
   /** The amount of water, lost by the nomads sabotaging the nodes. */
   public static double waterLost = 0;
+
   /** The amount of water, arrived to the cisterns. */
   public static double waterArrived = 0;
+
   /** The ArrayList representation of the game. This map contains every object. */
   private static Node[][] gameMap = null;
+
   private final Logger logger = LogManager.getLogger(Map.class);
 
   public Map(int size) {

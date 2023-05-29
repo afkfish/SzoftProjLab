@@ -6,6 +6,7 @@ import javax.swing.*;
 public class Menu {
   /** Java Swing components for the Menu class */
   static JFrame frame = new JFrame();
+
   static JTextField loadTextField = new JTextField();
   static JTextField plumberNamesTextField = new JTextField();
   static JTextField nomadNamesTextField = new JTextField();

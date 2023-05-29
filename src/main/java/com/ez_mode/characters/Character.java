@@ -152,15 +152,16 @@ public abstract class Character implements Tickable {
 
   @Override
   public String toString() {
-    String sb = "\t" +
-            this.uuid +
-            " (" +
-            this.name +
-            ") " +
-            "\n" +
-            "\t" +
-            "Standing on: " +
-            this.standingOn.getUuid();
+    String sb =
+        "\t"
+            + this.uuid
+            + " ("
+            + this.name
+            + ") "
+            + "\n"
+            + "\t"
+            + "Standing on: "
+            + this.standingOn.getUuid();
     return sb;
   }
 }

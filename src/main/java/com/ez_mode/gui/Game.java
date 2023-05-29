@@ -18,8 +18,10 @@ public class Game {
   public static boolean nomadTurn = false;
   public static ArrayList<String> plumberNames;
   public static ArrayList<String> nomadNames;
+
   /** Adding all the images' path that will be used in the game */
   public static String pipeImagePath = "src/main/resources/pipe.png";
+
   public static String sandImagePath = "src/main/resources/sand.png";
   public static String plumberImagePath = "src/main/resources/transplumber.png";
   public static String nomadImagePath = "src/main/resources/transnomad.png";
@@ -37,8 +39,10 @@ public class Game {
   public static String pickuppipeImagePath = "src/main/resources/pickuppipe.png";
   public static String pickuppumpImagePath = "src/main/resources/pickuppump.png";
   public static String setpumpImagePath = "src/main/resources/setpump.png";
+
   /** Adding all the images as ImageIcons, using the path given previously */
   public static ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
+
   public static ImageIcon sandIcon = new ImageIcon(sandImagePath);
   public static ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
   public static ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
@@ -59,8 +63,10 @@ public class Game {
   static int actionSize = fieldSize - 10;
   static ArrayList<String> playerNames;
   static int playerIdx = 0;
+
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
+
   public String waterImagePath = "src/main/resources/water.png";
   public String moveupImagePath = "src/main/resources/moveup.png";
   public String moveleftImagePath = "src/main/resources/moveleft.png";

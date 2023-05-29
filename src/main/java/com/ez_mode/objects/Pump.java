@@ -22,6 +22,7 @@ public class Pump extends Node {
   public Pump(int x, int y) {
     super(5, 4, x, y);
   }
+
   public Pump() {
     super(5, 4, -1, -1);
   }
