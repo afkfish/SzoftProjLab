@@ -58,10 +58,8 @@ public class Controller {
       else Game.playerNames.add(Game.nomadNames.get(n++));
     }
 
-    if (Menu.loadTextField.getText().isEmpty())
-      Map.fillMap(Menu.playerCount);
-    else
-      Map.loadMap(Menu.loadedPath);
+    if (Menu.loadTextField.getText().isEmpty()) Map.fillMap(Menu.playerCount);
+    else Map.loadMap(Menu.loadedPath);
 
     game = new Game();
   }
