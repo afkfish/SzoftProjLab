@@ -224,7 +224,7 @@ public class Game {
     playerIdx = playerIdx % (Menu.playerCount * 2);
 
     Controller.tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    assert Controller.tempChar != null: "tempChar is null???";
+    assert Controller.tempChar != null : "tempChar is null???";
     Controller.tempNode = Controller.tempChar.getStandingOn();
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
@@ -362,7 +362,8 @@ public class Game {
 
   /** The current character's break action in the gui, with the correct images */
   public void breakNode() {
-    int idx = Controller.tempChar.getStandingOn().getX()
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be broken by both characters
     try {
@@ -374,7 +375,8 @@ public class Game {
   }
 
   public void setSticky() {
-    int idx = Controller.tempChar.getStandingOn().getX()
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made sticky by both characters
     try {
@@ -386,7 +388,8 @@ public class Game {
   }
 
   public void setSlippery() {
-    int idx = Controller.tempChar.getStandingOn().getX()
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {
@@ -400,7 +403,8 @@ public class Game {
   }
 
   public void repairNode() {
-    int idx = Controller.tempChar.getStandingOn().getX()
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {

@@ -208,8 +208,7 @@ public class Controller {
       assert temp != null;
       try {
         // if inventory is empty pick up
-        if (temp.getDraggedpipe() != null || temp.getPickedUpPipe() != null)
-          temp.PlacePipe();
+        if (temp.getDraggedpipe() != null || temp.getPickedUpPipe() != null) temp.PlacePipe();
         // if not empty, then place
         else temp.PickupPipe((Pipe) tempChar.getStandingOn());
       } catch (NotFoundExeption ignored) {
