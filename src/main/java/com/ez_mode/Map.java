@@ -140,6 +140,13 @@ public class Map implements Tickable {
     Main.log("Map filled!");
   }
 
+  /**
+   * Connects a pipe to a node if they are neighbours. Used in fillMap to connect the generated map.
+   *
+   * @param pipe the pipe we want to connect to
+   * @param node the node we want to connect
+   */
+
   private static void connectIfNeighbouring(Pipe pipe, Node node) {
     if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
                 && (node.getY() == pipe.getY()))
@@ -279,7 +286,7 @@ public class Map implements Tickable {
    *
    * @param path the file's path
    */
-  public void loadMap(String path) {
+  public static void loadMap(String path) {
     Main.log("Loading map...");
     if (!path.endsWith(".json")) {
       Main.log("The file must be a .json configuration file!");
@@ -363,7 +370,7 @@ public class Map implements Tickable {
    *
    * @param path the file's path
    */
-  public void saveMap(String path) {
+  public static void saveMap(String path) {
     Main.log("Saving map...");
     assert path.endsWith(".json") : "The file must be a .json configuration file!";
     try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {

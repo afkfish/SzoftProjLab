@@ -3,6 +3,11 @@ package com.ez_mode.gui;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * This class is used for the menu that is seen when the 'End Game' button is pressed.
+ * It presents the option to save the map as it is, to start a new game, and to just close the game.
+ */
+
 public class EndGame {
   static JFrame frame = new JFrame();
   JButton startButton = new JButton();

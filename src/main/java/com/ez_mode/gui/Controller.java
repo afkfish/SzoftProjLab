@@ -289,7 +289,7 @@ public class Controller {
   public static void EndGameExitAction(ActionEvent ignored) {
     EndGame.frame.dispose();
     EndGame.savedPath = EndGame.saveTextField.getText();
-    // TODO : save the map to the given path
+    Map.saveMap(EndGame.savedPath);
   }
 
   public static void OpenMenuAction(ActionEvent ignored) {
