@@ -43,6 +43,7 @@ public class Plumber extends Character {
           newPipe.connect(pickedupPump);
           newPipe.connect(a);
           Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
+          pickedupPump = null;
         } catch (ObjectFullException e) {
           Main.log("Object is full!");
         }

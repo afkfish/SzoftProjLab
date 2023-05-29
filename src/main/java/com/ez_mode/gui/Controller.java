@@ -163,6 +163,7 @@ public class Controller {
   public static void CharacterSpecAction(ActionEvent e) {
     if (Game.nomadTurn) {
       Game.nomadTurn = !Game.nomadTurn;
+      game.updateAction();
       tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       try {
         Nomad tempNomad = (Nomad) tempChar;
@@ -172,9 +173,9 @@ public class Controller {
         game.setSlippery();
       } catch (ClassCastException ignored) {
       }
-      game.updateAction();
     } else {
       Game.nomadTurn = !Game.nomadTurn;
+      game.updateAction();
       tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       try {
         Plumber tempPlumber = (Plumber) tempChar;
@@ -184,7 +185,6 @@ public class Controller {
         game.repairNode();
       } catch (ClassCastException ignored) {
       }
-      game.updateAction();
     }
   }
 

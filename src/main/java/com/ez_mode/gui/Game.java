@@ -2,6 +2,7 @@ package com.ez_mode.gui;
 
 import static com.ez_mode.Main.map;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
@@ -411,6 +412,13 @@ public class Game {
       Pipe ignored2 = (Pipe) Controller.tempNode;
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
+      Main.log("target of repair is not a pipe");
+    }
+    try{
+      Pump ignored3 = (Pump) Controller.tempNode;
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    }catch(Exception ignored){
+      Main.log("target of repair is not a pump");
     }
   }
 
