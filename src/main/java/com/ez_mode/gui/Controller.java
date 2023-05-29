@@ -74,7 +74,6 @@ public class Controller {
   public static void MoveUpAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.UP;
     try {
       assert tempChar != null;
@@ -96,7 +95,6 @@ public class Controller {
   public static void MoveLeftAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.LEFT;
     try {
       assert tempChar != null;
@@ -118,7 +116,6 @@ public class Controller {
   public static void MoveDownAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.DOWN;
     try {
       assert tempChar != null;
@@ -140,7 +137,6 @@ public class Controller {
   public static void MoveRightAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     direction = Direction.RIGHT;
     try {
       assert tempChar != null;
@@ -161,27 +157,23 @@ public class Controller {
 
   // two actions because one button
   public static void CharacterSpecAction(ActionEvent e) {
-    if (Game.nomadTurn) {
-      Game.nomadTurn = !Game.nomadTurn;
-      game.updateAction();
-      tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    Game.nomadTurn = !Game.nomadTurn;
+    game.updateAction();
+    System.err.println(Game.nomadTurn);
+    if (!Game.nomadTurn) { // because we are changing the turn before
+      System.err.println("Slippery pipe");
       try {
         Nomad tempNomad = (Nomad) tempChar;
         assert tempChar != null;
         tempNomad.setSlippery();
-        tempNode = tempNomad.getStandingOn();
         game.setSlippery();
       } catch (ClassCastException ignored) {
       }
     } else {
-      Game.nomadTurn = !Game.nomadTurn;
-      game.updateAction();
-      tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       try {
         Plumber tempPlumber = (Plumber) tempChar;
         assert tempChar != null;
         tempPlumber.repair();
-        tempNode = tempPlumber.getStandingOn();
         game.repairNode();
       } catch (ClassCastException ignored) {
       }
@@ -191,8 +183,6 @@ public class Controller {
   public static void BreakAction(ActionEvent e) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
     assert tempChar != null;
     tempChar.breakNode();
     game.breakNode();
@@ -202,7 +192,6 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     try {
-      tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
       tempChar.makePipeSticky();
       game.setSticky();
@@ -215,15 +204,15 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     try {
-      Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-      assert tempChar != null;
+      Plumber temp = (Plumber) tempChar;
+      assert temp != null;
       try {
         // if inventory is empty pick up
-        if (tempChar.getDraggedpipe() != null || tempChar.getPickedUpPipe() != null)
-          tempChar.PlacePipe();
-        // if not empty than place
-        else tempChar.PickupPipe((Pipe) tempChar.getStandingOn());
-      } catch (NotFoundExeption NOTignored) {
+        if (temp.getDraggedpipe() != null || temp.getPickedUpPipe() != null)
+          temp.PlacePipe();
+        // if not empty, then place
+        else temp.PickupPipe((Pipe) tempChar.getStandingOn());
+      } catch (NotFoundExeption ignored) {
       }
     } catch (ClassCastException ignored) {
     }
@@ -241,7 +230,7 @@ public class Controller {
       assert tempChar != null;
       // if inventory is empty pick up
       if (tempChar.getPickedupPump() != null) tempChar.PlacePump();
-      // if not empty than place
+      // if not empty, then place
       else tempChar.PickupPump();
     } catch (ClassCastException ignored) {
     }
@@ -252,11 +241,8 @@ public class Controller {
   }
 
   public static void SetPumpAction(ActionEvent e) {
-
-    game.updateAction();
     Game.nomadTurn = !Game.nomadTurn;
-    tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY());
-    int curIdx = tempChar.getStandingOn().getX() + (Game.gridNum * tempChar.getStandingOn().getY());
+    game.updateAction();
     Node upNeighbour =
         Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
     Node downNeighbour =
@@ -266,27 +252,27 @@ public class Controller {
     Node rightNeighbour =
         Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
     try {
-      tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-      assert tempChar != null;
+      Plumber ignored1 = (Plumber) tempChar;
+      assert ignored1 != null;
       try {
-        Pump tempPump = (Pump) tempNode;
+        Pump ignored2 = (Pump) tempNode;
         new PopUp();
+        Pipe inputPipe;
+        Pipe outputPipe;
         if (setChoice == 0) {
-          Pipe inputPipe = (Pipe) upNeighbour;
-          Pipe outputPipe = (Pipe) downNeighbour;
-          pump.setActiveInput(inputPipe);
-          pump.setActiveOutput(outputPipe);
+          inputPipe = (Pipe) upNeighbour;
+          outputPipe = (Pipe) downNeighbour;
         } else {
-          Pipe inputPipe = (Pipe) leftNeighbour;
-          Pipe outputPipe = (Pipe) rightNeighbour;
-          pump.setActiveInput(inputPipe);
-          pump.setActiveOutput(outputPipe);
+          inputPipe = (Pipe) leftNeighbour;
+          outputPipe = (Pipe) rightNeighbour;
         }
+        pump.setActiveInput(inputPipe);
+        pump.setActiveOutput(outputPipe);
         game.setPump();
-      } catch (Exception ex) {
+      } catch (ClassCastException ex) {
         System.out.println(ex.getMessage());
       }
-    } catch (Exception ex) {
+    } catch (ClassCastException ex) {
       System.out.println(ex.getMessage());
     }
   }

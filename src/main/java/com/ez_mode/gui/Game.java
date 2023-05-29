@@ -10,10 +10,7 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game {
@@ -223,9 +220,12 @@ public class Game {
    * slippery
    */
   public void updateAction() {
-    Character tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    Node tempNode = tempChar.getStandingOn();
-    System.out.println(nomadTurn);
+    playerIdx++;
+    playerIdx = playerIdx % (Menu.playerCount * 2);
+
+    Controller.tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    assert Controller.tempChar != null: "tempChar is null???";
+    Controller.tempNode = Controller.tempChar.getStandingOn();
     if (nomadTurn) {
       Image slipperypipeImage = slipperypipeIcon.getImage();
       Image slipperypipeModIcon =
@@ -236,7 +236,6 @@ public class Game {
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
 
       textField.setText(nomadNames.get(playerIdx / 2) + " Nomads turn");
-      playerIdx++;
     } else {
       Image repairImage = repairIcon.getImage();
       Image repairModIcon =
@@ -259,9 +258,8 @@ public class Game {
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
 
       textField.setText(plumberNames.get(playerIdx / 2) + " Plumbers turn");
-      playerIdx++;
     }
-    playerIdx = playerIdx % (Menu.playerCount * 2);
+
     /*
         // TODO: if the given node is in inventory: (white the if)
         Cistern tempCis = (Cistern) tempNode;
@@ -289,7 +287,7 @@ public class Game {
     for (int i = 0; i < gridNum - 1; i++) {
       for (int j = 0; j < gridNum; j++) {
         Node tempNode = Map.getNode(j, i);
-        updateNodeImage(tempNode, j + (gridNum * i), null);
+        updateNodeImage(tempNode, i * gridNum + j, null);
       }
     }
     updatePlayerNodes();
@@ -302,140 +300,138 @@ public class Game {
     int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
     Controller.prevIdx = Controller.prevNode.getX() + (gridNum * Controller.prevNode.getY());
 
-    getPlayerType(Controller.tempChar);
     updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     updateNodeImage(Controller.prevNode, Controller.prevIdx, null);
     updatePlayerNodes();
   }
 
   private void updateNodeImage(Node node, int idx, Character character) {
-    Image image;
+    Image nodeImage;
     switch (getNodeType(node)) {
       case 1:
-        image = cisternIcon.getImage();
+        nodeImage = cisternIcon.getImage();
         break;
       case 2:
-        Pipe tempPipe = (Pipe) node;
-        if (tempPipe.isBroken()) {
-          image = brokenpipeIcon.getImage();
-        } else if (tempPipe.isSticky()) {
-          image = stickypipeIcon.getImage();
-        } else if (tempPipe.isSlippery()) {
-          image = slipperypipeIcon.getImage();
-        } else {
-          image = pipeIcon.getImage();
-        }
+        nodeImage = getPipeImage(node, pipeIcon);
         break;
       case 3:
         if (node.isBroken()) {
-          image = brokenpumpIcon.getImage();
+          nodeImage = brokenpumpIcon.getImage();
         } else {
-          image = emptypumpIcon.getImage();
+          nodeImage = emptypumpIcon.getImage();
         }
         break;
       case 4:
-        image = waterspringIcon.getImage();
+        nodeImage = waterspringIcon.getImage();
         break;
       case 5:
-        image = waterpipeIcon.getImage();
+        nodeImage = getPipeImage(node, waterpipeIcon);
         break;
       case 6:
-        image = waterpumpIcon.getImage();
+        nodeImage = waterpumpIcon.getImage();
         break;
       default:
-        image = sandIcon.getImage();
+        nodeImage = sandIcon.getImage();
         break;
     }
-    if (character != null) {
-      createLayeredImage(image);
-      Image outImage = Game.outIcon.getImage();
-      Image outModIcon =
-          outImage.getScaledInstance(Game.fieldSize, Game.fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[idx].setIcon(new ImageIcon(outModIcon));
-    } else {
-      image = image.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-      mapButtons[idx].setIcon(new ImageIcon(image));
+
+    // if the player is standing on the node, add the player image to the node image
+    Image characterI = getPlayerImage(character);
+    if (characterI != null) {
+      nodeImage = createLayeredImage(nodeImage, characterI);
     }
+
+    nodeImage = nodeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    mapButtons[idx].setIcon(new ImageIcon(nodeImage));
+  }
+
+  private Image getPipeImage(Node pipe, ImageIcon pipeIcon) {
+    Pipe tempPipe = (Pipe) pipe;
+    Image nodeImage;
+    if (tempPipe.isBroken()) {
+      nodeImage = brokenpipeIcon.getImage();
+    } else if (tempPipe.isSticky()) {
+      nodeImage = createLayeredImage(pipeIcon.getImage(), stickypipeIcon.getImage());
+    } else if (tempPipe.isSlippery()) {
+      nodeImage = createLayeredImage(pipeIcon.getImage(), slipperypipeIcon.getImage());
+    } else {
+      nodeImage = pipeIcon.getImage();
+    }
+    return nodeImage;
   }
 
   /** The current character's break action in the gui, with the correct images */
   public void breakNode() {
-    // get character type
-    getPlayerType(Controller.tempChar);
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
+    int idx = Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be broken by both characters
     try {
       Pipe ignored = (Pipe) Controller.tempNode;
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
+      Main.log("Target of break is not a pipe");
     }
   }
 
   public void setSticky() {
-    getPlayerType(Controller.tempChar);
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
+    int idx = Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made sticky by both characters
     try {
       Pipe ignored = (Pipe) Controller.tempNode;
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
+      Main.log("Target of sticky is not a pipe");
     }
   }
 
   public void setSlippery() {
-    getPlayerType(Controller.tempChar);
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
+    int idx = Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {
       Nomad ignored1 = (Nomad) Controller.tempChar;
       Pipe ignored2 = (Pipe) Controller.tempNode;
+      System.err.println("Slippery pipe\n\n\n");
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
+      Main.log("Target of slippery is not a pipe or character is not a nomad");
     }
   }
 
   public void repairNode() {
-    getPlayerType(Controller.tempChar);
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
+    int idx = Controller.tempChar.getStandingOn().getX()
             + (gridNum * Controller.tempChar.getStandingOn().getY());
     // only the Pipe nodes can be made slippery by nomad characters
     try {
       Plumber ignored1 = (Plumber) Controller.tempChar;
-      System.out.println("RepairNode character is a plumber");
-      Pipe ignored2 = (Pipe) Controller.tempNode;
-      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
-      Main.log("target of repair is not a pipe");
+      Main.log("Repair failed: character is not a plumber");
     }
-    try {
-      Pump ignored3 = (Pump) Controller.tempNode;
+    int type = getNodeType(Controller.tempNode);
+    if (type == 2 || type == 3) {
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    } catch (Exception ignored) {
-      Main.log("target of repair is not a pump");
+    } else {
+      Main.log("Repair failed: target is not a pump or pipe");
     }
   }
 
   public void setPump() {} // TODO: implement
 
   /** The getter for the current character's type */
-  private void getPlayerType(Character character) {
+  private Image getPlayerImage(Character character) {
+    if (character == null) return null;
     try {
       Nomad ignored = (Nomad) character;
-      overlay = nomadIcon.getImage();
+      return nomadIcon.getImage();
     } catch (Exception e) {
       try {
         Plumber ignored = (Plumber) character;
-        overlay = plumberIcon.getImage();
+        return plumberIcon.getImage();
       } catch (Exception ignored) {
       }
     }
+    return null;
   }
 
   /** The getter for the current node's type */
@@ -472,29 +468,24 @@ public class Game {
    *
    * @param image the buffered image
    */
-  private void createLayeredImage(Image image) {
-    try {
-      int w = Math.max(image.getWidth(null), overlay.getWidth(null));
-      int h = Math.max(image.getHeight(null), overlay.getHeight(null));
-      BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+  private Image createLayeredImage(Image image, Image overlay) {
+    int w = Math.max(image.getWidth(null), overlay.getWidth(null));
+    int h = Math.max(image.getHeight(null), overlay.getHeight(null));
+    BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
-      // adds the two layers of the images
-      Graphics g = combined.getGraphics();
-      g.drawImage(image, 0, 0, null);
-      g.drawImage(overlay, 0, 0, null);
-      g.dispose();
+    // adds the two layers of the images
+    Graphics g = combined.getGraphics();
+    g.drawImage(image, 0, 0, null);
+    g.drawImage(overlay, 0, 0, null);
+    g.dispose();
 
-      // writes the combined image
-      ImageIO.write(combined, "PNG", new File(Game.outImagePath));
-    } catch (IOException ignored) {
-    }
+    return combined;
   }
 
   private void updatePlayerNodes() {
     try {
       for (int i = 0; i < Map.playerCount(); i++) {
         Character tempChar = Map.getPlayer(i);
-        getPlayerType(tempChar);
         Node temp = tempChar.getStandingOn();
         int coord = temp.getX() + (gridNum * temp.getY());
 
