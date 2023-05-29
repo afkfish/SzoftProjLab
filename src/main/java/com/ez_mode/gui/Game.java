@@ -414,10 +414,10 @@ public class Game {
     } catch (Exception ignored) {
       Main.log("target of repair is not a pipe");
     }
-    try{
+    try {
       Pump ignored3 = (Pump) Controller.tempNode;
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    }catch(Exception ignored){
+    } catch (Exception ignored) {
       Main.log("target of repair is not a pump");
     }
   }
