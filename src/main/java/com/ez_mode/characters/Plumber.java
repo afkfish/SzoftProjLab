@@ -11,13 +11,12 @@ import com.ez_mode.objects.*;
  * and pupms and reroute the water to the cisterns.
  */
 public class Plumber extends Character {
-  public Plumber(String name) {
-    super(name);
-  }
-
   private Pump pickedupPump;
   private Pipe draggedpipe;
   private Pipe pickedUpPipe;
+  public Plumber(String name) {
+    super(name);
+  }
 
   /** Repairs the node the player is standing on. */
   public void repair() {
@@ -63,12 +62,12 @@ public class Plumber extends Character {
     return pickedUpPipe;
   }
 
-  public Pump getPickedupPump() {
-    return pickedupPump;
-  }
-
   public void setPickedUpPipe(Pipe p) {
     pickedUpPipe = p;
+  }
+
+  public Pump getPickedupPump() {
+    return pickedupPump;
   }
 
   public void setPickedupPump(Pump p) {

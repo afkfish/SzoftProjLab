@@ -27,9 +27,9 @@ public class Controller {
   /**
    * Actions in Menu class
    *
-   * @param e action event when a button is pressed
+   * @param ignored action event when a button is pressed
    */
-  public static void MenuStartAction(ActionEvent e) {
+  public static void MenuStartAction(ActionEvent ignored) {
     String pNames;
     String nNames;
     Menu.frame.dispose();
@@ -62,16 +62,16 @@ public class Controller {
     game = new Game();
   }
 
-  public static void MenuExitAction(ActionEvent e) {
+  public static void MenuExitAction(ActionEvent ignored) {
     Menu.frame.dispose();
   }
 
   /**
    * Actions in Game class
    *
-   * @param e action event when a button is pressed
+   * @param ignored action event when a button is pressed
    */
-  public static void MoveUpAction(ActionEvent e) {
+  public static void MoveUpAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     direction = Direction.UP;
@@ -84,7 +84,7 @@ public class Controller {
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
         game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
         tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
@@ -92,7 +92,7 @@ public class Controller {
     }
   }
 
-  public static void MoveLeftAction(ActionEvent e) {
+  public static void MoveLeftAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     direction = Direction.LEFT;
@@ -105,7 +105,7 @@ public class Controller {
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
         game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
         tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
@@ -113,7 +113,7 @@ public class Controller {
     }
   }
 
-  public static void MoveDownAction(ActionEvent e) {
+  public static void MoveDownAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     direction = Direction.DOWN;
@@ -126,7 +126,7 @@ public class Controller {
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
         game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
         tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
@@ -134,7 +134,7 @@ public class Controller {
     }
   }
 
-  public static void MoveRightAction(ActionEvent e) {
+  public static void MoveRightAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     direction = Direction.RIGHT;
@@ -147,7 +147,7 @@ public class Controller {
         tempChar.moveTo(tempNode);
         tempNode = tempChar.getStandingOn();
         game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored) {
+      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
         tempNode = prevNode;
       }
     } catch (ArrayIndexOutOfBoundsException ex) {
@@ -156,7 +156,7 @@ public class Controller {
   }
 
   // two actions because one button
-  public static void CharacterSpecAction(ActionEvent e) {
+  public static void CharacterSpecAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     System.err.println(Game.nomadTurn);
@@ -167,7 +167,7 @@ public class Controller {
         assert tempChar != null;
         tempNomad.setSlippery();
         game.setSlippery();
-      } catch (ClassCastException ignored) {
+      } catch (ClassCastException ignored1) {
       }
     } else {
       try {
@@ -175,12 +175,12 @@ public class Controller {
         assert tempChar != null;
         tempPlumber.repair();
         game.repairNode();
-      } catch (ClassCastException ignored) {
+      } catch (ClassCastException ignored1) {
       }
     }
   }
 
-  public static void BreakAction(ActionEvent e) {
+  public static void BreakAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     assert tempChar != null;
@@ -188,19 +188,19 @@ public class Controller {
     game.breakNode();
   }
 
-  public static void StickyAction(ActionEvent e) {
+  public static void StickyAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     try {
       assert tempChar != null;
       tempChar.makePipeSticky();
       game.setSticky();
-    } catch (ClassCastException ignored) {
+    } catch (ClassCastException ignored1) {
     }
   }
 
   // TODO: check if its working, for that we need the cistern ticking (currently it is not)
-  public static void PickUpPipeAction(ActionEvent e) {
+  public static void PickUpPipeAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     try {
@@ -211,9 +211,9 @@ public class Controller {
         if (temp.getDraggedpipe() != null || temp.getPickedUpPipe() != null) temp.PlacePipe();
         // if not empty, then place
         else temp.PickupPipe((Pipe) tempChar.getStandingOn());
-      } catch (NotFoundExeption ignored) {
+      } catch (NotFoundExeption ignored1) {
       }
-    } catch (ClassCastException ignored) {
+    } catch (ClassCastException ignored1) {
     }
     /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
     assert tempChar != null;
@@ -221,7 +221,7 @@ public class Controller {
   }
 
   // TODO: check if its working, for that we need the cistern ticking (currently it is not)
-  public static void PickUpPumpAction(ActionEvent e) {
+  public static void PickUpPumpAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     try {
@@ -231,7 +231,7 @@ public class Controller {
       if (tempChar.getPickedupPump() != null) tempChar.PlacePump();
       // if not empty, then place
       else tempChar.PickupPump();
-    } catch (ClassCastException ignored) {
+    } catch (ClassCastException ignored1) {
     }
 
     /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
@@ -239,7 +239,7 @@ public class Controller {
     tempChar.PlacePump();*/
   }
 
-  public static void SetPumpAction(ActionEvent e) {
+  public static void SetPumpAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     Node upNeighbour =
@@ -276,7 +276,7 @@ public class Controller {
     }
   }
 
-  public static void GameExitAction(ActionEvent e) {
+  public static void GameExitAction(ActionEvent ignored) {
     Game.frame.dispose();
     new EndGame();
   }
@@ -284,20 +284,20 @@ public class Controller {
   /**
    * Actions in EndGame class
    *
-   * @param e action event when a button is pressed
+   * @param ignored action event when a button is pressed
    */
-  public static void EndGameExitAction(ActionEvent e) {
+  public static void EndGameExitAction(ActionEvent ignored) {
     EndGame.frame.dispose();
     EndGame.savedPath = EndGame.saveTextField.getText();
     // TODO : save the map to the given path
   }
 
-  public static void OpenMenuAction(ActionEvent e) {
+  public static void OpenMenuAction(ActionEvent ignored) {
     EndGame.frame.dispose();
     new Menu();
   }
 
-  public static void LoadMapAction(ActionEvent e) {
+  public static void LoadMapAction(ActionEvent ignored) {
     // TODO : load/create the map
   }
 

@@ -14,17 +14,11 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class Main {
-  private enum Version {
-    SKELETON,
-    PROTOTYPE,
-    GRAPHICAL
-  }
-
-  private static boolean running = true;
+  public static final Map map = new Map(10);
   private static final StringBuilder logs = new StringBuilder();
   private static final HashMap<String, Runnable> commands = new HashMap<>();
-  public static final Map map = new Map(10);
   public static Version version = Version.GRAPHICAL;
+  private static boolean running = true;
   private static Scanner scanner;
 
   /** Sets up the actions in the menu */
@@ -509,5 +503,11 @@ public class Main {
       input = scanner.nextLine();
       saveLog(input);
     }
+  }
+
+  private enum Version {
+    SKELETON,
+    PROTOTYPE,
+    GRAPHICAL
   }
 }

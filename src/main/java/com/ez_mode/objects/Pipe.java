@@ -18,14 +18,6 @@ public class Pipe extends Node {
   private boolean isSlippery;
   private int unbreakableTill;
 
-  public boolean isSlippery() {
-    return isSlippery;
-  }
-
-  public boolean isSticky() {
-    return isStikcy;
-  }
-
   public Pipe(int x, int y) {
     super(1, 2, x, y);
     isSlippery = false;
@@ -38,6 +30,14 @@ public class Pipe extends Node {
     isSlippery = false;
     isStikcy = false;
     unbreakableTill = 0;
+  }
+
+  public boolean isSlippery() {
+    return isSlippery;
+  }
+
+  public boolean isSticky() {
+    return isStikcy;
   }
 
   public double getCapacity() {

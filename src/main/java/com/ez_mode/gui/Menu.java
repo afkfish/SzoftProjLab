@@ -6,21 +6,19 @@ import javax.swing.*;
 public class Menu {
   /** Java Swing components for the Menu class */
   static JFrame frame = new JFrame();
-
+  static JTextField loadTextField = new JTextField();
+  static JTextField plumberNamesTextField = new JTextField();
+  static JTextField nomadNamesTextField = new JTextField();
+  static JTextField playerCountTextField = new JTextField();
+  static int playerCount;
+  static String loadedPath;
   JButton startButton = new JButton();
   JTextField title = new JTextField();
   JTextField loadText = new JTextField();
-  static JTextField loadTextField = new JTextField();
   JTextField plumberNamesText = new JTextField();
-  static JTextField plumberNamesTextField = new JTextField();
   JTextField nomadNamesText = new JTextField();
-  static JTextField nomadNamesTextField = new JTextField();
   JTextField playerCountText = new JTextField();
-  static JTextField playerCountTextField = new JTextField();
   JButton exitButton = new JButton();
-
-  static int playerCount;
-  static String loadedPath;
 
   public Menu() {
     title.setBackground(new Color(50, 50, 50));

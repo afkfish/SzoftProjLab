@@ -25,19 +25,15 @@ import org.apache.logging.log4j.Logger;
  */
 public class Map implements Tickable {
 
-  private final Logger logger = LogManager.getLogger(Map.class);
-
-  /** The ArrayList representation of the game. This map contains every object. */
-  private static Node[][] gameMap = null;
-
   /** The list of all players. */
   private static final ArrayList<Character> players = new ArrayList<>();
-
   /** The amount of water, lost by the nomads sabotaging the nodes. */
   public static double waterLost = 0;
-
   /** The amount of water, arrived to the cisterns. */
   public static double waterArrived = 0;
+  /** The ArrayList representation of the game. This map contains every object. */
+  private static Node[][] gameMap = null;
+  private final Logger logger = LogManager.getLogger(Map.class);
 
   public Map(int size) {
     gameMap = new Node[size][size];
@@ -151,177 +147,6 @@ public class Map implements Tickable {
       } catch (ObjectFullException e) {
         Main.log(e.getMessage());
       }
-    }
-  }
-
-  /**
-   * Loads a map from a file
-   *
-   * @param path the file's path
-   */
-  public void loadMap(String path) {
-    Main.log("Loading map...");
-    if (!path.endsWith(".json")) {
-      Main.log("The file must be a .json configuration file!");
-      return;
-    }
-    try (FileInputStream fileInputStream = new FileInputStream("testMap.json")) {
-      NotJSONTokener root = new NotJSONTokener(fileInputStream);
-      NotJSONObject rootObject = new NotJSONObject(root);
-
-      NotJSONArray nodeList = rootObject.getNotJSONArray("map");
-      for (int i = 0; i < nodeList.length(); i++) {
-        NotJSONObject node = nodeList.getJSONObject(i);
-        Node temp;
-        switch (node.getString("type")) {
-          case "cistern":
-            {
-              temp = new Cistern(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          case "pipe":
-            {
-              temp = new Pipe(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          case "pump":
-            {
-              temp = new Pump(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          case "waterspring":
-            {
-              temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
-              break;
-            }
-          default:
-            {
-              Main.log("Unknown node type!");
-              continue;
-            }
-        }
-        gameMap[node.getInt("x")][node.getInt("y")] = temp;
-        Main.log(String.valueOf(node));
-      }
-
-      // iterate over the nodes again and set the connections
-      for (int i = 0; i < nodeList.length(); i++) {
-        NotJSONObject node = nodeList.getJSONObject(i);
-        Node temp = gameMap[node.getInt("x")][node.getInt("y")];
-        if (node.getString("type").equals("waterspring")
-            || node.getString("type").equals("cistern")) {
-          continue;
-        }
-        NotJSONArray connections = node.getNotJSONArray("connections");
-
-        for (int j = 0; j < connections.length(); j++) {
-          NotJSONObject connection = connections.getJSONObject(j);
-          Node neighbour = gameMap[connection.getInt("x")][connection.getInt("y")];
-          if (neighbour == null) {
-            Main.log(
-                "There is no node at the given coordinates: "
-                    + connection.getInt("x")
-                    + ", "
-                    + connection.getInt("y")
-                    + "!");
-            Main.log("Skipping connection...");
-            continue;
-          }
-          temp.connect(neighbour);
-        }
-      }
-
-      NotJSONArray playerList = rootObject.getNotJSONArray("players");
-      for (int i = 0; i < playerList.length(); i++) {
-        NotJSONObject player = playerList.getJSONObject(i);
-        Character temp;
-        switch (player.getString("type")) {
-          case "plumber":
-            {
-              temp = new Plumber(player.getString("name"));
-              break;
-            }
-          case "nomad":
-            {
-              temp = new Nomad(player.getString("name"));
-              break;
-            }
-          default:
-            {
-              Main.log("Unknown player type!");
-              continue;
-            }
-        }
-        Main.log(String.valueOf(player));
-        players.add(temp);
-        temp.placeTo(gameMap[player.getInt("x")][player.getInt("y")]);
-      }
-      Main.log("Map loaded successfully!");
-    } catch (SecurityException | IOException e) {
-      Main.log("There was an error loading the map!");
-    } catch (ObjectFullException e) {
-      Main.log("Some objects are full and cannot have more connections! The map is invalid!");
-    }
-  }
-
-  /**
-   * Saves the map to a file
-   *
-   * @param path the file's path
-   */
-  public void saveMap(String path) {
-    Main.log("Saving map...");
-    assert path.endsWith(".json") : "The file must be a .json configuration file!";
-    try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
-      // create the root object
-      NotJSONObject root = new NotJSONObject();
-      root.put("size", gameMap.length);
-      NotJSONArray playerList = new NotJSONArray();
-      // iterate over the players and add them to the list
-      for (Character player : players) {
-        NotJSONObject playerObject = new NotJSONObject();
-        playerObject.put("name", player.getName());
-        playerObject.put("type", player.getClass().getSimpleName().toLowerCase());
-        playerObject.put("x", player.getStandingOn().getX());
-        playerObject.put("y", player.getStandingOn().getY());
-        playerObject.put("inventory", new NotJSONObject());
-        playerList.put(playerObject);
-      }
-      NotJSONArray nodeList = new NotJSONArray();
-      // iterate over the nodes and add them to the list
-      for (int i = 0; i < gameMap.length; i++) {
-        for (int j = 0; j < gameMap[i].length; j++) {
-          if (gameMap[i][j] == null) {
-            continue;
-          }
-          NotJSONObject node = new NotJSONObject();
-          node.put("type", gameMap[i][j].getClass().getSimpleName().toLowerCase());
-          node.put("x", i);
-          node.put("y", j);
-          if (node.getString("type").equals("waterspring")
-              || node.getString("type").equals("cistern")) {
-            nodeList.put(node);
-            continue;
-          }
-          NotJSONArray connections = new NotJSONArray();
-          for (Node neighbour : gameMap[i][j].getNeighbours()) {
-            NotJSONObject connection = new NotJSONObject();
-            connection.put("x", neighbour.getX());
-            connection.put("y", neighbour.getY());
-            connections.put(connection);
-          }
-          node.put("connections", connections);
-          nodeList.put(node);
-        }
-      }
-
-      root.put("players", playerList);
-      root.put("map", nodeList);
-
-      fileOutputStream.write(root.toString(2).getBytes());
-      Main.log("Map saved successfully!");
-    } catch (IOException e) {
-      Main.log("There was an error saving the map!");
     }
   }
 
@@ -443,6 +268,151 @@ public class Map implements Tickable {
   /** Clears the map */
   public static void clearMap() {
     gameMap = new Node[gameMap.length][gameMap[0].length];
+  }
+
+  /**
+   * Loads a map from a file
+   *
+   * @param path the file's path
+   */
+  public void loadMap(String path) {
+    Main.log("Loading map...");
+    if (!path.endsWith(".json")) {
+      Main.log("The file must be a .json configuration file!");
+      return;
+    }
+    try (FileInputStream fileInputStream = new FileInputStream("testMap.json")) {
+      NotJSONTokener root = new NotJSONTokener(fileInputStream);
+      NotJSONObject rootObject = new NotJSONObject(root);
+
+      NotJSONArray nodeList = rootObject.getNotJSONArray("map");
+      for (int i = 0; i < nodeList.length(); i++) {
+        NotJSONObject node = nodeList.getJSONObject(i);
+        Node temp;
+        switch (node.getString("type")) {
+          case "cistern" -> temp = new Cistern(node.getInt("x"), node.getInt("y"));
+          case "pipe" -> temp = new Pipe(node.getInt("x"), node.getInt("y"));
+          case "pump" -> temp = new Pump(node.getInt("x"), node.getInt("y"));
+          case "waterspring" -> temp = new WaterSpring(node.getInt("x"), node.getInt("y"));
+          default -> {
+            Main.log("Unknown node type!");
+            continue;
+          }
+        }
+        gameMap[node.getInt("x")][node.getInt("y")] = temp;
+        Main.log(String.valueOf(node));
+      }
+
+      // iterate over the nodes again and set the connections
+      for (int i = 0; i < nodeList.length(); i++) {
+        NotJSONObject node = nodeList.getJSONObject(i);
+        Node temp = gameMap[node.getInt("x")][node.getInt("y")];
+        if (node.getString("type").equals("waterspring")
+            || node.getString("type").equals("cistern")) {
+          continue;
+        }
+        NotJSONArray connections = node.getNotJSONArray("connections");
+
+        for (int j = 0; j < connections.length(); j++) {
+          NotJSONObject connection = connections.getJSONObject(j);
+          Node neighbour = gameMap[connection.getInt("x")][connection.getInt("y")];
+          if (neighbour == null) {
+            Main.log(
+                "There is no node at the given coordinates: "
+                    + connection.getInt("x")
+                    + ", "
+                    + connection.getInt("y")
+                    + "!");
+            Main.log("Skipping connection...");
+            continue;
+          }
+          temp.connect(neighbour);
+        }
+      }
+
+      NotJSONArray playerList = rootObject.getNotJSONArray("players");
+      for (int i = 0; i < playerList.length(); i++) {
+        NotJSONObject player = playerList.getJSONObject(i);
+        Character temp;
+        switch (player.getString("type")) {
+          case "plumber" -> temp = new Plumber(player.getString("name"));
+          case "nomad" -> temp = new Nomad(player.getString("name"));
+          default -> {
+            Main.log("Unknown player type!");
+            continue;
+          }
+        }
+        Main.log(String.valueOf(player));
+        players.add(temp);
+        temp.placeTo(gameMap[player.getInt("x")][player.getInt("y")]);
+      }
+      Main.log("Map loaded successfully!");
+    } catch (SecurityException | IOException e) {
+      Main.log("There was an error loading the map!");
+    } catch (ObjectFullException e) {
+      Main.log("Some objects are full and cannot have more connections! The map is invalid!");
+    }
+  }
+
+  /**
+   * Saves the map to a file
+   *
+   * @param path the file's path
+   */
+  public void saveMap(String path) {
+    Main.log("Saving map...");
+    assert path.endsWith(".json") : "The file must be a .json configuration file!";
+    try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
+      // create the root object
+      NotJSONObject root = new NotJSONObject();
+      root.put("size", gameMap.length);
+      NotJSONArray playerList = new NotJSONArray();
+      // iterate over the players and add them to the list
+      for (Character player : players) {
+        NotJSONObject playerObject = new NotJSONObject();
+        playerObject.put("name", player.getName());
+        playerObject.put("type", player.getClass().getSimpleName().toLowerCase());
+        playerObject.put("x", player.getStandingOn().getX());
+        playerObject.put("y", player.getStandingOn().getY());
+        playerObject.put("inventory", new NotJSONObject());
+        playerList.put(playerObject);
+      }
+      NotJSONArray nodeList = new NotJSONArray();
+      // iterate over the nodes and add them to the list
+      for (int i = 0; i < gameMap.length; i++) {
+        for (int j = 0; j < gameMap[i].length; j++) {
+          if (gameMap[i][j] == null) {
+            continue;
+          }
+          NotJSONObject node = new NotJSONObject();
+          node.put("type", gameMap[i][j].getClass().getSimpleName().toLowerCase());
+          node.put("x", i);
+          node.put("y", j);
+          if (node.getString("type").equals("waterspring")
+              || node.getString("type").equals("cistern")) {
+            nodeList.put(node);
+            continue;
+          }
+          NotJSONArray connections = new NotJSONArray();
+          for (Node neighbour : gameMap[i][j].getNeighbours()) {
+            NotJSONObject connection = new NotJSONObject();
+            connection.put("x", neighbour.getX());
+            connection.put("y", neighbour.getY());
+            connections.put(connection);
+          }
+          node.put("connections", connections);
+          nodeList.put(node);
+        }
+      }
+
+      root.put("players", playerList);
+      root.put("map", nodeList);
+
+      fileOutputStream.write(root.toString(2).getBytes());
+      Main.log("Map saved successfully!");
+    } catch (IOException e) {
+      Main.log("There was an error saving the map!");
+    }
   }
 
   /** ticks every node on map */

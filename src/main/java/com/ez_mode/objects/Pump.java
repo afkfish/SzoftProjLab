@@ -16,24 +16,30 @@ import java.util.Random;
 public class Pump extends Node {
   // TODO: Make that this is used when calculating the flow rate
   private double internalBufferLevel = 0;
+  private Pipe activeInput;
+  private Pipe activeOutput;
 
   public Pump(int x, int y) {
     super(5, 4, x, y);
   }
-
   public Pump() {
     super(5, 4, -1, -1);
   }
-
-  private Pipe activeInput;
-  private Pipe activeOutput;
 
   public Pipe getActiveOutput() {
     return activeOutput;
   }
 
+  public void setActiveOutput(Pipe p) {
+    activeOutput = p;
+  }
+
   public Pipe getActiveInput() {
     return activeInput;
+  }
+
+  public void setActiveInput(Pipe p) {
+    activeInput = p;
   }
 
   /**
@@ -84,14 +90,6 @@ public class Pump extends Node {
         String.format("Player <%s> tried to make a pump sticky/slippery.", c.getName()));
   }
 
-  public void setActiveInput(Pipe p) {
-    activeInput = p;
-  }
-
-  public void setActiveOutput(Pipe p) {
-    activeOutput = p;
-  }
-
   /** Calculates the water flow rate */
   @Override
   public void calculateFlowRate() {
@@ -107,7 +105,6 @@ public class Pump extends Node {
         this.setFlowRate(min(this.internalBufferLevel, activeOutput.getCapacity()));
         activeOutput.flowRate += flowRate;
       } else {
-        return;
       }
     } else {
       this.setFlowRate(0);

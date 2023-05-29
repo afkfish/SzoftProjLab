@@ -46,14 +46,6 @@ public abstract class Node implements Tickable {
   /** The amount of water flowing through this object. */
   protected double flowRate = 0;
 
-  public double getFlowRate() {
-    return flowRate;
-  }
-
-  public boolean isBroken() {
-    return isBroken;
-  }
-
   protected Node(int maxCharacters, int maxConnections, int x, int y) {
     Random random = new Random();
     this.uuid = this.getClass().getSimpleName() + random.nextInt(100);
@@ -62,6 +54,18 @@ public abstract class Node implements Tickable {
     this.maxConnections = maxConnections;
     this.x = x;
     this.y = y;
+  }
+
+  public double getFlowRate() {
+    return flowRate;
+  }
+
+  public void setFlowRate(double flowRate) {
+    this.flowRate = flowRate;
+  }
+
+  public boolean isBroken() {
+    return isBroken;
   }
 
   public String getUuid() {
@@ -78,8 +82,7 @@ public abstract class Node implements Tickable {
   }
 
   public boolean fullOfConn() {
-    if (this.neighbours.size() >= this.maxConnections) return true;
-    return false;
+    return this.neighbours.size() >= this.maxConnections;
   }
 
   public void addCharacter(Character character)
@@ -140,10 +143,6 @@ public abstract class Node implements Tickable {
       this.sources.remove(source);
       this.absorbers.forEach(node -> node.removeFlowRate(this, flowRate));
     }
-  }
-
-  public void setFlowRate(double flowRate) {
-    this.flowRate = flowRate;
   }
 
   @Override
