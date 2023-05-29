@@ -146,7 +146,6 @@ public class Map implements Tickable {
    * @param pipe the pipe we want to connect to
    * @param node the node we want to connect
    */
-
   private static void connectIfNeighbouring(Pipe pipe, Node node) {
     if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
                 && (node.getY() == pipe.getY()))
