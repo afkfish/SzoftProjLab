@@ -58,7 +58,11 @@ public class Controller {
       else Game.playerNames.add(Game.nomadNames.get(n++));
     }
 
-    Map.fillMap(Menu.playerCount);
+    if (Menu.loadTextField.getText().isEmpty())
+      Map.fillMap(Menu.playerCount);
+    else
+      Map.loadMap(Menu.loadedPath);
+
     game = new Game();
   }
 
@@ -298,7 +302,9 @@ public class Controller {
   }
 
   public static void LoadMapAction(ActionEvent ignored) {
-    // TODO : load/create the map
+    Menu.frame.dispose();
+    Menu.loadedPath = Menu.loadTextField.getText();
+    Map.loadMap(Menu.loadedPath);
   }
 
   public enum Direction {
