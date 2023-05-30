@@ -168,13 +168,9 @@ public abstract class Node implements Tickable {
     // If the pipe is broken or any of its connectors are not connected, then it loses water
     absorbers.clear();
     sources.clear();
-    for (Node nodi:
-            neighbours) {
-      if (flowRate<nodi.flowRate)
-        sources.add(nodi);
-      else if(flowRate>nodi.flowRate)
-        absorbers.add(nodi);
-
+    for (Node nodi : neighbours) {
+      if (flowRate < nodi.flowRate) sources.add(nodi);
+      else if (flowRate > nodi.flowRate) absorbers.add(nodi);
     }
     if (this.isBroken) {
       this.logger.warn("Pipe is broken, losing water.");
