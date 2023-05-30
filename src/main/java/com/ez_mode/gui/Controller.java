@@ -8,6 +8,7 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
+import com.ez_mode.objects.Cistern;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
@@ -213,35 +214,40 @@ public class Controller {
       try {
         tempNode = tempPlumber.getStandingOn();
         assert tempNode != null;
-        // if not empty, then place
-        if (tempPlumber.getDraggedpipe() != null || tempPlumber.getPickedUpPipe() != null)
-          tempPlumber.PlacePipe();
-        // if inventory is empty pick up
-        else {
-          Pipe tempPipe = new Pipe();
-          new PopUp();
+        Pipe tempPipe = new Pipe();
+        new PopUp(false, tempPlumber);
+        if (PopUp.place) {
+          tempPlumber.PlacePipe(setChoice);
+          switch (setChoice) {
+            case 0 -> tempNode = Map.getNode(tempNode.getX(), tempNode.getY() - 1);
+            case 1 -> tempNode = Map.getNode(tempNode.getX(), tempNode.getY() + 1);
+            case 2 -> tempNode = Map.getNode(tempNode.getX() - 1, tempNode.getY());
+            case 3 -> tempNode = Map.getNode(tempNode.getX() + 1, tempNode.getY());
+          }
+          game.UpdateField();
+        } else {
           Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
           try {
             upNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
           } catch (ArrayIndexOutOfBoundsException e) {
             upNeighbour = null;
           }
           try {
             downNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
           } catch (ArrayIndexOutOfBoundsException e) {
             downNeighbour = null;
           }
           try {
             leftNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+                    Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
           } catch (ArrayIndexOutOfBoundsException e) {
             leftNeighbour = null;
           }
           try {
             rightNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+                    Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
           } catch (ArrayIndexOutOfBoundsException e) {
             rightNeighbour = null;
           }
@@ -250,14 +256,16 @@ public class Controller {
             case 1 -> tempPipe = (Pipe) downNeighbour;
             case 2 -> tempPipe = (Pipe) leftNeighbour;
             case 3 -> tempPipe = (Pipe) rightNeighbour;
+            case 4 -> tempPipe = ((Cistern) tempChar.getStandingOn()).MakePipe();
           }
           tempPlumber.PickupPipe(tempPipe);
           tempNode = tempPipe;
-          game.UpdateField();
         }
+
       } catch (NotFoundExeption ignored1) {
       }
     } catch (ClassCastException ignored1) {
+      JOptionPane.showMessageDialog(null, "You are not standing on a cistern!");
     }
   }
 
@@ -319,10 +327,10 @@ public class Controller {
       assert tempChar != null;
       try {
         Pump ignored2 = (Pump) tempNode;
-        new PopUp();
+        new PopUp(true, null);
         Pipe inputPipe;
         Pipe outputPipe;
-        if (setChoice == 0) {
+        if (setChoice == 0 | setChoice == 1) {
           inputPipe = (Pipe) upNeighbour;
           outputPipe = (Pipe) downNeighbour;
         } else {

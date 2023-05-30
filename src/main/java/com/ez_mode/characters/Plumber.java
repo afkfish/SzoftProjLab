@@ -101,10 +101,15 @@ public class Plumber extends Character {
   }
 
   /** A plumber can place a pipe onto an empty field if it has one in its inventory. */
-  public void PlacePipe() {
+  public void PlacePipe(int dir) {
     try {
       if (draggedpipe != null) {
-        this.getEmptyPlace(draggedpipe, null);
+        switch (dir) {
+          case 0 -> draggedpipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() - 1);
+          case 1 -> draggedpipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() + 1);
+          case 2 -> draggedpipe.setPos(this.getStandingOn().getX() - 1, this.getStandingOn().getY());
+          case 3 -> draggedpipe.setPos(this.getStandingOn().getX() + 1, this.getStandingOn().getY());
+        }
         standingOn.connect(draggedpipe);
         Map.removeNode(draggedpipe);
         Map.addNode(draggedpipe, draggedpipe.getX(), draggedpipe.getY());
@@ -113,7 +118,12 @@ public class Plumber extends Character {
           draggedpipe = null;
         }
       } else if (pickedUpPipe != null) {
-        this.getEmptyPlace(pickedUpPipe, null);
+        switch (dir) {
+          case 0 -> pickedUpPipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() - 1);
+          case 1 -> pickedUpPipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() + 1);
+          case 2 -> pickedUpPipe.setPos(this.getStandingOn().getX() - 1, this.getStandingOn().getY());
+          case 3 -> pickedUpPipe.setPos(this.getStandingOn().getX() + 1, this.getStandingOn().getY());
+        }
         standingOn.connect(pickedUpPipe);
         if (this.getStandingOn().getNeighbours().contains(pickedUpPipe)) {
           Map.addNode(pickedUpPipe, pickedUpPipe.getX(), pickedUpPipe.getY());

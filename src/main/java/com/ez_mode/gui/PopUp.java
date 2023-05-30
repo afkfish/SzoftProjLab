@@ -1,56 +1,89 @@
 package com.ez_mode.gui;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.ez_mode.characters.Plumber;
+
 import javax.swing.*;
 
 public class PopUp {
 
-  Object[] options = {"Pick up", "Place", "Up", "Down", "Left", "Right"};
+  Object[] options = {"Pick up", "Place"};
+  Object[] pickUpDirections = {"Up", "Down", "Left", "Right", "From cistern"};
+  Object[] placeDirections = {"Up", "Down", "Left", "Right"};
 
-  Set<Integer> choices = new HashSet<>();
+  static boolean place = false;
 
-  public PopUp() {
-    int maxSelections = 2;
+  public PopUp(boolean set, Plumber tempPlumber) {
+    if (!set) {
+      int action =
+              JOptionPane.showOptionDialog(
+                      null,
+                      "Pick up or place the node",
+                      "Action",
+                      JOptionPane.DEFAULT_OPTION,
+                      JOptionPane.QUESTION_MESSAGE,
+                      null,
+                      options,
+                      options[0]);
 
-    while (choices.size() < maxSelections) {
-      int choice =
-          JOptionPane.showOptionDialog(
-              null,
-              "Pick up or place the node and its direction: (Select "
-                  + (maxSelections - choices.size())
-                  + " more)",
-              "Direction",
-              JOptionPane.DEFAULT_OPTION,
-              JOptionPane.QUESTION_MESSAGE,
-              null,
-              options,
-              options[0]);
-
-      if (choice >= 0 && choice < options.length) {
-        choices.add(choice);
-        System.out.println("User chose: " + options[choice]);
-      } else {
-        break; // Dialog was closed or an invalid option was selected
+      place = action == 1;
+      if (action == JOptionPane.CLOSED_OPTION) {
+        System.out.println("User closed the window");
+        return;
+      } else if (action == 1) {
+        if (tempPlumber.getDraggedpipe() == null && tempPlumber.getPickedUpPipe() == null) {
+          JOptionPane.showMessageDialog(null, "The plumber does not have any pipies to place");
+          return;
+        }
       }
     }
 
+    int direction;
+    if (place) {
+      direction =
+              JOptionPane.showOptionDialog(
+                      null,
+                      "Specify the direction",
+                      "Direction",
+                      JOptionPane.DEFAULT_OPTION,
+                      JOptionPane.QUESTION_MESSAGE,
+                      null,
+                      placeDirections,
+                      placeDirections[0]);
+    } else {
+      direction =
+              JOptionPane.showOptionDialog(
+                      null,
+                      "Specify the direction",
+                      "Direction",
+                      JOptionPane.DEFAULT_OPTION,
+                      JOptionPane.QUESTION_MESSAGE,
+                      null,
+                      pickUpDirections,
+                      pickUpDirections[0]);
+    }
+
+
     // Handle the selected choices
-    for (int choice : choices) {
-      if (choice == 0) {
-        System.out.println("User chose Pick Up");
+    switch (direction) {
+      default -> {
+        System.out.println("User chose Up");
         Controller.setChoice = 0;
-      } else if (choice == 1) {
-        System.out.println("User chose Place");
+      }
+      case 1 -> {
+        System.out.println("User chose Down");
         Controller.setChoice = 1;
-      } else if (choice == 2) {
-        System.out.println("User Chose Up");
-      } else if (choice == 3) {
-        System.out.println("User Chose Down");
-      } else if (choice == 4) {
+      }
+      case 2 -> {
         System.out.println("User Chose Left");
-      } else if (choice == 3) {
+        Controller.setChoice = 2;
+      }
+      case 3 -> {
         System.out.println("User Chose Right");
+        Controller.setChoice = 3;
+      }
+      case 4 -> {
+        System.out.println("User Chose From Cistern");
+        Controller.setChoice = 4;
       }
     }
   }

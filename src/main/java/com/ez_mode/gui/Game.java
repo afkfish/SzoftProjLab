@@ -379,7 +379,9 @@ public class Game {
 
   public void UpdateField() {
     int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
+    System.out.println(idx);
     updateNodeImage(Controller.tempNode, idx, null);
+    updatePlayerNodes();
   }
 
   /** The getter for the current character's type */

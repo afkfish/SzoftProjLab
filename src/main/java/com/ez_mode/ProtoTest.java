@@ -180,7 +180,7 @@ public class ProtoTest {
     }
     Plumber p = (Plumber) c;
     if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
-      p.PlacePipe();
+      p.PlacePipe(0);
       if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
         Main.log("Plumber still has a pipe to place");
         Main.log("PlacePipeTest failed!");
