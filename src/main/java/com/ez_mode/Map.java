@@ -296,7 +296,7 @@ public class Map implements Tickable {
       Main.log("The file must be a .json configuration file!");
       return;
     }
-    try (FileInputStream fileInputStream = new FileInputStream("testMap.json")) {
+    try (FileInputStream fileInputStream = new FileInputStream(path)) {
       NotJSONTokener root = new NotJSONTokener(fileInputStream);
       NotJSONObject rootObject = new NotJSONObject(root);
 
@@ -341,7 +341,12 @@ public class Map implements Tickable {
             Main.log("Skipping connection...");
             continue;
           }
-          temp.connect(neighbour);
+          try {
+            temp.connect(neighbour);
+          } catch (ObjectFullException e) {
+            Main.log("The node is full!");
+            Main.log("Skipping connection...");
+          }
         }
       }
 
@@ -364,8 +369,6 @@ public class Map implements Tickable {
       Main.log("Map loaded successfully!");
     } catch (SecurityException | IOException e) {
       Main.log("There was an error loading the map!");
-    } catch (ObjectFullException e) {
-      Main.log("Some objects are full and cannot have more connections! The map is invalid!");
     }
   }
 
@@ -376,7 +379,11 @@ public class Map implements Tickable {
    */
   public static void saveMap(String path) {
     Main.log("Saving map...");
-    assert path.endsWith(".json") : "The file must be a .json configuration file!";
+    if (path.isEmpty()) {
+      Main.log("The path cannot be empty!");
+      return;
+    }
+    if (!path.endsWith(".json")) path += ".json";
     try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
       // create the root object
       NotJSONObject root = new NotJSONObject();
