@@ -7,7 +7,6 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
 import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * Class representing a Plummer character. The plummer can repair pipes and pumps, place new pipes
@@ -37,11 +36,11 @@ public class Plumber extends Character {
     if (this.pickedupPump != null) {
       try {
         Pipe temp = ((Pipe) standingOn);
-        //Pipe newPipe = new Pipe();
+        // Pipe newPipe = new Pipe();
         this.getEmptyPlace(pickedupPump, null);
         try {
           temp.connect(pickedupPump);
-          //newPipe.connect(pickedupPump);
+          // newPipe.connect(pickedupPump);
           Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
           if (standingOn.getNeighbours().contains(pickedupPump)) {
             Map.addNode(pickedupPump, pickedupPump.getX(), pickedupPump.getY());
@@ -50,7 +49,7 @@ public class Plumber extends Character {
               System.err.println("connected");
             } catch (Exception ignored) {
             }
-            try{
+            try {
               Map.getNode(pickedupPump.getX(), pickedupPump.getY() + 1).connect(pickedupPump);
               System.err.println("connected");
             } catch (Exception ignored) {
@@ -65,8 +64,8 @@ public class Plumber extends Character {
               System.err.println("connected");
             } catch (Exception ignored) {
             }
-//            if (pickedupPump.getNeighbours().contains(newPipe))
-//              Map.addNode(newPipe, newPipe.getX(), newPipe.getY());
+            //            if (pickedupPump.getNeighbours().contains(newPipe))
+            //              Map.addNode(newPipe, newPipe.getX(), newPipe.getY());
             pickedupPump = null;
           }
         } catch (ObjectFullException e) {

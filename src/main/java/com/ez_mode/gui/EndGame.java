@@ -1,7 +1,6 @@
 package com.ez_mode.gui;
 
 import com.ez_mode.Map;
-
 import java.awt.*;
 import javax.swing.*;
 
