@@ -66,6 +66,7 @@ public class Game {
 
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
+
   public String moveupImagePath = "src/main/resources/moveup.png";
   public String moveleftImagePath = "src/main/resources/moveleft.png";
   public String movedownImagePath = "src/main/resources/movedown.png";
