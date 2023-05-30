@@ -137,7 +137,6 @@ public class Pipe extends Node {
 
     } else if (this.getFlowRate()!=0) {
       this.getNeighbours().forEach(node -> node.addFlowRate(this, this.flowRate));
-      this.logger.warn("Viz megy");
     }
   }
 }
