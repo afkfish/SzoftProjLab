@@ -154,7 +154,8 @@ public class Map implements Tickable {
     if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
                 && (node.getY() == pipe.getY()))
             || ((node.getY() == pipe.getY() - 1 || node.getY() == pipe.getY() + 1)
-                && (node.getX() == pipe.getX())))
+                && (node.getX() == pipe.getX())
+                && !pipe.getNeighbours().contains(node)))
         && !pipe.fullOfConn()) {
       try {
         node.connect(pipe);

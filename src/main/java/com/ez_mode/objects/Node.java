@@ -172,6 +172,7 @@ public abstract class Node implements Tickable {
       // add the water loss to the nomad points
       Map.waterLost += this.flowRate;
       this.absorbers.forEach(node -> node.removeFlowRate(this, this.flowRate));
+      this.logger.warn("Viz folyik");
 
     } else {
       this.absorbers.forEach(node -> node.addFlowRate(this, this.flowRate));

@@ -120,7 +120,7 @@ public class Pump extends Node {
   public void tick() {
     calculateFlowRate();
     Random random = new Random();
-    if (random.nextInt(100) > 95) {
+    if (random.nextInt(100) > 98) {
       Nomad temp = new Nomad("temp");
       temp.placeTo(this);
       try {
