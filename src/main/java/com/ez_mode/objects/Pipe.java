@@ -7,7 +7,6 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-
 import java.util.Random;
 
 /**
@@ -125,6 +124,7 @@ public class Pipe extends Node {
       isSlippery = false;
     }
   }
+
   @Override
   protected void calculateFlowRate() {
     // If the pipe is broken or any of its connectors are not connected, then it loses water

@@ -1,14 +1,13 @@
 package com.ez_mode.objects;
 
+import static java.lang.Double.min;
+
 import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.NotFoundExeption;
-
 import java.util.Random;
-
-import static java.lang.Double.min;
 
 /**
  * A pump is a node that can be adjusted and repaired. It is bound to break after a certain amount
