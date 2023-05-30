@@ -166,9 +166,7 @@ public class Controller {
   public static void CharacterSpecAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    System.err.println(Game.nomadTurn);
     if (!Game.nomadTurn) { // because we are changing the turn before
-      System.err.println("Slippery pipe");
       try {
         Nomad tempNomad = (Nomad) tempChar;
         assert tempChar != null;

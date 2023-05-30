@@ -186,6 +186,7 @@ public class Map implements Tickable {
   public static void removeNode(Node ignored) {}
 
   public static Character getPlayer(int index) {
+    index = index % players.size();
     return players.get(index);
   }
 
