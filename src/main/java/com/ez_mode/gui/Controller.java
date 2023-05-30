@@ -11,11 +11,10 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class Controller {
   static Game game;
@@ -212,30 +211,39 @@ public class Controller {
       assert tempPlumber != null;
       try {
         tempNode = tempPlumber.getStandingOn();
-        assert  tempNode != null;
+        assert tempNode != null;
         // if not empty, then place
-        if (tempPlumber.getDraggedpipe() != null || tempPlumber.getPickedUpPipe() != null) tempPlumber.PlacePipe();
+        if (tempPlumber.getDraggedpipe() != null || tempPlumber.getPickedUpPipe() != null)
+          tempPlumber.PlacePipe();
         // if inventory is empty pick up
         else {
           Pipe tempPipe = new Pipe();
           PickPipeFrame f = new PickPipeFrame();
           Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
-          try{
-             upNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-          }catch (ArrayIndexOutOfBoundsException e){ upNeighbour = null;}
-          try{
-             downNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-          }catch (ArrayIndexOutOfBoundsException e){ downNeighbour = null;}
-          try{
-             leftNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-          }catch (ArrayIndexOutOfBoundsException e){ leftNeighbour = null;}
-          try{
-             rightNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
-          }catch (ArrayIndexOutOfBoundsException e){ rightNeighbour = null;}
+          try {
+            upNeighbour =
+                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+          } catch (ArrayIndexOutOfBoundsException e) {
+            upNeighbour = null;
+          }
+          try {
+            downNeighbour =
+                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+          } catch (ArrayIndexOutOfBoundsException e) {
+            downNeighbour = null;
+          }
+          try {
+            leftNeighbour =
+                Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+          } catch (ArrayIndexOutOfBoundsException e) {
+            leftNeighbour = null;
+          }
+          try {
+            rightNeighbour =
+                Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+          } catch (ArrayIndexOutOfBoundsException e) {
+            rightNeighbour = null;
+          }
           switch (setChoice) {
             case 0:
               tempPipe = (Pipe) upNeighbour;
@@ -252,11 +260,10 @@ public class Controller {
           }
           tempPlumber.PickupPipe(tempPipe);
         }
-      } catch (NotFoundExeption /*| InterruptedException */ignored1) {
+      } catch (NotFoundExeption /*| InterruptedException */ ignored1) {
       }
     } catch (ClassCastException ignored1) {
     }
-
   }
 
   public static void PickUpPumpAction(ActionEvent ignored) {
@@ -288,24 +295,32 @@ public class Controller {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
-    try{
-      upNeighbour =
-              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-    }catch (ArrayIndexOutOfBoundsException e){ upNeighbour = null;}
-    try{
-      downNeighbour =
-              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-    }catch (ArrayIndexOutOfBoundsException e){ downNeighbour = null;}
-    try{
-      leftNeighbour =
-              Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-    }catch (ArrayIndexOutOfBoundsException e){ leftNeighbour = null;}
-    try{
-      rightNeighbour =
-              Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
-    }catch (ArrayIndexOutOfBoundsException e){ rightNeighbour = null;}
     try {
-      //Plumber ignored1 = (Plumber) tempChar;
+      upNeighbour =
+          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+    } catch (ArrayIndexOutOfBoundsException e) {
+      upNeighbour = null;
+    }
+    try {
+      downNeighbour =
+          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+    } catch (ArrayIndexOutOfBoundsException e) {
+      downNeighbour = null;
+    }
+    try {
+      leftNeighbour =
+          Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+    } catch (ArrayIndexOutOfBoundsException e) {
+      leftNeighbour = null;
+    }
+    try {
+      rightNeighbour =
+          Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+    } catch (ArrayIndexOutOfBoundsException e) {
+      rightNeighbour = null;
+    }
+    try {
+      // Plumber ignored1 = (Plumber) tempChar;
       assert tempChar != null;
       try {
         Pump ignored2 = (Pump) tempNode;
