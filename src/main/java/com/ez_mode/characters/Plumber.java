@@ -38,7 +38,7 @@ public class Plumber extends Character {
         Pipe newPipe = new Pipe();
         this.getEmptyPlace(newPipe);
         try {
-          if(temp.getNeighbours().size() == 2) {
+          if (temp.getNeighbours().size() == 2) {
             Node a = temp.getNeighbours().get(1);
             temp.disconnect(a);
             newPipe.connect(a);
@@ -46,7 +46,7 @@ public class Plumber extends Character {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
           Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
-          if(standingOn.getNeighbours().contains(pickedupPump))pickedupPump = null;
+          if (standingOn.getNeighbours().contains(pickedupPump)) pickedupPump = null;
         } catch (ObjectFullException e) {
           Main.log("Object is full!");
         }
@@ -57,20 +57,23 @@ public class Plumber extends Character {
       Main.log(this.getUuid() + " doesn't have a pump to place");
     }
   }
-  public void getEmptyPlace(Node node){
+
+  public void getEmptyPlace(Node node) {
     int X = this.standingOn.getX();
     int Y = this.standingOn.getY();
-    if( (X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) pickedupPump.setPos(X + 1, Y);
-    else if((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) pickedupPump.setPos(X - 1, Y);
-    else if((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) pickedupPump.setPos(X, Y + 1);
-    else if((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) pickedupPump.setPos(X, Y - 1);
+    if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) pickedupPump.setPos(X + 1, Y);
+    else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) pickedupPump.setPos(X - 1, Y);
+    else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null)
+      pickedupPump.setPos(X, Y + 1);
+    else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) pickedupPump.setPos(X, Y - 1);
     X = pickedupPump.getX();
     Y = pickedupPump.getY();
-    if( (X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) node.setPos(X + 1, Y);
-    else if((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) node.setPos(X - 1, Y);
-    else if((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) node.setPos(X, Y + 1);
-    else if((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) node.setPos(X, Y - 1);
+    if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) node.setPos(X + 1, Y);
+    else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) node.setPos(X - 1, Y);
+    else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) node.setPos(X, Y + 1);
+    else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) node.setPos(X, Y - 1);
   }
+
   public Pipe getDraggedpipe() {
     return draggedpipe;
   }
