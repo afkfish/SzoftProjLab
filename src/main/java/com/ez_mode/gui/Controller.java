@@ -229,25 +229,25 @@ public class Controller {
           Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
           try {
             upNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
           } catch (ArrayIndexOutOfBoundsException e) {
             upNeighbour = null;
           }
           try {
             downNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
           } catch (ArrayIndexOutOfBoundsException e) {
             downNeighbour = null;
           }
           try {
             leftNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+                Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
           } catch (ArrayIndexOutOfBoundsException e) {
             leftNeighbour = null;
           }
           try {
             rightNeighbour =
-                    Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+                Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
           } catch (ArrayIndexOutOfBoundsException e) {
             rightNeighbour = null;
           }

@@ -105,10 +105,14 @@ public class Plumber extends Character {
     try {
       if (draggedpipe != null) {
         switch (dir) {
-          case 0 -> draggedpipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() - 1);
-          case 1 -> draggedpipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() + 1);
-          case 2 -> draggedpipe.setPos(this.getStandingOn().getX() - 1, this.getStandingOn().getY());
-          case 3 -> draggedpipe.setPos(this.getStandingOn().getX() + 1, this.getStandingOn().getY());
+          case 0 -> draggedpipe.setPos(
+              this.getStandingOn().getX(), this.getStandingOn().getY() - 1);
+          case 1 -> draggedpipe.setPos(
+              this.getStandingOn().getX(), this.getStandingOn().getY() + 1);
+          case 2 -> draggedpipe.setPos(
+              this.getStandingOn().getX() - 1, this.getStandingOn().getY());
+          case 3 -> draggedpipe.setPos(
+              this.getStandingOn().getX() + 1, this.getStandingOn().getY());
         }
         standingOn.connect(draggedpipe);
         Map.removeNode(draggedpipe);
@@ -119,10 +123,14 @@ public class Plumber extends Character {
         }
       } else if (pickedUpPipe != null) {
         switch (dir) {
-          case 0 -> pickedUpPipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() - 1);
-          case 1 -> pickedUpPipe.setPos(this.getStandingOn().getX(), this.getStandingOn().getY() + 1);
-          case 2 -> pickedUpPipe.setPos(this.getStandingOn().getX() - 1, this.getStandingOn().getY());
-          case 3 -> pickedUpPipe.setPos(this.getStandingOn().getX() + 1, this.getStandingOn().getY());
+          case 0 -> pickedUpPipe.setPos(
+              this.getStandingOn().getX(), this.getStandingOn().getY() - 1);
+          case 1 -> pickedUpPipe.setPos(
+              this.getStandingOn().getX(), this.getStandingOn().getY() + 1);
+          case 2 -> pickedUpPipe.setPos(
+              this.getStandingOn().getX() - 1, this.getStandingOn().getY());
+          case 3 -> pickedUpPipe.setPos(
+              this.getStandingOn().getX() + 1, this.getStandingOn().getY());
         }
         standingOn.connect(pickedUpPipe);
         if (this.getStandingOn().getNeighbours().contains(pickedUpPipe)) {
