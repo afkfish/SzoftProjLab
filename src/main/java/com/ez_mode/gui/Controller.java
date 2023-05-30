@@ -60,8 +60,11 @@ public class Controller {
       else Game.playerNames.add(Game.nomadNames.get(n++));
     }
 
-    if (Menu.loadTextField.getText().isEmpty()) Map.fillMap(Menu.playerCount);
-    else Map.loadMap(Menu.loadedPath);
+    if (Menu.loadTextField.getText().isEmpty()) {
+      Map.fillMap(Menu.playerCount);
+    } else {
+      Map.loadMap(Menu.loadedPath);
+    }
 
     game = new Game();
   }
@@ -372,6 +375,21 @@ public class Controller {
     Menu.frame.dispose();
     Menu.loadedPath = Menu.loadTextField.getText();
     Map.loadMap(Menu.loadedPath);
+    Menu.setPlayerCount(Map.playerCount() / 2);
+    Game.plumberNames = new ArrayList<>();
+    Game.nomadNames = new ArrayList<>();
+    Game.playerNames = new ArrayList<>();
+    for (int i = 0; i < Map.playerCount(); i++) {
+      Character tempChar = Map.getPlayer(i);
+      Game.playerNames.add(tempChar.getName());
+      try {
+        Plumber ignored1 = (Plumber) tempChar;
+        Game.plumberNames.add(tempChar.getName());
+      } catch (ClassCastException ignored2) {
+        Game.nomadNames.add(tempChar.getName());
+      }
+    }
+    game = new Game();
   }
 
   public enum Direction {

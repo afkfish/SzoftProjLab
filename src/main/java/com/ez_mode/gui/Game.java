@@ -219,7 +219,7 @@ public class Game {
     playerIdx++;
     playerIdx = playerIdx % (Menu.playerCount * 2);
 
-    Controller.tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    Controller.tempChar = Map.getPlayer(Game.playerIdx);
     assert Controller.tempChar != null : "tempChar is null???";
     Controller.tempNode = Controller.tempChar.getStandingOn();
     if (nomadTurn) {
