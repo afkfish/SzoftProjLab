@@ -9,9 +9,6 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,8 +34,6 @@ public class Map implements Tickable {
 
   /** The ArrayList representation of the game. This map contains every object. */
   private static Node[][] gameMap = null;
-
-  private final Logger logger = LogManager.getLogger(Map.class);
 
   public Map(int size) {
     gameMap = new Node[size][size];
@@ -430,7 +425,7 @@ public class Map implements Tickable {
         node.tick();
       }
     }
-    this.logger.debug("Current water loss: {}", Map.waterLost);
+    Main.log("Current water loss: " + Map.waterLost);
   }
 
   /**

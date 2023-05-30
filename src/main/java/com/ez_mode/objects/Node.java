@@ -10,16 +10,9 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import java.util.ArrayList;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /** The Node class is the base class for all objects that can be placed on the map. */
 public abstract class Node implements Tickable {
-  /*
-   * The logger for this class.
-   */
-  protected final Logger logger;
-
   /** The unique identifier for this object. */
   protected final String uuid;
 
@@ -49,7 +42,6 @@ public abstract class Node implements Tickable {
   protected Node(int maxCharacters, int maxConnections, int x, int y) {
     Random random = new Random();
     this.uuid = this.getClass().getSimpleName() + random.nextInt(100);
-    this.logger = LogManager.getLogger(this.getClass());
     this.maxCharacters = maxCharacters;
     this.maxConnections = maxConnections;
     this.x = x;
@@ -78,7 +70,7 @@ public abstract class Node implements Tickable {
 
   public void placeCharacter(Character character) {
     characters.add(character);
-    this.logger.debug("Placed {} on {}", character.getUuid(), this.uuid);
+    Main.log("Placed " + character.getUuid() + " on " + this.uuid);
   }
 
   public boolean fullOfConn() {
@@ -157,7 +149,7 @@ public abstract class Node implements Tickable {
 
     this.calculateFlowRate();
 
-    this.logger.debug("Flow rate is at {}", this.flowRate);
+    Main.log("Flow rate is at " + this.flowRate);
   }
 
   public ArrayList<Node> getNeighbours() {
@@ -173,13 +165,9 @@ public abstract class Node implements Tickable {
       else if (flowRate > nodi.flowRate) absorbers.add(nodi);
     }
     if (this.isBroken) {
-      this.logger.warn("Pipe is broken, losing water.");
-
       // add the water loss to the nomad points
       Map.waterLost += this.flowRate;
       this.absorbers.forEach(node -> node.removeFlowRate(this, this.flowRate));
-      this.logger.warn("Viz folyik");
-
     } else {
       this.absorbers.forEach(node -> node.addFlowRate(this, this.flowRate));
     }

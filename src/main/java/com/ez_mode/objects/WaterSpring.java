@@ -1,5 +1,6 @@
 package com.ez_mode.objects;
 
+import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 
@@ -69,6 +70,6 @@ public class WaterSpring extends Node {
         .filter(node -> !node.isBroken)
         .forEach(node -> node.addFlowRate(this, 1));
 
-    this.logger.debug("Flow rate is at {}", this.flowRate);
+    Main.log("Flow rate is at " + this.flowRate);
   }
 }
