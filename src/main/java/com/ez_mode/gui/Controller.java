@@ -275,6 +275,7 @@ public class Controller {
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
+      JOptionPane.showMessageDialog(null, "You have picked up a pump!");
       // if not empty, then place
       if (tempChar.getPickedupPump() != null) {
         Pipe a = (Pipe) tempChar.getStandingOn();
