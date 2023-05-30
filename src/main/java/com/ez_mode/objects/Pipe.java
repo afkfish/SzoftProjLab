@@ -135,7 +135,7 @@ public class Pipe extends Node {
       Map.waterLost += this.flowRate;
       this.getNeighbours().forEach(node -> node.removeFlowRate(this, this.flowRate));
 
-    } else {
+    } else if (this.getFlowRate()!=0) {
       this.getNeighbours().forEach(node -> node.addFlowRate(this, this.flowRate));
       this.logger.warn("Viz megy");
     }
