@@ -235,7 +235,7 @@ public class Controller {
         tempChar.PlacePump();
         tempNode = placed;
         game.UpdateField();
-        if(placed.getNeighbours().size() >= 2){
+        if (placed.getNeighbours().size() >= 2) {
           tempNode = placed.getNeighbours().get(1);
           game.UpdateField();
         }
