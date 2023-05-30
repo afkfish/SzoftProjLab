@@ -1,7 +1,6 @@
 package com.ez_mode.gui;
 
 import com.ez_mode.characters.Plumber;
-
 import javax.swing.*;
 
 public class PopUp {
@@ -15,15 +14,15 @@ public class PopUp {
   public PopUp(boolean set, Plumber tempPlumber) {
     if (!set) {
       int action =
-              JOptionPane.showOptionDialog(
-                      null,
-                      "Pick up or place the node",
-                      "Action",
-                      JOptionPane.DEFAULT_OPTION,
-                      JOptionPane.QUESTION_MESSAGE,
-                      null,
-                      options,
-                      options[0]);
+          JOptionPane.showOptionDialog(
+              null,
+              "Pick up or place the node",
+              "Action",
+              JOptionPane.DEFAULT_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              options,
+              options[0]);
 
       place = action == 1;
       if (action == JOptionPane.CLOSED_OPTION) {
@@ -40,28 +39,27 @@ public class PopUp {
     int direction;
     if (place) {
       direction =
-              JOptionPane.showOptionDialog(
-                      null,
-                      "Specify the direction",
-                      "Direction",
-                      JOptionPane.DEFAULT_OPTION,
-                      JOptionPane.QUESTION_MESSAGE,
-                      null,
-                      placeDirections,
-                      placeDirections[0]);
+          JOptionPane.showOptionDialog(
+              null,
+              "Specify the direction",
+              "Direction",
+              JOptionPane.DEFAULT_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              placeDirections,
+              placeDirections[0]);
     } else {
       direction =
-              JOptionPane.showOptionDialog(
-                      null,
-                      "Specify the direction",
-                      "Direction",
-                      JOptionPane.DEFAULT_OPTION,
-                      JOptionPane.QUESTION_MESSAGE,
-                      null,
-                      pickUpDirections,
-                      pickUpDirections[0]);
+          JOptionPane.showOptionDialog(
+              null,
+              "Specify the direction",
+              "Direction",
+              JOptionPane.DEFAULT_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              pickUpDirections,
+              pickUpDirections[0]);
     }
-
 
     // Handle the selected choices
     switch (direction) {
