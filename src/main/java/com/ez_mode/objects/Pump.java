@@ -110,7 +110,9 @@ public class Pump extends Node {
         } else {
           internalBufferLevel += activeInput.flowRate;
         }
-      } else if (activeOutput!=null&&this.internalBufferLevel > 0 && sources.contains(activeOutput)) {
+      } else if (activeOutput != null
+          && this.internalBufferLevel > 0
+          && sources.contains(activeOutput)) {
         this.setFlowRate(min(this.internalBufferLevel, activeOutput.getCapacity()));
         activeOutput.flowRate += flowRate;
       }
