@@ -275,7 +275,6 @@ public class Controller {
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
-      JOptionPane.showMessageDialog(null, "You have picked up a pump!");
       // if not empty, then place
       if (tempChar.getPickedupPump() != null) {
         Pipe a = (Pipe) tempChar.getStandingOn();
@@ -289,7 +288,9 @@ public class Controller {
         }
       }
       // if inventory is empty pick up
-      else tempChar.PickupPump();
+      else {
+        tempChar.PickupPump();
+      }
     } catch (ClassCastException ignored1) {
       Main.log(tempChar.getUuid() + " is not standing on a Pipe");
     }

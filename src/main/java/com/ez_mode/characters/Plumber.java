@@ -7,6 +7,8 @@ import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.*;
 
+import javax.swing.*;
+
 /**
  * Class representing a Plummer character. The plummer can repair pipes and pumps, place new pipes
  * and pupms and reroute the water to the cisterns.
@@ -151,6 +153,7 @@ public class Plumber extends Character {
       if ((temp != null)) {
         pickedupPump = temp;
         Main.log("\t" + temp.getUuid() + " has been picked up by " + this.getUuid());
+        JOptionPane.showMessageDialog(null, "You have picked up a pump!");
         return;
       }
       Main.log("There is no pump to pick up");
