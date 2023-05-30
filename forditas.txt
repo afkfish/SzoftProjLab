@@ -1,9 +1,10 @@
 forditas terminalban!!!!!!!:
-mkdir .\out
+mkdir .\out\src\main\resources\
 cp .\lib\*.jar .\out
-javac -d .\out\ .\src\main\java\com\ez_mode\Main.java .\src\main\java\com\ez_mode\*.java .\src\main\java\com\ez_mode\characters\* .\src\main\java\com\ez_mode\exceptions\* .\src\main\java\com\ez_mode\objects\* .\src\main\java\com\ez_mode\notJson\* -cp ".\lib\log4j-api-2.20.0.jar;.\lib\log4j-core-2.20.0.jar"
+cp .\src\main\resources\* .\out\src\main\resources\
+javac -d .\out\ .\src\main\java\com\ez_mode\Main.java .\src\main\java\com\ez_mode\*.java .\src\main\java\com\ez_mode\characters\* .\src\main\java\com\ez_mode\exceptions\* .\src\main\java\com\ez_mode\objects\* .\src\main\java\com\ez_mode\notJson\* .\src\main\java\com\ez_mode\gui\*.java
 futtatas tarminalbol!!!!!!!:
 cd ./out
-java -cp ";%CLASSPATH%;.\log4j-api-2.20.0.jar;.\log4j-core-2.20.0.jar" com.ez_mode.Main
+java -cp ";%CLASSPATH%" com.ez_mode.Main
 
 cmdbol a cp-t at kell irni copyra, es a ;-t at kell irni :ra

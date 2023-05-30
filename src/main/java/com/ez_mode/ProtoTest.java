@@ -12,8 +12,8 @@ import com.ez_mode.objects.Pump;
 import java.util.*;
 
 public class ProtoTest {
+  private static final ArrayList<String> args = new ArrayList<>();
   private final HashMap<String, Runnable> commands;
-  private static ArrayList<String> args = new ArrayList<>();
   private boolean exited = false;
 
   /**
@@ -88,7 +88,7 @@ public class ProtoTest {
   /**
    * This function processes the command with inputs from the scanner, and runs them.
    *
-   * @param scanner
+   * @param scanner the scanner
    */
   public void processCommand(Scanner scanner) {
     while (!exited) {
@@ -180,7 +180,7 @@ public class ProtoTest {
     }
     Plumber p = (Plumber) c;
     if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
-      p.PlacePipe();
+      p.PlacePipe(0);
       if (p.getDraggedpipe() != null || p.getPickedUpPipe() != null) {
         Main.log("Plumber still has a pipe to place");
         Main.log("PlacePipeTest failed!");
@@ -226,7 +226,7 @@ public class ProtoTest {
     }
     try {
       c.breakNode();
-      if (((Pipe) (c.getStandingOn())).isBroken()) {
+      if (c.getStandingOn().isBroken()) {
         Main.log("BreakPipeTest ran successfully!");
         return;
       }
@@ -278,7 +278,7 @@ public class ProtoTest {
     }
     try {
       ((Plumber) c).repair();
-      if (!((Pump) (c.getStandingOn())).isBroken()) {
+      if (!c.getStandingOn().isBroken()) {
         Main.log("RepairTest ran successfully!");
         return;
       }
@@ -298,7 +298,7 @@ public class ProtoTest {
     }
     try {
       ((Plumber) c).repair();
-      if (!((Pipe) (c.getStandingOn())).isBroken()) {
+      if (!c.getStandingOn().isBroken()) {
         Main.log("RepairPipeTest successfully!");
         return;
       }

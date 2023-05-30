@@ -1,6 +1,7 @@
 package com.ez_mode.objects;
 
 import com.ez_mode.Main;
+import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
@@ -18,26 +19,26 @@ public class Pipe extends Node {
   private boolean isSlippery;
   private int unbreakableTill;
 
-  public boolean isSlippery() {
-    return isSlippery;
-  }
-
-  public boolean isSticky() {
-    return isStikcy;
-  }
-
   public Pipe(int x, int y) {
-    super(1, 2, x, y);
+    super(1, 4, x, y);
     isSlippery = false;
     isStikcy = false;
     unbreakableTill = 0;
   }
 
   public Pipe() {
-    super(1, 2, -1, -1);
+    super(1, 4, -1, -1);
     isSlippery = false;
     isStikcy = false;
     unbreakableTill = 0;
+  }
+
+  public boolean isSlippery() {
+    return isSlippery;
+  }
+
+  public boolean isSticky() {
+    return isStikcy;
   }
 
   public double getCapacity() {
@@ -49,7 +50,7 @@ public class Pipe extends Node {
     if (this.isBroken) {
       this.isBroken = false;
       Random random = new Random();
-      unbreakableTill = ((random.nextInt(100)) + 1);
+      unbreakableTill = ((random.nextInt(10)) + 1);
     } else {
       throw new InvalidPlayerActionException(
           String.format(
@@ -70,9 +71,12 @@ public class Pipe extends Node {
         this.characters.add(character);
         if (isSlippery) {
           Random random = new Random();
-          int RNG = random.nextInt(100);
-          if (RNG < 50) this.neighbours.get(1).addCharacter(character);
-          else this.neighbours.get(0).addCharacter(character);
+          if (this.neighbours.size() == 1) this.neighbours.get(0).addCharacter(character);
+          else {
+            int RNG = random.nextInt(100);
+            if (RNG < 50) this.neighbours.get(1).addCharacter(character);
+            else this.neighbours.get(0).addCharacter(character);
+          }
           try {
             this.removeCharacter(character);
           } catch (NotFoundExeption e) {
@@ -108,7 +112,7 @@ public class Pipe extends Node {
 
     this.calculateFlowRate();
     if (unbreakableTill > 0) this.unbreakableTill--;
-    this.logger.debug("Flow rate is at {}", this.flowRate);
+    Main.log("Flow rate is at " + this.flowRate);
   }
 
   @Override
@@ -118,6 +122,21 @@ public class Pipe extends Node {
     else {
       isStikcy = false;
       isSlippery = false;
+    }
+  }
+
+  @Override
+  protected void calculateFlowRate() {
+    // If the pipe is broken or any of its connectors are not connected, then it loses water
+    if (this.isBroken) {
+      Main.log("Pipe is broken, losing water.");
+
+      // add the water loss to the nomad points
+      Map.waterLost += this.flowRate;
+      this.getNeighbours().forEach(node -> node.removeFlowRate(this, this.flowRate));
+
+    } else if (this.getFlowRate() != 0) {
+      this.getNeighbours().forEach(node -> node.addFlowRate(this, this.flowRate));
     }
   }
 }

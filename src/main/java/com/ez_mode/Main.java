@@ -1,7 +1,5 @@
 package com.ez_mode;
 
-// import com.ez_mode.gui.Menu;
-
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
@@ -16,17 +14,11 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class Main {
-  private enum Version {
-    SKELETON,
-    PROTOTYPE,
-    GRAPHICAL
-  }
-
-  private static boolean running = true;
+  public static final Map map = new Map(10);
   private static final StringBuilder logs = new StringBuilder();
   private static final HashMap<String, Runnable> commands = new HashMap<>();
-  public static final Map map = new Map(10);
   public static Version version = Version.GRAPHICAL;
+  private static boolean running = true;
   private static Scanner scanner;
 
   /** Sets up the actions in the menu */
@@ -38,13 +30,13 @@ public class Main {
         () -> {
           log("What is the path to the game file?");
           Map.clearMap();
-          map.loadMap(scanner.nextLine());
+          Map.loadMap(scanner.nextLine());
         });
     commands.put(
         "save",
         () -> {
           log("Where do you want to save the game?");
-          map.saveMap(scanner.nextLine());
+          Map.saveMap(scanner.nextLine());
         });
     commands.put(
         "character",
@@ -285,7 +277,7 @@ public class Main {
                 try {
                   node.get().connect(node1);
                 } catch (ObjectFullException e) {
-                  throw new RuntimeException(e);
+                  log(e.getMessage());
                 }
               });
           actions.put(
@@ -313,7 +305,7 @@ public class Main {
               log("Character creation aborted!");
             }
           } else if (type == 2) {
-            if (createNode(scanner) == null) {
+            if (createNode(scanner).isEmpty()) {
               log("Node creation aborted!");
             }
           }
@@ -409,8 +401,8 @@ public class Main {
   /**
    * Creates a new node
    *
-   * @param scanner
-   * @return
+   * @param scanner static scanner
+   * @return a new node that is optional
    */
   private static Optional<Node> createNode(Scanner scanner) {
     log("What is the type of the node?");
@@ -511,5 +503,11 @@ public class Main {
       input = scanner.nextLine();
       saveLog(input);
     }
+  }
+
+  private enum Version {
+    SKELETON,
+    PROTOTYPE,
+    GRAPHICAL
   }
 }

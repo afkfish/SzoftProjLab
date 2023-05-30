@@ -1,164 +1,463 @@
 package com.ez_mode.gui;
 
+import static com.ez_mode.Main.map;
+
+import com.ez_mode.Main;
+import com.ez_mode.Map;
+import com.ez_mode.characters.Character;
+import com.ez_mode.characters.Nomad;
+import com.ez_mode.characters.Plumber;
+import com.ez_mode.objects.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.*;
 
-public class Game implements ActionListener {
-  int gridNum = 10;
-  int fieldSize = 68;
+public class Game {
+  public static int gridNum = 10;
+  public static boolean nomadTurn = false;
+  public static ArrayList<String> plumberNames;
+  public static ArrayList<String> nomadNames;
 
-  JFrame frame = new JFrame();
+  /** Adding all the images' path that will be used in the game */
+  private final String pipeImagePath = "src/main/resources/pipe.png";
+
+  private final String sandImagePath = "src/main/resources/sand.png";
+  private final String plumberImagePath = "src/main/resources/transplumber.png";
+  private final String nomadImagePath = "src/main/resources/transnomad.png";
+  private final String waterspringImagePath = "src/main/resources/waterspring.png";
+  private final String waterpumpImagePath = "src/main/resources/waterpump.png";
+  private final String waterpipeImagePath = "src/main/resources/waterpipe.png";
+  private final String stickypipeImagePath = "src/main/resources/stickypipe.png";
+  private final String slipperypipeImagePath = "src/main/resources/slipperypipe.png";
+  private final String repairImagePath = "src/main/resources/repair.png";
+  private final String emptypumpImagePath = "src/main/resources/emptypump.png";
+  private final String cisternImagePath = "src/main/resources/cistern.png";
+  private final String brokenpumpImagePath = "src/main/resources/brokenpump.png";
+  private final String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
+  private final String breakImagePath = "src/main/resources/break.png";
+  private final String pickuppipeImagePath = "src/main/resources/pickuppipe.png";
+  private final String pickuppumpImagePath = "src/main/resources/pickuppump.png";
+  private final String setpumpImagePath = "src/main/resources/setpump.png";
+
+  /** Adding all the images as ImageIcons, using the path given previously */
+  private final ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
+
+  private final ImageIcon sandIcon = new ImageIcon(sandImagePath);
+  private final ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
+  private final ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
+  private final ImageIcon waterpipeIcon = new ImageIcon(waterpipeImagePath);
+  private final ImageIcon stickypipeIcon = new ImageIcon(stickypipeImagePath);
+  private final ImageIcon slipperypipeIcon = new ImageIcon(slipperypipeImagePath);
+  private final ImageIcon repairIcon = new ImageIcon(repairImagePath);
+  private final ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
+  private final ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
+  private final ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
+  private final ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
+  private final ImageIcon breakIcon = new ImageIcon(breakImagePath);
+  private final ImageIcon pickuppipeIcon = new ImageIcon(pickuppipeImagePath);
+  private final ImageIcon pickuppumpIcon = new ImageIcon(pickuppumpImagePath);
+  private final ImageIcon setpumpIcon = new ImageIcon(setpumpImagePath);
+  static int windowWidth = 800 - 100;
+  static int fieldSize = windowWidth / gridNum;
+  static int actionSize = fieldSize - 10;
+  static ArrayList<String> playerNames;
+  static int playerIdx = 0;
+
+  /** Java Swing components for the Game class */
+  static JFrame frame = new JFrame();
+
+  private final String moveupImagePath = "src/main/resources/moveup.png";
+  private final String moveleftImagePath = "src/main/resources/moveleft.png";
+  private final String movedownImagePath = "src/main/resources/movedown.png";
+  private final String moverightImagePath = "src/main/resources/moveright.png";
+  private final ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
+  private final ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
+  private final ImageIcon moveupIcon = new ImageIcon(moveupImagePath);
+  private final ImageIcon moveleftIcon = new ImageIcon(moveleftImagePath);
+  private final ImageIcon movedownIcon = new ImageIcon(movedownImagePath);
+  private final ImageIcon moverightIcon = new ImageIcon(moverightImagePath);
+  int windowHeight = 800;
   JPanel titlePanel = new JPanel();
-  JPanel turnPanel = new JPanel();
-  JPanel playerPanel = new JPanel();
-  JPanel buttonPanel = new JPanel();
   JLabel textField = new JLabel();
-  JLabel turnLabel = new JLabel();
-  JButton[] buttons = new JButton[gridNum * gridNum];
-  JButton exitButton = new JButton();
-
-  public String pipeImagePath = "src/main/resources/pipe.png";
-  public String sandImagePath = "src/main/resources/sand.png";
-  public String plumberImagePath = "src/main/resources/plumber.png";
-  public String nomadImagePath = "src/main/resources/nomad.png";
-  public String waterspringImagePath = "src/main/resources/waterspring.png";
-  public String waterpumpImagePath = "src/main/resources/waterpump.png";
-  public String waterpipeImagePath = "src/main/resources/waterpipe.png";
-  public String waterImagePath = "src/main/resources/water.png";
-  public String stickypipeImagePath = "src/main/resources/stickypipe.png";
-  public String slipperypipeImagePath = "src/main/resources/slipperypipe.png";
-  public String repairImagePath = "src/main/resources/repair.png";
-  public String emptypumpImagePath = "src/main/resources/emptypump.png";
-  public String cisternImagePath = "src/main/resources/cistern.png";
-  public String brokenpumpImagePath = "src/main/resources/brokenpump.png";
-  public String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
-  public String breakImagePath = "src/main/resources/break.png";
-
-  public ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
-  public ImageIcon sandIcon = new ImageIcon(sandImagePath);
-  public ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
-  public ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
-  public ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
-  public ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
-  public ImageIcon waterpipeIcon = new ImageIcon(waterpipeImagePath);
-  public ImageIcon waterIcon = new ImageIcon(waterImagePath);
-  public ImageIcon stickypipeIcon = new ImageIcon(stickypipeImagePath);
-  public ImageIcon slipperypipeIcon = new ImageIcon(slipperypipeImagePath);
-  public ImageIcon repairIcon = new ImageIcon(repairImagePath);
-  public ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
-  public ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
-  public ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
-  public ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
-  public ImageIcon breakIcon = new ImageIcon(breakImagePath);
+  JButton endGameButton = new JButton();
+  JPanel mapPanel = new JPanel();
+  JButton[] mapButtons = new JButton[gridNum * gridNum + 1];
+  JPanel actionPanel = new JPanel();
 
   public Game() {
+    playerIdx = 0;
+    // Properties of the frame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Game");
     frame.setResizable(false);
-    frame.getContentPane().setBackground(new Color(50, 50, 50));
 
     titlePanel.setLayout(new BorderLayout());
-    turnPanel.setLayout(new BorderLayout());
 
+    // Properties of the text field
     textField.setBackground(new Color(0, 0, 0));
     textField.setForeground(new Color(230, 230, 230));
     textField.setFont(new Font("Monospace", Font.BOLD, 50));
     textField.setHorizontalAlignment(JLabel.CENTER);
-    textField.setText("GAME");
+    textField.setText("Plumbers turn");
     textField.setOpaque(true);
 
-    turnLabel.setBackground(new Color(50, 50, 50));
-    turnLabel.setForeground(new Color(230, 230, 230));
-    turnLabel.setFont(new Font("Monospace", Font.BOLD, 30));
-    turnLabel.setHorizontalAlignment(JLabel.CENTER);
-    /*if (turnNum == 1) {
-        turnLabel.setText( + " turn");
+    // Properties of the end game button
+    endGameButton.setBounds(500, 13, 20, 30);
+    endGameButton.setFont(new Font("Monospace", Font.BOLD, 20));
+    endGameButton.setText("End Game");
+    endGameButton.setBackground(new Color(250, 250, 250));
+    endGameButton.setForeground(new Color(0, 0, 0));
+    endGameButton.setFocusable(false);
+    endGameButton.addActionListener(Controller::GameExitAction);
+
+    // Filling the map
+    mapPanel.setLayout(new GridLayout(gridNum, gridNum + 1));
+    mapPanel.setBorder(null);
+
+    for (int i = 0; i < gridNum; i++) {
+      for (int j = 0; j < gridNum; j++) {
+        Node temp = Map.getNode(j, i);
+        mapButtons[i * gridNum + j] = new JButton();
+        mapPanel.add(mapButtons[i * gridNum + j]);
+        mapButtons[i * gridNum + j].setFocusable(false);
+        mapButtons[i * gridNum + j].setSize(fieldSize, fieldSize);
+        mapButtons[i * gridNum + j].setBorderPainted(false);
+        mapButtons[i * gridNum + j].setHorizontalAlignment(JLabel.HORIZONTAL);
+        updateNodeImage(temp, i * gridNum + j, null);
+      }
     }
-    else {
-        turnLabel.setText( + " turn");
-    }
-    turnLabel.setOpaque(true);*/
+    updatePlayerNodes();
 
-    playerPanel.setLayout(new BorderLayout());
-    buttonPanel.setLayout(new GridLayout(gridNum, gridNum));
-    buttonPanel.setBackground(new Color(50, 50, 50));
-
-    for (int i = 0; i < (gridNum * gridNum); i++) {
-      buttons[i] = new JButton();
-      buttonPanel.add(buttons[i]);
-      buttons[i].setFocusable(false);
-      buttons[i].setSize(20, 20);
-      buttons[i].setMaximumSize(buttons[i].getPreferredSize());
-      buttons[i].setBackground(new Color(244, 228, 156));
-      buttons[i].setBorderPainted(false);
-      buttons[i].setHorizontalAlignment(JLabel.HORIZONTAL);
-      sandIcon = new ImageIcon(String.valueOf(sandImagePath));
-      Image sandImage = sandIcon.getImage();
-      Image modIcon2 = sandImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-      buttons[i].setIcon(new ImageIcon(modIcon2));
-      buttons[i].addActionListener(this);
+    // Icons of the action bar
+    for (int i = (gridNum * gridNum - gridNum); i < (gridNum * gridNum); i++) {
+      mapButtons[i].setBackground(new Color(255, 255, 255));
     }
 
-    Image cisternImage = cisternIcon.getImage();
-    Image cisternModIcon =
-        cisternImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    buttons[0].setIcon(new ImageIcon(cisternModIcon));
-    buttons[1].setIcon(new ImageIcon(cisternModIcon));
-    buttons[2].setIcon(new ImageIcon(cisternModIcon));
+    Image moveupImage = moveupIcon.getImage();
+    Image moveupModIcon =
+        moveupImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum].setIcon(new ImageIcon(moveupModIcon));
+    mapButtons[gridNum * gridNum - gridNum].addActionListener(Controller::MoveUpAction);
 
-    Image waterspringImage = waterspringIcon.getImage();
-    Image waterspringModIcon =
-        waterspringImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    buttons[gridNum * gridNum - 1].setIcon(new ImageIcon(waterspringModIcon));
-    buttons[gridNum * gridNum - 2].setIcon(new ImageIcon(waterspringModIcon));
-    buttons[gridNum * gridNum - 3].setIcon(new ImageIcon(waterspringModIcon));
+    Image moveleftImage = moveleftIcon.getImage();
+    Image moveleftModIcon =
+        moveleftImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 1].setIcon(new ImageIcon(moveleftModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 1].addActionListener(Controller::MoveLeftAction);
 
-    buttons[10].setBackground(new Color(180, 180, 180));
-    Image plumberImage = plumberIcon.getImage();
-    Image plumberModIcon =
-        plumberImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    buttons[10].setIcon(new ImageIcon(plumberModIcon));
+    Image movedownImage = movedownIcon.getImage();
+    Image movedownModIcon =
+        movedownImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 2].setIcon(new ImageIcon(movedownModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 2].addActionListener(Controller::MoveDownAction);
 
-    buttons[24].setBackground(new Color(180, 180, 180));
-    Image nomadImage = nomadIcon.getImage();
-    Image nomadModIcon = nomadImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-    buttons[24].setIcon(new ImageIcon(nomadModIcon));
+    Image moverightImage = moverightIcon.getImage();
+    Image moverightModIcon =
+        moverightImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 3].setIcon(new ImageIcon(moverightModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 3].addActionListener(Controller::MoveRightAction);
 
-    exitButton.setBounds(500, 13, 150, 40);
-    exitButton.setFont(new Font("Monospace", Font.BOLD, 20));
-    exitButton.setText("End Game");
-    exitButton.setBackground(new Color(250, 250, 250));
-    exitButton.setForeground(new Color(0, 0, 0));
-    exitButton.setFocusable(false);
-    exitButton.addActionListener(this);
+    Image breakImage = breakIcon.getImage();
+    Image breakModIcon = breakImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 4].setIcon(new ImageIcon(breakModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 4].addActionListener(Controller::BreakAction);
 
-    JPanel mainPanel = new JPanel(new BorderLayout());
-    JPanel textPanel = new JPanel(new GridLayout(2, 1));
-    textPanel.add(textField);
-    textPanel.add(turnLabel);
-    frame.add(exitButton);
-    mainPanel.add(textPanel, BorderLayout.NORTH);
-    mainPanel.add(buttonPanel, BorderLayout.CENTER);
-    frame.add(mainPanel);
+    Image repairImage = repairIcon.getImage();
+    Image repairModIcon =
+        repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 5].addActionListener(Controller::CharacterSpecAction);
+
+    Image stickypipeImage = stickypipeIcon.getImage();
+    Image stickypipeModIcon =
+        stickypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 6].setIcon(new ImageIcon(stickypipeModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 6].addActionListener(Controller::StickyAction);
+
+    Image setpumpImage = setpumpIcon.getImage();
+    Image setpumpModIcon =
+        setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(setpumpModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 7].addActionListener(Controller::SetPumpAction);
+
+    Image pickuppipeImage = pickuppipeIcon.getImage();
+    Image pickuppipeModIcon =
+        pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPipeAction);
+
+    Image pickuppumpImage = pickuppumpIcon.getImage();
+    Image pickuppumpModIcon =
+        pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+    mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
+    mapButtons[gridNum * gridNum - gridNum + 9].addActionListener(Controller::PickUpPumpAction);
+
+    // Adding the components to the frame and setting their layouts
+    textField.setText(plumberNames.get(playerIdx) + " Plumbers turn");
+    playerIdx++;
+    frame.add(titlePanel, BorderLayout.NORTH);
+    titlePanel.add(textField);
+    titlePanel.add(endGameButton, BorderLayout.EAST);
+    frame.add(mapPanel);
+    frame.add(actionPanel, BorderLayout.SOUTH);
     frame.pack();
-    frame.setSize(700, 800);
+    frame.setSize(windowWidth, windowHeight);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
   }
 
-  public void actionPerformed(ActionEvent e) {
-    for (int i = 0; i < gridNum * gridNum; i++) {
-      if (e.getSource() == buttons[i]) {
-        if (buttons[i].getText().equals("")) {
-          Image pipeImage = pipeIcon.getImage();
-          Image pipeModIcon =
-              pipeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
-          buttons[i].setBackground(new Color(180, 180, 180));
-          buttons[i].setIcon(new ImageIcon(pipeModIcon));
+  /**
+   * After one team's turn the action bar will be updated to suit for the next team's actions The
+   * mutual actions are the movements, making the pipe sticky or breaking a pipe The plumbers' team
+   * can repair, set pump, pick up pump and pick up pipe The nomad's team can break, make a pipe
+   * slippery
+   */
+  public void updateAction() {
+    playerIdx++;
+    playerIdx = playerIdx % (Menu.playerCount * 2);
+
+    Controller.tempChar = Map.getPlayer(Game.playerIdx);
+    assert Controller.tempChar != null : "tempChar is null???";
+    Controller.tempNode = Controller.tempChar.getStandingOn();
+    if (nomadTurn) {
+      Image slipperypipeImage = slipperypipeIcon.getImage();
+      Image slipperypipeModIcon =
+          slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(slipperypipeModIcon));
+      // mapButtons[gridNum * gridNum - gridNum + 7].setIcon(null);
+      mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
+      mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
+
+      textField.setText(nomadNames.get(playerIdx / 2) + " Nomads turn");
+    } else {
+      Image repairImage = repairIcon.getImage();
+      Image repairModIcon =
+          repairImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(repairModIcon));
+
+      Image setpumpImage = setpumpIcon.getImage();
+      Image setpumpModIcon =
+          setpumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 7].setIcon(new ImageIcon(setpumpModIcon));
+
+      Image pickuppipeImage = pickuppipeIcon.getImage();
+      Image pickuppipeModIcon =
+          pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
+
+      Image pickuppumpImage = pickuppumpIcon.getImage();
+      Image pickuppumpModIcon =
+          pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
+      mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
+
+      textField.setText(plumberNames.get(playerIdx / 2) + " Plumbers turn");
+    }
+
+    updateFlow();
+  }
+
+  public void updateFlow() {
+    // checks the flowrate for every node, if it's > 0, sets the node to watery
+    for (int i = 0; i < gridNum - 1; i++) {
+      for (int j = 0; j < gridNum; j++) {
+        Node tempNode = Map.getNode(j, i);
+        updateNodeImage(tempNode, i * gridNum + j, null);
+      }
+    }
+    updatePlayerNodes();
+    map.tick();
+  }
+
+  /** The character movement in the gui, with the correct images */
+  public void moveCharacter() {
+    // calculate the index of the node that the character is standing on
+    int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
+    Controller.prevIdx = Controller.prevNode.getX() + (gridNum * Controller.prevNode.getY());
+
+    updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    updateNodeImage(Controller.prevNode, Controller.prevIdx, null);
+    updatePlayerNodes();
+  }
+
+  private void updateNodeImage(Node node, int idx, Character character) {
+    Image nodeImage;
+    switch (getNodeType(node)) {
+      case 1 -> nodeImage = cisternIcon.getImage();
+      case 2 -> nodeImage = getPipeImage(node, pipeIcon);
+      case 3 -> {
+        if (node.isBroken()) {
+          nodeImage = brokenpumpIcon.getImage();
+        } else {
+          nodeImage = emptypumpIcon.getImage();
         }
       }
+      case 4 -> nodeImage = waterspringIcon.getImage();
+      case 5 -> nodeImage = getPipeImage(node, waterpipeIcon);
+      case 6 -> nodeImage = waterpumpIcon.getImage();
+      default -> nodeImage = sandIcon.getImage();
+    }
+
+    // if the player is standing on the node, add the player image to the node image
+    Image characterI = getPlayerImage(character);
+    if (characterI != null) {
+      nodeImage = createLayeredImage(nodeImage, characterI);
+    }
+
+    nodeImage = nodeImage.getScaledInstance(fieldSize, fieldSize, Image.SCALE_DEFAULT);
+    mapButtons[idx].setIcon(new ImageIcon(nodeImage));
+  }
+
+  private Image getPipeImage(Node pipe, ImageIcon pipeIcon) {
+    Pipe tempPipe = (Pipe) pipe;
+    Image nodeImage;
+    if (tempPipe.isBroken()) {
+      nodeImage = brokenpipeIcon.getImage();
+    } else if (tempPipe.isSticky()) {
+      nodeImage = createLayeredImage(pipeIcon.getImage(), stickypipeIcon.getImage());
+    } else if (tempPipe.isSlippery()) {
+      nodeImage = createLayeredImage(pipeIcon.getImage(), slipperypipeIcon.getImage());
+    } else {
+      nodeImage = pipeIcon.getImage();
+    }
+    return nodeImage;
+  }
+
+  /** The current character's break action in the gui, with the correct images */
+  public void breakNode() {
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
+            + (gridNum * Controller.tempChar.getStandingOn().getY());
+    // only the Pipe nodes can be broken by both characters
+    try {
+      Pipe ignored = (Pipe) Controller.tempNode;
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
+      Main.log("Target of break is not a pipe");
+    }
+  }
+
+  public void setSticky() {
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
+            + (gridNum * Controller.tempChar.getStandingOn().getY());
+    // only the Pipe nodes can be made sticky by both characters
+    try {
+      Pipe ignored = (Pipe) Controller.tempNode;
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
+      Main.log("Target of sticky is not a pipe");
+    }
+  }
+
+  public void setSlippery() {
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
+            + (gridNum * Controller.tempChar.getStandingOn().getY());
+    // only the Pipe nodes can be made slippery by nomad characters
+    try {
+      Nomad ignored1 = (Nomad) Controller.tempChar;
+      Pipe ignored2 = (Pipe) Controller.tempNode;
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
+      Main.log("Target of slippery is not a pipe or character is not a nomad");
+    }
+  }
+
+  public void repairNode() {
+    int idx =
+        Controller.tempChar.getStandingOn().getX()
+            + (gridNum * Controller.tempChar.getStandingOn().getY());
+    // only the Pipe nodes can be made slippery by nomad characters
+    try {
+      Plumber ignored1 = (Plumber) Controller.tempChar;
+      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
+    } catch (Exception ignored) {
+      Main.log("Repair failed: character is not a plumber");
+    }
+  }
+
+  public void UpdateField() {
+    int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
+    System.out.println(idx);
+    updateNodeImage(Controller.tempNode, idx, null);
+    updatePlayerNodes();
+  }
+
+  /** The getter for the current character's type */
+  private Image getPlayerImage(Character character) {
+    if (character == null) return null;
+    try {
+      Nomad ignored = (Nomad) character;
+      return nomadIcon.getImage();
+    } catch (Exception e) {
+      try {
+        Plumber ignored = (Plumber) character;
+        return plumberIcon.getImage();
+      } catch (Exception ignored) {
+      }
+    }
+    return null;
+  }
+
+  /** The getter for the current node's type */
+  private int getNodeType(Node node) {
+    int nodeType = 0;
+    if (node == null) return nodeType;
+    try {
+      Cistern ignored = (Cistern) node;
+      nodeType = 1;
+    } catch (Exception e) {
+      try {
+        Pipe ignored = (Pipe) node;
+        if (ignored.getFlowRate() == 0) nodeType = 2;
+        else nodeType = 5;
+      } catch (Exception ex) {
+        try {
+          Pump ignored = (Pump) node;
+          if (ignored.getFlowRate() == 0) nodeType = 3;
+          else nodeType = 6;
+        } catch (Exception exception) {
+          try {
+            WaterSpring ignored = (WaterSpring) node;
+            nodeType = 4;
+          } catch (Exception ignored) {
+          }
+        }
+      }
+    }
+    return nodeType;
+  }
+
+  /**
+   * create the layered image
+   *
+   * @param image the buffered image
+   */
+  private Image createLayeredImage(Image image, Image overlay) {
+    int w = Math.max(image.getWidth(null), overlay.getWidth(null));
+    int h = Math.max(image.getHeight(null), overlay.getHeight(null));
+    BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+    // adds the two layers of the images
+    Graphics g = combined.getGraphics();
+    g.drawImage(image, 0, 0, null);
+    g.drawImage(overlay, 0, 0, null);
+    g.dispose();
+
+    return combined;
+  }
+
+  private void updatePlayerNodes() {
+    try {
+      for (int i = 0; i < Map.playerCount(); i++) {
+        Character tempChar = Map.getPlayer(i);
+        Node temp = tempChar.getStandingOn();
+        int coord = temp.getX() + (gridNum * temp.getY());
+
+        updateNodeImage(temp, coord, tempChar);
+      }
+    } catch (NullPointerException ignored) {
     }
   }
 }
