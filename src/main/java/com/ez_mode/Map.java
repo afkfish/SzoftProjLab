@@ -92,7 +92,7 @@ public class Map implements Tickable {
           }
 
         } else { // leaves the place empty
-          if (30 <= randomInt && randomInt <= 60) {
+          if (30 <= randomInt && randomInt <= 70) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
           } else if (80 <= randomInt) {
