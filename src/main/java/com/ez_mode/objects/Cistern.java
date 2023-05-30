@@ -56,7 +56,6 @@ public class Cistern extends Node {
   @Override
   public void tick() {
     super.tick();
-    flowRate=100;
     Random random = new Random();
     if (random.nextInt(100) < 40) {
       MakePump();
@@ -86,7 +85,7 @@ public class Cistern extends Node {
   /**
    * Makes a Pipe.
    *
-   * @return
+   * @return a Pipe object
    */
   public Pipe MakePipe() {
     Main.log("\t" + this.uuid + " made a pipe");

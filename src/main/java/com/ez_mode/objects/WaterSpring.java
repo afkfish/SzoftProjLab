@@ -64,6 +64,7 @@ public class WaterSpring extends Node {
   /** Controls the water flow. */
   @Override
   public void tick() {
+    flowRate = 100;
     this.neighbours.stream()
         .filter(node -> !node.isBroken)
         .forEach(node -> node.addFlowRate(this, 1));
