@@ -1,5 +1,6 @@
 package com.ez_mode.gui;
 
+import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
@@ -10,6 +11,8 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,28 +204,61 @@ public class Controller {
     }
   }
 
-  // TODO: check if its working, for that we need the cistern ticking (currently it is not)
   public static void PickUpPipeAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
     try {
-      Plumber temp = (Plumber) tempChar;
-      assert temp != null;
+      Plumber tempPlumber = (Plumber) tempChar;
+      assert tempPlumber != null;
       try {
-        // if inventory is empty pick up
-        if (temp.getDraggedpipe() != null || temp.getPickedUpPipe() != null) temp.PlacePipe();
+        tempNode = tempPlumber.getStandingOn();
+        assert  tempNode != null;
         // if not empty, then place
-        else temp.PickupPipe((Pipe) tempChar.getStandingOn());
-      } catch (NotFoundExeption ignored1) {
+        if (tempPlumber.getDraggedpipe() != null || tempPlumber.getPickedUpPipe() != null) tempPlumber.PlacePipe();
+        // if inventory is empty pick up
+        else {
+          Pipe tempPipe = new Pipe();
+          PickPipeFrame f = new PickPipeFrame();
+          Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
+          try{
+             upNeighbour =
+                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+          }catch (ArrayIndexOutOfBoundsException e){ upNeighbour = null;}
+          try{
+             downNeighbour =
+                    Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+          }catch (ArrayIndexOutOfBoundsException e){ downNeighbour = null;}
+          try{
+             leftNeighbour =
+                    Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+          }catch (ArrayIndexOutOfBoundsException e){ leftNeighbour = null;}
+          try{
+             rightNeighbour =
+                    Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+          }catch (ArrayIndexOutOfBoundsException e){ rightNeighbour = null;}
+          switch (setChoice) {
+            case 0:
+              tempPipe = (Pipe) upNeighbour;
+              break;
+            case 1:
+              tempPipe = (Pipe) downNeighbour;
+              break;
+            case 2:
+              tempPipe = (Pipe) rightNeighbour;
+              break;
+            case 3:
+              tempPipe = (Pipe) leftNeighbour;
+              break;
+          }
+          tempPlumber.PickupPipe(tempPipe);
+        }
+      } catch (NotFoundExeption /*| InterruptedException */ignored1) {
       }
     } catch (ClassCastException ignored1) {
     }
-    /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    assert tempChar != null;
-    tempChar.PlacePipe();*/
+
   }
 
-  // TODO: check if its working, for that we need the cistern ticking (currently it is not)
   public static void PickUpPumpAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
@@ -231,6 +267,7 @@ public class Controller {
       assert tempChar != null;
       // if not empty, then place
       if (tempChar.getPickedupPump() != null) {
+        Pipe a = (Pipe) tempChar.getStandingOn();
         Pump placed = tempChar.getPickedupPump();
         tempChar.PlacePump();
         tempNode = placed;
@@ -243,23 +280,33 @@ public class Controller {
       // if inventory is empty pick up
       else tempChar.PickupPump();
     } catch (ClassCastException ignored1) {
+      Main.log(tempChar.getUuid() + " is not standing on a Pipe");
     }
   }
 
   public static void SetPumpAction(ActionEvent ignored) {
     Game.nomadTurn = !Game.nomadTurn;
     game.updateAction();
-    Node upNeighbour =
-        Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-    Node downNeighbour =
-        Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-    Node leftNeighbour =
-        Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-    Node rightNeighbour =
-        Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+    Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
+    try{
+      upNeighbour =
+              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
+    }catch (ArrayIndexOutOfBoundsException e){ upNeighbour = null;}
+    try{
+      downNeighbour =
+              Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
+    }catch (ArrayIndexOutOfBoundsException e){ downNeighbour = null;}
+    try{
+      leftNeighbour =
+              Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
+    }catch (ArrayIndexOutOfBoundsException e){ leftNeighbour = null;}
+    try{
+      rightNeighbour =
+              Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
+    }catch (ArrayIndexOutOfBoundsException e){ rightNeighbour = null;}
     try {
-      Plumber ignored1 = (Plumber) tempChar;
-      assert ignored1 != null;
+      //Plumber ignored1 = (Plumber) tempChar;
+      assert tempChar != null;
       try {
         Pump ignored2 = (Pump) tempNode;
         new PopUp();

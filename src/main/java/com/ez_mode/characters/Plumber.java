@@ -36,7 +36,7 @@ public class Plumber extends Character {
       try {
         Pipe temp = ((Pipe) standingOn);
         Pipe newPipe = new Pipe();
-        this.getEmptyPlace(newPipe);
+        this.getEmptyPlace(pickedupPump, newPipe);
         try {
           if (temp.getNeighbours().size() == 2) {
             Node a = temp.getNeighbours().get(1);
@@ -46,7 +46,12 @@ public class Plumber extends Character {
           temp.connect(pickedupPump);
           newPipe.connect(pickedupPump);
           Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
-          if (standingOn.getNeighbours().contains(pickedupPump)) pickedupPump = null;
+          if (standingOn.getNeighbours().contains(pickedupPump)) {
+            Map.addNode(pickedupPump, pickedupPump.getX(), pickedupPump.getY());
+            if(pickedupPump.getNeighbours().contains(newPipe))Map.addNode(newPipe,
+                    newPipe.getX(), newPipe.getY());
+            pickedupPump = null;
+          }
         } catch (ObjectFullException e) {
           Main.log("Object is full!");
         }
@@ -58,20 +63,21 @@ public class Plumber extends Character {
     }
   }
 
-  public void getEmptyPlace(Node node) {
+  public void getEmptyPlace(Node node1, Node node2) {
     int X = this.standingOn.getX();
     int Y = this.standingOn.getY();
-    if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) pickedupPump.setPos(X + 1, Y);
-    else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) pickedupPump.setPos(X - 1, Y);
-    else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null)
-      pickedupPump.setPos(X, Y + 1);
-    else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) pickedupPump.setPos(X, Y - 1);
-    X = pickedupPump.getX();
-    Y = pickedupPump.getY();
-    if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) node.setPos(X + 1, Y);
-    else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) node.setPos(X - 1, Y);
-    else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) node.setPos(X, Y + 1);
-    else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) node.setPos(X, Y - 1);
+    if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) node1.setPos(X + 1, Y);
+    else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) node1.setPos(X - 1, Y);
+    else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) node1.setPos(X, Y + 1);
+    else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) node1.setPos(X, Y - 1);
+    if(node2 != null) {
+      X = node1.getX();
+      Y = node1.getY();
+      if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) node2.setPos(X + 1, Y);
+      else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) node2.setPos(X - 1, Y);
+      else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) node2.setPos(X, Y + 1);
+      else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) node2.setPos(X, Y - 1);
+    }
   }
 
   public Pipe getDraggedpipe() {
@@ -98,13 +104,20 @@ public class Plumber extends Character {
   public void PlacePipe() {
     try {
       if (draggedpipe != null) {
+        this.getEmptyPlace(draggedpipe, null);
         standingOn.connect(draggedpipe);
-        draggedpipe = null;
+        if(this.getStandingOn().getNeighbours().contains(draggedpipe)){
+          Map.addNode(draggedpipe, draggedpipe.getX(), draggedpipe.getY());
+          draggedpipe = null;
+        }
       } else if (pickedUpPipe != null) {
+        this.getEmptyPlace(pickedUpPipe, null);
         standingOn.connect(pickedUpPipe);
-        // Map.addNode(pickedUpPipe, standingOn.getX()+5, standingOn.getY()+5);
-        pickedUpPipe = null;
-      } else Main.log(this.getUuid() + "has no pipe to place");
+        if(this.getStandingOn().getNeighbours().contains(pickedUpPipe)){
+          Map.addNode(pickedUpPipe, pickedUpPipe.getX(), pickedUpPipe.getY());
+          pickedUpPipe = null;
+        }
+      } else Main.log(this.getUuid() + "has no pipe to place or has one but there is not enough space");
     } catch (ObjectFullException e) {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
     }
@@ -150,7 +163,7 @@ public class Plumber extends Character {
       } else if (draggedpipe != null && draggedpipe.getNeighbours().isEmpty()) {
         pickedUpPipe = draggedpipe;
         draggedpipe = null;
-        // Map.removeNode(pickedUpPipe);
+        Map.removeNode(pickedUpPipe);
         Main.log("\t" + pickedUpPipe + " has been picked up, and stored by " + this.getUuid());
       } else if (draggedpipe == null) {
         throw new NotFoundExeption("Pipe Not Found!");
