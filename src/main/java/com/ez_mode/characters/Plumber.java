@@ -56,12 +56,14 @@ public class Plumber extends Character {
           }
         } catch (ObjectFullException e) {
           Main.log("Object is full!");
+          JOptionPane.showMessageDialog(null, "Object is full!");
         }
       } catch (ClassCastException e) {
         Main.log(this.getUuid() + " is not standing on a Pipe");
       }
     } else {
       Main.log(this.getUuid() + " doesn't have a pump to place");
+      JOptionPane.showMessageDialog(null, "Empty inventory!");
     }
   }
 
@@ -141,8 +143,10 @@ public class Plumber extends Character {
         }
       } else
         Main.log(this.getUuid() + "has no pipe to place or has one but there is not enough space");
+      JOptionPane.showMessageDialog(null, "Object is full or inventory is empty!");
     } catch (ObjectFullException e) {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
+      JOptionPane.showMessageDialog(null, "Object is full!");
     }
   }
 
@@ -159,6 +163,7 @@ public class Plumber extends Character {
       Main.log("There is no pump to pick up");
     } catch (ClassCastException e) {
       Main.log(this.getUuid() + " is not standing on a Cistern");
+      JOptionPane.showMessageDialog(null, "You couldn't pick up a pump, the cistern is empty!");
     }
   }
 
