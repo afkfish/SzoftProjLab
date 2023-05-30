@@ -229,9 +229,18 @@ public class Controller {
     try {
       Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
       assert tempChar != null;
-      // if inventory is empty pick up
-      if (tempChar.getPickedupPump() != null) tempChar.PlacePump();
       // if not empty, then place
+      if (tempChar.getPickedupPump() != null) {
+        Pump placed = tempChar.getPickedupPump();
+        tempChar.PlacePump();
+        tempNode = placed;
+        game.UpdateField();
+        if(placed.getNeighbours().size() >= 2){
+          tempNode = placed.getNeighbours().get(1);
+          game.UpdateField();
+        }
+      }
+      // if inventory is empty pick up
       else tempChar.PickupPump();
     } catch (ClassCastException ignored1) {
     }

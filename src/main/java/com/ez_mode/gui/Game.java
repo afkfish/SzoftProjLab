@@ -398,6 +398,12 @@ public class Game {
       Main.log("Repair failed: character is not a plumber");
     }
   }
+  public void UpdateField(){
+    int idx =
+            Controller.tempNode.getX()
+                    + (gridNum * Controller.tempNode.getY());
+    updateNodeImage(Controller.tempNode, idx, null);
+  }
 
   public void setPump() {} // TODO: implement
 
