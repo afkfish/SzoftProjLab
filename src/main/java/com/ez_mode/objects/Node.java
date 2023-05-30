@@ -8,11 +8,10 @@ import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
 import com.ez_mode.exceptions.NotFoundExeption;
 import com.ez_mode.exceptions.ObjectFullException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** The Node class is the base class for all objects that can be placed on the map. */
 public abstract class Node implements Tickable {
@@ -136,11 +135,11 @@ public abstract class Node implements Tickable {
   public abstract void setSurface(String type, Character c) throws InvalidPlayerActionException;
 
   public void addFlowRate(Node source, double exceededFlow) {
-    //if (!this.sources.contains(source)) {
-      this.flowRate += exceededFlow;
-      this.sources.add(source);
-      this.absorbers.forEach(node -> node.addFlowRate(this, exceededFlow));
-    //}
+    // if (!this.sources.contains(source)) {
+    this.flowRate += exceededFlow;
+    this.sources.add(source);
+    this.absorbers.forEach(node -> node.addFlowRate(this, exceededFlow));
+    // }
   }
 
   public void removeFlowRate(Node source, double flowRate) {
