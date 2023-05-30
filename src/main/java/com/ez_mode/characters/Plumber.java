@@ -108,7 +108,7 @@ public class Plumber extends Character {
         standingOn.connect(draggedpipe);
         Map.removeNode(draggedpipe);
         Map.addNode(draggedpipe, draggedpipe.getX(), draggedpipe.getY());
-        if(this.getStandingOn().getNeighbours().contains(draggedpipe)){
+        if (this.getStandingOn().getNeighbours().contains(draggedpipe)) {
           Map.addNode(draggedpipe, draggedpipe.getX(), draggedpipe.getY());
           draggedpipe = null;
         }

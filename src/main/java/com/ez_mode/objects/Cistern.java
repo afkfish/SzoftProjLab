@@ -60,7 +60,7 @@ public class Cistern extends Node {
     if (random.nextInt(100) < 40) {
       MakePump();
     }
-    if(random.nextInt(100) > 95 && sources.size() < maxConnections){
+    if (random.nextInt(100) > 95 && sources.size() < maxConnections) {
       sources.add(MakePipe());
     }
 
