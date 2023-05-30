@@ -1,5 +1,7 @@
 package com.ez_mode.gui;
 
+import com.ez_mode.Map;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -18,6 +20,7 @@ public class EndGame {
   String winner = "It's a draw!";
 
   public EndGame() {
+    winner = Map.waterArrived > Map.waterLost ? "Plumbers" : "Nomads";
     title.setBackground(new Color(50, 50, 50));
     title.setForeground(new Color(250, 250, 250));
     title.setBorder(javax.swing.BorderFactory.createEmptyBorder());
