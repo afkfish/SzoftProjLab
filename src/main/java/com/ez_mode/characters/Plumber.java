@@ -48,8 +48,8 @@ public class Plumber extends Character {
           Main.log("\t" + pickedupPump.getUuid() + " has been placed ");
           if (standingOn.getNeighbours().contains(pickedupPump)) {
             Map.addNode(pickedupPump, pickedupPump.getX(), pickedupPump.getY());
-            if(pickedupPump.getNeighbours().contains(newPipe))Map.addNode(newPipe,
-                    newPipe.getX(), newPipe.getY());
+            if (pickedupPump.getNeighbours().contains(newPipe))
+              Map.addNode(newPipe, newPipe.getX(), newPipe.getY());
             pickedupPump = null;
           }
         } catch (ObjectFullException e) {
@@ -70,7 +70,7 @@ public class Plumber extends Character {
     else if ((X - 1) >= 0 && Map.getNode(X - 1, Y) == null) node1.setPos(X - 1, Y);
     else if ((Y + 1) < Map.getMapSize() && Map.getNode(X, Y + 1) == null) node1.setPos(X, Y + 1);
     else if ((Y - 1) >= 0 && Map.getNode(X, Y - 1) == null) node1.setPos(X, Y - 1);
-    if(node2 != null) {
+    if (node2 != null) {
       X = node1.getX();
       Y = node1.getY();
       if ((X + 1) < Map.getMapSize() && Map.getNode(X + 1, Y) == null) node2.setPos(X + 1, Y);
@@ -115,11 +115,12 @@ public class Plumber extends Character {
       } else if (pickedUpPipe != null) {
         this.getEmptyPlace(pickedUpPipe, null);
         standingOn.connect(pickedUpPipe);
-        if(this.getStandingOn().getNeighbours().contains(pickedUpPipe)){
+        if (this.getStandingOn().getNeighbours().contains(pickedUpPipe)) {
           Map.addNode(pickedUpPipe, pickedUpPipe.getX(), pickedUpPipe.getY());
           pickedUpPipe = null;
         }
-      } else Main.log(this.getUuid() + "has no pipe to place or has one but there is not enough space");
+      } else
+        Main.log(this.getUuid() + "has no pipe to place or has one but there is not enough space");
     } catch (ObjectFullException e) {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
     }
@@ -158,7 +159,6 @@ public class Plumber extends Character {
         }
       } else if (this.standingOn.getNeighbours().contains(pipe)) {
         draggedpipe = pipe;
-        getStandingOn().disconnect(draggedpipe);
       }
 
       if (draggedpipe != null && !draggedpipe.getNeighbours().isEmpty()) {

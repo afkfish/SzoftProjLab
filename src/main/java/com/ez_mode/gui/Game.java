@@ -227,7 +227,7 @@ public class Game {
       Image slipperypipeModIcon =
           slipperypipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
       mapButtons[gridNum * gridNum - gridNum + 5].setIcon(new ImageIcon(slipperypipeModIcon));
-      //mapButtons[gridNum * gridNum - gridNum + 7].setIcon(null);
+      // mapButtons[gridNum * gridNum - gridNum + 7].setIcon(null);
       mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
       mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
 
