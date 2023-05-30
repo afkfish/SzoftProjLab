@@ -5,7 +5,6 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.gui.Game;
-import com.ez_mode.gui.Menu;
 import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
