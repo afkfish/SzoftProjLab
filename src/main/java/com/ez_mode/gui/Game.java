@@ -67,16 +67,16 @@ public class Game {
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
 
-  private  final String moveupImagePath = "src/main/resources/moveup.png";
-  private  final String moveleftImagePath = "src/main/resources/moveleft.png";
-  private  final String movedownImagePath = "src/main/resources/movedown.png";
-  private  final String moverightImagePath = "src/main/resources/moveright.png";
-  private  final ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
-  private  final ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
-  private  final ImageIcon moveupIcon = new ImageIcon(moveupImagePath);
-  private  final ImageIcon moveleftIcon = new ImageIcon(moveleftImagePath);
-  private  final ImageIcon movedownIcon = new ImageIcon(movedownImagePath);
-  private  final ImageIcon moverightIcon = new ImageIcon(moverightImagePath);
+  private final String moveupImagePath = "src/main/resources/moveup.png";
+  private final String moveleftImagePath = "src/main/resources/moveleft.png";
+  private final String movedownImagePath = "src/main/resources/movedown.png";
+  private final String moverightImagePath = "src/main/resources/moveright.png";
+  private final ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
+  private final ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
+  private final ImageIcon moveupIcon = new ImageIcon(moveupImagePath);
+  private final ImageIcon moveleftIcon = new ImageIcon(moveleftImagePath);
+  private final ImageIcon movedownIcon = new ImageIcon(movedownImagePath);
+  private final ImageIcon moverightIcon = new ImageIcon(moverightImagePath);
   int windowHeight = 800;
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
