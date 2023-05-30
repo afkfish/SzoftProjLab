@@ -9,12 +9,13 @@ import javax.swing.*;
  */
 public class EndGame {
   static JFrame frame = new JFrame();
-  JButton startButton = new JButton();
   JTextField title = new JTextField();
+  JTextField winnerText = new JTextField();
   JTextField saveText = new JTextField();
   static JTextField saveTextField = new JTextField();
   JButton exitButton = new JButton();
   static String savedPath;
+  String winner = "It's a draw!";
 
   public EndGame() {
     title.setBackground(new Color(50, 50, 50));
@@ -25,19 +26,19 @@ public class EndGame {
     title.setText("Menu");
     title.setEditable(false);
 
-    startButton.setBounds(55, 80, 300, 40);
-    startButton.setFont(new Font("Monospace", Font.BOLD, 25));
-    startButton.setText("New game");
-    startButton.setBackground(new Color(0, 0, 0));
-    startButton.setForeground(new Color(250, 250, 250));
-    startButton.setFocusable(false);
-    startButton.addActionListener(Controller::OpenMenuAction);
+    winnerText.setBackground(new Color(50, 50, 50));
+    winnerText.setForeground(new Color(250, 250, 250));
+    winnerText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+    winnerText.setFont(new Font("Monospace", Font.BOLD, 20));
+    winnerText.setBounds(55, 100, 300, 40);
+    winnerText.setText("The winner team is: " + winner);
+    winnerText.setEditable(false);
 
     saveText.setBackground(new Color(50, 50, 50));
     saveText.setForeground(new Color(250, 250, 250));
     saveText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
     saveText.setFont(new Font("Monospace", Font.BOLD, 20));
-    saveText.setBounds(55, 180, 300, 40);
+    saveText.setBounds(55, 180, 450, 40);
     saveText.setText("Path to save the map: ");
     saveText.setEditable(false);
 
@@ -56,7 +57,7 @@ public class EndGame {
     exitButton.addActionListener(Controller::EndGameExitAction);
 
     frame.add(title);
-    frame.add(startButton);
+    frame.add(winnerText);
     frame.add(saveText);
     frame.add(saveTextField);
     frame.add(exitButton);

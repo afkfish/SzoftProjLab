@@ -365,11 +365,6 @@ public class Controller {
     Map.saveMap(EndGame.savedPath);
   }
 
-  public static void OpenMenuAction(ActionEvent ignored) {
-    EndGame.frame.dispose();
-    new Menu();
-  }
-
   public static void LoadMapAction(ActionEvent ignored) {
     Menu.frame.dispose();
     Menu.loadedPath = Menu.loadTextField.getText();
