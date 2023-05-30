@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class PopUp {
 
-  Object[] options = {"Up-Down", "Left-Right"};
+  Object[] options = {"Up","Down", "Left", "Right"};
 
   int choice =
       JOptionPane.showOptionDialog(
@@ -19,11 +19,16 @@ public class PopUp {
 
   public PopUp() {
     if (choice == 0) {
-      System.out.println("User chose Up-Down");
+      System.out.println("User chose Up");
       Controller.setChoice = 0;
     } else if (choice == 1) {
-      System.out.println("User chose Left-Right");
+      System.out.println("User chose Down");
       Controller.setChoice = 1;
+    } else if(choice == 2){
+      System.out.println("User Chose Left");
+    }
+    else if(choice == 3){
+      System.out.println("User Chose Right");
     }
   }
 }

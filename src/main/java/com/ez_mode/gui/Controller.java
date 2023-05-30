@@ -218,7 +218,7 @@ public class Controller {
         // if inventory is empty pick up
         else {
           Pipe tempPipe = new Pipe();
-          PickPipeFrame f = new PickPipeFrame();
+          new PopUp();
           Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
           try{
              upNeighbour =
@@ -244,15 +244,17 @@ public class Controller {
               tempPipe = (Pipe) downNeighbour;
               break;
             case 2:
-              tempPipe = (Pipe) rightNeighbour;
+              tempPipe = (Pipe) leftNeighbour;
               break;
             case 3:
-              tempPipe = (Pipe) leftNeighbour;
+              tempPipe = (Pipe) rightNeighbour;
               break;
           }
           tempPlumber.PickupPipe(tempPipe);
+          tempNode = tempPipe;
+          game.UpdateField();
         }
-      } catch (NotFoundExeption /*| InterruptedException */ignored1) {
+      } catch (NotFoundExeption ignored1) {
       }
     } catch (ClassCastException ignored1) {
     }

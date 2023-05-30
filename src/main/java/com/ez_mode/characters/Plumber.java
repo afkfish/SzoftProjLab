@@ -106,6 +106,8 @@ public class Plumber extends Character {
       if (draggedpipe != null) {
         this.getEmptyPlace(draggedpipe, null);
         standingOn.connect(draggedpipe);
+        Map.removeNode(draggedpipe);
+        Map.addNode(draggedpipe, draggedpipe.getX(), draggedpipe.getY());
         if(this.getStandingOn().getNeighbours().contains(draggedpipe)){
           Map.addNode(draggedpipe, draggedpipe.getX(), draggedpipe.getY());
           draggedpipe = null;
@@ -156,6 +158,7 @@ public class Plumber extends Character {
         }
       } else if (this.standingOn.getNeighbours().contains(pipe)) {
         draggedpipe = pipe;
+        getStandingOn().disconnect(draggedpipe);
       }
 
       if (draggedpipe != null && !draggedpipe.getNeighbours().isEmpty()) {

@@ -59,9 +59,10 @@ public class Cistern extends Node {
     Random random = new Random();
     if (random.nextInt(100) < 40) {
       MakePump();
-      MakePipe();
     }
-    if (sources.size() < maxConnections) sources.add(MakePipe());
+    if(random.nextInt(100) > 95 && sources.size() < maxConnections){
+      sources.add(MakePipe());
+    }
 
     // this.sources.forEach(node -> Map.waterLost += node.flowRate);
     for (Node node : this.sources) {
