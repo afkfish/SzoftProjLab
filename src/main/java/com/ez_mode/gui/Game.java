@@ -359,7 +359,6 @@ public class Game {
     try {
       Nomad ignored1 = (Nomad) Controller.tempChar;
       Pipe ignored2 = (Pipe) Controller.tempNode;
-      System.err.println("Slippery pipe\n\n\n");
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
       Main.log("Target of slippery is not a pipe or character is not a nomad");
