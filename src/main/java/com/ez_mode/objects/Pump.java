@@ -1,14 +1,13 @@
 package com.ez_mode.objects;
 
+import static java.lang.Double.min;
+
 import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.NotFoundExeption;
-
 import java.util.Random;
-
-import static java.lang.Double.min;
 
 /**
  * A pump is a node that can be adjusted and repaired. It is bound to break after a certain amount
@@ -96,7 +95,7 @@ public class Pump extends Node {
   public void calculateFlowRate() {
     absorbers.clear();
     sources.clear();
-    if (activeInput!=null && activeInput.flowRate>0) {
+    if (activeInput != null && activeInput.flowRate > 0) {
       sources.add(activeInput);
 
       if (activeOutput != null && activeOutput.flowRate < activeInput.flowRate) {
@@ -126,12 +125,11 @@ public class Pump extends Node {
   /** Randomly breaks. */
   @Override
   public void tick() {
-    if(activeOutput!=null&& activeInput!=null){
-      if(activeOutput.flowRate> activeInput.flowRate)
-      {
-        Pipe temp=activeInput;
-        activeInput=activeOutput;
-        activeOutput= temp;
+    if (activeOutput != null && activeInput != null) {
+      if (activeOutput.flowRate > activeInput.flowRate) {
+        Pipe temp = activeInput;
+        activeInput = activeOutput;
+        activeOutput = temp;
       }
     }
     calculateFlowRate();
