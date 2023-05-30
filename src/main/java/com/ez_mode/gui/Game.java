@@ -1,18 +1,17 @@
 package com.ez_mode.gui;
 
+import static com.ez_mode.Main.map;
+
 import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.*;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import static com.ez_mode.Main.map;
+import javax.swing.*;
 
 public class Game {
   public static int gridNum = 10;

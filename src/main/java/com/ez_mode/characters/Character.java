@@ -67,7 +67,8 @@ public abstract class Character implements Tickable {
       this.standingOn = node;
       Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
-      Main.log(e.getMessage());    }
+      Main.log(e.getMessage());
+    }
   }
 
   /**
