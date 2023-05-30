@@ -112,7 +112,7 @@ public class Pipe extends Node {
 
     this.calculateFlowRate();
     if (unbreakableTill > 0) this.unbreakableTill--;
-    this.logger.debug("Flow rate is at {}", this.flowRate);
+    Main.log("Flow rate is at " + this.flowRate);
   }
 
   @Override
@@ -129,7 +129,7 @@ public class Pipe extends Node {
   protected void calculateFlowRate() {
     // If the pipe is broken or any of its connectors are not connected, then it loses water
     if (this.isBroken) {
-      this.logger.warn("Pipe is broken, losing water.");
+      Main.log("Pipe is broken, losing water.");
 
       // add the water loss to the nomad points
       Map.waterLost += this.flowRate;

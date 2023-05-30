@@ -246,18 +246,10 @@ public class Controller {
             rightNeighbour = null;
           }
           switch (setChoice) {
-            case 0:
-              tempPipe = (Pipe) upNeighbour;
-              break;
-            case 1:
-              tempPipe = (Pipe) downNeighbour;
-              break;
-            case 2:
-              tempPipe = (Pipe) leftNeighbour;
-              break;
-            case 3:
-              tempPipe = (Pipe) rightNeighbour;
-              break;
+            case 0 -> tempPipe = (Pipe) upNeighbour;
+            case 1 -> tempPipe = (Pipe) downNeighbour;
+            case 2 -> tempPipe = (Pipe) leftNeighbour;
+            case 3 -> tempPipe = (Pipe) rightNeighbour;
           }
           tempPlumber.PickupPipe(tempPipe);
           tempNode = tempPipe;

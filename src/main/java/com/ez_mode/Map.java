@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -36,8 +34,6 @@ public class Map implements Tickable {
 
   /** The ArrayList representation of the game. This map contains every object. */
   private static Node[][] gameMap = null;
-
-  private final Logger logger = LogManager.getLogger(Map.class);
 
   public Map(int size) {
     gameMap = new Node[size][size];
@@ -428,7 +424,7 @@ public class Map implements Tickable {
         node.tick();
       }
     }
-    this.logger.debug("Current water loss: {}", Map.waterLost);
+    Main.log("Current water loss: " + Map.waterLost);
   }
 
   /**
