@@ -20,44 +20,44 @@ public class Game {
   public static ArrayList<String> nomadNames;
 
   /** Adding all the images' path that will be used in the game */
-  public static String pipeImagePath = "src/main/resources/pipe.png";
+  private final String pipeImagePath = "src/main/resources/pipe.png";
 
-  public static String sandImagePath = "src/main/resources/sand.png";
-  public static String plumberImagePath = "src/main/resources/transplumber.png";
-  public static String nomadImagePath = "src/main/resources/transnomad.png";
-  public static String waterspringImagePath = "src/main/resources/waterspring.png";
-  public static String waterpumpImagePath = "src/main/resources/waterpump.png";
-  public static String waterpipeImagePath = "src/main/resources/waterpipe.png";
-  public static String stickypipeImagePath = "src/main/resources/stickypipe.png";
-  public static String slipperypipeImagePath = "src/main/resources/slipperypipe.png";
-  public static String repairImagePath = "src/main/resources/repair.png";
-  public static String emptypumpImagePath = "src/main/resources/emptypump.png";
-  public static String cisternImagePath = "src/main/resources/cistern.png";
-  public static String brokenpumpImagePath = "src/main/resources/brokenpump.png";
-  public static String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
-  public static String breakImagePath = "src/main/resources/break.png";
-  public static String pickuppipeImagePath = "src/main/resources/pickuppipe.png";
-  public static String pickuppumpImagePath = "src/main/resources/pickuppump.png";
-  public static String setpumpImagePath = "src/main/resources/setpump.png";
+  private final String sandImagePath = "src/main/resources/sand.png";
+  private final String plumberImagePath = "src/main/resources/transplumber.png";
+  private final String nomadImagePath = "src/main/resources/transnomad.png";
+  private final String waterspringImagePath = "src/main/resources/waterspring.png";
+  private final String waterpumpImagePath = "src/main/resources/waterpump.png";
+  private final String waterpipeImagePath = "src/main/resources/waterpipe.png";
+  private final String stickypipeImagePath = "src/main/resources/stickypipe.png";
+  private final String slipperypipeImagePath = "src/main/resources/slipperypipe.png";
+  private final String repairImagePath = "src/main/resources/repair.png";
+  private final String emptypumpImagePath = "src/main/resources/emptypump.png";
+  private final String cisternImagePath = "src/main/resources/cistern.png";
+  private final String brokenpumpImagePath = "src/main/resources/brokenpump.png";
+  private final String brokenpipeImagePath = "src/main/resources/brokenpipe.png";
+  private final String breakImagePath = "src/main/resources/break.png";
+  private final String pickuppipeImagePath = "src/main/resources/pickuppipe.png";
+  private final String pickuppumpImagePath = "src/main/resources/pickuppump.png";
+  private final String setpumpImagePath = "src/main/resources/setpump.png";
 
   /** Adding all the images as ImageIcons, using the path given previously */
-  public static ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
+  private final ImageIcon pipeIcon = new ImageIcon(pipeImagePath);
 
-  public static ImageIcon sandIcon = new ImageIcon(sandImagePath);
-  public static ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
-  public static ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
-  public static ImageIcon waterpipeIcon = new ImageIcon(waterpipeImagePath);
-  public static ImageIcon stickypipeIcon = new ImageIcon(stickypipeImagePath);
-  public static ImageIcon slipperypipeIcon = new ImageIcon(slipperypipeImagePath);
-  public static ImageIcon repairIcon = new ImageIcon(repairImagePath);
-  public static ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
-  public static ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
-  public static ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
-  public static ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
-  public static ImageIcon breakIcon = new ImageIcon(breakImagePath);
-  public static ImageIcon pickuppipeIcon = new ImageIcon(pickuppipeImagePath);
-  public static ImageIcon pickuppumpIcon = new ImageIcon(pickuppumpImagePath);
-  public static ImageIcon setpumpIcon = new ImageIcon(setpumpImagePath);
+  private final ImageIcon sandIcon = new ImageIcon(sandImagePath);
+  private final ImageIcon waterspringIcon = new ImageIcon(waterspringImagePath);
+  private final ImageIcon waterpumpIcon = new ImageIcon(waterpumpImagePath);
+  private final ImageIcon waterpipeIcon = new ImageIcon(waterpipeImagePath);
+  private final ImageIcon stickypipeIcon = new ImageIcon(stickypipeImagePath);
+  private final ImageIcon slipperypipeIcon = new ImageIcon(slipperypipeImagePath);
+  private final ImageIcon repairIcon = new ImageIcon(repairImagePath);
+  private final ImageIcon emptypumpIcon = new ImageIcon(emptypumpImagePath);
+  private final ImageIcon cisternIcon = new ImageIcon(cisternImagePath);
+  private final ImageIcon brokenpumpIcon = new ImageIcon(brokenpumpImagePath);
+  private final ImageIcon brokenpipeIcon = new ImageIcon(brokenpipeImagePath);
+  private final ImageIcon breakIcon = new ImageIcon(breakImagePath);
+  private final ImageIcon pickuppipeIcon = new ImageIcon(pickuppipeImagePath);
+  private final ImageIcon pickuppumpIcon = new ImageIcon(pickuppumpImagePath);
+  private final ImageIcon setpumpIcon = new ImageIcon(setpumpImagePath);
   static int windowWidth = 800 - 100;
   static int fieldSize = windowWidth / gridNum;
   static int actionSize = fieldSize - 10;
@@ -67,16 +67,16 @@ public class Game {
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
 
-  public String moveupImagePath = "src/main/resources/moveup.png";
-  public String moveleftImagePath = "src/main/resources/moveleft.png";
-  public String movedownImagePath = "src/main/resources/movedown.png";
-  public String moverightImagePath = "src/main/resources/moveright.png";
-  public ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
-  public ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
-  public ImageIcon moveupIcon = new ImageIcon(moveupImagePath);
-  public ImageIcon moveleftIcon = new ImageIcon(moveleftImagePath);
-  public ImageIcon movedownIcon = new ImageIcon(movedownImagePath);
-  public ImageIcon moverightIcon = new ImageIcon(moverightImagePath);
+  private  final String moveupImagePath = "src/main/resources/moveup.png";
+  private  final String moveleftImagePath = "src/main/resources/moveleft.png";
+  private  final String movedownImagePath = "src/main/resources/movedown.png";
+  private  final String moverightImagePath = "src/main/resources/moveright.png";
+  private  final ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
+  private  final ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
+  private  final ImageIcon moveupIcon = new ImageIcon(moveupImagePath);
+  private  final ImageIcon moveleftIcon = new ImageIcon(moveleftImagePath);
+  private  final ImageIcon movedownIcon = new ImageIcon(movedownImagePath);
+  private  final ImageIcon moverightIcon = new ImageIcon(moverightImagePath);
   int windowHeight = 800;
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
