@@ -39,8 +39,8 @@ public abstract class Node implements Tickable {
   protected final int maxCharacters;
 
   protected final int maxConnections;
-  protected final int x;
-  protected final int y;
+  protected int x;
+  protected int y;
   protected boolean isBroken = false;
 
   /** The amount of water flowing through this object. */
@@ -122,6 +122,7 @@ public abstract class Node implements Tickable {
   public int getY() {
     return y;
   }
+  public void setPos(int X, int Y){x = X; y = Y;}
 
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
 

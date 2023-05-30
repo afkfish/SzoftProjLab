@@ -235,10 +235,6 @@ public class Controller {
       else tempChar.PickupPump();
     } catch (ClassCastException ignored1) {
     }
-
-    /*Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-    assert tempChar != null;
-    tempChar.PlacePump();*/
   }
 
   public static void SetPumpAction(ActionEvent ignored) {

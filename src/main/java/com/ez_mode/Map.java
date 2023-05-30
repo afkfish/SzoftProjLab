@@ -43,6 +43,7 @@ public class Map implements Tickable {
     gameMap = new Node[size][size];
   }
 
+  public static int getMapSize(){return gameMap[0].length;}
   /**
    * This method fills the map with the objects and places the characters to their startiing
    * positions.
