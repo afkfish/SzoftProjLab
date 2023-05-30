@@ -9,14 +9,15 @@ import com.ez_mode.notJson.NotJSONArray;
 import com.ez_mode.notJson.NotJSONObject;
 import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -262,24 +263,6 @@ public class Map implements Tickable {
     return gameMap[x][y];
   }
 
-  /**
-   * If a player character lost somehow, this method will move it to the position it is supposed to
-   * be, or to the start position.
-   *
-   * @param ignored the player who is lost
-   */
-  public static void playerLostHandler(Character ignored) {
-    // Node playerTruePos =
-    // gameMap.stream()
-    // .flatMap(ArrayList::stream)
-    // .filter(node -> node.getCharacters().contains(character))
-    // .findFirst()
-    // .orElse(null);
-
-    // TODO: move to start if null
-    // assert playerTruePos != null;
-    // character.placeTo(playerTruePos);
-  }
 
   /** Clears the map */
   public static void clearMap() {

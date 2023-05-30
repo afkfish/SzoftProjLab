@@ -15,7 +15,6 @@ import static java.lang.Double.min;
  * of time. The pump can hold 5 players at once.
  */
 public class Pump extends Node {
-  // TODO: Make that this is used when calculating the flow rate
   private double internalBufferLevel = 0;
   private Pipe activeInput;
   private Pipe activeOutput;
@@ -112,7 +111,7 @@ public class Pump extends Node {
         } else {
           internalBufferLevel += activeInput.flowRate;
         }
-      } else if (this.internalBufferLevel > 0 && sources.contains(activeOutput)) {
+      } else if (activeOutput!=null&&this.internalBufferLevel > 0 && sources.contains(activeOutput)) {
         this.setFlowRate(min(this.internalBufferLevel, activeOutput.getCapacity()));
         activeOutput.flowRate += flowRate;
       }

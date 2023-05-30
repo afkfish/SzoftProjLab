@@ -1,7 +1,6 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.Main;
-import com.ez_mode.Map;
 import com.ez_mode.Tickable;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
@@ -76,9 +75,7 @@ public abstract class Character implements Tickable {
       this.standingOn = node;
       Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
-      Main.log(e.getMessage());
-      Map.playerLostHandler(this);
-    }
+      Main.log(e.getMessage());    }
   }
 
   /**
