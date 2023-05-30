@@ -1,11 +1,8 @@
 package com.ez_mode.gui;
 
-import javax.swing.*;
-
 import java.util.HashSet;
 import java.util.Set;
-
-import static com.ez_mode.gui.Controller.game;
+import javax.swing.*;
 
 public class PopUp {
 
@@ -17,9 +14,12 @@ public class PopUp {
     int maxSelections = 2;
 
     while (choices.size() < maxSelections) {
-      int choice = JOptionPane.showOptionDialog(
+      int choice =
+          JOptionPane.showOptionDialog(
               null,
-              "Pick up or place the node and its direction: (Select " + (maxSelections - choices.size()) + " more)",
+              "Pick up or place the node and its direction: (Select "
+                  + (maxSelections - choices.size())
+                  + " more)",
               "Direction",
               JOptionPane.DEFAULT_OPTION,
               JOptionPane.QUESTION_MESSAGE,
@@ -49,10 +49,9 @@ public class PopUp {
         System.out.println("User Chose Down");
       } else if (choice == 4) {
         System.out.println("User Chose Left");
-      }else if (choice == 3) {
+      } else if (choice == 3) {
         System.out.println("User Chose Right");
       }
-
     }
   }
 }
