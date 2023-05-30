@@ -122,7 +122,11 @@ public abstract class Node implements Tickable {
   public int getY() {
     return y;
   }
-  public void setPos(int X, int Y){x = X; y = Y;}
+
+  public void setPos(int X, int Y) {
+    x = X;
+    y = Y;
+  }
 
   public abstract void repairNode(Character character) throws InvalidPlayerActionException;
 
