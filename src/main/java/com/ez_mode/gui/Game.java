@@ -67,14 +67,12 @@ public class Game {
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
 
-  public String waterImagePath = "src/main/resources/water.png";
   public String moveupImagePath = "src/main/resources/moveup.png";
   public String moveleftImagePath = "src/main/resources/moveleft.png";
   public String movedownImagePath = "src/main/resources/movedown.png";
   public String moverightImagePath = "src/main/resources/moveright.png";
   public ImageIcon plumberIcon = new ImageIcon(plumberImagePath);
   public ImageIcon nomadIcon = new ImageIcon(nomadImagePath);
-  public ImageIcon waterIcon = new ImageIcon(waterImagePath);
   public ImageIcon moveupIcon = new ImageIcon(moveupImagePath);
   public ImageIcon moveleftIcon = new ImageIcon(moveleftImagePath);
   public ImageIcon movedownIcon = new ImageIcon(movedownImagePath);
@@ -256,25 +254,7 @@ public class Game {
       textField.setText(plumberNames.get(playerIdx / 2) + " Plumbers turn");
     }
 
-    /*
-        // TODO: if the given node is in inventory: (white the if)
-        Cistern tempCis = (Cistern) tempNode;
-        Image pickuppipeImage = pickuppipeIcon.getImage();
-        Image pickuppipeModIcon =
-            pickuppipeImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-        mapButtons[gridNum * gridNum - gridNum + 8].setIcon(new ImageIcon(pickuppipeModIcon));
-        mapButtons[gridNum * gridNum - gridNum + 8].addActionListener(Controller::PickUpPipeAction);
-
-        Image pickuppumpImage = pickuppumpIcon.getImage();
-        Image pickuppumpModIcon =
-            pickuppumpImage.getScaledInstance(actionSize, actionSize, Image.SCALE_DEFAULT);
-        mapButtons[gridNum * gridNum - gridNum + 9].setIcon(new ImageIcon(pickuppumpModIcon));
-
-        // TODO: else:
-        mapButtons[gridNum * gridNum - gridNum + 8].setIcon(null);
-        mapButtons[gridNum * gridNum - gridNum + 9].setIcon(null);
-    */
-    updateFlow(); // TODO: debug UpdateFlow()
+    updateFlow();
   }
 
   // TODO: needs a LOT of debug :c
@@ -403,8 +383,6 @@ public class Game {
     int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
     updateNodeImage(Controller.tempNode, idx, null);
   }
-
-  public void setPump() {} // TODO: implement
 
   /** The getter for the current character's type */
   private Image getPlayerImage(Character character) {
