@@ -903,8 +903,8 @@
 <XPD:REF name="Model">f3BwDmZ9wUa8/c7Wz0FOsQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="sUv2FES2AUSJ+v8jwIbSLQAA">
-<XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">30</XPD:ATTR>
+<XPD:ATTR name="Alpha" type="real">-3,98574566359811</XPD:ATTR>
+<XPD:ATTR name="Distance" type="real">44,407206622349</XPD:ATTR>
 <XPD:ATTR name="Text" type="string">&lt;&lt;include&gt;&gt;</XPD:ATTR>
 <XPD:REF name="Model">f3BwDmZ9wUa8/c7Wz0FOsQAA</XPD:REF>
 </XPD:OBJ>
@@ -929,8 +929,8 @@
 <XPD:REF name="Model">py/4aIjm60Gz0m7RiBIcwwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="Jy9y3QTA2UC/AxE/s8O/lgAA">
-<XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">30</XPD:ATTR>
+<XPD:ATTR name="Alpha" type="real">3,82655427516502</XPD:ATTR>
+<XPD:ATTR name="Distance" type="real">59,0338885725818</XPD:ATTR>
 <XPD:ATTR name="Text" type="string">&lt;&lt;include&gt;&gt;</XPD:ATTR>
 <XPD:REF name="Model">py/4aIjm60Gz0m7RiBIcwwAA</XPD:REF>
 </XPD:OBJ>
@@ -981,8 +981,8 @@
 <XPD:REF name="Model">uQHu3gIVw0+/I4MmaXd53AAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="pzPAD4mqBk6Nj1OHJGZ4QAAA">
-<XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">30</XPD:ATTR>
+<XPD:ATTR name="Alpha" type="real">2,43381538568225</XPD:ATTR>
+<XPD:ATTR name="Distance" type="real">30,4630924234556</XPD:ATTR>
 <XPD:ATTR name="Text" type="string">&lt;&lt;include&gt;&gt;</XPD:ATTR>
 <XPD:REF name="Model">uQHu3gIVw0+/I4MmaXd53AAA</XPD:REF>
 </XPD:OBJ>
