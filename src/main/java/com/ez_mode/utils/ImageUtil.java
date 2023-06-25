@@ -37,7 +37,7 @@ public class ImageUtil {
   public static ScalableImage combine(Image base, Image overlay) {
     int w = Math.max(base.getWidth(null), overlay.getWidth(null));
     int h = Math.max(base.getHeight(null), overlay.getHeight(null));
-    BufferedImage combined = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage combined = new BufferedImage(70, 70, BufferedImage.TYPE_INT_ARGB);
 
     // adds the two layers of the images
     Graphics g = combined.getGraphics();
@@ -49,7 +49,7 @@ public class ImageUtil {
   }
 
   public static ImageIcon getTransparent() {
-    return new ImageIcon(new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB));
+    return new ImageIcon(new BufferedImage(70, 70, BufferedImage.TYPE_INT_ARGB));
   }
   
   public static class ScalableImage {

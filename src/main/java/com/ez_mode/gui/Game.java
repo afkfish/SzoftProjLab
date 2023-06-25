@@ -18,14 +18,14 @@ public class Game {
   public static boolean nomadTurn = false;
   public static ArrayList<String> plumberNames;
   public static ArrayList<String> nomadNames;
-  static int windowWidth = 600;
+  static int windowWidth = 70*10;
   static int fieldSize = windowWidth / gridNum;
   static int actionSize = fieldSize;
   static ArrayList<String> playerNames;
   static int playerIdx = 0;
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
-  int windowHeight = 720;
+  int windowHeight = 70*12+10;
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
