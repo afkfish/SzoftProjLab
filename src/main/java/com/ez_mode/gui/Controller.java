@@ -267,7 +267,7 @@ public class Controller {
         }
         pump.setActiveInput(inputPipe);
         pump.setActiveOutput(outputPipe);
-        game.setPump();
+//        game.setPump();
       } catch (ClassCastException ex) {
         System.out.println(ex.getMessage());
       }

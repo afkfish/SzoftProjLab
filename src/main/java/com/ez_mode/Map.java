@@ -174,6 +174,10 @@ public class Map implements Tickable {
     return players.get(index);
   }
 
+  public static ArrayList<Character> getPlayers() {
+    return players;
+  }
+
   /**
    * Gives a player by its name
    *
