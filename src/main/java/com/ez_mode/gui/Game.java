@@ -18,14 +18,16 @@ public class Game {
   public static boolean nomadTurn = false;
   public static ArrayList<String> plumberNames;
   public static ArrayList<String> nomadNames;
-  static int windowWidth = 70*10;
+  static int windowWidth = 70 * 10;
   static int fieldSize = windowWidth / gridNum;
   static int actionSize = fieldSize;
   static ArrayList<String> playerNames;
   static int playerIdx = 0;
+
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
-  int windowHeight = 70*12+10;
+
+  int windowHeight = 70 * 12 + 10;
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
@@ -82,12 +84,12 @@ public class Game {
     updatePlayerNodes();
 
     for (int i = 0; i < gridNum; i++) {
-        JButton button = actionButtons[i] = new JButton();
-        actionPanel.add(button);
-        button.setFocusable(false);
-        button.setSize(fieldSize, fieldSize);
-        button.setBorderPainted(false);
-        button.setHorizontalAlignment(JLabel.HORIZONTAL);
+      JButton button = actionButtons[i] = new JButton();
+      actionPanel.add(button);
+      button.setFocusable(false);
+      button.setSize(fieldSize, fieldSize);
+      button.setBorderPainted(false);
+      button.setHorizontalAlignment(JLabel.HORIZONTAL);
     }
 
     int i = 0;
@@ -300,18 +302,16 @@ public class Game {
     else if (node instanceof Pipe tempPipe) {
       if (tempPipe.getFlowRate() == 0) return "pipe";
       else return "waterpipe";
-    }
-    else if (node instanceof Pump tempPump) {
+    } else if (node instanceof Pump tempPump) {
       if (tempPump.getFlowRate() == 0) return "pump";
       else return "waterpump";
-    }
-    else if (node instanceof WaterSpring) return "waterspring";
+    } else if (node instanceof WaterSpring) return "waterspring";
     else return "sand";
   }
 
   private void updatePlayerNodes() {
     try {
-      for (Character character: Map.getPlayers()) {
+      for (Character character : Map.getPlayers()) {
         Node temp = character.getStandingOn();
         int coord = temp.getX() + (gridNum * temp.getY());
 

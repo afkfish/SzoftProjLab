@@ -15,7 +15,15 @@ public class ImageUtil {
       case "sticky", "slippery" -> {
         return "overlay/";
       }
-      case "break", "movedown", "moveleft", "moveright", "moveup", "pickuppipe", "pickuppump", "repair", "setpump" -> {
+      case "break",
+          "movedown",
+          "moveleft",
+          "moveright",
+          "moveup",
+          "pickuppipe",
+          "pickuppump",
+          "repair",
+          "setpump" -> {
         return "action/";
       }
       default -> {
@@ -51,7 +59,7 @@ public class ImageUtil {
   public static ImageIcon getTransparent() {
     return new ImageIcon(new BufferedImage(70, 70, BufferedImage.TYPE_INT_ARGB));
   }
-  
+
   public static class ScalableImage {
     private final Image image;
 
