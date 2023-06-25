@@ -1,7 +1,6 @@
 package com.ez_mode.characters;
 
 import com.ez_mode.Main;
-import com.ez_mode.Map;
 import com.ez_mode.Tickable;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 import com.ez_mode.exceptions.InvalidPlayerMovementException;
@@ -10,19 +9,12 @@ import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.objects.Node;
 import com.ez_mode.objects.Pipe;
 import com.ez_mode.objects.Pump;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the characters in the game. This is tha abstract class for all
  * characters. It contains a name and a reference to the StandableObject it is standing on.
  */
 public abstract class Character implements Tickable {
-  /*
-   * The logger for this class.
-   */
-  protected final Logger logger;
-
   /** The name of the player. */
   private final String name;
 
@@ -38,7 +30,6 @@ public abstract class Character implements Tickable {
   protected int stuckOnPipe;
 
   public Character(String name) {
-    this.logger = LogManager.getLogger(this.getClass());
     this.name = name;
     this.uuid = this.name + (int) (Math.random() * 100);
     this.stuckOnPipe = 0;
@@ -72,12 +63,11 @@ public abstract class Character implements Tickable {
             this.uuid + "Player tried to move, but cant because it stucked in a pipe");
       node.addCharacter(this);
       standingOn.removeCharacter(this);
-      this.logger.debug("Moved {} to {} from {}", this.uuid, node.getUuid(), standingOn.getUuid());
+      Main.log("Moved " + this.uuid + " to " + node.getUuid() + " from " + standingOn.getUuid());
       this.standingOn = node;
       Main.log("\t" + this.uuid + " moved to " + node.getUuid());
     } catch (NotFoundExeption e) {
       Main.log(e.getMessage());
-      Map.playerLostHandler(this);
     }
   }
 
@@ -152,15 +142,16 @@ public abstract class Character implements Tickable {
 
   @Override
   public String toString() {
-    String sb = "\t" +
-            this.uuid +
-            " (" +
-            this.name +
-            ") " +
-            "\n" +
-            "\t" +
-            "Standing on: " +
-            this.standingOn.getUuid();
+    String sb =
+        "\t"
+            + this.uuid
+            + " ("
+            + this.name
+            + ") "
+            + "\n"
+            + "\t"
+            + "Standing on: "
+            + this.standingOn.getUuid();
     return sb;
   }
 }

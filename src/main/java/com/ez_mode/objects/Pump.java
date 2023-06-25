@@ -14,7 +14,6 @@ import java.util.Random;
  * of time. The pump can hold 5 players at once.
  */
 public class Pump extends Node {
-  // TODO: Make that this is used when calculating the flow rate
   private double internalBufferLevel = 0;
   private Pipe activeInput;
   private Pipe activeOutput;
@@ -22,6 +21,7 @@ public class Pump extends Node {
   public Pump(int x, int y) {
     super(5, 4, x, y);
   }
+
   public Pump() {
     super(5, 4, -1, -1);
   }
@@ -93,6 +93,15 @@ public class Pump extends Node {
   /** Calculates the water flow rate */
   @Override
   public void calculateFlowRate() {
+    absorbers.clear();
+    sources.clear();
+    if (activeInput != null && activeInput.flowRate > 0) {
+      sources.add(activeInput);
+
+      if (activeOutput != null && activeOutput.flowRate < activeInput.flowRate) {
+        absorbers.add(activeOutput);
+      }
+    }
     if (!this.isBroken) {
       if (sources.contains(activeInput)) {
         if (absorbers.contains(activeOutput)) {
@@ -101,10 +110,11 @@ public class Pump extends Node {
         } else {
           internalBufferLevel += activeInput.flowRate;
         }
-      } else if (this.internalBufferLevel > 0 && sources.contains(activeOutput)) {
+      } else if (activeOutput != null
+          && this.internalBufferLevel > 0
+          && sources.contains(activeOutput)) {
         this.setFlowRate(min(this.internalBufferLevel, activeOutput.getCapacity()));
         activeOutput.flowRate += flowRate;
-      } else {
       }
     } else {
       this.setFlowRate(0);
@@ -117,9 +127,16 @@ public class Pump extends Node {
   /** Randomly breaks. */
   @Override
   public void tick() {
+    if (activeOutput != null && activeInput != null) {
+      if (activeOutput.flowRate > activeInput.flowRate) {
+        Pipe temp = activeInput;
+        activeInput = activeOutput;
+        activeOutput = temp;
+      }
+    }
     calculateFlowRate();
     Random random = new Random();
-    if (random.nextInt(100) > 95) {
+    if (random.nextInt(100) > 98) {
       Nomad temp = new Nomad("temp");
       temp.placeTo(this);
       try {

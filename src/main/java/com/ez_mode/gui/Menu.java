@@ -6,6 +6,7 @@ import javax.swing.*;
 public class Menu {
   /** Java Swing components for the Menu class */
   static JFrame frame = new JFrame();
+
   static JTextField loadTextField = new JTextField();
   static JTextField plumberNamesTextField = new JTextField();
   static JTextField nomadNamesTextField = new JTextField();
@@ -47,7 +48,6 @@ public class Menu {
     loadTextField.setBackground(new Color(250, 250, 250));
     loadTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     loadTextField.setBounds(150, 150, 230, 40);
-    loadTextField.getText();
     loadTextField.addActionListener(Controller::LoadMapAction);
 
     playerCountText.setBackground(new Color(50, 50, 50));
@@ -60,7 +60,6 @@ public class Menu {
     playerCountTextField.setBackground(new Color(250, 250, 250));
     playerCountTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     playerCountTextField.setBounds(330, 210, 50, 40);
-    playerCountTextField.getText();
 
     plumberNamesText.setBackground(new Color(50, 50, 50));
     plumberNamesText.setForeground(new Color(250, 250, 250));
@@ -72,7 +71,6 @@ public class Menu {
     plumberNamesTextField.setBackground(new Color(250, 250, 250));
     plumberNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     plumberNamesTextField.setBounds(260, 270, 100, 40);
-    plumberNamesTextField.getText();
 
     nomadNamesText.setBackground(new Color(50, 50, 50));
     nomadNamesText.setForeground(new Color(250, 250, 250));
@@ -84,7 +82,6 @@ public class Menu {
     nomadNamesTextField.setBackground(new Color(250, 250, 250));
     nomadNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     nomadNamesTextField.setBounds(260, 330, 100, 40);
-    nomadNamesTextField.getText();
 
     exitButton.setBounds(55, 400, 300, 40);
     exitButton.setFont(new Font("Monospace", Font.BOLD, 25));
@@ -114,5 +111,9 @@ public class Menu {
     frame.setLayout(null);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
+  }
+
+  public static void setPlayerCount(int playerCount) {
+    Menu.playerCount = playerCount;
   }
 }

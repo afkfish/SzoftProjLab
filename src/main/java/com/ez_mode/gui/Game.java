@@ -155,7 +155,7 @@ public class Game {
     playerIdx++;
     playerIdx = playerIdx % (Menu.playerCount * 2);
 
-    Controller.tempChar = Map.getPlayer(Game.playerNames.get(Game.playerIdx));
+    Controller.tempChar = Map.getPlayer(Game.playerIdx);
     assert Controller.tempChar != null : "tempChar is null???";
     Controller.tempNode = Controller.tempChar.getStandingOn();
 
@@ -261,7 +261,6 @@ public class Game {
     try {
       Nomad ignored1 = (Nomad) Controller.tempChar;
       Pipe ignored2 = (Pipe) Controller.tempNode;
-      System.err.println("Slippery pipe\n\n\n");
       updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
     } catch (Exception ignored) {
       Main.log("Target of slippery is not a pipe or character is not a nomad");
@@ -279,6 +278,13 @@ public class Game {
     } catch (Exception ignored) {
       Main.log("Repair failed: character is not a plumber");
     }
+  }
+
+  public void UpdateField() {
+    int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
+    System.out.println(idx);
+    updateNodeImage(Controller.tempNode, idx, null);
+    updatePlayerNodes();
   }
 
   /** The getter for the current character's type */

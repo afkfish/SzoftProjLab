@@ -2,42 +2,30 @@
   "size": 10,
   "players": [
     {
+      "name": "saf",
+      "x": 8,
+      "y": 3,
       "type": "plumber",
-      "name": "Mario",
-        "x": 0,
-        "y": 0,
-      "inventory": []
+      "inventory": {}
     },
     {
-      "type": "plumber",
-      "name": "Luigi",
-        "x": 0,
-        "y": 0,
-      "inventory": []
-    },
-    {
+      "name": "gds",
+      "x": 8,
+      "y": 8,
       "type": "nomad",
-      "name": "Wario",
-        "x": 0,
-        "y": 0
-    },
-    {
-      "type": "nomad",
-      "name": "Waluigi",
-        "x": 0,
-        "y": 0
+      "inventory": {}
     }
   ],
   "map": [
     {
-      "type": "cistern",
-        "x": 0,
-        "y": 0
+      "x": 0,
+      "y": 0,
+      "type": "cistern"
     },
     {
+      "x": 0,
+      "y": 1,
       "type": "pipe",
-        "x": 0,
-        "y": 1,
       "connections": [
         {
           "x": 0,
@@ -48,6 +36,675 @@
           "y": 2
         }
       ]
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "type": "pipe",
+      "connections": [{
+        "x": 0,
+        "y": 1
+      }]
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 1,
+          "y": 5
+        },
+        {
+          "x": 0,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 0,
+          "y": 5
+        },
+        {
+          "x": 0,
+          "y": 7
+        },
+        {
+          "x": 1,
+          "y": 6
+        },
+        {
+          "x": 1,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 0,
+          "y": 6
+        },
+        {
+          "x": 0,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "type": "waterspring"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "type": "pipe",
+      "connections": []
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "type": "pump",
+      "connections": [
+        {
+          "x": 0,
+          "y": 5
+        },
+        {
+          "x": 1,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 0,
+          "y": 6
+        },
+        {
+          "x": 1,
+          "y": 5
+        },
+        {
+          "x": 2,
+          "y": 6
+        },
+        {
+          "x": 2,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "type": "cistern"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "type": "pipe",
+      "connections": [{
+        "x": 2,
+        "y": 0
+      }]
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 1,
+          "y": 6
+        },
+        {
+          "x": 2,
+          "y": 7
+        },
+        {
+          "x": 3,
+          "y": 6
+        },
+        {
+          "x": 3,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 2,
+          "y": 6
+        },
+        {
+          "x": 2,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "type": "waterspring"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 2,
+          "y": 6
+        },
+        {
+          "x": 4,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "type": "cistern"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 4,
+          "y": 0
+        },
+        {
+          "x": 4,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 1
+        },
+        {
+          "x": 3,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 5
+        },
+        {
+          "x": 5,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "type": "pump",
+      "connections": [
+        {
+          "x": 3,
+          "y": 6
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 4,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "type": "waterspring"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "type": "pipe",
+      "connections": []
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 6,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "type": "pump",
+      "connections": [
+        {
+          "x": 5,
+          "y": 5
+        },
+        {
+          "x": 6,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "type": "cistern"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 6,
+          "y": 0
+        },
+        {
+          "x": 6,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 6,
+          "y": 1
+        },
+        {
+          "x": 7,
+          "y": 2
+        },
+        {
+          "x": 7,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 5,
+          "y": 5
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 5
+        },
+        {
+          "x": 7,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 6,
+          "y": 5
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "type": "waterspring"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 6,
+          "y": 2
+        },
+        {
+          "x": 7,
+          "y": 3
+        },
+        {
+          "x": 6,
+          "y": 2
+        },
+        {
+          "x": 8,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "type": "pump",
+      "connections": [
+        {
+          "x": 7,
+          "y": 2
+        },
+        {
+          "x": 7,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 7,
+          "y": 3
+        },
+        {
+          "x": 7,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 6,
+          "y": 5
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "type": "pump",
+      "connections": [
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 5
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "type": "cistern"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 8,
+          "y": 0
+        },
+        {
+          "x": 8,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 7,
+          "y": 2
+        },
+        {
+          "x": 8,
+          "y": 1
+        },
+        {
+          "x": 8,
+          "y": 3
+        },
+        {
+          "x": 9,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "type": "pump",
+      "connections": [{
+        "x": 8,
+        "y": 2
+      }]
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "type": "pump",
+      "connections": [{
+        "x": 8,
+        "y": 7
+      }]
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "type": "pipe",
+      "connections": [
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "type": "waterspring"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "type": "pump",
+      "connections": [{
+        "x": 8,
+        "y": 2
+      }]
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "type": "pipe",
+      "connections": [{
+        "x": 9,
+        "y": 6
+      }]
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "type": "pump",
+      "connections": [{
+        "x": 9,
+        "y": 5
+      }]
     }
   ]
 }

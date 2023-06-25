@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -27,16 +25,22 @@ public class Map implements Tickable {
 
   /** The list of all players. */
   private static final ArrayList<Character> players = new ArrayList<>();
+
   /** The amount of water, lost by the nomads sabotaging the nodes. */
   public static double waterLost = 0;
+
   /** The amount of water, arrived to the cisterns. */
   public static double waterArrived = 0;
+
   /** The ArrayList representation of the game. This map contains every object. */
   private static Node[][] gameMap = null;
-  private final Logger logger = LogManager.getLogger(Map.class);
 
   public Map(int size) {
     gameMap = new Node[size][size];
+  }
+
+  public static int getMapSize() {
+    return gameMap[0].length;
   }
 
   /**
@@ -84,7 +88,7 @@ public class Map implements Tickable {
           }
 
         } else { // leaves the place empty
-          if (30 <= randomInt && randomInt <= 80) {
+          if (30 <= randomInt && randomInt <= 70) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
           } else if (80 <= randomInt) {
@@ -103,8 +107,8 @@ public class Map implements Tickable {
           if (p.getNeighbours().size() == 1) {
             p.setActiveOutput((Pipe) p.getNeighbours().get(0));
           } else if (p.getNeighbours().size() > 1) {
-            p.setActiveInput((Pipe) p.getNeighbours().get(0));
-            p.setActiveOutput((Pipe) p.getNeighbours().get(1));
+            p.setActiveInput((Pipe) p.getNeighbours().get(p.getNeighbours().size() - 1));
+            p.setActiveOutput((Pipe) p.getNeighbours().get(p.getNeighbours().size() - 2));
           }
         } catch (ClassCastException ignored) {
         }
@@ -136,11 +140,18 @@ public class Map implements Tickable {
     Main.log("Map filled!");
   }
 
+  /**
+   * Connects a pipe to a node if they are neighbours. Used in fillMap to connect the generated map.
+   *
+   * @param pipe the pipe we want to connect to
+   * @param node the node we want to connect
+   */
   private static void connectIfNeighbouring(Pipe pipe, Node node) {
     if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
                 && (node.getY() == pipe.getY()))
             || ((node.getY() == pipe.getY() - 1 || node.getY() == pipe.getY() + 1)
-                && (node.getX() == pipe.getX())))
+                && (node.getX() == pipe.getX())
+                && !pipe.getNeighbours().contains(node)))
         && !pipe.fullOfConn()) {
       try {
         node.connect(pipe);
@@ -171,6 +182,7 @@ public class Map implements Tickable {
   public static void removeNode(Node ignored) {}
 
   public static Character getPlayer(int index) {
+    index = index % players.size();
     return players.get(index);
   }
 
@@ -250,25 +262,6 @@ public class Map implements Tickable {
     return gameMap[x][y];
   }
 
-  /**
-   * If a player character lost somehow, this method will move it to the position it is supposed to
-   * be, or to the start position.
-   *
-   * @param ignored the player who is lost
-   */
-  public static void playerLostHandler(Character ignored) {
-    // Node playerTruePos =
-    // gameMap.stream()
-    // .flatMap(ArrayList::stream)
-    // .filter(node -> node.getCharacters().contains(character))
-    // .findFirst()
-    // .orElse(null);
-
-    // TODO: move to start if null
-    // assert playerTruePos != null;
-    // character.placeTo(playerTruePos);
-  }
-
   /** Clears the map */
   public static void clearMap() {
     gameMap = new Node[gameMap.length][gameMap[0].length];
@@ -279,13 +272,13 @@ public class Map implements Tickable {
    *
    * @param path the file's path
    */
-  public void loadMap(String path) {
+  public static void loadMap(String path) {
     Main.log("Loading map...");
     if (!path.endsWith(".json")) {
       Main.log("The file must be a .json configuration file!");
       return;
     }
-    try (FileInputStream fileInputStream = new FileInputStream("testMap.json")) {
+    try (FileInputStream fileInputStream = new FileInputStream(path)) {
       NotJSONTokener root = new NotJSONTokener(fileInputStream);
       NotJSONObject rootObject = new NotJSONObject(root);
 
@@ -330,7 +323,12 @@ public class Map implements Tickable {
             Main.log("Skipping connection...");
             continue;
           }
-          temp.connect(neighbour);
+          try {
+            temp.connect(neighbour);
+          } catch (ObjectFullException e) {
+            Main.log("The node is full!");
+            Main.log("Skipping connection...");
+          }
         }
       }
 
@@ -353,8 +351,6 @@ public class Map implements Tickable {
       Main.log("Map loaded successfully!");
     } catch (SecurityException | IOException e) {
       Main.log("There was an error loading the map!");
-    } catch (ObjectFullException e) {
-      Main.log("Some objects are full and cannot have more connections! The map is invalid!");
     }
   }
 
@@ -363,9 +359,13 @@ public class Map implements Tickable {
    *
    * @param path the file's path
    */
-  public void saveMap(String path) {
+  public static void saveMap(String path) {
     Main.log("Saving map...");
-    assert path.endsWith(".json") : "The file must be a .json configuration file!";
+    if (path.isEmpty()) {
+      Main.log("The path cannot be empty!");
+      return;
+    }
+    if (!path.endsWith(".json")) path += ".json";
     try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
       // create the root object
       NotJSONObject root = new NotJSONObject();
@@ -428,7 +428,7 @@ public class Map implements Tickable {
         node.tick();
       }
     }
-    this.logger.debug("Current water loss: {}", Map.waterLost);
+    Main.log("Current water loss: " + Map.waterLost);
   }
 
   /**

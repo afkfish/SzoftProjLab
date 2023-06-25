@@ -30,13 +30,13 @@ public class Main {
         () -> {
           log("What is the path to the game file?");
           Map.clearMap();
-          map.loadMap(scanner.nextLine());
+          Map.loadMap(scanner.nextLine());
         });
     commands.put(
         "save",
         () -> {
           log("Where do you want to save the game?");
-          map.saveMap(scanner.nextLine());
+          Map.saveMap(scanner.nextLine());
         });
     commands.put(
         "character",
