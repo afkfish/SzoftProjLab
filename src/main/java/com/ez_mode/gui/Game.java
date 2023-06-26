@@ -18,7 +18,7 @@ public class Game {
   public static boolean nomadTurn = false;
   public static ArrayList<String> plumberNames;
   public static ArrayList<String> nomadNames;
-  static int windowWidth = 70 * 10;
+  static int windowWidth = 70 * gridNum;
   static int fieldSize = windowWidth / gridNum;
   static int actionSize = fieldSize;
   static ArrayList<String> playerNames;
@@ -27,7 +27,7 @@ public class Game {
   /** Java Swing components for the Game class */
   static JFrame frame = new JFrame();
 
-  int windowHeight = 70 * 12 + 10;
+  int windowHeight = 70 * (gridNum + 2) + 20;
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
@@ -37,6 +37,7 @@ public class Game {
   JPanel actionPanel = new JPanel();
 
   public Game() {
+    loadImageCache();
     playerIdx = 0;
     // Properties of the frame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -167,8 +168,11 @@ public class Game {
       actionButtons[i++].setIcon(new ImageIcon(slipperyImage));
       i++; // skip the sticky button
       i++; // skip the setpump button
-      actionButtons[i++].setIcon(getTransparent());
-      actionButtons[i].setIcon(getTransparent());
+      ImageIcon transparent = new ImageIcon(getTransparent().scale(actionSize));
+      actionButtons[i].setEnabled(false);
+      actionButtons[i++].setIcon(transparent);
+      actionButtons[i].setEnabled(false);
+      actionButtons[i].setIcon(transparent);
 
       textField.setText(nomadNames.get(playerIdx / 2) + "'s turn (Nomad)");
     } else {
@@ -182,9 +186,11 @@ public class Game {
       actionButtons[i++].setIcon(new ImageIcon(setpumpImage));
 
       Image pickuppipeImage = getImage("pickuppipe", actionSize);
+      actionButtons[i].setEnabled(true);
       actionButtons[i++].setIcon(new ImageIcon(pickuppipeImage));
 
       Image pickuppumpImage = getImage("pickuppump", actionSize);
+      actionButtons[i].setEnabled(true);
       actionButtons[i].setIcon(new ImageIcon(pickuppumpImage));
 
       textField.setText(plumberNames.get(playerIdx / 2) + "'s turn (Plumber)");
@@ -217,12 +223,25 @@ public class Game {
   }
 
   private void updateNodeImage(Node node, int idx, Character character) {
-    Image nodeImage = getImage(getNodeType(node), actionSize);
+    Image nodeImage;
+    String nodeType = getNodeType(node);
 
-    // if the player is standing on the node, add the player image to the node image
-    Image characterI = getPlayerImage(character);
-    if (characterI != null) {
-      nodeImage = combine(nodeImage, characterI).scale(actionSize);
+    nodeImage = combine(nodeType, getPlayerType(character)).scale(actionSize);
+
+    if (nodeType.equals("pipe") || nodeType.equals("waterpipe")) {
+      Pipe pipe = (Pipe) node;
+
+      if (pipe.isBroken()) {
+        nodeImage = combine("brokenpipe", getPlayerType(character)).scale(actionSize);
+
+      } else if (pipe.isSticky()) {
+        Image stickyPipe = combine(nodeType, "sticky").scale(actionSize);
+        nodeImage = combine(stickyPipe, getPlayerType(character)).scale(actionSize);
+
+      } else if (pipe.isSlippery()) {
+        Image slipperyPipe = combine(nodeType, "slippery").scale(actionSize);
+        nodeImage = combine(slipperyPipe, getPlayerType(character)).scale(actionSize);
+      }
     }
 
     mapButtons[idx].setIcon(new ImageIcon(nodeImage));
@@ -290,9 +309,9 @@ public class Game {
   }
 
   /** The getter for the current character's type */
-  private Image getPlayerImage(Character character) {
-    if (character instanceof Nomad) return getImage("nomad", actionSize);
-    else if (character instanceof Plumber) return getImage("plumber", actionSize);
+  private String getPlayerType(Character character) {
+    if (character instanceof Nomad) return "nomad";
+    else if (character instanceof Plumber) return "plumber";
     else return null;
   }
 
