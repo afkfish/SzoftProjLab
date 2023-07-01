@@ -140,7 +140,6 @@ public class Controller {
     } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
     }
 
-
     game.updateAction();
   }
 
@@ -223,7 +222,8 @@ public class Controller {
         }
         tempPlumber.PickupPipe(tempPipe);
       }
-    } catch (NotFoundExeption ignored1) {}
+    } catch (NotFoundExeption ignored1) {
+    }
 
     game.updateAction();
   }
@@ -234,12 +234,12 @@ public class Controller {
       if (tempPlumber.getPickedupPump() != null) {
         Pump placed = tempPlumber.getPickedupPump();
         tempPlumber.PlacePump();
-//        tempNode = placed;
+        //        tempNode = placed;
         Game.updateField(placed);
-//        if (placed.getNeighbours().size() >= 2) {
-//          tempNode = placed.getNeighbours().get(1);
-//          game.updateField(tempNode);
-//        }
+        //        if (placed.getNeighbours().size() >= 2) {
+        //          tempNode = placed.getNeighbours().get(1);
+        //          game.updateField(tempNode);
+        //        }
       } else { // if inventory is empty pick up
         tempPlumber.PickupPump();
       }
@@ -254,11 +254,15 @@ public class Controller {
       Pipe outputPipe = null;
       try {
         if (setChoice == 0 | setChoice == 1) {
-          inputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() - 1);;
-          outputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() + 1);;
+          inputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() - 1);
+          ;
+          outputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() + 1);
+          ;
         } else {
-          inputPipe = (Pipe) Map.getNode(currentNode.getX() - 1, currentNode.getY());;
-          outputPipe = (Pipe) Map.getNode(currentNode.getX() + 1, currentNode.getY());;
+          inputPipe = (Pipe) Map.getNode(currentNode.getX() - 1, currentNode.getY());
+          ;
+          outputPipe = (Pipe) Map.getNode(currentNode.getX() + 1, currentNode.getY());
+          ;
         }
       } catch (ClassCastException ex) {
         System.out.println(ex.getMessage());

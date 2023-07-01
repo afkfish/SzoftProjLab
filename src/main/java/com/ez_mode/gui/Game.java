@@ -22,8 +22,10 @@ public class Game {
   static ArrayList<String> playerNames;
   static LinkedList<Character> players = new LinkedList<>();
   private static Game game;
+
   /** Java Swing components for the Game class */
   JFrame frame = new JFrame();
+
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
@@ -59,7 +61,7 @@ public class Game {
     endGameButton.setBounds(500, 13, 20, 30);
     endGameButton.setFont(new Font("Monospace", Font.BOLD, 20));
     endGameButton.setText("End Game");
-    //endGameButton.setBackground(Color.WHITE);
+    // endGameButton.setBackground(Color.WHITE);
     endGameButton.setForeground(Color.RED);
     endGameButton.setFocusable(false);
     endGameButton.setOpaque(false);
@@ -156,7 +158,7 @@ public class Game {
 
     // Adding the components to the frame and setting their layouts
     textField.setText(firstPlayer.getName() + "'s turn (Plumber)");
-//    playerIdx++;
+    //    playerIdx++;
     frame.add(titlePanel, BorderLayout.NORTH);
     titlePanel.add(textField);
     titlePanel.add(endGameButton, BorderLayout.EAST);
