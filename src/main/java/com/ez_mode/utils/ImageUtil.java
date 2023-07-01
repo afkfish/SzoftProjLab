@@ -8,7 +8,6 @@ import javax.swing.*;
 
 public class ImageUtil {
   private static final String basePath = "src/main/resources/images/";
-
   private static final HashMap<String, ScalableImage> imageCache = new HashMap<>();
 
   public static void loadImageCache() {
@@ -20,7 +19,6 @@ public class ImageUtil {
       assert images != null;
       for (File image : images) {
         String name = image.getName().split("\\.")[0];
-        System.out.println(name);
         if (!imageCache.containsKey(name)) {
           getImage(name, 200);
         }

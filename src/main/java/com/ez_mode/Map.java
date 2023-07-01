@@ -67,7 +67,7 @@ public class Map implements Tickable {
     Random rand = new Random();
     // generates the different node types
     for (int i = 0; i < Game.gridNum; i++) {
-      for (int j = 0; j < Game.gridNum - 1; j++) {
+      for (int j = 0; j < Game.gridNum; j++) {
         int randomInt = rand.nextInt(100);
         if (j == 0) {
           if (i % 2 == 0) {
@@ -75,7 +75,7 @@ public class Map implements Tickable {
             nodes.add(c);
             startPPositions.add(c);
           }
-        } else if (j == 8) {
+        } else if (j == 9) {
           if ((i + 2) % 2 == 0) {
             WaterSpring w = new WaterSpring(i, j);
             nodes.add(w);
@@ -88,7 +88,7 @@ public class Map implements Tickable {
           }
 
         } else { // leaves the place empty
-          if (30 <= randomInt && randomInt <= 70) {
+          if (20 <= randomInt && randomInt <= 80) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
           } else if (80 <= randomInt) {

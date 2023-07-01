@@ -11,23 +11,19 @@ import com.ez_mode.characters.Plumber;
 import com.ez_mode.objects.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javax.swing.*;
 
 public class Game {
   public static int gridNum = 10;
-  public static boolean nomadTurn = false;
   public static ArrayList<String> plumberNames;
   public static ArrayList<String> nomadNames;
-  static int windowWidth = 70 * gridNum;
-  static int fieldSize = windowWidth / gridNum;
-  static int actionSize = fieldSize;
+  static int buttonSize;
   static ArrayList<String> playerNames;
-  static int playerIdx = 0;
-
+  static LinkedList<Character> players = new LinkedList<>();
+  private static Game game;
   /** Java Swing components for the Game class */
-  static JFrame frame = new JFrame();
-
-  int windowHeight = 70 * (gridNum + 2) + 20;
+  JFrame frame = new JFrame();
   JPanel titlePanel = new JPanel();
   JLabel textField = new JLabel();
   JButton endGameButton = new JButton();
@@ -37,14 +33,19 @@ public class Game {
   JPanel actionPanel = new JPanel();
 
   public Game() {
+    game = this;
     loadImageCache();
-    playerIdx = 0;
     // Properties of the frame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setTitle("Game");
     frame.setResizable(false);
 
+    int windowWidth = 70 * gridNum;
+    int windowHeight = 70 * (gridNum + 2) + 20;
+    buttonSize = windowWidth / gridNum;
+
     titlePanel.setLayout(new BorderLayout());
+    titlePanel.setBackground(Color.BLACK);
 
     // Properties of the text field
     textField.setBackground(Color.BLACK);
@@ -58,27 +59,35 @@ public class Game {
     endGameButton.setBounds(500, 13, 20, 30);
     endGameButton.setFont(new Font("Monospace", Font.BOLD, 20));
     endGameButton.setText("End Game");
-    endGameButton.setBackground(Color.WHITE);
-    endGameButton.setForeground(Color.BLACK);
+    //endGameButton.setBackground(Color.WHITE);
+    endGameButton.setForeground(Color.RED);
     endGameButton.setFocusable(false);
+    endGameButton.setOpaque(false);
+    endGameButton.setContentAreaFilled(false);
+    endGameButton.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
     endGameButton.addActionListener(Controller::GameExitAction);
 
     // Filling the map
     mapPanel.setLayout(new GridLayout(gridNum, gridNum));
+    mapPanel.setBackground(Color.BLACK);
     mapPanel.setBorder(null);
 
     actionPanel.setLayout(new GridLayout(1, gridNum));
+    actionPanel.setBackground(Color.WHITE);
     actionPanel.setBorder(null);
 
     for (int i = 0; i < gridNum; i++) {
       for (int j = 0; j < gridNum; j++) {
         Node temp = Map.getNode(j, i);
-        mapButtons[i * gridNum + j] = new JButton();
-        mapPanel.add(mapButtons[i * gridNum + j]);
-        mapButtons[i * gridNum + j].setFocusable(false);
-        mapButtons[i * gridNum + j].setSize(fieldSize, fieldSize);
-        mapButtons[i * gridNum + j].setBorderPainted(false);
-        mapButtons[i * gridNum + j].setHorizontalAlignment(JLabel.HORIZONTAL);
+        JButton button = mapButtons[i * gridNum + j] = new JButton();
+        mapPanel.add(button);
+        button.setFocusable(false);
+        button.setSize(buttonSize, buttonSize);
+        button.setBorderPainted(false);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorder(null);
+        button.setHorizontalAlignment(JLabel.HORIZONTAL);
         updateNodeImage(temp, i * gridNum + j, null);
       }
     }
@@ -88,55 +97,66 @@ public class Game {
       JButton button = actionButtons[i] = new JButton();
       actionPanel.add(button);
       button.setFocusable(false);
-      button.setSize(fieldSize, fieldSize);
+      button.setSize(buttonSize, buttonSize);
       button.setBorderPainted(false);
+      button.setOpaque(false);
+      button.setContentAreaFilled(false);
+      button.setBorder(null);
       button.setHorizontalAlignment(JLabel.HORIZONTAL);
     }
 
     int i = 0;
-    Image moveupImage = getImage("moveup", actionSize);
+    Image moveupImage = getImage("moveup", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(moveupImage));
     actionButtons[i++].addActionListener(Controller::MoveUpAction);
 
-    Image moveleftImage = getImage("moveleft", actionSize);
+    Image moveleftImage = getImage("moveleft", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(moveleftImage));
     actionButtons[i++].addActionListener(Controller::MoveLeftAction);
 
-    Image movedownImage = getImage("movedown", actionSize);
+    Image movedownImage = getImage("movedown", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(movedownImage));
     actionButtons[i++].addActionListener(Controller::MoveDownAction);
 
-    Image moverightImage = getImage("moveright", actionSize);
+    Image moverightImage = getImage("moveright", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(moverightImage));
     actionButtons[i++].addActionListener(Controller::MoveRightAction);
 
-    Image breakImage = getImage("break", actionSize);
+    Image breakImage = getImage("break", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(breakImage));
     actionButtons[i++].addActionListener(Controller::BreakAction);
 
-    Image repairImage = getImage("repair", actionSize);
+    Image repairImage = getImage("repair", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(repairImage));
     actionButtons[i++].addActionListener(Controller::CharacterSpecAction);
 
-    Image stickypipeImage = getImage("sticky", actionSize);
+    Image stickypipeImage = getImage("sticky", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(stickypipeImage));
     actionButtons[i++].addActionListener(Controller::StickyAction);
 
-    Image setpumpImage = getImage("setpump", actionSize);
+    Image setpumpImage = getImage("setpump", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(setpumpImage));
     actionButtons[i++].addActionListener(Controller::SetPumpAction);
 
-    Image pickuppipeImage = getImage("pickuppipe", actionSize);
+    Image pickuppipeImage = getImage("pickuppipe", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(pickuppipeImage));
     actionButtons[i++].addActionListener(Controller::PickUpPipeAction);
 
-    Image pickuppumpImage = getImage("pickuppump", actionSize);
+    Image pickuppumpImage = getImage("pickuppump", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(pickuppumpImage));
     actionButtons[i].addActionListener(Controller::PickUpPumpAction);
 
+    Character firstPlayer = players.removeFirst();
+    players.addLast(firstPlayer);
+    if (firstPlayer instanceof Nomad) {
+      firstPlayer = players.removeFirst();
+      players.addLast(firstPlayer);
+    }
+    Controller.currentPlayer = firstPlayer;
+
     // Adding the components to the frame and setting their layouts
-    textField.setText(plumberNames.get(playerIdx) + "'s turn (Plumber)");
-    playerIdx++;
+    textField.setText(firstPlayer.getName() + "'s turn (Plumber)");
+//    playerIdx++;
     frame.add(titlePanel, BorderLayout.NORTH);
     titlePanel.add(textField);
     titlePanel.add(endGameButton, BorderLayout.EAST);
@@ -148,58 +168,7 @@ public class Game {
     frame.setVisible(true);
   }
 
-  /**
-   * After one team's turn the action bar will be updated to suit for the next team's actions The
-   * mutual actions are the movements, making the pipe sticky or breaking a pipe The plumbers' team
-   * can repair, set pump, pick up pump and pick up pipe The nomad's team can break, make a pipe
-   * slippery
-   */
-  public void updateAction() {
-    playerIdx++;
-    playerIdx = playerIdx % (Menu.playerCount * 2);
-
-    Controller.tempChar = Map.getPlayer(Game.playerIdx);
-    assert Controller.tempChar != null : "tempChar is null???";
-    Controller.tempNode = Controller.tempChar.getStandingOn();
-
-    if (nomadTurn) {
-      int i = 5;
-      Image slipperyImage = getImage("slippery", actionSize);
-      actionButtons[i++].setIcon(new ImageIcon(slipperyImage));
-      i++; // skip the sticky button
-      i++; // skip the setpump button
-      ImageIcon transparent = new ImageIcon(getTransparent().scale(actionSize));
-      actionButtons[i].setEnabled(false);
-      actionButtons[i++].setIcon(transparent);
-      actionButtons[i].setEnabled(false);
-      actionButtons[i].setIcon(transparent);
-
-      textField.setText(nomadNames.get(playerIdx / 2) + "'s turn (Nomad)");
-    } else {
-      int i = 5;
-      Image repairImage = getImage("repair", actionSize);
-      actionButtons[i++].setIcon(new ImageIcon(repairImage));
-
-      i++; // skip the sticky button
-
-      Image setpumpImage = getImage("setpump", actionSize);
-      actionButtons[i++].setIcon(new ImageIcon(setpumpImage));
-
-      Image pickuppipeImage = getImage("pickuppipe", actionSize);
-      actionButtons[i].setEnabled(true);
-      actionButtons[i++].setIcon(new ImageIcon(pickuppipeImage));
-
-      Image pickuppumpImage = getImage("pickuppump", actionSize);
-      actionButtons[i].setEnabled(true);
-      actionButtons[i].setIcon(new ImageIcon(pickuppumpImage));
-
-      textField.setText(plumberNames.get(playerIdx / 2) + "'s turn (Plumber)");
-    }
-
-    updateFlow();
-  }
-
-  public void updateFlow() {
+  private static void updateFlow() {
     // checks the flowrate for every node, if it's > 0, sets the node to watery
     for (int i = 0; i < gridNum - 1; i++) {
       for (int j = 0; j < gridNum; j++) {
@@ -212,111 +181,105 @@ public class Game {
   }
 
   /** The character movement in the gui, with the correct images */
-  public void moveCharacter() {
+  public static void moveCharacter(Node from, Node to) {
     // calculate the index of the node that the character is standing on
-    int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
-    Controller.prevIdx = Controller.prevNode.getX() + (gridNum * Controller.prevNode.getY());
+    int idx = to.getX() + (gridNum * to.getY());
+    int prevIdx = from.getX() + (gridNum * from.getY());
 
-    updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    updateNodeImage(Controller.prevNode, Controller.prevIdx, null);
-    updatePlayerNodes();
+    updateNodeImage(from, prevIdx, null);
+    updateNodeImage(to, idx, Controller.currentPlayer);
+    // updatePlayerNodes();
   }
 
-  private void updateNodeImage(Node node, int idx, Character character) {
+  private static void updateNodeImage(Node node, int idx, Character character) {
     Image nodeImage;
     String nodeType = getNodeType(node);
 
-    nodeImage = combine(nodeType, getPlayerType(character)).scale(actionSize);
+    nodeImage = combine(nodeType, getPlayerType(character)).scale(buttonSize);
 
     if (nodeType.equals("pipe") || nodeType.equals("waterpipe")) {
       Pipe pipe = (Pipe) node;
 
       if (pipe.isBroken()) {
-        nodeImage = combine("brokenpipe", getPlayerType(character)).scale(actionSize);
+        nodeImage = combine("brokenpipe", getPlayerType(character)).scale(buttonSize);
 
       } else if (pipe.isSticky()) {
-        Image stickyPipe = combine(nodeType, "sticky").scale(actionSize);
-        nodeImage = combine(stickyPipe, getPlayerType(character)).scale(actionSize);
+        Image stickyPipe = combine(nodeType, "sticky").scale(buttonSize);
+        nodeImage = combine(stickyPipe, getPlayerType(character)).scale(buttonSize);
 
       } else if (pipe.isSlippery()) {
-        Image slipperyPipe = combine(nodeType, "slippery").scale(actionSize);
-        nodeImage = combine(slipperyPipe, getPlayerType(character)).scale(actionSize);
+        Image slipperyPipe = combine(nodeType, "slippery").scale(buttonSize);
+        nodeImage = combine(slipperyPipe, getPlayerType(character)).scale(buttonSize);
       }
     }
 
-    mapButtons[idx].setIcon(new ImageIcon(nodeImage));
+    game.mapButtons[idx].setIcon(new ImageIcon(nodeImage));
   }
 
   /** The current character's break action in the gui, with the correct images */
-  public void breakNode() {
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
-            + (gridNum * Controller.tempChar.getStandingOn().getY());
+  public static void breakNode(Node node, Character character) {
+    int idx = node.getX() + (gridNum * node.getY());
+
     // only the Pipe nodes can be broken by both characters
-    try {
-      Pipe ignored = (Pipe) Controller.tempNode;
-      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    } catch (Exception ignored) {
-      Main.log("Target of break is not a pipe");
+    if (node instanceof Pipe) {
+      updateNodeImage(node, idx, character);
     }
+
+    Main.log("Target of break is not a pipe");
   }
 
-  public void setSticky() {
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
-            + (gridNum * Controller.tempChar.getStandingOn().getY());
+  public static void setSticky(Node node) {
+    int idx = node.getX() + (gridNum * node.getY());
+
     // only the Pipe nodes can be made sticky by both characters
-    try {
-      Pipe ignored = (Pipe) Controller.tempNode;
-      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    } catch (Exception ignored) {
-      Main.log("Target of sticky is not a pipe");
+    if (node instanceof Pipe) {
+      updateNodeImage(node, idx, Controller.currentPlayer);
+      return;
     }
+
+    Main.log("Target of sticky is not a pipe");
   }
 
-  public void setSlippery() {
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
-            + (gridNum * Controller.tempChar.getStandingOn().getY());
+  public static void setSlippery(Node node, Character character) {
+    int idx = node.getX() + (gridNum * node.getY());
+
     // only the Pipe nodes can be made slippery by nomad characters
-    try {
-      Nomad ignored1 = (Nomad) Controller.tempChar;
-      Pipe ignored2 = (Pipe) Controller.tempNode;
-      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    } catch (Exception ignored) {
-      Main.log("Target of slippery is not a pipe or character is not a nomad");
+    if (character instanceof Nomad && node instanceof Pipe) {
+      updateNodeImage(node, idx, character);
+      return;
     }
+
+    Main.log("Target of slippery is not a pipe or character is not a nomad");
   }
 
-  public void repairNode() {
-    int idx =
-        Controller.tempChar.getStandingOn().getX()
-            + (gridNum * Controller.tempChar.getStandingOn().getY());
-    // only the Pipe nodes can be made slippery by nomad characters
-    try {
-      Plumber ignored1 = (Plumber) Controller.tempChar;
-      updateNodeImage(Controller.tempNode, idx, Controller.tempChar);
-    } catch (Exception ignored) {
-      Main.log("Repair failed: character is not a plumber");
+  public static void repairNode(Node node, Character character) {
+    int idx = node.getX() + (gridNum * node.getY());
+
+    // only the Pump and Pipe nodes can be repaired by plumbers
+    if (character instanceof Plumber && node instanceof Pump) {
+      updateNodeImage(node, idx, character);
+      return;
     }
+
+    Main.log("Repair failed: character is not a plumber");
   }
 
-  public void UpdateField() {
-    int idx = Controller.tempNode.getX() + (gridNum * Controller.tempNode.getY());
-    System.out.println(idx);
-    updateNodeImage(Controller.tempNode, idx, null);
+  public static void updateField(Node node) {
+    int idx = node.getX() + (gridNum * node.getY());
+
+    updateNodeImage(node, idx, null);
     updatePlayerNodes();
   }
 
   /** The getter for the current character's type */
-  private String getPlayerType(Character character) {
+  private static String getPlayerType(Character character) {
     if (character instanceof Nomad) return "nomad";
     else if (character instanceof Plumber) return "plumber";
     else return null;
   }
 
   /** The getter for the current node's type */
-  private String getNodeType(Node node) {
+  private static String getNodeType(Node node) {
     if (node instanceof Cistern) return "cistern";
     else if (node instanceof Pipe tempPipe) {
       if (tempPipe.getFlowRate() == 0) return "pipe";
@@ -328,7 +291,7 @@ public class Game {
     else return "sand";
   }
 
-  private void updatePlayerNodes() {
+  private static void updatePlayerNodes() {
     try {
       for (Character character : Map.getPlayers()) {
         Node temp = character.getStandingOn();
@@ -338,5 +301,59 @@ public class Game {
       }
     } catch (NullPointerException ignored) {
     }
+  }
+
+  public void dispose() {
+    frame.dispose();
+  }
+
+  /**
+   * After one team's turn the action bar will be updated to suit for the next team's actions The
+   * mutual actions are the movements, making the pipe sticky or breaking a pipe The plumbers' team
+   * can repair, set pump, pick up pump and pick up pipe The nomad's team can break, make a pipe
+   * slippery
+   */
+  public void updateAction() {
+    Character currentPlayer = players.removeFirst();
+    players.addLast(currentPlayer);
+
+    Controller.currentPlayer = currentPlayer;
+    Controller.currentNode = currentPlayer.getStandingOn();
+
+    if (currentPlayer instanceof Nomad) {
+      int i = 5;
+      Image slipperyImage = getImage("slippery", buttonSize);
+      actionButtons[i++].setIcon(new ImageIcon(slipperyImage));
+      i++; // skip the sticky button
+      i++; // skip the setpump button
+      ImageIcon transparent = new ImageIcon(getTransparent().scale(buttonSize));
+      actionButtons[i].setEnabled(false);
+      actionButtons[i++].setIcon(transparent);
+      actionButtons[i].setEnabled(false);
+      actionButtons[i].setIcon(transparent);
+
+      textField.setText(currentPlayer.getName() + "'s turn (Nomad)");
+    } else {
+      int i = 5;
+      Image repairImage = getImage("repair", buttonSize);
+      actionButtons[i++].setIcon(new ImageIcon(repairImage));
+
+      i++; // skip the sticky button
+
+      Image setpumpImage = getImage("setpump", buttonSize);
+      actionButtons[i++].setIcon(new ImageIcon(setpumpImage));
+
+      Image pickuppipeImage = getImage("pickuppipe", buttonSize);
+      actionButtons[i].setEnabled(true);
+      actionButtons[i++].setIcon(new ImageIcon(pickuppipeImage));
+
+      Image pickuppumpImage = getImage("pickuppump", buttonSize);
+      actionButtons[i].setEnabled(true);
+      actionButtons[i].setIcon(new ImageIcon(pickuppumpImage));
+
+      textField.setText(currentPlayer.getName() + "'s turn (Plumber)");
+    }
+
+    updateFlow();
   }
 }

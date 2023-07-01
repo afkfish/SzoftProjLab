@@ -1,6 +1,5 @@
 package com.ez_mode.gui;
 
-import com.ez_mode.Main;
 import com.ez_mode.Map;
 import com.ez_mode.characters.Character;
 import com.ez_mode.characters.Nomad;
@@ -19,11 +18,9 @@ import javax.swing.*;
 
 public class Controller {
   static Game game;
-  static Character tempChar;
+  static Character currentPlayer;
   static Direction direction;
-  static Node tempNode;
-  static Node prevNode;
-  static int prevIdx;
+  static Node currentNode;
   static int setChoice;
   static Pump pump = new Pump();
 
@@ -33,13 +30,10 @@ public class Controller {
    * @param ignored action event when a button is pressed
    */
   public static void MenuStartAction(ActionEvent ignored) {
-    String pNames;
-    String nNames;
+    String[] pNames;
+    String[] nNames;
     Menu.frame.dispose();
     EndGame.frame.dispose();
-    int p = 0;
-    int n = 0;
-    Game.playerNames = new ArrayList<>();
 
     if (Menu.playerCountTextField.getText().isEmpty()) {
       Menu.playerCount = 2;
@@ -49,17 +43,11 @@ public class Controller {
 
     Menu.loadedPath = Menu.loadTextField.getText();
 
-    pNames = Menu.plumberNamesTextField.getText();
-    Game.plumberNames = new ArrayList<>(List.of(pNames.split(" ")));
-    System.out.println(Game.plumberNames);
+    pNames = Menu.plumberNamesTextField.getText().split(" ");
+    Game.plumberNames = new ArrayList<>(List.of(pNames));
 
-    nNames = Menu.nomadNamesTextField.getText();
-    Game.nomadNames = new ArrayList<>(List.of(nNames.split(" ")));
-
-    for (int i = 0; i < (Game.nomadNames.size() + Game.plumberNames.size()); i++) {
-      if (i % 2 == 0) Game.playerNames.add(Game.plumberNames.get(p++));
-      else Game.playerNames.add(Game.nomadNames.get(n++));
-    }
+    nNames = Menu.nomadNamesTextField.getText().split(" ");
+    Game.nomadNames = new ArrayList<>(List.of(nNames));
 
     if (Menu.loadTextField.getText().isEmpty()) {
       Map.fillMap(Menu.playerCount);
@@ -67,6 +55,7 @@ public class Controller {
       Map.loadMap(Menu.loadedPath);
     }
 
+    Game.players.addAll(Map.getPlayers());
     game = new Game();
   }
 
@@ -80,277 +69,209 @@ public class Controller {
    * @param ignored action event when a button is pressed
    */
   public static void MoveUpAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
     direction = Direction.UP;
+
+    Node prevNode = currentPlayer.getStandingOn();
     try {
-      assert tempChar != null;
-      prevNode = tempChar.getStandingOn();
-      tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-      try {
-        assert tempNode != null;
-        tempChar.moveTo(tempNode);
-        tempNode = tempChar.getStandingOn();
-        game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
-        tempNode = prevNode;
-      }
+      currentNode = Map.getNode(prevNode.getX(), prevNode.getY() - 1);
     } catch (ArrayIndexOutOfBoundsException ex) {
-      System.out.println("Legfelso sor");
+      currentNode = prevNode;
+      return;
     }
+
+    if (currentNode == null) {
+      currentNode = prevNode;
+      return;
+    }
+
+    try {
+      currentPlayer.moveTo(currentNode);
+      Game.moveCharacter(prevNode, currentNode);
+    } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
+    }
+
+    game.updateAction();
   }
 
   public static void MoveLeftAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
     direction = Direction.LEFT;
+
+    Node prevNode = currentPlayer.getStandingOn();
     try {
-      assert tempChar != null;
-      prevNode = tempChar.getStandingOn();
-      tempNode = Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-      try {
-        assert tempNode != null;
-        tempChar.moveTo(tempNode);
-        tempNode = tempChar.getStandingOn();
-        game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
-        tempNode = prevNode;
-      }
+      currentNode = Map.getNode(prevNode.getX() - 1, prevNode.getY());
     } catch (ArrayIndexOutOfBoundsException ex) {
-      System.out.println("balszelso sor");
+      currentNode = prevNode;
+      return;
     }
+
+    if (currentNode == null) {
+      currentNode = prevNode;
+      return;
+    }
+
+    try {
+      currentPlayer.moveTo(currentNode);
+      Game.moveCharacter(prevNode, currentNode);
+    } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
+    }
+
+    game.updateAction();
   }
 
   public static void MoveDownAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
     direction = Direction.DOWN;
+
+    Node prevNode = currentPlayer.getStandingOn();
     try {
-      assert tempChar != null;
-      prevNode = tempChar.getStandingOn();
-      tempNode = Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-      try {
-        assert tempNode != null;
-        tempChar.moveTo(tempNode);
-        tempNode = tempChar.getStandingOn();
-        game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
-        tempNode = prevNode;
-      }
+      currentNode = Map.getNode(prevNode.getX(), prevNode.getY() + 1);
     } catch (ArrayIndexOutOfBoundsException ex) {
-      System.out.println("legalso sor");
+      currentNode = prevNode;
+      return;
     }
+
+    if (currentNode == null) {
+      currentNode = prevNode;
+      return;
+    }
+
+    try {
+      currentPlayer.moveTo(currentNode);
+      Game.moveCharacter(prevNode, currentNode);
+    } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
+    }
+
+
+    game.updateAction();
   }
 
   public static void MoveRightAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
     direction = Direction.RIGHT;
+
+    Node prevNode = currentPlayer.getStandingOn();
     try {
-      assert tempChar != null;
-      prevNode = tempChar.getStandingOn();
-      tempNode = Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
-      try {
-        assert tempNode != null;
-        tempChar.moveTo(tempNode);
-        tempNode = tempChar.getStandingOn();
-        game.moveCharacter();
-      } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
-        tempNode = prevNode;
-      }
+      currentNode = Map.getNode(prevNode.getX() + 1, prevNode.getY());
     } catch (ArrayIndexOutOfBoundsException ex) {
-      System.out.println("jobb szelso sor");
+      currentNode = prevNode;
+      return;
     }
+
+    if (currentNode == null) {
+      currentNode = prevNode;
+      return;
+    }
+
+    try {
+      currentPlayer.moveTo(currentNode);
+      Game.moveCharacter(prevNode, currentNode);
+    } catch (ObjectFullException | InvalidPlayerMovementException ignored1) {
+    }
+
+    game.updateAction();
   }
 
   // two actions because one button
   public static void CharacterSpecAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
-    if (!Game.nomadTurn) { // because we are changing the turn before
-      try {
-        Nomad tempNomad = (Nomad) tempChar;
-        assert tempChar != null;
-        tempNomad.setSlippery();
-        game.setSlippery();
-      } catch (ClassCastException ignored1) {
-      }
-    } else {
-      try {
-        Plumber tempPlumber = (Plumber) tempChar;
-        assert tempChar != null;
-        tempPlumber.repair();
-        game.repairNode();
-      } catch (ClassCastException ignored1) {
-      }
+    if (currentPlayer instanceof Nomad tempNomad) {
+      tempNomad.setSlippery();
+      Game.setSlippery(currentNode, currentPlayer);
+    } else if (currentPlayer instanceof Plumber tempPlumber) {
+      tempPlumber.repair();
+      Game.repairNode(currentNode, currentPlayer);
     }
+
+    game.updateAction();
   }
 
   public static void BreakAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
+    currentPlayer.breakNode();
+    Game.breakNode(currentNode, currentPlayer);
+
     game.updateAction();
-    assert tempChar != null;
-    tempChar.breakNode();
-    game.breakNode();
   }
 
   public static void StickyAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
+    currentPlayer.makePipeSticky();
+    Game.setSticky(currentNode);
+
     game.updateAction();
-    try {
-      assert tempChar != null;
-      tempChar.makePipeSticky();
-      game.setSticky();
-    } catch (ClassCastException ignored1) {
-    }
   }
 
   public static void PickUpPipeAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
-    try {
-      Plumber tempPlumber = (Plumber) tempChar;
-      assert tempPlumber != null;
-      try {
-        tempNode = tempPlumber.getStandingOn();
-        assert tempNode != null;
-        Pipe tempPipe = new Pipe();
-        new PopUp(false, tempPlumber);
-        if (PopUp.place) {
-          tempPlumber.PlacePipe(setChoice);
-          switch (setChoice) {
-            case 0 -> tempNode = Map.getNode(tempNode.getX(), tempNode.getY() - 1);
-            case 1 -> tempNode = Map.getNode(tempNode.getX(), tempNode.getY() + 1);
-            case 2 -> tempNode = Map.getNode(tempNode.getX() - 1, tempNode.getY());
-            case 3 -> tempNode = Map.getNode(tempNode.getX() + 1, tempNode.getY());
-          }
-          game.UpdateField();
-        } else {
-          Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
-          try {
-            upNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-          } catch (ArrayIndexOutOfBoundsException e) {
-            upNeighbour = null;
-          }
-          try {
-            downNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-          } catch (ArrayIndexOutOfBoundsException e) {
-            downNeighbour = null;
-          }
-          try {
-            leftNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-          } catch (ArrayIndexOutOfBoundsException e) {
-            leftNeighbour = null;
-          }
-          try {
-            rightNeighbour =
-                Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
-          } catch (ArrayIndexOutOfBoundsException e) {
-            rightNeighbour = null;
-          }
-          switch (setChoice) {
-            case 0 -> tempPipe = (Pipe) upNeighbour;
-            case 1 -> tempPipe = (Pipe) downNeighbour;
-            case 2 -> tempPipe = (Pipe) leftNeighbour;
-            case 3 -> tempPipe = (Pipe) rightNeighbour;
-            case 4 -> tempPipe = ((Cistern) tempChar.getStandingOn()).MakePipe();
-          }
-          tempPlumber.PickupPipe(tempPipe);
-          tempNode = tempPipe;
-        }
-
-      } catch (NotFoundExeption ignored1) {
-      }
-    } catch (ClassCastException ignored1) {
-      JOptionPane.showMessageDialog(null, "You are not standing on a cistern!");
+    if (currentPlayer instanceof Nomad) {
+      return;
     }
+
+    Plumber tempPlumber = (Plumber) currentPlayer;
+    try {
+      new PopUp(false, tempPlumber);
+      if (PopUp.place) {
+        Node placed = tempPlumber.PlacePipe(setChoice);
+        Game.updateField(placed);
+      } else {
+        Pipe tempPipe = new Pipe();
+
+        try {
+          switch (setChoice) {
+            case 0 -> tempPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() - 1);
+            case 1 -> tempPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() + 1);
+            case 2 -> tempPipe = (Pipe) Map.getNode(currentNode.getX() - 1, currentNode.getY());
+            case 3 -> tempPipe = (Pipe) Map.getNode(currentNode.getX() + 1, currentNode.getY());
+            case 4 -> tempPipe = ((Cistern) currentPlayer.getStandingOn()).MakePipe();
+          }
+        } catch (ClassCastException ignored1) {
+          JOptionPane.showMessageDialog(null, "You are not standing on a cistern!");
+        }
+        tempPlumber.PickupPipe(tempPipe);
+      }
+    } catch (NotFoundExeption ignored1) {}
+
+    game.updateAction();
   }
 
   public static void PickUpPumpAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
-    try {
-      Plumber tempChar = (Plumber) Map.getPlayer(Game.playerNames.get(Game.playerIdx));
-      assert tempChar != null;
+    if (currentPlayer instanceof Plumber tempPlumber) {
       // if not empty, then place
-      if (tempChar.getPickedupPump() != null) {
-        Pipe a = (Pipe) tempChar.getStandingOn();
-        Pump placed = tempChar.getPickedupPump();
-        tempChar.PlacePump();
-        tempNode = placed;
-        game.UpdateField();
-        if (placed.getNeighbours().size() >= 2) {
-          tempNode = placed.getNeighbours().get(1);
-          game.UpdateField();
-        }
+      if (tempPlumber.getPickedupPump() != null) {
+        Pump placed = tempPlumber.getPickedupPump();
+        tempPlumber.PlacePump();
+//        tempNode = placed;
+        Game.updateField(placed);
+//        if (placed.getNeighbours().size() >= 2) {
+//          tempNode = placed.getNeighbours().get(1);
+//          game.updateField(tempNode);
+//        }
+      } else { // if inventory is empty pick up
+        tempPlumber.PickupPump();
       }
-      // if inventory is empty pick up
-      else {
-        tempChar.PickupPump();
-      }
-    } catch (ClassCastException ignored1) {
-      Main.log(tempChar.getUuid() + " is not standing on a Pipe");
     }
+    game.updateAction();
   }
 
   public static void SetPumpAction(ActionEvent ignored) {
-    Game.nomadTurn = !Game.nomadTurn;
-    game.updateAction();
-    Node upNeighbour, downNeighbour, rightNeighbour, leftNeighbour;
-    try {
-      upNeighbour =
-          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() - 1);
-    } catch (ArrayIndexOutOfBoundsException e) {
-      upNeighbour = null;
-    }
-    try {
-      downNeighbour =
-          Map.getNode(tempChar.getStandingOn().getX(), tempChar.getStandingOn().getY() + 1);
-    } catch (ArrayIndexOutOfBoundsException e) {
-      downNeighbour = null;
-    }
-    try {
-      leftNeighbour =
-          Map.getNode(tempChar.getStandingOn().getX() - 1, tempChar.getStandingOn().getY());
-    } catch (ArrayIndexOutOfBoundsException e) {
-      leftNeighbour = null;
-    }
-    try {
-      rightNeighbour =
-          Map.getNode(tempChar.getStandingOn().getX() + 1, tempChar.getStandingOn().getY());
-    } catch (ArrayIndexOutOfBoundsException e) {
-      rightNeighbour = null;
-    }
-    try {
-      // Plumber ignored1 = (Plumber) tempChar;
-      assert tempChar != null;
+    if (currentNode instanceof Pump) {
+      new PopUp(true, null);
+      Pipe inputPipe = null;
+      Pipe outputPipe = null;
       try {
-        Pump ignored2 = (Pump) tempNode;
-        new PopUp(true, null);
-        Pipe inputPipe;
-        Pipe outputPipe;
         if (setChoice == 0 | setChoice == 1) {
-          inputPipe = (Pipe) upNeighbour;
-          outputPipe = (Pipe) downNeighbour;
+          inputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() - 1);;
+          outputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() + 1);;
         } else {
-          inputPipe = (Pipe) leftNeighbour;
-          outputPipe = (Pipe) rightNeighbour;
+          inputPipe = (Pipe) Map.getNode(currentNode.getX() - 1, currentNode.getY());;
+          outputPipe = (Pipe) Map.getNode(currentNode.getX() + 1, currentNode.getY());;
         }
-        pump.setActiveInput(inputPipe);
-        pump.setActiveOutput(outputPipe);
       } catch (ClassCastException ex) {
         System.out.println(ex.getMessage());
       }
-    } catch (ClassCastException ex) {
-      System.out.println(ex.getMessage());
+      pump.setActiveInput(inputPipe);
+      pump.setActiveOutput(outputPipe);
     }
+
+    game.updateAction();
   }
 
   public static void GameExitAction(ActionEvent ignored) {
-    Game.frame.dispose();
+    game.dispose();
     new EndGame();
   }
 
@@ -375,12 +296,12 @@ public class Controller {
     Game.playerNames = new ArrayList<>();
     for (int i = 0; i < Map.playerCount(); i++) {
       Character tempChar = Map.getPlayer(i);
-      Game.playerNames.add(tempChar.getName());
-      try {
-        Plumber ignored1 = (Plumber) tempChar;
-        Game.plumberNames.add(tempChar.getName());
-      } catch (ClassCastException ignored2) {
+      if (tempChar instanceof Nomad nomad) {
         Game.nomadNames.add(tempChar.getName());
+        Game.players.add(nomad);
+      } else if (tempChar instanceof Plumber plumber) {
+        Game.plumberNames.add(tempChar.getName());
+        Game.players.add(plumber);
       }
     }
     game = new Game();
