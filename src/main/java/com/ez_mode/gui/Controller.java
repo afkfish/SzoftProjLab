@@ -17,12 +17,10 @@ import java.util.List;
 import javax.swing.*;
 
 public class Controller {
-  static Game game;
-  static Character currentPlayer;
-  static Direction direction;
-  static Node currentNode;
-  static int setChoice;
-  static Pump pump = new Pump();
+  public static Character currentPlayer;
+  public static Node currentNode;
+  public static int setChoice;
+  private static Game game;
 
   /**
    * Actions in Menu class
@@ -32,8 +30,8 @@ public class Controller {
   public static void MenuStartAction(ActionEvent ignored) {
     String[] pNames;
     String[] nNames;
-    Menu.frame.dispose();
-    EndGame.frame.dispose();
+    Menu.dispose();
+    EndGame.dispose();
 
     if (Menu.playerCountTextField.getText().isEmpty()) {
       Menu.playerCount = 2;
@@ -60,7 +58,7 @@ public class Controller {
   }
 
   public static void MenuExitAction(ActionEvent ignored) {
-    Menu.frame.dispose();
+    Menu.dispose();
   }
 
   /**
@@ -69,8 +67,6 @@ public class Controller {
    * @param ignored action event when a button is pressed
    */
   public static void MoveUpAction(ActionEvent ignored) {
-    direction = Direction.UP;
-
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX(), prevNode.getY() - 1);
@@ -94,8 +90,6 @@ public class Controller {
   }
 
   public static void MoveLeftAction(ActionEvent ignored) {
-    direction = Direction.LEFT;
-
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX() - 1, prevNode.getY());
@@ -119,8 +113,6 @@ public class Controller {
   }
 
   public static void MoveDownAction(ActionEvent ignored) {
-    direction = Direction.DOWN;
-
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX(), prevNode.getY() + 1);
@@ -145,8 +137,6 @@ public class Controller {
   }
 
   public static void MoveRightAction(ActionEvent ignored) {
-    direction = Direction.RIGHT;
-
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX() + 1, prevNode.getY());
@@ -248,17 +238,17 @@ public class Controller {
   }
 
   public static void SetPumpAction(ActionEvent ignored) {
-    if (currentNode instanceof Pump) {
+    if (currentNode instanceof Pump pump) {
       new PopUp(true, null);
       Pipe inputPipe = null;
       Pipe outputPipe = null;
       try {
         if (setChoice == 0 | setChoice == 1) {
-          inputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() - 1);;
-          outputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() + 1);;
+          inputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() - 1);
+          outputPipe = (Pipe) Map.getNode(currentNode.getX(), currentNode.getY() + 1);
         } else {
-          inputPipe = (Pipe) Map.getNode(currentNode.getX() - 1, currentNode.getY());;
-          outputPipe = (Pipe) Map.getNode(currentNode.getX() + 1, currentNode.getY());;
+          inputPipe = (Pipe) Map.getNode(currentNode.getX() - 1, currentNode.getY());
+          outputPipe = (Pipe) Map.getNode(currentNode.getX() + 1, currentNode.getY());
         }
       } catch (ClassCastException ex) {
         System.out.println(ex.getMessage());
@@ -281,13 +271,12 @@ public class Controller {
    * @param ignored action event when a button is pressed
    */
   public static void EndGameExitAction(ActionEvent ignored) {
-    EndGame.frame.dispose();
-    EndGame.savedPath = EndGame.saveTextField.getText();
-    Map.saveMap(EndGame.savedPath);
+    EndGame.dispose();
+    Map.saveMap(EndGame.getSavedPath());
   }
 
   public static void LoadMapAction(ActionEvent ignored) {
-    Menu.frame.dispose();
+    Menu.dispose();
     Menu.loadedPath = Menu.loadTextField.getText();
     Map.loadMap(Menu.loadedPath);
     Menu.setPlayerCount(Map.playerCount() / 2);
@@ -305,12 +294,5 @@ public class Controller {
       }
     }
     game = new Game();
-  }
-
-  public enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
   }
 }

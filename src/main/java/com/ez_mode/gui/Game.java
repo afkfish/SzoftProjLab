@@ -18,19 +18,15 @@ public class Game {
   public static int gridNum = 10;
   public static ArrayList<String> plumberNames;
   public static ArrayList<String> nomadNames;
-  static int buttonSize;
-  static ArrayList<String> playerNames;
-  static LinkedList<Character> players = new LinkedList<>();
+  public static ArrayList<String> playerNames;
+  public static LinkedList<Character> players = new LinkedList<>();
+  private static int buttonSize;
   private static Game game;
   /** Java Swing components for the Game class */
-  JFrame frame = new JFrame();
-  JPanel titlePanel = new JPanel();
-  JLabel textField = new JLabel();
-  JButton endGameButton = new JButton();
-  JPanel mapPanel = new JPanel();
-  JButton[] mapButtons = new JButton[gridNum * gridNum];
-  JButton[] actionButtons = new JButton[gridNum];
-  JPanel actionPanel = new JPanel();
+  private final JFrame frame = new JFrame();
+  private final JLabel textField = new JLabel();
+  private final JButton[] mapButtons = new JButton[gridNum * gridNum];
+  private final JButton[] actionButtons = new JButton[gridNum];
 
   public Game() {
     game = this;
@@ -44,6 +40,7 @@ public class Game {
     int windowHeight = 70 * (gridNum + 2) + 20;
     buttonSize = windowWidth / gridNum;
 
+    JPanel titlePanel = new JPanel();
     titlePanel.setLayout(new BorderLayout());
     titlePanel.setBackground(Color.BLACK);
 
@@ -56,6 +53,7 @@ public class Game {
     textField.setOpaque(true);
 
     // Properties of the end game button
+    JButton endGameButton = new JButton();
     endGameButton.setBounds(500, 13, 20, 30);
     endGameButton.setFont(new Font("Monospace", Font.BOLD, 20));
     endGameButton.setText("End Game");
@@ -68,10 +66,12 @@ public class Game {
     endGameButton.addActionListener(Controller::GameExitAction);
 
     // Filling the map
+    JPanel mapPanel = new JPanel();
     mapPanel.setLayout(new GridLayout(gridNum, gridNum));
     mapPanel.setBackground(Color.BLACK);
     mapPanel.setBorder(null);
 
+    JPanel actionPanel = new JPanel();
     actionPanel.setLayout(new GridLayout(1, gridNum));
     actionPanel.setBackground(Color.WHITE);
     actionPanel.setBorder(null);

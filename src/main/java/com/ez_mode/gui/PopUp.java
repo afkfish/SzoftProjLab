@@ -4,12 +4,10 @@ import com.ez_mode.characters.Plumber;
 import javax.swing.*;
 
 public class PopUp {
-
+  static boolean place = false;
   Object[] options = {"Pick up", "Place"};
   Object[] pickUpDirections = {"Up", "Down", "Left", "Right", "From cistern"};
   Object[] placeDirections = {"Up", "Down", "Left", "Right"};
-
-  static boolean place = false;
 
   public PopUp(boolean set, Plumber tempPlumber) {
     if (!set) {
