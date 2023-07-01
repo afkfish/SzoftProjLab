@@ -25,6 +25,7 @@ public class Game {
 
   /** Java Swing components for the Game class */
   private final JFrame frame = new JFrame();
+
   private final JLabel textField = new JLabel();
   private final JButton[] mapButtons = new JButton[gridNum * gridNum];
   private final JButton[] actionButtons = new JButton[gridNum];
