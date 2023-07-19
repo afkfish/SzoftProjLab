@@ -13,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.*;
+import org.jetbrains.annotations.NotNull;
 
 public class Game {
   public static int gridNum = 10;
@@ -183,7 +184,7 @@ public class Game {
   }
 
   /** The character movement in the gui, with the correct images */
-  public static void moveCharacter(Node from, Node to) {
+  public static void moveCharacter(@NotNull Node from, @NotNull Node to) {
     // calculate the index of the node that the character is standing on
     int idx = to.getX() + (gridNum * to.getY());
     int prevIdx = from.getX() + (gridNum * from.getY());
@@ -219,7 +220,7 @@ public class Game {
   }
 
   /** The current character's break action in the gui, with the correct images */
-  public static void breakNode(Node node, Character character) {
+  public static void breakNode(@NotNull Node node, Character character) {
     int idx = node.getX() + (gridNum * node.getY());
 
     // only the Pipe nodes can be broken by both characters
@@ -230,7 +231,7 @@ public class Game {
     Main.log("Target of break is not a pipe");
   }
 
-  public static void setSticky(Node node) {
+  public static void setSticky(@NotNull Node node) {
     int idx = node.getX() + (gridNum * node.getY());
 
     // only the Pipe nodes can be made sticky by both characters
@@ -242,7 +243,7 @@ public class Game {
     Main.log("Target of sticky is not a pipe");
   }
 
-  public static void setSlippery(Node node, Character character) {
+  public static void setSlippery(@NotNull Node node, Character character) {
     int idx = node.getX() + (gridNum * node.getY());
 
     // only the Pipe nodes can be made slippery by nomad characters
@@ -254,7 +255,7 @@ public class Game {
     Main.log("Target of slippery is not a pipe or character is not a nomad");
   }
 
-  public static void repairNode(Node node, Character character) {
+  public static void repairNode(@NotNull Node node, Character character) {
     int idx = node.getX() + (gridNum * node.getY());
 
     // only the Pump and Pipe nodes can be repaired by plumbers
@@ -266,7 +267,7 @@ public class Game {
     Main.log("Repair failed: character is not a plumber");
   }
 
-  public static void updateField(Node node) {
+  public static void updateField(@NotNull Node node) {
     int idx = node.getX() + (gridNum * node.getY());
 
     updateNodeImage(node, idx, null);
@@ -281,7 +282,7 @@ public class Game {
   }
 
   /** The getter for the current node's type */
-  private static String getNodeType(Node node) {
+  private static @NotNull String getNodeType(@NotNull Node node) {
     if (node instanceof Cistern) return "cistern";
     else if (node instanceof Pipe tempPipe) {
       if (tempPipe.getFlowRate() == 0) return "pipe";

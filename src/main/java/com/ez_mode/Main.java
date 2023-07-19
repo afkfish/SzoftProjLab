@@ -12,6 +12,8 @@ import com.ez_mode.objects.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
+import javax.swing.*;
+import org.jetbrains.annotations.NotNull;
 
 public class Main {
   public static final Map map = new Map(10);
@@ -356,7 +358,7 @@ public class Main {
    * @param neighbours the node's neighbours
    * @return Integer of the chosen index
    */
-  private static int printNeighbours(Scanner scanner, ArrayList<Node> neighbours) {
+  private static int printNeighbours(Scanner scanner, @NotNull ArrayList<Node> neighbours) {
     for (int j = 0; j < neighbours.size(); j++) {
       Node temp = neighbours.get(j);
       log(j + " - " + temp + " - [" + temp.getX() + ", " + temp.getY() + "]");
@@ -369,6 +371,13 @@ public class Main {
     if (version == Version.PROTOTYPE) {
       proto(scanner);
     } else if (version == Version.GRAPHICAL) {
+      try {
+        UIManager.setLookAndFeel(
+                UIManager.getSystemLookAndFeelClassName());
+      }
+      catch (Exception ignored) {
+        System.out.println("Could not set look and feel");
+      }
       if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         System.setProperty("apple.awt.application.name", "SzoftProjLab");
@@ -409,7 +418,7 @@ public class Main {
    * @param scanner static scanner
    * @return a new node that is optional
    */
-  private static Optional<Node> createNode(Scanner scanner) {
+  private static Optional<Node> createNode(@NotNull Scanner scanner) {
     log("What is the type of the node?");
     log("1 - Pipe");
     log("2 - Pump");
@@ -448,7 +457,7 @@ public class Main {
    * @param scanner static scanner
    * @return a new character that is optional
    */
-  private static Optional<Character> createCharacter(Scanner scanner) {
+  private static Optional<Character> createCharacter(@NotNull Scanner scanner) {
     log("What is the name of the character?");
     String name = scanner.nextLine();
     log("What is the type of the character?");

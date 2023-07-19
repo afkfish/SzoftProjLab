@@ -58,10 +58,6 @@ public class Controller {
     game = new Game();
   }
 
-  public static void menuExitAction(ActionEvent ignored) {
-    Menu.dispose();
-  }
-
   /**
    * Actions in Game class
    *

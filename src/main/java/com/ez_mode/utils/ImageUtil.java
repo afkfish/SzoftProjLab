@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
 import javax.swing.*;
+import org.jetbrains.annotations.NotNull;
 
 public class ImageUtil {
   private static final String basePath = "src/main/resources/images/";
@@ -26,7 +27,7 @@ public class ImageUtil {
     }
   }
 
-  private static String getSubPath(String name) {
+  private static String getSubPath(@NotNull String name) {
     switch (name) {
       case "nomad", "plumber" -> {
         return "character/";
@@ -63,11 +64,11 @@ public class ImageUtil {
     return new ScalableImage(icon.getImage()).scale(size);
   }
 
-  public static Image scale(Image image, int size) {
+  public static Image scale(@NotNull Image image, int size) {
     return image.getScaledInstance(size, size, Image.SCALE_DEFAULT);
   }
 
-  public static ScalableImage combine(Image base, Image overlay) {
+  public static ScalableImage combine(@NotNull Image base, @NotNull Image overlay) {
     int w = Math.max(base.getWidth(null), overlay.getWidth(null));
     int h = Math.max(base.getHeight(null), overlay.getHeight(null));
     BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);

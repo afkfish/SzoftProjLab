@@ -12,15 +12,13 @@ public class Menu {
   public static JTextField plumberNamesTextField = new JTextField();
   public static JTextField nomadNamesTextField = new JTextField();
   public static JTextField playerCountTextField = new JTextField();
-  public static int playerCount = 2;
+  public static int playerCount = 1;
   public static String loadedPath;
 
   public static void open() {
     JMenuBar menuBar = new JMenuBar();
-    menuBar.setBackground(new Color(50, 50, 50));
 
     JMenu fileMenu = new JMenu("File");
-    fileMenu.setBackground(new Color(50, 50, 50));
     JMenuItem importMenuItem = new JMenuItem("Import");
     JSeparator separator = new JSeparator();
     JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -77,7 +75,7 @@ public class Menu {
     playerCountTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     //    playerCountTextField.setBounds(330, 210, 50, 40);
 
-    JSlider slider = new JSlider(1, 4, 2);
+    JSlider slider = new JSlider(1, 4, 1);
     slider.setBackground(null);
     slider.setSnapToTicks(true);
     slider.addChangeListener(c -> playerCount = slider.getValue());
@@ -103,15 +101,6 @@ public class Menu {
     nomadNamesTextField.setBackground(new Color(250, 250, 250));
     nomadNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     //    nomadNamesTextField.setBounds(260, 330, 100, 40);
-
-    //    JButton exitButton = new JButton();
-    ////    exitButton.setBounds(55, 400, 300, 40);
-    //    exitButton.setFont(new Font("Monospace", Font.BOLD, 25));
-    //    exitButton.setText("Exit game");
-    //    exitButton.setUI(new ColoredButtonUI(Color.BLACK));
-    //    exitButton.setForeground(new Color(250, 250, 250));
-    //    exitButton.setFocusable(false);
-    //    exitButton.addActionListener(Controller::menuExitAction);
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(420, 500);
@@ -151,13 +140,6 @@ public class Menu {
     mainActionPanel.setBackground(null);
 
     mainPanel.add(mainActionPanel);
-
-    //    JPanel exitButtonPanel = new JPanel();
-    //    exitButtonPanel.setLayout(new BorderLayout());
-    //    exitButtonPanel.add(exitButton, BorderLayout.CENTER);
-    //    exitButtonPanel.setBackground(null);
-
-    //    mainPanel.add(exitButtonPanel);
     frame.add(mainPanel);
 
     frame.setVisible(true);

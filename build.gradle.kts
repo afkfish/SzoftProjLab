@@ -21,6 +21,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains:annotations:24.0.0")
+    implementation("org.json:json:20230618")
     // JUnit for testing
     testImplementation("junit:junit:4.13.2")
 }
