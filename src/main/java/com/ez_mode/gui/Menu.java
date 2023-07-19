@@ -7,13 +7,14 @@ import javax.swing.plaf.basic.BasicButtonUI;
 public class Menu {
   /** Java Swing components for the Menu class */
   private static final JFrame frame = new JFrame();
+
   public static JTextField loadTextField = new JTextField();
   public static JTextField plumberNamesTextField = new JTextField();
   public static JTextField nomadNamesTextField = new JTextField();
   public static JTextField playerCountTextField = new JTextField();
   public static int playerCount = 2;
   public static String loadedPath;
-  
+
   public static void open() {
     JMenuBar menuBar = new JMenuBar();
     menuBar.setBackground(new Color(50, 50, 50));
@@ -36,12 +37,12 @@ public class Menu {
     title.setForeground(new Color(250, 250, 250));
     title.setBorder(null);
     title.setFont(new Font("Monospace", Font.BOLD, 45));
-//    title.setBounds(140, 10, 300, 40);
+    //    title.setBounds(140, 10, 300, 40);
     title.setText("Menu");
     title.setHorizontalAlignment(SwingConstants.CENTER);
 
     JButton startButton = new JButton();
-//    startButton.setBounds(55, 80, 300, 40);
+    //    startButton.setBounds(55, 80, 300, 40);
     startButton.setFont(new Font("Monospace", Font.BOLD, 25));
     startButton.setText("Start game");
     startButton.setUI(new ColoredButtonUI(Color.BLACK));
@@ -58,11 +59,12 @@ public class Menu {
     loadText.setText("Path of map: ");
     loadTextField.setBackground(new Color(250, 250, 250));
     loadTextField.setFont(new Font("Monospace", Font.BOLD, 20));
-//    loadTextField.setBounds(frame.getWidth(), 150, frame.getWidth()/3, 20);
+    //    loadTextField.setBounds(frame.getWidth(), 150, frame.getWidth()/3, 20);
     loadTextField.addActionListener(Controller::loadMapAction);
 
-//    loadTextField.setMaximumSize(new Dimension((int) (frame.getWidth() / 3), loadTextField.getHeight()));
-//    loadTextField.setSize(frame.getWidth() / 3, loadTextField.getHeight());
+    //    loadTextField.setMaximumSize(new Dimension((int) (frame.getWidth() / 3),
+    // loadTextField.getHeight()));
+    //    loadTextField.setSize(frame.getWidth() / 3, loadTextField.getHeight());
 
     JLabel playerCountText = new JLabel();
     playerCountText.setBackground(new Color(50, 50, 50));
@@ -73,7 +75,7 @@ public class Menu {
     playerCountText.setText("Number of players in one team: ");
     playerCountTextField.setBackground(new Color(250, 250, 250));
     playerCountTextField.setFont(new Font("Monospace", Font.BOLD, 20));
-//    playerCountTextField.setBounds(330, 210, 50, 40);
+    //    playerCountTextField.setBounds(330, 210, 50, 40);
 
     JSlider slider = new JSlider(1, 4, 2);
     slider.setBackground(null);
@@ -89,7 +91,7 @@ public class Menu {
     plumberNamesText.setText("Names of the plumbers:");
     plumberNamesTextField.setBackground(new Color(250, 250, 250));
     plumberNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
-//    plumberNamesTextField.setBounds(260, 270, 100, 40);
+    //    plumberNamesTextField.setBounds(260, 270, 100, 40);
 
     JLabel nomadNamesText = new JLabel();
     nomadNamesText.setBackground(new Color(50, 50, 50));
@@ -100,16 +102,16 @@ public class Menu {
     nomadNamesText.setText("Names of the nomads:");
     nomadNamesTextField.setBackground(new Color(250, 250, 250));
     nomadNamesTextField.setFont(new Font("Monospace", Font.BOLD, 20));
-//    nomadNamesTextField.setBounds(260, 330, 100, 40);
+    //    nomadNamesTextField.setBounds(260, 330, 100, 40);
 
-//    JButton exitButton = new JButton();
-////    exitButton.setBounds(55, 400, 300, 40);
-//    exitButton.setFont(new Font("Monospace", Font.BOLD, 25));
-//    exitButton.setText("Exit game");
-//    exitButton.setUI(new ColoredButtonUI(Color.BLACK));
-//    exitButton.setForeground(new Color(250, 250, 250));
-//    exitButton.setFocusable(false);
-//    exitButton.addActionListener(Controller::menuExitAction);
+    //    JButton exitButton = new JButton();
+    ////    exitButton.setBounds(55, 400, 300, 40);
+    //    exitButton.setFont(new Font("Monospace", Font.BOLD, 25));
+    //    exitButton.setText("Exit game");
+    //    exitButton.setUI(new ColoredButtonUI(Color.BLACK));
+    //    exitButton.setForeground(new Color(250, 250, 250));
+    //    exitButton.setFocusable(false);
+    //    exitButton.addActionListener(Controller::menuExitAction);
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(420, 500);
@@ -150,12 +152,12 @@ public class Menu {
 
     mainPanel.add(mainActionPanel);
 
-//    JPanel exitButtonPanel = new JPanel();
-//    exitButtonPanel.setLayout(new BorderLayout());
-//    exitButtonPanel.add(exitButton, BorderLayout.CENTER);
-//    exitButtonPanel.setBackground(null);
+    //    JPanel exitButtonPanel = new JPanel();
+    //    exitButtonPanel.setLayout(new BorderLayout());
+    //    exitButtonPanel.add(exitButton, BorderLayout.CENTER);
+    //    exitButtonPanel.setBackground(null);
 
-//    mainPanel.add(exitButtonPanel);
+    //    mainPanel.add(exitButtonPanel);
     frame.add(mainPanel);
 
     frame.setVisible(true);
@@ -167,6 +169,7 @@ public class Menu {
 
   private static class ColoredButtonUI extends BasicButtonUI {
     private final Color color;
+
     public ColoredButtonUI(Color color) {
       super();
       this.color = color;

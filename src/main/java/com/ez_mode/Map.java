@@ -423,13 +423,20 @@ public class Map implements Tickable {
   /** ticks every node on map */
   @Override
   public void tick() {
-    Arrays.stream(gameMap).forEach((Node[] col) -> Arrays.stream(col).forEach(node -> {if(node != null) node.tick();}));
-//    for (Node[] nodes : gameMap) {
-//      for (Node node : nodes) {
-//        if (node == null) continue;
-//        node.tick();
-//      }
-//    }
+    Arrays.stream(gameMap)
+        .forEach(
+            (Node[] col) ->
+                Arrays.stream(col)
+                    .forEach(
+                        node -> {
+                          if (node != null) node.tick();
+                        }));
+    //    for (Node[] nodes : gameMap) {
+    //      for (Node node : nodes) {
+    //        if (node == null) continue;
+    //        node.tick();
+    //      }
+    //    }
     Main.log("Current water loss: " + Map.waterLost);
   }
 

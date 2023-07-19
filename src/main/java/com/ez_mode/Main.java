@@ -374,7 +374,7 @@ public class Main {
         System.setProperty("apple.awt.application.name", "SzoftProjLab");
       }
       Menu.open();
-//      new Menu1();
+      //      new Menu1();
     }
   }
 

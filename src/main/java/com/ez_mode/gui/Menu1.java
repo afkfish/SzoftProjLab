@@ -9,6 +9,7 @@ public class Menu1 {
   private JTextField textField3;
   private JButton startButton;
   private JSlider slider1;
+
   public Menu1() {
     startButton.addActionListener(Controller::menuStartAction);
   }

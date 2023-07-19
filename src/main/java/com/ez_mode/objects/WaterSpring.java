@@ -1,6 +1,5 @@
 package com.ez_mode.objects;
 
-import com.ez_mode.Main;
 import com.ez_mode.characters.Character;
 import com.ez_mode.exceptions.InvalidPlayerActionException;
 

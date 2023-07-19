@@ -14,7 +14,6 @@ import com.ez_mode.objects.Pump;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.swing.*;
 
 public class Controller {
@@ -38,7 +37,7 @@ public class Controller {
     nNames = Menu.nomadNamesTextField.getText().split(" ");
     Game.nomadNames = new ArrayList<>(List.of(nNames));
 
-    if (Game.nomadNames.size() + Game.plumberNames.size() != Menu.playerCount*2) {
+    if (Game.nomadNames.size() + Game.plumberNames.size() != Menu.playerCount * 2) {
       Game.plumberNames = null;
       Game.nomadNames = null;
       return;
