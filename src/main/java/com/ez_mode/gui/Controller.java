@@ -14,6 +14,7 @@ import com.ez_mode.objects.Pump;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.*;
 
 public class Controller {
@@ -27,25 +28,26 @@ public class Controller {
    *
    * @param ignored action event when a button is pressed
    */
-  public static void MenuStartAction(ActionEvent ignored) {
+  public static void menuStartAction(ActionEvent ignored) {
     String[] pNames;
     String[] nNames;
-    Menu.dispose();
-    EndGame.dispose();
-
-    if (Menu.playerCountTextField.getText().isEmpty()) {
-      Menu.playerCount = 2;
-    } else {
-      Menu.playerCount = Integer.parseInt(Menu.playerCountTextField.getText());
-    }
-
-    Menu.loadedPath = Menu.loadTextField.getText();
 
     pNames = Menu.plumberNamesTextField.getText().split(" ");
     Game.plumberNames = new ArrayList<>(List.of(pNames));
 
     nNames = Menu.nomadNamesTextField.getText().split(" ");
     Game.nomadNames = new ArrayList<>(List.of(nNames));
+
+    if (Game.nomadNames.size() + Game.plumberNames.size() != Menu.playerCount*2) {
+      Game.plumberNames = null;
+      Game.nomadNames = null;
+      return;
+    }
+
+    Menu.dispose();
+    EndGame.dispose();
+
+    Menu.loadedPath = Menu.loadTextField.getText();
 
     if (Menu.loadTextField.getText().isEmpty()) {
       Map.fillMap(Menu.playerCount);
@@ -57,7 +59,7 @@ public class Controller {
     game = new Game();
   }
 
-  public static void MenuExitAction(ActionEvent ignored) {
+  public static void menuExitAction(ActionEvent ignored) {
     Menu.dispose();
   }
 
@@ -66,7 +68,7 @@ public class Controller {
    *
    * @param ignored action event when a button is pressed
    */
-  public static void MoveUpAction(ActionEvent ignored) {
+  public static void moveUpAction(ActionEvent ignored) {
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX(), prevNode.getY() - 1);
@@ -89,7 +91,7 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void MoveLeftAction(ActionEvent ignored) {
+  public static void moveLeftAction(ActionEvent ignored) {
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX() - 1, prevNode.getY());
@@ -112,7 +114,7 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void MoveDownAction(ActionEvent ignored) {
+  public static void moveDownAction(ActionEvent ignored) {
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX(), prevNode.getY() + 1);
@@ -135,7 +137,7 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void MoveRightAction(ActionEvent ignored) {
+  public static void moveRightAction(ActionEvent ignored) {
     Node prevNode = currentPlayer.getStandingOn();
     try {
       currentNode = Map.getNode(prevNode.getX() + 1, prevNode.getY());
@@ -159,7 +161,7 @@ public class Controller {
   }
 
   // two actions because one button
-  public static void CharacterSpecAction(ActionEvent ignored) {
+  public static void characterSpecAction(ActionEvent ignored) {
     if (currentPlayer instanceof Nomad tempNomad) {
       tempNomad.setSlippery();
       Game.setSlippery(currentNode, currentPlayer);
@@ -171,21 +173,21 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void BreakAction(ActionEvent ignored) {
+  public static void breakAction(ActionEvent ignored) {
     currentPlayer.breakNode();
     Game.breakNode(currentNode, currentPlayer);
 
     game.updateAction();
   }
 
-  public static void StickyAction(ActionEvent ignored) {
+  public static void stickyAction(ActionEvent ignored) {
     currentPlayer.makePipeSticky();
     Game.setSticky(currentNode);
 
     game.updateAction();
   }
 
-  public static void PickUpPipeAction(ActionEvent ignored) {
+  public static void pickUpPipeAction(ActionEvent ignored) {
     if (currentPlayer instanceof Nomad) {
       return;
     }
@@ -218,7 +220,7 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void PickUpPumpAction(ActionEvent ignored) {
+  public static void pickUpPumpAction(ActionEvent ignored) {
     if (currentPlayer instanceof Plumber tempPlumber) {
       // if not empty, then place
       if (tempPlumber.getPickedupPump() != null) {
@@ -237,7 +239,7 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void SetPumpAction(ActionEvent ignored) {
+  public static void setPumpAction(ActionEvent ignored) {
     if (currentNode instanceof Pump pump) {
       new PopUp(true, null);
       Pipe inputPipe = null;
@@ -260,9 +262,9 @@ public class Controller {
     game.updateAction();
   }
 
-  public static void GameExitAction(ActionEvent ignored) {
+  public static void gameExitAction(ActionEvent ignored) {
     game.dispose();
-    new EndGame();
+    EndGame.show();
   }
 
   /**
@@ -270,16 +272,16 @@ public class Controller {
    *
    * @param ignored action event when a button is pressed
    */
-  public static void EndGameExitAction(ActionEvent ignored) {
+  public static void endGameExitAction(ActionEvent ignored) {
     EndGame.dispose();
     Map.saveMap(EndGame.getSavedPath());
   }
 
-  public static void LoadMapAction(ActionEvent ignored) {
+  public static void loadMapAction(ActionEvent ignored) {
     Menu.dispose();
     Menu.loadedPath = Menu.loadTextField.getText();
     Map.loadMap(Menu.loadedPath);
-    Menu.setPlayerCount(Map.playerCount() / 2);
+    Menu.playerCount = Map.playerCount() / 2;
     Game.plumberNames = new ArrayList<>();
     Game.nomadNames = new ArrayList<>();
     Game.playerNames = new ArrayList<>();

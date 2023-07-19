@@ -369,7 +369,12 @@ public class Main {
     if (version == Version.PROTOTYPE) {
       proto(scanner);
     } else if (version == Version.GRAPHICAL) {
-      new Menu();
+      if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        System.setProperty("apple.awt.application.name", "SzoftProjLab");
+      }
+      Menu.open();
+//      new Menu1();
     }
   }
 

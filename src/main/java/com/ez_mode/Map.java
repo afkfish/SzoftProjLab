@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -54,8 +55,8 @@ public class Map implements Tickable {
     // creates the players
     // each team has playersCount players
     for (int i = 0; i < playerCount; i++) {
-      players.add(new Plumber(Game.plumberNames.get(i)));
-      players.add(new Nomad(Game.nomadNames.get(i)));
+      players.add(new Plumber(Game.plumberNames.remove(0)));
+      players.add(new Nomad(Game.nomadNames.remove(0)));
     }
 
     // lists for the different generated nodes
@@ -130,10 +131,10 @@ public class Map implements Tickable {
       try {
         // try to cast the player to a nomad
         Nomad ignored = (Nomad) player;
-        player.placeTo(startNPositions.removeLast());
+        player.placeTo(startNPositions.removeFirst());
       } catch (ClassCastException ignored) {
         // if it fails, then it is a plumber
-        player.placeTo(startPPositions.removeLast());
+        player.placeTo(startPPositions.removeFirst());
       }
     }
 
@@ -422,12 +423,13 @@ public class Map implements Tickable {
   /** ticks every node on map */
   @Override
   public void tick() {
-    for (Node[] nodes : gameMap) {
-      for (Node node : nodes) {
-        if (node == null) continue;
-        node.tick();
-      }
-    }
+    Arrays.stream(gameMap).forEach((Node[] col) -> Arrays.stream(col).forEach(node -> {if(node != null) node.tick();}));
+//    for (Node[] nodes : gameMap) {
+//      for (Node node : nodes) {
+//        if (node == null) continue;
+//        node.tick();
+//      }
+//    }
     Main.log("Current water loss: " + Map.waterLost);
   }
 

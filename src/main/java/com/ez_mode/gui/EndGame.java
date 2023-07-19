@@ -12,7 +12,7 @@ public class EndGame {
   private static final JFrame frame = new JFrame();
   private static final JTextField saveTextField = new JTextField();
 
-  public EndGame() {
+  public static void show() {
     String winner = Map.waterArrived > Map.waterLost ? "Plumbers" : "Nomads";
     JLabel title = new JLabel();
     title.setBackground(new Color(50, 50, 50));
@@ -42,7 +42,7 @@ public class EndGame {
     saveTextField.setFont(new Font("Monospace", Font.BOLD, 20));
     saveTextField.setBounds(55, 240, 300, 40);
     saveTextField.getText();
-    saveTextField.addActionListener(Controller::LoadMapAction);
+    saveTextField.addActionListener(Controller::loadMapAction);
 
     JButton exitButton = new JButton();
     exitButton.setBounds(55, 380, 300, 40);
@@ -51,7 +51,7 @@ public class EndGame {
     exitButton.setBackground(new Color(0, 0, 0));
     exitButton.setForeground(new Color(250, 250, 250));
     exitButton.setFocusable(false);
-    exitButton.addActionListener(Controller::EndGameExitAction);
+    exitButton.addActionListener(Controller::endGameExitAction);
 
     frame.add(title);
     frame.add(winnerText);

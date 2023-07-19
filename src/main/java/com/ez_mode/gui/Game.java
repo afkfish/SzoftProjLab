@@ -65,7 +65,7 @@ public class Game {
     endGameButton.setOpaque(false);
     endGameButton.setContentAreaFilled(false);
     endGameButton.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-    endGameButton.addActionListener(Controller::GameExitAction);
+    endGameButton.addActionListener(Controller::gameExitAction);
 
     // Filling the map
     JPanel mapPanel = new JPanel();
@@ -110,43 +110,43 @@ public class Game {
     int i = 0;
     Image moveupImage = getImage("moveup", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(moveupImage));
-    actionButtons[i++].addActionListener(Controller::MoveUpAction);
+    actionButtons[i++].addActionListener(Controller::moveUpAction);
 
     Image moveleftImage = getImage("moveleft", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(moveleftImage));
-    actionButtons[i++].addActionListener(Controller::MoveLeftAction);
+    actionButtons[i++].addActionListener(Controller::moveLeftAction);
 
     Image movedownImage = getImage("movedown", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(movedownImage));
-    actionButtons[i++].addActionListener(Controller::MoveDownAction);
+    actionButtons[i++].addActionListener(Controller::moveDownAction);
 
     Image moverightImage = getImage("moveright", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(moverightImage));
-    actionButtons[i++].addActionListener(Controller::MoveRightAction);
+    actionButtons[i++].addActionListener(Controller::moveRightAction);
 
     Image breakImage = getImage("break", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(breakImage));
-    actionButtons[i++].addActionListener(Controller::BreakAction);
+    actionButtons[i++].addActionListener(Controller::breakAction);
 
     Image repairImage = getImage("repair", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(repairImage));
-    actionButtons[i++].addActionListener(Controller::CharacterSpecAction);
+    actionButtons[i++].addActionListener(Controller::characterSpecAction);
 
     Image stickypipeImage = getImage("sticky", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(stickypipeImage));
-    actionButtons[i++].addActionListener(Controller::StickyAction);
+    actionButtons[i++].addActionListener(Controller::stickyAction);
 
     Image setpumpImage = getImage("setpump", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(setpumpImage));
-    actionButtons[i++].addActionListener(Controller::SetPumpAction);
+    actionButtons[i++].addActionListener(Controller::setPumpAction);
 
     Image pickuppipeImage = getImage("pickuppipe", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(pickuppipeImage));
-    actionButtons[i++].addActionListener(Controller::PickUpPipeAction);
+    actionButtons[i++].addActionListener(Controller::pickUpPipeAction);
 
     Image pickuppumpImage = getImage("pickuppump", buttonSize);
     actionButtons[i].setIcon(new ImageIcon(pickuppumpImage));
-    actionButtons[i].addActionListener(Controller::PickUpPumpAction);
+    actionButtons[i].addActionListener(Controller::pickUpPumpAction);
 
     Character firstPlayer = players.removeFirst();
     players.addLast(firstPlayer);

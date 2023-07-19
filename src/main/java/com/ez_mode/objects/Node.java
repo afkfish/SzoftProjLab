@@ -148,8 +148,6 @@ public abstract class Node implements Tickable {
         : this.getClass().getName() + " has more than max neighbours";
 
     this.calculateFlowRate();
-
-    Main.log("Flow rate is at " + this.flowRate);
   }
 
   public ArrayList<Node> getNeighbours() {

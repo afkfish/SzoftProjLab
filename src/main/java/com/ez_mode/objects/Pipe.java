@@ -17,6 +17,7 @@ public class Pipe extends Node {
   private double capacity;
   private boolean isStikcy;
   private boolean isSlippery;
+  private int surfaceTimer = 0;
   private int unbreakableTill;
 
   public Pipe(int x, int y) {
@@ -112,6 +113,14 @@ public class Pipe extends Node {
 
     this.calculateFlowRate();
     if (unbreakableTill > 0) this.unbreakableTill--;
+    if ((isStikcy || isSlippery) && surfaceTimer > 0) {
+      surfaceTimer--;
+      if (surfaceTimer == 0) {
+        isSlippery = false;
+        isStikcy = false;
+      }
+    }
+
     Main.log("Flow rate is at " + this.flowRate);
   }
 
@@ -122,7 +131,9 @@ public class Pipe extends Node {
     else {
       isStikcy = false;
       isSlippery = false;
+      return;
     }
+    surfaceTimer = 5;
   }
 
   @Override

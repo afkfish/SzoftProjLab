@@ -69,7 +69,5 @@ public class WaterSpring extends Node {
     this.neighbours.stream()
         .filter(node -> !node.isBroken)
         .forEach(node -> node.addFlowRate(this, 1));
-
-    Main.log("Flow rate is at " + this.flowRate);
   }
 }
