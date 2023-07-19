@@ -372,10 +372,8 @@ public class Main {
       proto(scanner);
     } else if (version == Version.GRAPHICAL) {
       try {
-        UIManager.setLookAndFeel(
-                UIManager.getSystemLookAndFeelClassName());
-      }
-      catch (Exception ignored) {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      } catch (Exception ignored) {
         System.out.println("Could not set look and feel");
       }
       if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
