@@ -5,16 +5,17 @@ import com.ez_mode.characters.Nomad;
 import com.ez_mode.characters.Plumber;
 import com.ez_mode.exceptions.ObjectFullException;
 import com.ez_mode.gui.Game;
-import com.ez_mode.notJson.NotJSONArray;
-import com.ez_mode.notJson.NotJSONObject;
-import com.ez_mode.notJson.NotJSONTokener;
 import com.ez_mode.objects.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.json.*;
 
 /**
  * This class is responsible for the map of the game. It contains a HashMap of StandableObjects and
@@ -54,8 +55,8 @@ public class Map implements Tickable {
     // creates the players
     // each team has playersCount players
     for (int i = 0; i < playerCount; i++) {
-      players.add(new Plumber(Game.plumberNames.get(i)));
-      players.add(new Nomad(Game.nomadNames.get(i)));
+      players.add(new Plumber(Game.plumberNames.remove(0)));
+      players.add(new Nomad(Game.nomadNames.remove(0)));
     }
 
     // lists for the different generated nodes
@@ -67,7 +68,7 @@ public class Map implements Tickable {
     Random rand = new Random();
     // generates the different node types
     for (int i = 0; i < Game.gridNum; i++) {
-      for (int j = 0; j < Game.gridNum - 1; j++) {
+      for (int j = 0; j < Game.gridNum; j++) {
         int randomInt = rand.nextInt(100);
         if (j == 0) {
           if (i % 2 == 0) {
@@ -75,7 +76,7 @@ public class Map implements Tickable {
             nodes.add(c);
             startPPositions.add(c);
           }
-        } else if (j == 8) {
+        } else if (j == 9) {
           if ((i + 2) % 2 == 0) {
             WaterSpring w = new WaterSpring(i, j);
             nodes.add(w);
@@ -88,7 +89,7 @@ public class Map implements Tickable {
           }
 
         } else { // leaves the place empty
-          if (30 <= randomInt && randomInt <= 70) {
+          if (20 <= randomInt && randomInt <= 80) {
             // gameMap[i][j] = new Pipe(i, j);
             pipes.add(new Pipe(i, j));
           } else if (80 <= randomInt) {
@@ -130,10 +131,10 @@ public class Map implements Tickable {
       try {
         // try to cast the player to a nomad
         Nomad ignored = (Nomad) player;
-        player.placeTo(startNPositions.removeLast());
+        player.placeTo(startNPositions.removeFirst());
       } catch (ClassCastException ignored) {
         // if it fails, then it is a plumber
-        player.placeTo(startPPositions.removeLast());
+        player.placeTo(startPPositions.removeFirst());
       }
     }
 
@@ -146,7 +147,7 @@ public class Map implements Tickable {
    * @param pipe the pipe we want to connect to
    * @param node the node we want to connect
    */
-  private static void connectIfNeighbouring(Pipe pipe, Node node) {
+  private static void connectIfNeighbouring(@NotNull Pipe pipe, @NotNull Node node) {
     if ((((node.getX() == pipe.getX() - 1 || node.getX() == pipe.getX() + 1)
                 && (node.getY() == pipe.getY()))
             || ((node.getY() == pipe.getY() - 1 || node.getY() == pipe.getY() + 1)
@@ -186,13 +187,17 @@ public class Map implements Tickable {
     return players.get(index);
   }
 
+  public static ArrayList<Character> getPlayers() {
+    return players;
+  }
+
   /**
    * Gives a player by its name
    *
    * @param name the name of the player
    * @return a player
    */
-  public static Character getPlayer(String name) {
+  public static @Nullable Character getPlayer(String name) {
     for (Character c : players) {
       if (c.getName().equals(name)) {
         return c;
@@ -207,7 +212,7 @@ public class Map implements Tickable {
    * @param name name of the node
    * @return a node
    */
-  public static Node getNode(String name) {
+  public static @Nullable Node getNode(String name) {
     for (Node[] asd : gameMap) {
       for (Node nodi : asd) {
         if (nodi.getUuid().equals(name)) {
@@ -268,19 +273,19 @@ public class Map implements Tickable {
    *
    * @param path the file's path
    */
-  public static void loadMap(String path) {
+  public static void loadMap(@NotNull String path) {
     Main.log("Loading map...");
     if (!path.endsWith(".json")) {
       Main.log("The file must be a .json configuration file!");
       return;
     }
     try (FileInputStream fileInputStream = new FileInputStream(path)) {
-      NotJSONTokener root = new NotJSONTokener(fileInputStream);
-      NotJSONObject rootObject = new NotJSONObject(root);
+      JSONTokener root = new JSONTokener(fileInputStream);
+      JSONObject rootObject = new JSONObject(root);
 
-      NotJSONArray nodeList = rootObject.getNotJSONArray("map");
+      JSONArray nodeList = rootObject.getJSONArray("map");
       for (int i = 0; i < nodeList.length(); i++) {
-        NotJSONObject node = nodeList.getJSONObject(i);
+        JSONObject node = nodeList.getJSONObject(i);
         Node temp;
         switch (node.getString("type")) {
           case "cistern" -> temp = new Cistern(node.getInt("x"), node.getInt("y"));
@@ -298,16 +303,16 @@ public class Map implements Tickable {
 
       // iterate over the nodes again and set the connections
       for (int i = 0; i < nodeList.length(); i++) {
-        NotJSONObject node = nodeList.getJSONObject(i);
+        JSONObject node = nodeList.getJSONObject(i);
         Node temp = gameMap[node.getInt("x")][node.getInt("y")];
         if (node.getString("type").equals("waterspring")
             || node.getString("type").equals("cistern")) {
           continue;
         }
-        NotJSONArray connections = node.getNotJSONArray("connections");
+        JSONArray connections = node.getJSONArray("connections");
 
         for (int j = 0; j < connections.length(); j++) {
-          NotJSONObject connection = connections.getJSONObject(j);
+          JSONObject connection = connections.getJSONObject(j);
           Node neighbour = gameMap[connection.getInt("x")][connection.getInt("y")];
           if (neighbour == null) {
             Main.log(
@@ -328,9 +333,9 @@ public class Map implements Tickable {
         }
       }
 
-      NotJSONArray playerList = rootObject.getNotJSONArray("players");
+      JSONArray playerList = rootObject.getJSONArray("players");
       for (int i = 0; i < playerList.length(); i++) {
-        NotJSONObject player = playerList.getJSONObject(i);
+        JSONObject player = playerList.getJSONObject(i);
         Character temp;
         switch (player.getString("type")) {
           case "plumber" -> temp = new Plumber(player.getString("name"));
@@ -355,7 +360,7 @@ public class Map implements Tickable {
    *
    * @param path the file's path
    */
-  public static void saveMap(String path) {
+  public static void saveMap(@NotNull String path) {
     Main.log("Saving map...");
     if (path.isEmpty()) {
       Main.log("The path cannot be empty!");
@@ -364,27 +369,27 @@ public class Map implements Tickable {
     if (!path.endsWith(".json")) path += ".json";
     try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
       // create the root object
-      NotJSONObject root = new NotJSONObject();
+      JSONObject root = new JSONObject();
       root.put("size", gameMap.length);
-      NotJSONArray playerList = new NotJSONArray();
+      JSONArray playerList = new JSONArray();
       // iterate over the players and add them to the list
       for (Character player : players) {
-        NotJSONObject playerObject = new NotJSONObject();
+        JSONObject playerObject = new JSONObject();
         playerObject.put("name", player.getName());
         playerObject.put("type", player.getClass().getSimpleName().toLowerCase());
         playerObject.put("x", player.getStandingOn().getX());
         playerObject.put("y", player.getStandingOn().getY());
-        playerObject.put("inventory", new NotJSONObject());
+        playerObject.put("inventory", new JSONObject());
         playerList.put(playerObject);
       }
-      NotJSONArray nodeList = new NotJSONArray();
+      JSONArray nodeList = new JSONArray();
       // iterate over the nodes and add them to the list
       for (int i = 0; i < gameMap.length; i++) {
         for (int j = 0; j < gameMap[i].length; j++) {
           if (gameMap[i][j] == null) {
             continue;
           }
-          NotJSONObject node = new NotJSONObject();
+          JSONObject node = new JSONObject();
           node.put("type", gameMap[i][j].getClass().getSimpleName().toLowerCase());
           node.put("x", i);
           node.put("y", j);
@@ -393,9 +398,9 @@ public class Map implements Tickable {
             nodeList.put(node);
             continue;
           }
-          NotJSONArray connections = new NotJSONArray();
+          JSONArray connections = new JSONArray();
           for (Node neighbour : gameMap[i][j].getNeighbours()) {
-            NotJSONObject connection = new NotJSONObject();
+            JSONObject connection = new JSONObject();
             connection.put("x", neighbour.getX());
             connection.put("y", neighbour.getY());
             connections.put(connection);
@@ -418,12 +423,20 @@ public class Map implements Tickable {
   /** ticks every node on map */
   @Override
   public void tick() {
-    for (Node[] nodes : gameMap) {
-      for (Node node : nodes) {
-        if (node == null) continue;
-        node.tick();
-      }
-    }
+    Arrays.stream(gameMap)
+        .forEach(
+            (Node[] col) ->
+                Arrays.stream(col)
+                    .forEach(
+                        node -> {
+                          if (node != null) node.tick();
+                        }));
+    //    for (Node[] nodes : gameMap) {
+    //      for (Node node : nodes) {
+    //        if (node == null) continue;
+    //        node.tick();
+    //      }
+    //    }
     Main.log("Current water loss: " + Map.waterLost);
   }
 

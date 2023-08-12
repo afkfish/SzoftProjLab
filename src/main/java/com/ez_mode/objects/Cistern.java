@@ -55,7 +55,6 @@ public class Cistern extends Node {
   /** Update the neighbouring nodes. */
   @Override
   public void tick() {
-    super.tick();
     Random random = new Random();
     if (random.nextInt(100) < 40) {
       MakePump();

@@ -119,7 +119,7 @@ public class Plumber extends Character {
   }
 
   /** A plumber can place a pipe onto an empty field if it has one in its inventory. */
-  public void PlacePipe(int dir) {
+  public Node PlacePipe(int dir) {
     try {
       if (draggedpipe != null) {
         switch (dir) {
@@ -162,6 +162,7 @@ public class Plumber extends Character {
       Main.log(this.getUuid() + "tried to place and connect a pipe to a full node");
       JOptionPane.showMessageDialog(null, "Object is full!");
     }
+    return draggedpipe == null ? pickedUpPipe : draggedpipe;
   }
 
   /** A plumber can pick up pumps from a cistern if it has one. */
